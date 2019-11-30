@@ -333,7 +333,7 @@ public class EquipoDaoImpl implements EquipoDao{
 		List<Equipo> equiposList = new ArrayList<Equipo>();
 		String query = "  SELECT  "
 				+"   equipos.idEquipo,  "
-				
+				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo) img,"
 				+"   equipos.nombreEquipo,  "
 				+"   equipos.descripcionEquipo,  "
 				+"   equipos.activo ,  "
@@ -357,7 +357,7 @@ public class EquipoDaoImpl implements EquipoDao{
                         equipo.setId(rs.getInt("idEquipo"));
                         equipo.setNombre(rs.getString("nombreEquipo"));
                         equipo.setDescripcion(rs.getString("descripcionEquipo"));
-                        
+                        equipo.setImg(rs.getString("img"));
                         Division division= new Division();
                         division.setId(rs.getString("Division_idDivision"));
                         division.setNombre(rs.getString("nombreDivision"));

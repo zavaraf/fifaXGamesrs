@@ -93,6 +93,8 @@ public class GenerarJornadasUtil {
 				jo.setNombreEquipoLocal(equipoLcoal.getNombre());
 				jo.setIdEquipoVisita((int) equipoVisita.getId());
 				jo.setNombreEquipoVisita(equipoVisita.getNombre());
+				jo.setImgLocal(equipoLcoal.getImg());
+				jo.setImgVisita(equipoVisita.getImg());
 				
 				juegosList.add(jo);				
 				
