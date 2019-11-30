@@ -7,6 +7,7 @@ public class GolesJornadas {
 	private String nombreEquipo;
 	private String sobrenombre;
 	private String nombreCompleto;
+	private int isAutogol;
 	public int getIdEquipo() {
 		return idEquipo;
 	}
@@ -36,6 +37,12 @@ public class GolesJornadas {
 	}
 	public void setNombreCompleto(String nombreCompleto) {
 		this.nombreCompleto = nombreCompleto;
+	}
+	public int getIsAutogol() {
+		return isAutogol;
+	}
+	public void setIsAutogol(int isAutogol) {
+		this.isAutogol = isAutogol;
 	}
 	
 	

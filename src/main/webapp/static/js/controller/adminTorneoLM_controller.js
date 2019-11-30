@@ -16,6 +16,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	self.divisiones;
 	self.divisionSelect;
 	self.isEdit = false;
+	self.isJornadaInsert = false;
 	self.jornadasEdit = [];
 	
 	
@@ -99,13 +100,15 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	                    
 	                    if(self.jornadas!= null && self.jornadas!=''){
 	                    	self.isEdit=true;
+	                    	self.isJornadaInsert = true;
+	                    	
 	                    }else{
 	                    	self.isEdit=false;
-	                    	self.jornadasEdit = [];
+	                    	
 	                    }
 	                    console.log("TorneoLMService-getTablaJornadas]:",self.jornadas)
 	                    console.log("TorneoLMService-getTablaJornadas]: -----------FIN-----------")
-	                    
+	                    self.jornadasEdit = [];
 	                    return d;
 	                },
 	                function(errResponse){
@@ -130,6 +133,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
                     console.log("TorneoLMService-addJornadas]:",d)
                     
                     self.isEdit = true;
+                    self.isJornadaInsert = true;
                     return d;
                 },
                 function(errResponse){

@@ -26,7 +26,7 @@ import com.app.modelo.TablaGeneral;
 import com.app.modelo.Torneo;
 import com.app.service.TorneoService;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*",allowedHeaders = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @Controller
 @RequestMapping(value="/rest/torneos")
 public class TorneoController {

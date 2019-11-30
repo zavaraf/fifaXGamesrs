@@ -162,14 +162,14 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 	
 }
 
-	public void savePlayer(User player) {
+	public void savePlayer(User player,int idTorneo) {
 		System.out.println("Plyer]:"+player.toString());
 		System.out.println("Equipo]:"+player.toString());
 		//NOmbre
 		//Sobrenombre
 		//Raiting
 		//Equipo
-		String insert = "call fifaxgamersbd.crearJugador(?,?, ?,?,?)";
+		String insert = "call fifaxgamersbd.crearJugador(?,?, ?,?,?,?)";
 				
 		
 		jdbcTemplate.update(insert,
@@ -177,13 +177,14 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 			    player.getSobrenombre(),
 			    player.getRaiting(),
 			    player.getEquipo().getId(),
-			    player.getLink()
+			    player.getLink(),
+			    idTorneo
 			  );
 		
 		
 	}
 
-	public void updatePlayer(User currentUser) {
+	public void updatePlayer(User currentUser, int idTorneo) {
 		
 		System.out.println("------->Plyer]:"+currentUser.toString());
 		System.out.println("Equipo]:"+currentUser.toString());
@@ -191,7 +192,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 		//Sobrenombre
 		//Raiting
 		//Equipo
-		String insert = "call fifaxgamersbd.modificarJugador(?,?, ?,?,?,?)";
+		String insert = "call fifaxgamersbd.modificarJugador(?,?, ?,?,?,?,?)";
 				
 		
 		jdbcTemplate.update(insert,
@@ -200,7 +201,8 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 				currentUser.getRaiting(),
 				currentUser.getEquipo().getId(),
 				currentUser.getId(),
-				currentUser.getLink()
+				currentUser.getLink(),
+				idTorneo
 			  );
 	}
 
@@ -262,6 +264,8 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 	        
 		return null;
 	}
+
+	
 
 
 

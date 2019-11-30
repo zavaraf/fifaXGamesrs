@@ -1,9 +1,11 @@
 'use strict';
 
+//http://fifaapp-env-1.kvdjpbscsv.us-east-2.elasticbeanstalk.com/
+//'IP_PROD': 'http://env-2654648.jl.serv.net.mx/fifaApp',
 angular.module('myApp')
 .constant('CONFIG', {
     'VARTORNEO' : '',
-    'PROD': true,
+    'PROD': false,
     'IP_PROD': 'http://env-2654648.jl.serv.net.mx/fifaApp',
     'IP_DES':'http://localhost:8081/fifaApp'
 })

@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	        return null;
 	    }
 	     
-	    public void saveUser(User user) {
+	    public void saveUser(User user,int idTorneo) {
 	        user.setId(counter.incrementAndGet());
 	        users.add(user);
 	    }
@@ -88,12 +88,12 @@ public class UserServiceImpl implements UserService {
 			return userDao.findAllPlayers();
 		}
 
-		public void savePlayer(User user) {
-			userDao.savePlayer(user);			
+		public void savePlayer(User user,int idTorneo) {
+			userDao.savePlayer(user,idTorneo);			
 		}
 
-		public void updatePlayer(User currentUser) {
-			userDao.updatePlayer(currentUser);
+		public void updatePlayer(User currentUser,int idTorneo) {
+			userDao.updatePlayer(currentUser,idTorneo);
 			
 		}
 
@@ -103,6 +103,12 @@ public class UserServiceImpl implements UserService {
 		
 		public List<User> findAllPlayersByIdEquipo(long id, long idVisita) {
 			return userDao.findAllPlayersByIdEquipo(id, idVisita);
+		}
+
+		@Override
+		public void saveUser(User user) {
+			// TODO Auto-generated method stub
+			
 		}
 
 		

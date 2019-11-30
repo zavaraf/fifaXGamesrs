@@ -152,7 +152,8 @@
                       </thead>
                       <tbody>
                           <tr ng-repeat="e in ctrl.equipos | orderBy : 'e.division' | filter : test">
-                              <td><span ng-bind="e.id"></span></td>
+<!--                               <td><span ng-bind="e.id"></span></td> -->
+                              <td><img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
 <!--                               <td><span ng-bind="e.manager"></span></td> -->
                               <td><a href="#!team/{{e.id}}">{{e.nombre}}</a></td>
 <!--                               <td><span ng-bind="e.descripcion"></span></td> -->

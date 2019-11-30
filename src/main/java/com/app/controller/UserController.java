@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -121,8 +122,8 @@ public class UserController {
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
-    @RequestMapping(value = "/user/player", method = RequestMethod.POST)
-    public ResponseEntity<Void> createPlayer(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
+    @RequestMapping(value = "/user/player/{idTorneo}", method = RequestMethod.POST)
+    public ResponseEntity<Void> createPlayer(@PathVariable int idTorneo,@RequestBody User user,    UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getNombre());
   
         if (userService.isUserExist(user)) {
@@ -130,7 +131,7 @@ public class UserController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
   
-        userService.savePlayer(user);
+        userService.savePlayer(user,idTorneo);
   
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
@@ -160,8 +161,8 @@ public class UserController {
         userService.updateUser(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
-    @RequestMapping(value = "/user/player/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<User> updatePlayer(@PathVariable("id") long id, @RequestBody User user) {
+    @RequestMapping(value = "/user/player/{id}/{idTorneo}", method = RequestMethod.PUT)
+    public ResponseEntity<User> updatePlayer(@PathVariable("id") long id,@PathVariable("idTorneo") int idTorneo, @RequestBody User user) {
         System.out.println("Updating User " + id);
           
         User currentUser = userService.findById(id);
@@ -177,7 +178,7 @@ public class UserController {
         currentUser.setEquipo(user.getEquipo());
         currentUser.setLink(user.getLink());
           
-        userService.updatePlayer(currentUser);
+        userService.updatePlayer(currentUser,idTorneo);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
   

@@ -8,6 +8,7 @@ public class Jornada {
 	private int idJornada;
 	private int id;
 	private int activa;
+	private int cerrada;
 	private int numeroJornada;
 	private int idEquipoLocal;
 	private String nombreEquipoLocal;
@@ -17,6 +18,8 @@ public class Jornada {
 	private Integer golesVisita;
 	private List<GolesJornadas> golesJornada;
 	private List<HashMap<String,String>> imagenes;
+	private String imgLocal;
+	private String imgVisita;
 	
 	public int getId() {
 		return id;
@@ -90,6 +93,25 @@ public class Jornada {
 	public void setNumeroJornada(int numeroJornada) {
 		this.numeroJornada = numeroJornada;
 	}
+	public int getCerrada() {
+		return cerrada;
+	}
+	public void setCerrada(int cerrada) {
+		this.cerrada = cerrada;
+	}
+	public String getImgLocal() {
+		return imgLocal;
+	}
+	public void setImgLocal(String imgLocal) {
+		this.imgLocal = imgLocal;
+	}
+	public String getImgVisita() {
+		return imgVisita;
+	}
+	public void setImgVisita(String imgVisita) {
+		this.imgVisita = imgVisita;
+	}
+	
 	
 	
 	

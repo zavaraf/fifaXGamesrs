@@ -50,8 +50,9 @@
   
   <div class="container text-center container-fluid">
   
-    <h1>{{ctrl.equipo.nombre}}</h1>      
-    <p>{{ctrl.equipo.descripcion}}</p>
+    <img src="{{ctrl.equipo.img}}" style="width: 15%;"class="card-img-center" alt="..."> 
+    <h4>{{ctrl.equipo.nombre}}</h4>      
+<!--     <p>{{ctrl.equipo.descripcion}}</p> -->
 <!--       <div class="row  justify-content-center"> -->
       <div class="row-fluid">
 <!-- 	    <div class="col-sm-3"> -->

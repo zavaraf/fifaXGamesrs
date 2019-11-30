@@ -6,6 +6,7 @@ public class Jornadas {
 	
 	private int idJornda;
 	private int activa;
+	private int cerrada;
 	private int numeroJornada;
 	
 	private List<Jornada> jornada;
@@ -40,6 +41,14 @@ public class Jornadas {
 
 	public void setNumeroJornada(int numeroJornada) {
 		this.numeroJornada = numeroJornada;
+	}
+
+	public int getCerrada() {
+		return cerrada;
+	}
+
+	public void setCerrada(int cerrada) {
+		this.cerrada = cerrada;
 	}
 	
 	

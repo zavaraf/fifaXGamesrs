@@ -48,6 +48,8 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 	 public PasswordEncoder passwordEncoder(){
 	  return new BCryptPasswordEncoder();
 	 }
+	 
+	
 	
 //	public UserDetailsService userDetailsService(){
 //        Properties usuarios = new Properties();
@@ -59,9 +61,12 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 //		return new InMemoryUserDetailsManager(usuarios);
 //	}
 
+	
+	 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	
+		
 		http
 		.authorizeRequests()
 			.antMatchers("/imagenes/*").permitAll()
@@ -72,6 +77,7 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 			.antMatchers("/usermanager/**").permitAll()
 			.antMatchers("/**").access("hasAnyRole('Admin','Manager','Usuario')")
 			.antMatchers("/index.jsp/**").access("hasAnyRole('Usuario')")
+		
 		    
 		    ;
 		
@@ -106,8 +112,13 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 		.maxSessionsPreventsLogin(false);
 		
 		http.sessionManagement()
-	    .sessionFixation().migrateSession();		
+	    .sessionFixation().migrateSession();
+		
+		
+//		http.cors();
 		
 					
 	}
+	
+	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import com.app.modelo.Equipo;
@@ -53,7 +54,9 @@ public class GenerarJornadasUtil {
 		return jornadas;
 	}
 	
-	public List<Jornadas> getJornadas(List<Equipo> equipos){
+	public List<Jornadas> getJornadas(List<Equipo> equiposL){
+		
+		List<Equipo> equipos = agruparArreglo(equiposL);
 		
 		int numero = equipos.size();
 		
@@ -106,6 +109,37 @@ public class GenerarJornadasUtil {
 		
 		return jornadasList;
 		
+	}
+	
+	public List<Equipo> agruparArreglo(List<Equipo> equipos){
+		
+		List<Equipo> arrayEquipos= new ArrayList<Equipo>();
+		if(equipos== null || equipos.size()==0){
+			return null;
+		}
+		
+		int n = equipos.size();
+		int k = n;
+		int[] resultado = new int[n];
+		int[] numeros=new int[n];       
+		Random rnd = new Random();
+		int res;
+		       
+		for(int i=0;i<n;i++){
+		    numeros[i]=i+1;
+		}
+		       
+		for(int i=0;i<n;i++){
+		    res = rnd.nextInt(k);           
+		        resultado[i]=numeros[res];
+		        numeros[res]=numeros[k-1];
+		        k--;           
+		}
+		for(int i = 0; i<n; i++){
+		       System.out.println(resultado[i]);
+		       arrayEquipos.add(equipos.get(resultado[i]-1));
+		}
+		return arrayEquipos;
 	}
 	
 //	public static void main(String[] args) {

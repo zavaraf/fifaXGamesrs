@@ -36,6 +36,10 @@ public class AppInitializer implements WebApplicationInitializer {
         context.setConfigLocation("com.spring");
         return context;
     }
+    
+   
+    
+   
 
 
 	

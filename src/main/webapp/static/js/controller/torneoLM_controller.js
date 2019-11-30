@@ -26,6 +26,7 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.getInitTorneo = getInitTorneo;
 	self.getJornadaActual = getJornadaActual;
 	self.setJornadaActual = setJornadaActual;
+	self.showEditJornada = showEditJornada;
 	
 	
 	buscarDivisiones()
@@ -219,6 +220,15 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 				console.error('Error while fetching TorneoLMConroller-buscarDivisiones');
 			});
 			
+		}
+	 
+	 function showEditJornada(roles,idEquipo,idEquipoLocal,idEquipoVisita) {
+		 
+			if(self.jornadaEdit!= null && ((roles.includes('Manager') && (idEquipoLocal == idEquipo || idEquipoVisita == idEquipo )) 
+					|| roles.includes('Admin')) && self.jornadaEdit.cerrada == 0){	
+				return true;
+			}						
+			return false;
 		}
 	 
 	

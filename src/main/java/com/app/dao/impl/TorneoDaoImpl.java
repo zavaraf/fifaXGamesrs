@@ -65,6 +65,7 @@ public class TorneoDaoImpl implements TorneoDao {
 				+"  tablaGeneral.division_idDivision, "
 				+"  tablaGeneral.torneos_idTorneo, "
 				+"  tablaGeneral.idEquipo,  "
+				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tablaGeneral.idEquipo) img, "
 				+"  tablaGeneral.nombreEquipo, "
 				+"  tablaGeneral.pj, "
 				+"  tablaGeneral.pg,  "
@@ -276,6 +277,7 @@ public class TorneoDaoImpl implements TorneoDao {
                     	tablaG.setGe(rs.getInt("ge"));
                     	tablaG.setDif(rs.getInt("dif"));
                     	tablaG.setPts(rs.getInt("pts"));
+                    	tablaG.setImg(rs.getString("img"));
                     	
                     	return tablaG;
                     }
@@ -297,18 +299,22 @@ public class TorneoDaoImpl implements TorneoDao {
 		String query = "  select tabla.idJornada, tabla.id, tabla.numeroJornada, "
 					+"  tabla.equipos_idEquipoLocal, "
 					+ " tabla.activa, "
-					+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, "
+					+ " tabla.cerrada, "
+					+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, " 
+					+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoLocal) imgLocal, "
 					+"  tabla.golesLocal, "
 					+"  tabla.golesVisita, "
 					+"   "
 					+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoVisita) equipoVisita, "
-					+"  tabla.equipos_idEquipoVisita "
+					+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita) imgVisita, "
+					+"  tabla.equipos_idEquipoVisita " 
 					+"   "
 					+"  from ( "
 					+"   "
 					+"  select jornadas.idJornada, "
 					+ " je.id, jornadas.numeroJornada,"
 					+ " jornadas.activa,"
+					+ " jornadas.cerrada,"
 					+"  je.equipos_idEquipoLocal, "
 					+"  je.golesLocal, "
 					+"  je.golesVisita, "
@@ -336,7 +342,10 @@ public class TorneoDaoImpl implements TorneoDao {
                     	jornada.setIdEquipoVisita(rs.getInt("equipos_idEquipoVisita"));
                     	jornada.setNombreEquipoVisita(rs.getString("equipoVisita"));
                     	jornada.setNumeroJornada(rs.getInt("numeroJornada"));
-                    	jornada.setActiva(rs.getInt("activa"));	
+                    	jornada.setActiva(rs.getInt("activa"));
+                    	jornada.setCerrada(rs.getInt("cerrada"));
+                    	jornada.setImgLocal(rs.getString("imgLocal"));
+                    	jornada.setImgVisita(rs.getString("imgVisita"));
                     	try{
                     	
                     	jornada.setGolesLocal(Integer.parseInt(rs.getString("golesLocal")));
@@ -364,6 +373,7 @@ public class TorneoDaoImpl implements TorneoDao {
 		    if(juegos.size()>0){
 		    	
 		    	jorn.setActiva(juegos.get(0).getActiva());
+		    	jorn.setCerrada(juegos.get(0).getCerrada());
 		    	jorn.setIdJornda(juegos.get(0).getIdJornada());
 		    	jorn.setNumeroJornada(juegos.get(0).getNumeroJornada());
 		    	jorn.setJornada(juegos);
@@ -418,7 +428,8 @@ public class TorneoDaoImpl implements TorneoDao {
 				"  equipos.nombreEquipo, " +
 				"  persona.idPersona, " +
 				"  persona.sobrenombre, " +
-				"  persona.NombreCompleto " +
+				"  persona.NombreCompleto, " +
+				"  golesjornadas.isautogol " +
 				"  from golesjornadas " +
 				"  join persona on persona.idPersona = golesjornadas.persona_idPersona " +
 				"  join equipos on equipos.idEquipo = golesjornadas.equipos_idEquipo " +
@@ -437,6 +448,7 @@ public class TorneoDaoImpl implements TorneoDao {
                     	goles.setNombreCompleto(rs.getString("NombreCompleto"));
                     	goles.setNombreEquipo(rs.getString("nombreEquipo"));
                     	goles.setSobrenombre(rs.getString("sobrenombre"));
+                    	goles.setIsAutogol(rs.getInt("isautogol"));
                     	return goles;
                     }
                 });
@@ -451,18 +463,22 @@ public class TorneoDaoImpl implements TorneoDao {
 	public Jornada getJornada(String idJornada,String id,	String idEquipoLocal,	String idEquipoVisita){
 		
 	Jornada jornada = new Jornada();
-	String query = "  select tabla.idJornada, tabla.id, tabla.numeroJornada,"
+	String query = "  select tabla.idJornada, tabla.id, tabla.numeroJornada, tabla.cerrada,"
 				+"  tabla.equipos_idEquipoLocal, "
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, "
+				+"  tabla.golesLocal, "
+				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, " 
+				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoLocal) imgLocal, "
 				+"  tabla.golesLocal, "
 				+"  tabla.golesVisita, "
 				+"   "
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoVisita) equipoVisita, "
-				+"  tabla.equipos_idEquipoVisita "
+				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita) imgVisita, "
+				+"  tabla.equipos_idEquipoVisita " 
 				+"   "
 				+"  from ( "
 				+"   "
-				+"  select jornadas.idJornada, je.id, jornadas.numeroJornada,"
+				+"  select jornadas.idJornada, je.id, jornadas.numeroJornada, jornadas.cerrada,"
 				+"  je.equipos_idEquipoLocal, "
 				+"  je.golesLocal, "
 				+"  je.golesVisita, "
@@ -489,6 +505,10 @@ public class TorneoDaoImpl implements TorneoDao {
                 	jornada.setIdEquipoVisita(rs.getInt("equipos_idEquipoVisita"));
                 	jornada.setNombreEquipoVisita(rs.getString("equipoVisita"));
                 	jornada.setNumeroJornada(rs.getInt("numeroJornada"));
+                	jornada.setCerrada(rs.getInt("cerrada"));
+                	jornada.setImgLocal(rs.getString("imgLocal"));
+                	jornada.setImgVisita(rs.getString("imgVisita"));
+                	
                 	try{
                 	jornada.setGolesLocal(Integer.parseInt(rs.getString("golesLocal")));
                 	jornada.setGolesVisita(Integer.parseInt(rs.getString("golesVisita")));
@@ -612,7 +632,7 @@ public class TorneoDaoImpl implements TorneoDao {
 	}
 
 	@Override
-	public HashMap<String, String> addJornada(int idTorneo, int idDivision, Jornada juego,int activa) {
+	public HashMap<String, String> addJornada(int idTorneo, int idDivision, Jornada juego,int activa,int cerrada) {
 		System.out.println("----->equipoLocal]:" + juego.getIdEquipoLocal()+","
 				+ "equipoVisita]:"+juego.getIdEquipoVisita()+
 				",numJornada]:"+juego.getId()+",torneo]:"+idTorneo+",division]:"+idDivision+
@@ -629,20 +649,21 @@ public class TorneoDaoImpl implements TorneoDao {
 		SqlParameter division        = new SqlParameter("division", Types.INTEGER);
 		SqlParameter liga            = new SqlParameter("liga", Types.INTEGER);
 		SqlParameter activaV          = new SqlParameter("activa", Types.INTEGER);
+		SqlParameter cerradaV          = new SqlParameter("cerrada", Types.INTEGER);
 		SqlParameter id          = new SqlParameter("id", Types.INTEGER);
 		
 		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
 		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
 
 		SqlParameter[] paramArray = { equipoLocal,equipoVisita,numJornada,
-				torneo,division,liga,activaV,id,isError ,message};
+				torneo,division,liga,activaV,cerradaV,id,isError ,message};
 
 		myStoredProcedure.setParameters(paramArray);
 		myStoredProcedure.compile();
 
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(juego.getIdEquipoLocal(),juego.getIdEquipoVisita(),
-				juego.getNumeroJornada(),idTorneo,idDivision,1,activa,juego.getId());
+				juego.getNumeroJornada(),idTorneo,idDivision,1,activa,cerrada,juego.getId());
 
 		System.out.println(storedProcResult);
 

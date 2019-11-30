@@ -5,6 +5,7 @@ var app = angular.module("myApp", ["ngRoute","ngPagination"]);
         $routeProvider
         .when("/", {
            // templateUrl : "Jugadores.htm"
+        	templateUrl : "Jugadores"
         })
         .when("/jugadores", {
             templateUrl : "Jugadores.htm"

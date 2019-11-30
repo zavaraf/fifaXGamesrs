@@ -7,7 +7,15 @@
 <html ng-app="myApp">
    <head>
       <title>FIFA XGAMERS</title>
-      <style>
+        <meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		  <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+		<style>
          .username.ng-valid {
          background-color: lightgreen;
          }
@@ -27,37 +35,38 @@
          background-color: yellow;
          }
       </style>
-      <link rel="stylesheet"
-         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-         crossorigin="anonymous">
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-         crossorigin="anonymous"></script>
-      <script
-         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-         crossorigin="anonymous"></script>
-      <script
-         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-         crossorigin="anonymous"></script>
-      <!--  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> -->
-      <script
-         src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-      <script src="<c:url value='/static/js/libs/angular.js/angular-pagination.js' />"></script>
-      <%--         <script src="<c:url value='/static/js/libs/angular-ui-bootstrap/ui-bootstrap-tpls-2.1.2.min.js' />"></script> --%>
-      <link href="<c:url value='/static/css/app.css' />" rel="stylesheet">
-      </link>
-      <script src="<c:url value='/static/js/app/app.js' />"></script>
-      <script src="<c:url value='/static/js/controller/user_controller.js' />"></script>
-      <script src="<c:url value='/static/js/service/user_service.js' />"></script>
-      <script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
-      <script src="<c:url value='/static/js/controller/equipo_controller.js' />"></script>
+<!--       <link rel="stylesheet" -->
+<!--          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" -->
+<!--          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" -->
+<!--          crossorigin="anonymous"> -->
+<!--       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" -->
+<!--          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" -->
+<!--          crossorigin="anonymous"></script> -->
+<!--       <script -->
+<!--          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" -->
+<!--          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" -->
+<!--          crossorigin="anonymous"></script> -->
+<!--       <script -->
+<!--          src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" -->
+<!--          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" -->
+<!--          crossorigin="anonymous"></script> -->
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> -->
+<!--       <script -->
+<!--          src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
+<%--       <script src="<c:url value='/static/js/libs/angular.js/angular-pagination.js' />"></script> --%>
+<%--               <script src="<c:url value='/static/js/libs/angular-ui-bootstrap/ui-bootstrap-tpls-2.1.2.min.js' />"></script> --%>
+<%--       <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"> --%>
+<!--       </link> -->
+      
       <%--      <script src="<c:url value='/static/js/service/draft_service.js' />"></script> --%>
       <%--      <script src="<c:url value='/static/js/controller/draft_controller.js' />"></script> --%>
    </head>
    <body class="ng-cloak">
+<%--    	  <script src="<c:url value='/static/js/app/app.js' />"></script> --%>
+      <script src="<c:url value='/static/js/controller/user_controller.js' />"></script>
+      <script src="<c:url value='/static/js/service/user_service.js' />"></script>
+      <script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
+      <script src="<c:url value='/static/js/controller/equipo_controller.js' />"></script>
       <div class="container text-center container-fluid" ng-controller="UserController as ctrl">
       	<div >
       		<div id="jugadores"  >

@@ -66,7 +66,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
  
     function createPlayer(player) {
     	var deferred = $q.defer();
-    	$http.post(REST_SERVICE_URI+"player", player)
+    	$http.post(REST_SERVICE_URI+"player"+"/"+CONFIG.VARTORNEO.id, player)
     	.then(
     			function (response) {
     				deferred.resolve(response.data);
@@ -98,7 +98,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
     function updatePlayer(player, id) {
         var deferred = $q.defer();
         console.log("------> Player Update]",player)
-        $http.put(REST_SERVICE_URI+"player/"+id, player)
+        $http.put(REST_SERVICE_URI+"player/"+id+"/"+CONFIG.VARTORNEO.id, player)
             .then(
             function (response) {
                 deferred.resolve(response.data);

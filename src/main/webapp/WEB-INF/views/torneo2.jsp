@@ -1,38 +1,36 @@
-<%@ include file="/WEB-INF/views/include.jsp" %>
+<%@ include file="/WEB-INF/views/include.jsp"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+   pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>FIFA XGAMERS</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-<!--      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
-<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
-<!-- 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    div.scrollmenu {
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<html ng-app="myApp">
+   <head>
+      <title>FIFA XGAMERS</title>
+      <style>
+         .username.ng-valid {
+         background-color: lightgreen;
+         }
+         .username.ng-dirty.ng-invalid-required {
+         background-color: red;
+         }
+         .username.ng-dirty.ng-invalid-minlength {
+         background-color: yellow;
+         }
+         .email.ng-valid {
+         background-color: lightgreen;
+         }
+         .email.ng-dirty.ng-invalid-required {
+         background-color: red;
+         }
+         .email.ng-dirty.ng-invalid-email {
+         background-color: yellow;
+         }
+         .anyClass {
+		  height:550px;
+		  overflow-y: scroll;
+		}
+		div.scrollmenu {
 		  background-color: #333;
 		  overflow: auto;
 		  white-space: nowrap;
@@ -49,16 +47,39 @@
 		div.scrollmenu a:hover {
 		  background-color: #777;
 		}
-  </style>
-</head>
-<body ng-app="myApp" >
+      </style>
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+         crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+         crossorigin="anonymous"></script>
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+         crossorigin="anonymous"></script>
+      <script
+         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+         crossorigin="anonymous"></script>
+      <!--  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> -->
+      <script
+         src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <script src="<c:url value='/static/js/libs/angular.js/angular-pagination.js' />"></script>
+      <%--         <script src="<c:url value='/static/js/libs/angular-ui-bootstrap/ui-bootstrap-tpls-2.1.2.min.js' />"></script> --%>
+      <link href="<c:url value='/static/css/app.css' />" rel="stylesheet">
+      </link>
+      <script src="<c:url value='/static/js/app/app.js' />"></script>
       <script src="<c:url value='/static/js/controller/torneoLM_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
-  
-  	
-	<div class="container container-fluid" ng-controller="TorneoLMController as ctrl">
-	
-	<!-- Modal -->
+      <%--      <script src="<c:url value='/static/js/service/draft_service.js' />"></script> --%>
+      <%--      <script src="<c:url value='/static/js/controller/draft_controller.js' />"></script> --%>
+   </head>
+   <body class="ng-cloak">
+      <div class="container  container-fluid" ng-controller="TorneoLMController as ctrl">
+      
+      <!-- Modal -->
 		<div class="modal fade " id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
 		    <div class="modal-content">
@@ -78,7 +99,6 @@
 				    <div class="col">
 				      
 				    <blockquote class="blockquote ">
-				    <img src="{{ctrl.jornadaEdit.imgLocal}}" style="width: 30%;"class="card-img-center" alt="...">
 					  <p class="mb-0">{{ctrl.jornadaEdit.nombreEquipoLocal}} </p>
 				    
 			       	<p>
@@ -133,7 +153,7 @@
 					  </div>
 					</div>
 				    
-					  <footer class="blockquote-footer text-right {{ p.isAutogol == 1 ? 'alert alert-danger' : ''}} " ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer>
+					  <footer class="blockquote-footer text-right" ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer>
 					  
 					</blockquote>
 				    </div>
@@ -146,7 +166,6 @@
 				    <div class="col">
 				      
 				      <blockquote class="blockquote ">
-				      <img src="{{ctrl.jornadaEdit.imgVisita}}" style="width: 30%;"class="card-img-center" alt="...">
 					  <p class="mb-0">{{ctrl.jornadaEdit.nombreEquipoVisita}}</p>
 				      <p>
 				      <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
@@ -189,7 +208,7 @@
 					  </div>
 					</div>
 					
-						<footer class="blockquote-footer text-left {{p.isAutogol == 1 ? 'alert alert-danger' : ''}} " ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer>
+					<footer class="blockquote-footer text-left" ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer>
 					
 					  
 					</blockquote>
@@ -217,7 +236,7 @@
 			    </li>   
 			 </ul>
 	        <div class="formcontainer"	>
-	        
+	        <h1>Tabla General</h1>
             	<div class="panel panel-default">
                     <div class="panel-heading">
                         
@@ -229,7 +248,6 @@
 		                <table class="table table-sm table-hover table-striped">
 		                	<thead class="thead-dark">
 		                          <tr>
-		                          	  <th>*</th>
 		                              <th>Equipo</th>
 		                              <th>PJ</th>
 		                              <th>PG</th>
@@ -243,8 +261,7 @@
 		                      </thead>
 		                      <tbody>
 		                          <tr ng-repeat="e in ctrl.tablaGeneral">
-		                          	  <td><img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
-		                              <td><a>{{e.nombreEquipo}}</a></td>
+		                              <td><span>{{e.nombreEquipo}}</a></td>
 		                              <td><span ng-bind="e.pj"></span></td>
 		                              <td><span ng-bind="e.pg"></span></td>
 		                              <td><span ng-bind="e.pe"></span></td>
@@ -263,61 +280,38 @@
 		    			<div class="row">
 		    			<div class="scrollmenu">
 						  <a href="" ng-click="ctrl.setJornadaActual(e)" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada'" >Jornada {{e.numeroJornada}}</a>
+						 
 						</div>
 							<div class="col"  ng-repeat="e in ctrl.jornadaSelect | orderBy : 'numeroJornada'" >
 							<blockquote class="blockquote text-center">
 								  <p class="mb-0">Jornada {{e.numeroJornada}} <a ng-show="e.cerrada==1">Cerrada</a></p>
 								  
 							</blockquote>
-							<table class="table table-sm table-hover table-dark">
-		                	
-		                      <tbody>
-		                          <tr  ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+							
+							<div  class="list-group">
+							  <span  ng-repeat="jor in e.jornada" class="list-group-item list-group-item-action">
+							  	<div class="container" 
+							  	ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
 							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
 							  	data-toggle="modal" data-target="#exampleModalScrollable">
-		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
-		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
-		                              <td><img src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
-		                              <td>{{jor.golesLocal}}</td>
-		                              <td>-</td>
-		                              <td>{{jor.golesVisita}}</td>
-		                              <td><img src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
-		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
-		                             
-		                          </tr>
-		                      </tbody>
-		    			</table>
-<!-- 							<div  class="list-group"> -->
-<!-- 							  <span  ng-repeat="jor in e.jornada" class="list-group-item list-group-item-action"> -->
-<!-- 							  	<div class="container"  -->
-<!-- 							  	ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita); -->
-<!-- 							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  "  -->
-<!-- 							  	data-toggle="modal" data-target="#exampleModalScrollable"> -->
-<!-- 								  <div class="row text-center"> -->
-<!-- 								    <div class="col " > -->
-<!-- 								      {{jor.nombreEquipoLocal}}  -->
-<!-- 								    </div> -->
-<!-- 								    <div class="col-dm" > -->
-<!-- 								    <img src="https://cdn.sofifa.org/teams/2/dark/241@2x.png" style="max-width:50%;width:auto;height:auto; class="rounded float-left" alt="...">  -->
-<!-- 								    </div> -->
-<!-- 								    <div class="col-sm"> -->
-<!-- 								      {{jor.golesLocal}}-{{jor.golesVisita}} -->
-<!-- 								    </div> -->
-<!-- 								    <div class="col-dm" > -->
-<!-- 								    <img src="https://cdn.sofifa.org/teams/2/dark/241@2x.png" style="max-width:50%;width:auto;height:auto; class="rounded float-left" alt="...">  -->
-<!-- 								    </div> -->
-<!-- 								    <div class="col"> -->
-								    
-<!-- 								      {{jor.nombreEquipoVisita}} -->
-<!-- 								    </div> -->
-<!-- 								  </div> -->
-<!-- 								</div> -->
-<!-- 							  </span> -->
+								  <div class="row text-center">
+								    <div class="col " >
+								      {{jor.nombreEquipoLocal}} 
+								    </div>
+								    <div class="col-sm">
+								      {{jor.golesLocal}}-{{jor.golesVisita}}
+								    </div>
+								    <div class="col">
+								      {{jor.nombreEquipoVisita}}
+								    </div>
+								  </div>
+								</div>
+							  </span>
 							 
 						
 							
 							
-<!-- 							</div> -->
+							</div>
 							</div>
 						</div>
 					
@@ -327,8 +321,7 @@
         	</div>   
         	
         	             
-		</div> 
-	
-	</div>
-</body>
+		</div>          
+   	   </div>
+   </body>
 </html>

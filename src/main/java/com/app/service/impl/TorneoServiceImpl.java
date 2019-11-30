@@ -48,21 +48,7 @@ public class TorneoServiceImpl implements TorneoService{
 		
 		List<Equipo> equipos = equipoDao.findEquiposByDivision(idTorneo, idDivision);
 		
-		Collections.sort(equipos, new Comparator() {
 		
-//			@Override
-//			public int compare(Equipo p1, Equipo p2) {
-//				return return new Integer((int)p1.getId()).compareTo(new Integer ((int)p2.getId()));
-//			}
-
-			@Override
-			public int compare(Object o1, Object o2) {
-				Equipo p1 = (Equipo)o1;
-				Equipo p2 = (Equipo)o2;
-				return new Integer((int)p2.getId()).compareTo(new Integer ((int)p1.getId()));
-			}
-
-		});
 		
 		GenerarJornadasUtil generarJornadas = new GenerarJornadasUtil();
 		
@@ -166,7 +152,7 @@ public class TorneoServiceImpl implements TorneoService{
 		for(Jornadas jornada : jornadas ){
 			for(Jornada juegos : jornada.getJornada()){
 				if(juegos.getIdEquipoLocal() != -1 && juegos.getIdEquipoVisita() !=-1){
-					map = torneoDao.addJornada( idTorneo,idDivision,juegos,jornada.getActiva());
+					map = torneoDao.addJornada( idTorneo,idDivision,juegos,jornada.getActiva(),jornada.getCerrada());
 				}
 			}
 		}

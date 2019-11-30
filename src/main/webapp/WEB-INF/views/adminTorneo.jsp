@@ -63,7 +63,7 @@
 			
 			<ul class="nav nav-tabs" role="tablist">
 			    <li class="nav-item" ng-repeat="div in ctrl.divisiones">
-			      <a class="nav-link"  ng-click= "ctrl.divisionSelect=div ; ctrl.getJornadas()" data-toggle="tab" >{{div.nombre}}</a>
+			      <a class="nav-link"  ng-click= "ctrl.divisionSelect=div ;ctrl.isJornadaInsert = false; ctrl.getJornadas()" data-toggle="tab" >{{div.nombre}}</a>
 			    </li>   
 			 </ul>
 	        <div class="formcontainer"	>
@@ -73,7 +73,7 @@
                        <span class="lead">Generar Jornadas</span>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary" ng-show="ctrl.jornadas==null || ctrl.jornadas == '' " ng-click="ctrl.getGenerarJornadas()">Generar Jornadas</button>
+                <button type="button" class="btn btn-primary"  ng-show="ctrl.isJornadaInsert==false"  ng-click="ctrl.getGenerarJornadas()">Generar Jornadas</button>
                 <button type="button" class="btn btn-primary" ng-show="ctrl.jornadas!=null && ctrl.jornadas != '' " ng-click="ctrl.addJornadas()">Guardar</button>
                 <div class="row" >
                 	
@@ -98,7 +98,7 @@
 								        </label>
 							      </div>
 							      <div class="form-check">
-								        <input ng-click="ctrl.addJornadasEdit(e)" ng-model="e.activa" ng-true-value="2" ng-false-value="0" class="form-check-input" type="checkbox" id="gridCheck1">
+								        <input ng-click="ctrl.addJornadasEdit(e)" ng-model="e.cerrada" ng-true-value="1" ng-false-value="0" class="form-check-input" type="checkbox" id="gridCheck1">
 								        <label class="form-check-label" for="gridCheck1">
 								          Cerrar
 								        </label>
@@ -107,30 +107,49 @@
 								</div>
 							</div>
 							
-							<div class="list-group" >
-							  <span ng-repeat="jor in e.jornada"  class="list-group-item list-group-item-action">
-							  	<div class="container" 
-							  	ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+							<table class="table table-sm table-hover table-dark">
+		                	
+		                      <tbody>
+		                          <tr  ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
 							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
 							  	data-toggle="modal" data-target="#exampleModalScrollable">
-								  <div class="row text-center">
-								    <div class="col ">
-								      {{jor.nombreEquipoLocal}}
-								    </div>
-								    <div class="col-sm-2">
-								      {{jor.golesLocal}}-{{jor.golesVisita}}
-								    </div>
-								    <div class="col">
-								      {{jor.nombreEquipoVisita}}
-								    </div>
-								  </div>
-								</div>
-							  </span>
+		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
+		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
+		                              <td><img src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td>{{jor.golesLocal}}</td>
+		                              <td>-</td>
+		                              <td>{{jor.golesVisita}}</td>
+		                              <td><img src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+		                             
+		                          </tr>
+		                      </tbody>
+		    			</table>
+							
+<!-- 							<div class="list-group" > -->
+<!-- 							  <span ng-repeat="jor in e.jornada"  class="list-group-item list-group-item-action"> -->
+<!-- 							  	<div class="container"  -->
+<!-- 							  	ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita); -->
+<!-- 							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  "  -->
+<!-- 							  	data-toggle="modal" data-target="#exampleModalScrollable"> -->
+<!-- 								  <div class="row text-center"> -->
+<!-- 								    <div class="col "> -->
+<!-- 								      {{jor.nombreEquipoLocal}} -->
+<!-- 								    </div> -->
+<!-- 								    <div class="col-sm-2"> -->
+<!-- 								      {{jor.golesLocal}}-{{jor.golesVisita}} -->
+<!-- 								    </div> -->
+<!-- 								    <div class="col"> -->
+<!-- 								      {{jor.nombreEquipoVisita}} -->
+<!-- 								    </div> -->
+<!-- 								  </div> -->
+<!-- 								</div> -->
+<!-- 							  </span> -->
 							 
 						
 							
 							
-							</div>
+<!-- 							</div> -->
 							</div>
 						</div>
 					

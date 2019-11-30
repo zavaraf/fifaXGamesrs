@@ -14,7 +14,17 @@ angular.module('myApp').factory('TorneoService', ['$http', '$q','CONFIG', functi
  
     function buscarTorneos() {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI_E+'buscarTorneos')
+        const headerDict = {
+        		  'Content-Type': 'application/json',
+        		  'Accept': 'application/json',
+        		  'Access-Control-Allow-Headers': 'Content-Type',
+        		}
+
+        		const requestOptions = {                                                                                                                                                                                 
+        		  headers: new Headers(headerDict), 
+        		};
+        
+        $http.get(REST_SERVICE_URI_E+'buscarTorneos',requestOptions)
             .then(
             function (response) {
             	console.log(response.data)

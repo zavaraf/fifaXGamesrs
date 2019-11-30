@@ -3,6 +3,7 @@ package com.app.modelo;
 public class TablaGeneral {
 	
 	private int idEquipo;
+	private String img;
 	private String nombreEquipo;
 	private int pj;
 	private int pg;
@@ -71,6 +72,12 @@ public class TablaGeneral {
 	}
 	public void setPts(int pts) {
 		this.pts = pts;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 	

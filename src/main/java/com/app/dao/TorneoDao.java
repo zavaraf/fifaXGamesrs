@@ -23,6 +23,6 @@ public interface TorneoDao {
 	
 	HashMap<String, String> addGol(int idJugador,int idEquipo,int id,int idJornada);
 	HashMap<String, String> addImagen(int idEquipo,int id,int idJornada,String img);
-	HashMap<String, String> addJornada(int idTorneo, int idDivision, Jornada juegos,int activa);
+	HashMap<String, String> addJornada(int idTorneo, int idDivision, Jornada juegos,int activa,int cerrada);
 
 }

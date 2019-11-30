@@ -19,6 +19,7 @@ public class Equipo {
 	private List<CatalogoFinanciero> finanzas;
 	private int presupuestoInicial;
 	private int presupuestoFinal;
+	private String img;
 	
 	@Override
 	public String toString() {
@@ -142,6 +143,14 @@ public class Equipo {
 
 	public void setPresupuestoFinal(int presupuestoFinal) {
 		this.presupuestoFinal = presupuestoFinal;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 	
