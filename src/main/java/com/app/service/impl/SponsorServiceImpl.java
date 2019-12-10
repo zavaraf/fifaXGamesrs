@@ -44,40 +44,40 @@ public class SponsorServiceImpl implements SponsorService {
 		return sponsorDao.getCatalogoFinanzas();
 	}
 
-	public void crearfinanzas(Equipo equipo, long id, long monto, int idTorneo) {
+	public void crearfinanzas(Equipo equipo, long id, long monto, int idTemporada) {
 		sponsorDao.crearFinanzas(equipo,id,monto);
 		
 		Equipo equipoBD = new Equipo();
 		
-		equipoBD = equipoDao.findByIdAll(equipo.getId(),idTorneo);
+		equipoBD = equipoDao.findByIdAll(equipo.getId(),idTemporada);
 		if(equipoBD.getDatosFinancieros() != null){
-			createPresupuesto(equipoBD,equipoBD.getDatosFinancieros().getPresupuestoInicial(), idTorneo);
+			createPresupuesto(equipoBD,equipoBD.getDatosFinancieros().getPresupuestoInicial(), idTemporada);
 		}
 		
 	}
 
-	public void createPresupuesto(Equipo equipo, long monto, int idTorneo) {
+	public void createPresupuesto(Equipo equipo, long monto, int idTemporada) {
 
 		
 		Equipo equipoBD = new Equipo();
 		
-		equipoBD = equipoDao.findByIdAll(equipo.getId(),idTorneo);
+		equipoBD = equipoDao.findByIdAll(equipo.getId(),idTemporada);
 		
 		int montoFinal = equipoUtil.getPresupuestoFinal(equipoBD, (int) monto);
 		int montoFinalSponsor = equipoUtil.getPresupuestoFinalSponsor(equipoBD, (int) monto);
 		
-		sponsorDao.createPresupuesto(equipoBD,monto,montoFinal,montoFinalSponsor,idTorneo);
+		sponsorDao.createPresupuesto(equipoBD,monto,montoFinal,montoFinalSponsor,idTemporada);
 		
 	}
 
-	public void updateObjetivosByIdEquipo(long id, String objetivos,int idTorneo) {
+	public void updateObjetivosByIdEquipo(long id, String objetivos,int idTemporada) {
 		Equipo equipoBD = new Equipo();
 		
-		equipoBD = equipoDao.findByIdAll(id,idTorneo);
+		equipoBD = equipoDao.findByIdAll(id,idTemporada);
 		
 		sponsorDao.updateObjetivosByIdEquipo(equipoBD,objetivos);
 		
-		createPresupuesto(equipoBD,equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTorneo);
+		createPresupuesto(equipoBD,equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTemporada);
 		
 		
 		

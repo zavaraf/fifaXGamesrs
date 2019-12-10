@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.modelo.Torneo;
-import com.app.service.TorneoService;
+import com.app.modelo.Temporada;
+import com.app.service.TemporadaService;
 import com.app.service.login.UserService;
 import com.app.utils.ApplicationConfig;
 import com.mysql.jdbc.Connection;
@@ -34,7 +34,7 @@ public class TestController {
 	@Autowired
 	UserService userService;
 	@Autowired 
-	TorneoService torneosService;
+	TemporadaService temporadaService;
 	
 	@RequestMapping(value="/test",method = RequestMethod.GET,
 			headers="Accept=application/json")
@@ -144,17 +144,17 @@ public class TestController {
 	}
 	
 	
-	@RequestMapping(value="test/buscarTorneos",method = RequestMethod.GET,
+	@RequestMapping(value="test/buscarTemporada",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<List<Torneo>> ListEquipos(){
+	public ResponseEntity<List<Temporada>> ListEquipos(){
 		
-		List<Torneo> listTorneos = torneosService.buscarTodos();
+		List<Temporada> listTemporada = temporadaService.buscarTodos();
 		
-		if(listTorneos.isEmpty()){
-			return new ResponseEntity<List<Torneo>>(HttpStatus.NO_CONTENT);
+		if(listTemporada.isEmpty()){
+			return new ResponseEntity<List<Temporada>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Torneo>>(listTorneos, HttpStatus.OK);
+		return new ResponseEntity<List<Temporada>>(listTemporada, HttpStatus.OK);
 	}
 
 

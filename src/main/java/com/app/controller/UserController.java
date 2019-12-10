@@ -122,8 +122,8 @@ public class UserController {
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
-    @RequestMapping(value = "/user/player/{idTorneo}", method = RequestMethod.POST)
-    public ResponseEntity<Void> createPlayer(@PathVariable int idTorneo,@RequestBody User user,    UriComponentsBuilder ucBuilder) {
+    @RequestMapping(value = "/user/player/{idTemporada}", method = RequestMethod.POST)
+    public ResponseEntity<Void> createPlayer(@PathVariable int idTemporada,@RequestBody User user,    UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getNombre());
   
         if (userService.isUserExist(user)) {
@@ -131,7 +131,7 @@ public class UserController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
   
-        userService.savePlayer(user,idTorneo);
+        userService.savePlayer(user,idTemporada);
   
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
@@ -161,8 +161,8 @@ public class UserController {
         userService.updateUser(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
-    @RequestMapping(value = "/user/player/{id}/{idTorneo}", method = RequestMethod.PUT)
-    public ResponseEntity<User> updatePlayer(@PathVariable("id") long id,@PathVariable("idTorneo") int idTorneo, @RequestBody User user) {
+    @RequestMapping(value = "/user/player/{id}/{idTemporada}", method = RequestMethod.PUT)
+    public ResponseEntity<User> updatePlayer(@PathVariable("id") long id,@PathVariable("idTemporada") int idTemporada, @RequestBody User user) {
         System.out.println("Updating User " + id);
           
         User currentUser = userService.findById(id);
@@ -178,7 +178,7 @@ public class UserController {
         currentUser.setEquipo(user.getEquipo());
         currentUser.setLink(user.getLink());
           
-        userService.updatePlayer(currentUser,idTorneo);
+        userService.updatePlayer(currentUser,idTemporada);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
   

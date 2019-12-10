@@ -8,13 +8,14 @@ import com.app.modelo.Equipo;
 public interface EquipoDao {
 	
 	Equipo findById(long id);
-	List<Equipo> buscarTodos(long idtorneo);
+	List<Equipo> buscarTodos(long idTemporada);
 	void createEquipo(Equipo equipo);
 	void updateEquipo(Equipo currentEquipo);
 	List<Division> buscarDivision();
-	Equipo findByIdAll(long id, int idTorneo);
-	Equipo findEquipoByIdAll(long id, int idTorneo);
-	List<Equipo> findEquiposByDivision(int idTorneo,int idDivision) ;
+	Equipo findByIdAll(long id, int idTemporada);
+	Equipo findEquipoByIdAll(long id, int idTemporada);
+	List<Equipo> findEquiposByDivision(int idTemporada,int idDivision) ;
+	List<Equipo> findEquiposByTorneo(int idTemporada,int idT) ;
 	
 
 }

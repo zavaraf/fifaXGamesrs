@@ -11,22 +11,22 @@ import com.app.modelo.User;
 
 public interface DraftService {
 
-	List<User> buscarTodos(int idTorneo);
+	List<User> buscarTodos(int idTemporada);
 
-	void crearPrestamo(User jugador, long id,int idTorneo);
+	void crearPrestamo(User jugador, long id,int idTemporada);
 
 	void deletePresById(long id, long idEquipo);
 
-	List<User> buscarTodosByidEquipo(long idEquipo,int idTorneo);
+	List<User> buscarTodosByidEquipo(long idEquipo,int idTemporada);
 
-	List<JugadorDraft> findJugadoresDraft(int idTorneo);
+	List<JugadorDraft> findJugadoresDraft(int idTemporada);
 
-	ResponseData initialDraft(long id, int monto, String manager, String observaciones,int idEquipo,int idTorneo);
+	ResponseData initialDraft(long id, int monto, String manager, String observaciones,int idEquipo,int idTemporada);
 
-	ResponseData updateDraft(long id, int monto, String manager, String observaciones, int montoInicial,int idEquipo, int idTorneo);
+	ResponseData updateDraft(long id, int monto, String manager, String observaciones, int montoInicial,int idEquipo, int idTemporada);
 
-	List<JugadorDraft> findJugadoresDraftByIdEquipo(int idEquipo, int idTorneo);
+	List<JugadorDraft> findJugadoresDraftByIdEquipo(int idEquipo, int idTemporada);
 
-	ResponseData confirmPlayer(long id, int idEquipo, int idTorneo);
+	ResponseData confirmPlayer(long id, int idEquipo, int idTemporada);
 
 }

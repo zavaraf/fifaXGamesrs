@@ -19,7 +19,7 @@ import com.app.enums.Salarios;
 import com.app.modelo.CatalogoFinanciero;
 import com.app.modelo.Division;
 import com.app.modelo.Equipo;
-import com.app.modelo.Torneo;
+import com.app.modelo.Temporada;
 import com.app.modelo.User;
 
 @Component
@@ -63,7 +63,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	        
 		return null;
 	}
-	public List<Equipo> buscarTodos(long idtorneo) {
+	public List<Equipo> buscarTodos(long idTemporada) {
 		System.out.println("buscarTodos");
 		List<Equipo> equiposList = new ArrayList<Equipo>();
 		String query = " SELECT  "
@@ -86,10 +86,10 @@ public class EquipoDaoImpl implements EquipoDao{
 				+ "        join fifaxgamersbd.persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
 				+ "        join fifaxgamersbd.roles on roles.idRoles = pero.Roles_idRoles  "
 				+ "        join fifaxgamersbd.equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+ "        join fifaxgamersbd.equipos_has_torneos et on et.Equipos_idEquipo = equipos.idEquipo  "
-				+ "        join fifaxgamersbd.torneos on torneos.idTorneo = et.Torneos_idTorneo "
-				+ "        left join datosfinancieros dat on dat.Equipos_idEquipo = equipos.idEquipo and dat.Torneos_idTorneo = torneos.idTorneo "
-				+ "        where roles.nombreRol = 'Jugador' and torneos.idTorneo = " + idtorneo
+				+ "        join fifaxgamersbd.equipos_has_temporada et on et.Equipos_idEquipo = equipos.idEquipo  "
+				+ "        join fifaxgamersbd.temporada on temporada.idTemporada = et.tempodada_idTemporada "
+				+ "        left join datosfinancieros dat on dat.Equipos_idEquipo = equipos.idEquipo and dat.tempodada_idTemporada = temporada.idTemporada "
+				+ "        where roles.nombreRol = 'Jugador' and temporada.idTemporada = " + idTemporada
 				+ "        group by  equipos.idEquipo ,dat.presupuestoInicial ,equipos.idEquipo,dat.presupuestoFinal  ) tot on tot.idEquipo = equipos.idEquipo " ;
 		Collection equipos = jdbcTemplate.query(
                 query
@@ -172,7 +172,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	        
 		return divisionesList;
 	}
-	public Equipo findByIdAll(long id, int idTorneo) {
+	public Equipo findByIdAll(long id, int idTemporada) {
 		System.out.println("findByIdAll");
 		String query = " SELECT  "
 				+" equipos.idEquipo,  "
@@ -185,13 +185,13 @@ public class EquipoDaoImpl implements EquipoDao{
 				+" division.descripcion as descripcionDivision , "
 				+" tot.totalJugadores, "
 				+" tot.totalRaiting , "
-				+" torneos.idTorneo,  "
-				+" torneos.NombreTorneo "
+				+" temporada.idTemporada,  "
+				+" temporada.NombreTemporada "
 				+" FROM fifaxgamersbd.equipos 			 "
 				+"  join fifaxgamersbd.division on equipos.Division_idDivision = division.idDivision  "
-				+"  join equipos_has_torneos equitor on equitor.Equipos_idEquipo = equipos.idEquipo  "
-				+" 					and equitor.Torneos_idTorneo = " + idTorneo + " "
-				+"  join torneos on torneos.idTorneo = equitor.Torneos_idTorneo  "
+				+"  join equipos_has_temporada equitor on equitor.Equipos_idEquipo = equipos.idEquipo  "
+				+" 					and equitor.tempodada_idTemporada = " + idTemporada + " "
+				+"  join temporada on temporada.idTemporada = equitor.tempodada_idTemporada  "
 				+"  left join (select count(persona.idPersona) as totalJugadores, sum(persona.Raiting) totalRaiting, equipos.idEquipo "
 				+"              from fifaxgamersbd.persona   "
 				+"              join fifaxgamersbd.persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
@@ -220,10 +220,10 @@ public class EquipoDaoImpl implements EquipoDao{
                          division.setDescripcion(rs.getString("descripcionDivision"));
                          equipo.setDivision(division);
                          equipo.setSalarios(obtenerSalario(division.getId(), equipo.getTotalRaiting()));
-                         Torneo torneo = new Torneo();
-                         torneo.setId(rs.getInt("idTorneo"));
-                         torneo.setNombre(rs.getString("NombreTorneo"));
-                         equipo.setTorneo(torneo);
+                         Temporada temporada = new Temporada();
+                         temporada.setId(rs.getInt("idTemporada"));
+                         temporada.setNombre(rs.getString("NombreTemporada"));
+                         equipo.setTemporada(temporada);
                          equipo.setDatosFinancieros(datosFinancierosDao.getDatosFinancieros(equipo));
                          if(equipo.getDatosFinancieros()!=null ){
                         	 List<CatalogoFinanciero> catalogoFinanzas = new ArrayList<CatalogoFinanciero>();
@@ -243,7 +243,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	        
 		return null;
 	}
-	public Equipo findEquipoByIdAll(long id, int idTorneo) {
+	public Equipo findEquipoByIdAll(long id, int idTemporada) {
 		System.out.println("findEquipoByIdAll Buscar todos");
 		
 		String query = " SELECT  "
@@ -286,10 +286,10 @@ public class EquipoDaoImpl implements EquipoDao{
 				division.setDescripcion(rs.getString("descripcionDivision"));
 				equipo.setDivision(division);
 				equipo.setSalarios(obtenerSalario(division.getId(), equipo.getTotalRaiting()));
-//				Torneo torneo = new Torneo();
-//				torneo.setId(rs.getInt("idTorneo"));
-//				torneo.setNombre(rs.getString("NombreTorneo"));
-//				equipo.setTorneo(torneo);
+//				Temporada temporada = new Temporada();
+//				temporada.setId(rs.getInt("idTemporada"));
+//				temporada.setNombre(rs.getString("NombreTemporada"));
+//				equipo.setTemporada(temporada);
 //				equipo.setDatosFinancieros(datosFinancierosDao.getDatosFinancieros(equipo));
 //				if(equipo.getDatosFinancieros()!=null && equipo.getDatosFinancieros().getSponsor()!=null){
 //					List<CatalogoFinanciero> catalogoFinanzas = new ArrayList<CatalogoFinanciero>();
@@ -328,7 +328,7 @@ public class EquipoDaoImpl implements EquipoDao{
        return (int) salario;
 	}
 	
-	public List<Equipo> findEquiposByDivision(int idTorneo,int idDivision) {
+	public List<Equipo> findEquiposByDivision(int idTemporada,int idDivision) {
 		System.out.println("findEquiposByDivision");
 		List<Equipo> equiposList = new ArrayList<Equipo>();
 		String query = "  SELECT  "
@@ -342,9 +342,56 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"   division.descripcion as descripcionDivision "
 				+"   FROM fifaxgamersbd.equipos  "
 				+"   join fifaxgamersbd.division on equipos.Division_idDivision = division.idDivision  "
-				+"   join equipos_has_torneos eht on eht.Equipos_idEquipo = equipos.idEquipo"
+				+"   join equipos_has_temporada eht on eht.Equipos_idEquipo = equipos.idEquipo"
 				+"   where division.idDivision =  "+idDivision
-				+"   and eht.Torneos_idTorneo= "+idTorneo
+				+"   and eht.tempodada_idTemporada= "+idTemporada
+			    +"   and equipos.idEquipo != 1 ";
+		
+		Collection equipos = jdbcTemplate.query(
+                query
+                , new RowMapper() {
+
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        Equipo equipo = new Equipo();
+                        equipo.setId(rs.getInt("idEquipo"));
+                        equipo.setNombre(rs.getString("nombreEquipo"));
+                        equipo.setDescripcion(rs.getString("descripcionEquipo"));
+                        equipo.setImg(rs.getString("img"));
+                        Division division= new Division();
+                        division.setId(rs.getString("Division_idDivision"));
+                        division.setNombre(rs.getString("nombreDivision"));
+                        division.setDescripcion(rs.getString("descripcionDivision"));
+                        equipo.setDivision(division);
+                        
+                        return equipo;
+                    }
+                });
+		 for (Object equipo : equipos) {
+	            System.out.println(equipo.toString());
+	            equiposList.add( (Equipo)equipo);
+	        }
+	        
+		return equiposList;
+	}
+	public List<Equipo> findEquiposByTorneo(int idTemporada,int idTorneo) {
+		System.out.println("findEquiposByDivision");
+		List<Equipo> equiposList = new ArrayList<Equipo>();
+		String query = "  SELECT  "
+				+"   equipos.idEquipo,  "
+				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo) img,"
+				+"   equipos.nombreEquipo,  "
+				+"   equipos.descripcionEquipo,  "
+				+"   equipos.activo ,  "
+				+"   equipos.Division_idDivision, "
+				+"   division.nombre as nombreDivision, "
+				+"   division.descripcion as descripcionDivision "
+				+"   FROM fifaxgamersbd.equipos  "
+				+"   join fifaxgamersbd.division on equipos.Division_idDivision = division.idDivision  "
+				+"   join equipos_has_temporada eht on eht.Equipos_idEquipo = equipos.idEquipo" 
+				+"   join grupos_torneo on grupos_torneo.equipos_idEquipo = equipos.idEquipo "
+				+" where grupos_torneo.torneo_idtorneo = " + idTorneo			
+				+"   and eht.tempodada_idTemporada= "+idTemporada
 			    +"   and equipos.idEquipo != 1 ";
 		
 		Collection equipos = jdbcTemplate.query(

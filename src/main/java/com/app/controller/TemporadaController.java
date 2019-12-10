@@ -23,71 +23,71 @@ import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
 import com.app.modelo.TablaGeneral;
-import com.app.modelo.Torneo;
-import com.app.service.TorneoService;
+import com.app.modelo.Temporada;
+import com.app.service.TemporadaService;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @Controller
-@RequestMapping(value="/rest/torneos")
-public class TorneoController {
+@RequestMapping(value="/rest/temporada")
+public class TemporadaController {
 	
 	@Autowired 
-	TorneoService torneosService;
+	TemporadaService temporadaService;
 	@Autowired
 	DatosFinancierosDao datos;
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> createEquipo(@RequestBody Equipo equipo,    UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating torneo " +equipo.toString());
+        System.out.println("Creating temporada " +equipo.toString());
 
   
-//        equipoService.crearTorneo(equipo);
+//        equipoService.crearTemporada(equipo);
   
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(equipo.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 	
-	@RequestMapping(value="/buscarTorneos",method = RequestMethod.GET,
+	@RequestMapping(value="/buscarTemporada",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<List<Torneo>> ListEquipos(){
+	public ResponseEntity<List<Temporada>> ListEquipos(){
 		
-		List<Torneo> listTorneos = torneosService.buscarTodos();
+		List<Temporada> listTemporada = temporadaService.buscarTodos();
 		
-		if(listTorneos.isEmpty()){
-			return new ResponseEntity<List<Torneo>>(HttpStatus.NO_CONTENT);
+		if(listTemporada.isEmpty()){
+			return new ResponseEntity<List<Temporada>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Torneo>>(listTorneos, HttpStatus.OK);
+		return new ResponseEntity<List<Temporada>>(listTemporada, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/lm/getTablaGeneral/{idTorneo}/{idDivision}",method = RequestMethod.GET,
+	@RequestMapping(value="/lm/getTablaGeneral/{idTemporada}/{idDivision}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<List<TablaGeneral>> getTablaGeneral(@PathVariable("idTorneo") int idTorneo,
+	public ResponseEntity<List<TablaGeneral>> getTablaGeneral(@PathVariable("idTemporada") int idTemporada,
 			@PathVariable("idDivision") int idDivision){
 		
-		List<TablaGeneral> listTorneos = torneosService.getTablaGeneral(idTorneo,idDivision);
+		List<TablaGeneral> listTemporada = temporadaService.getTablaGeneral(idTemporada,idDivision);
 		
-		if(listTorneos.isEmpty()){
+		if(listTemporada.isEmpty()){
 			return new ResponseEntity<List<TablaGeneral>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<TablaGeneral>>(listTorneos, HttpStatus.OK);
+		return new ResponseEntity<List<TablaGeneral>>(listTemporada, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/lm/getJornadas/{idTorneo}/{idDivision}/{activa}",method = RequestMethod.GET,
+	@RequestMapping(value="/lm/getJornadas/{idTemporada}/{idDivision}/{activa}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<List<Jornadas>> getJornadas(@PathVariable("idTorneo") int idTorneo,
+	public ResponseEntity<List<Jornadas>> getJornadas(@PathVariable("idTemporada") int idTemporada,
 			@PathVariable("idDivision") int idDivision,
 			@PathVariable("activa") int activa){
 		
-		List<Jornadas> listTorneos = torneosService.getJornadas(idTorneo,idDivision,activa);
+		List<Jornadas> listTemporada = temporadaService.getJornadas(idTemporada,idDivision,activa);
 		
-		if(listTorneos.isEmpty()){
+		if(listTemporada.isEmpty()){
 			return new ResponseEntity<List<Jornadas>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Jornadas>>(listTorneos, HttpStatus.OK);
+		return new ResponseEntity<List<Jornadas>>(listTemporada, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/lm/getJornadas/goles/{idJornada}/{id}/{idEquipoLocal}/{idEquipoVisita}",method = RequestMethod.GET,
@@ -98,12 +98,12 @@ public class TorneoController {
 			@PathVariable("idEquipoLocal") String idEquipoLocal,
 			@PathVariable("idEquipoVisita") String idEquipoVisita){
 		
-		List<GolesJornadas> listTorneos = torneosService.getGolesJornadas(idJornada, id, idEquipoLocal, idEquipoVisita);
+		List<GolesJornadas> listTemporada = temporadaService.getGolesJornadas(idJornada, id, idEquipoLocal, idEquipoVisita);
 		
-		if(listTorneos.isEmpty()){
+		if(listTemporada.isEmpty()){
 			return new ResponseEntity<List<GolesJornadas>>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<GolesJornadas>>(listTorneos, HttpStatus.OK);
+		return new ResponseEntity<List<GolesJornadas>>(listTemporada, HttpStatus.OK);
 	}
 	@RequestMapping(value="/lm/getJornada/{idJornada}/{id}/{idEquipoLocal}/{idEquipoVisita}",method = RequestMethod.GET,
 			headers="Accept=application/json")
@@ -113,7 +113,7 @@ public class TorneoController {
 			@PathVariable("idEquipoLocal") String idEquipoLocal,
 			@PathVariable("idEquipoVisita") String idEquipoVisita){
 		
-		Jornada jornada = torneosService.getJornada(idJornada, id, idEquipoLocal, idEquipoVisita);
+		Jornada jornada = temporadaService.getJornada(idJornada, id, idEquipoLocal, idEquipoVisita);
 		
 		if(jornada == null){
 			return new ResponseEntity<Jornada>(HttpStatus.NO_CONTENT);
@@ -135,7 +135,7 @@ public class TorneoController {
 		 ResponseData response = new ResponseData();	
 		 try{
 			 System.out.println( "jugador:"+id+" Equipo]:"+idEquipo);
-			 response = torneosService.addGol(idJugador,idEquipo,id,idJornada);
+			 response = temporadaService.addGol(idJugador,idEquipo,id,idJornada);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
@@ -160,7 +160,7 @@ public class TorneoController {
 		 ResponseData response = new ResponseData();	
 		 try{
 			 System.out.println( "jugador:"+id+" Equipo]:"+idEquipo);
-			 response = torneosService.addImagen(idEquipo,id,idJornada,img);
+			 response = temporadaService.addImagen(idEquipo,id,idJornada,img);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
@@ -171,35 +171,35 @@ public class TorneoController {
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
 	 
-	 @RequestMapping(value="/lm/getArmarJornadasInicial/{idTorneo}/{idDivision}",method = RequestMethod.GET,
+	 @RequestMapping(value="/lm/getArmarJornadasInicial/{idTemporada}/{idTorneo}",method = RequestMethod.GET,
 				headers="Accept=application/json")
 		@ResponseBody
-		public ResponseEntity<List<Jornadas>> getArmarJornadasInicial(@PathVariable("idTorneo") int idTorneo,
-				@PathVariable("idDivision") int idDivision){
+		public ResponseEntity<List<Jornadas>> getArmarJornadasInicial(@PathVariable("idTemporada") int idTemporada,
+				@PathVariable("idTorneo") int idTorneo){
 			
-			List<Jornadas> listTorneos = torneosService.getArmarJornadasInicial(idTorneo,idDivision);
+			List<Jornadas> listTemporada = temporadaService.getArmarJornadasInicial(idTemporada,idTorneo);
 			
-			if(listTorneos.isEmpty()){
+			if(listTemporada.isEmpty()){
 				return new ResponseEntity<List<Jornadas>>(HttpStatus.NO_CONTENT);
 			}
-			return new ResponseEntity<List<Jornadas>>(listTorneos, HttpStatus.OK);
+			return new ResponseEntity<List<Jornadas>>(listTemporada, HttpStatus.OK);
 		}
 
 	 
-	 @RequestMapping(value="/lm/addJornadas/{idTorneo}/{idDivision}",
+	 @RequestMapping(value="/lm/addJornadas/{idTemporada}/{idDivision}",
 			 method = RequestMethod.POST,
 			 headers="Accept=application/json")
 	 @ResponseBody
 	 public ResponseEntity<ResponseData> addJornadas(
-			 @PathVariable("idTorneo") int idTorneo,
+			 @PathVariable("idTemporada") int idTemporada,
 			 @PathVariable("idDivision") int idDivision,
 			 @RequestBody List<Jornadas> jornadas
 			 ){
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "idTorneo:"+idTorneo+" idDivision]:"+idDivision);
-			 response = torneosService.addJornadas(idTorneo,idDivision,jornadas);
+			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idDivision);
+			 response = temporadaService.addJornadas(idTemporada,idDivision,jornadas);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());

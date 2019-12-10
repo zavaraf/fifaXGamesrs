@@ -113,48 +113,48 @@ public class SponsorController {
 		return new ResponseEntity<List<CatalogoFinanciero>>(listCatalogo, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="finanzas/{idCatalogo}/{monto}/{idTorneo}",method = RequestMethod.POST,
+	@RequestMapping(value="finanzas/{idCatalogo}/{monto}/{idTemporada}",method = RequestMethod.POST,
 			headers="Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<Void> createFinanzas(@RequestBody Equipo equipo,
 													@PathVariable("idCatalogo") long id,
 													@PathVariable("monto") long monto,
-													@PathVariable("idTorneo") int idTorneo,
+													@PathVariable("idTemporada") int idTemporada,
 													UriComponentsBuilder ucBuilder) {
         System.out.println("Creating CAtalogoFinanzas " +id );
 		
-        sponsorService.crearfinanzas(equipo,id,monto,idTorneo);
+        sponsorService.crearfinanzas(equipo,id,monto,idTemporada);
         
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(id).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
-	@RequestMapping(value="finanzas/presupuesto/{monto}/{idTorneo}",method = RequestMethod.POST,
+	@RequestMapping(value="finanzas/presupuesto/{monto}/{idTemporada}",method = RequestMethod.POST,
 			headers="Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<Void> createPresupuesto(@RequestBody Equipo equipo,
 													@PathVariable("monto") long monto,
-													@PathVariable("idTorneo") int idTorneo,
+													@PathVariable("idTemporada") int idTemporada,
 													UriComponentsBuilder ucBuilder) {
         System.out.println("Creating createPresupuesto " +monto );
 		
-        sponsorService.createPresupuesto(equipo,monto,idTorneo);
+        sponsorService.createPresupuesto(equipo,monto,idTemporada);
         
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/{monto}").buildAndExpand(monto).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
-	@RequestMapping(value="finanzas/presupuesto/objetivos/{id}/{idTorneo}",method = RequestMethod.POST,
+	@RequestMapping(value="finanzas/presupuesto/objetivos/{id}/{idTemporada}",method = RequestMethod.POST,
 			headers="Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<Void> updateObjetivosByIdEquipo(@RequestBody String objetivos,
 			@PathVariable("id") long id,
-			@PathVariable("idTorneo") int idTorneo,
+			@PathVariable("idTemporada") int idTemporada,
 			UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating updateObjetivosByIdEquipo " +id );
 		System.out.println("Creating updateObjetivosByIdEquipo  objetivos]: " +objetivos );
 		
-		sponsorService.updateObjetivosByIdEquipo(id,objetivos,idTorneo);
+		sponsorService.updateObjetivosByIdEquipo(id,objetivos,idTemporada);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/{monto}").buildAndExpand(id).toUri());

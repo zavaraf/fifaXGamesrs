@@ -8,9 +8,9 @@ public interface UserDao {
 	
 	List<User> findAllPlayers();
 
-	void savePlayer(User player,int idTorneo);
+	void savePlayer(User player,int idTemporada);
 
-	void updatePlayer(User currentUser,int idTorneo);
+	void updatePlayer(User currentUser,int idTemporada);
 
 	User findById(long id);
 	

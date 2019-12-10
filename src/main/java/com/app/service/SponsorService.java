@@ -20,10 +20,10 @@ public interface SponsorService {
 
 	List<CatalogoFinanciero> getCatalogoFinanzas();
 
-	void crearfinanzas(Equipo equipo, long id, long monto,int idTorneo);
+	void crearfinanzas(Equipo equipo, long id, long monto,int idTemporada);
 
-	void createPresupuesto(Equipo equipo, long monto, int idTorneo);
+	void createPresupuesto(Equipo equipo, long monto, int idTemporada);
 
-	void updateObjetivosByIdEquipo(long id, String objetivos,int idTorneo);
+	void updateObjetivosByIdEquipo(long id, String objetivos,int idTemporada);
 
 }

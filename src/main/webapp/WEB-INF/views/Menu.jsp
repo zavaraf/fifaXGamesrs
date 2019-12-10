@@ -47,13 +47,13 @@
 	<script src="<c:url value='/static/js/service/draft_service.js' />"></script>
 	<script	src="<c:url value='/static/js/controller/draftPC_controller.js' />"></script>
 	<script src="<c:url value='/static/js/service/draftPC_service.js' />"></script>
-	<script	src="<c:url value='/static/js/controller/torneo_controller.js' />"></script>
-	<script src="<c:url value='/static/js/service/torneo_service.js' />"></script>
+	<script	src="<c:url value='/static/js/controller/temporada_controller.js' />"></script>
+	<script src="<c:url value='/static/js/service/temporada_service.js' />"></script>
 	
     
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	    <a class="navbar-brand" href="#!torneo">Torneo</a>
+	    <a class="navbar-brand" href="#!temporada">Temporada</a>
 		<a class="navbar-brand" href="#!jugadores">Jugadores</a> 
 		<a class="navbar-brand" href="#!equipos">Equipos</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"

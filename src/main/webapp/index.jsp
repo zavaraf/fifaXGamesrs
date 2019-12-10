@@ -60,8 +60,8 @@
 	<script src="<c:url value='/static/js/controller/adminUser_controller.js' />"></script>
     <script src="<c:url value='/static/js/service/adminUser_service.js' />"></script>
     
-    <script src="<c:url value='/static/js/controller/torneo_controller.js' />"></script>
-    <script src="<c:url value='/static/js/service/torneo_service.js' />"></script>
+    <script src="<c:url value='/static/js/controller/temporada_controller.js' />"></script>
+    <script src="<c:url value='/static/js/service/temporada_service.js' />"></script>
     
     <script src="<c:url value='/static/js/service/conceptos_service.js' />"></script>
   	<script src="<c:url value='/static/js/controller/conceptos_controller.js' />"></script>
@@ -71,9 +71,9 @@
       
       <script src="<c:url value='/static/js/controller/adminTorneoLM_controller.js' />"></script>
     
-    <div ng-controller="TorneoController as ctrl">
-    <!-- Modal DraftPC  Cambiar Torneo-->
-		<div class="modal fade" id="myModalTorneo" role="dialog">
+    <div ng-controller="TemporadaController as ctrl">
+    <!-- Modal DraftPC  Cambiar Temporada-->
+		<div class="modal fade" id="myModalTemporada" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
 				<div class="modal-content">
@@ -85,11 +85,11 @@
 					</div>
 					<div class="modal-body">
 <%-- 					<form  name="myFormCon" class="form-horizontal"> --%>
-                      <select  ng-model="ctrl.selectedTor" ng-options="torneo as torneo.nombre for torneo in ctrl.torneos track by torneo.id"  		
+                      <select  ng-model="ctrl.selectedTor" ng-options="temporada as temporada.nombre for temporada in ctrl.temporada track by temporada.id"  		
 						 class="form-control mr-sm-2" name="temporada" form="carform">
 						</select>
 						<div class="form-actions floatRight">
-                           <input ng-click="ctrl.cambiarTorneo()" type="submit" value="Confirmar" data-dismiss="modal" class="btn btn-primary btn-sm" >
+                           <input ng-click="ctrl.cambiarTemporada()" type="submit" value="Confirmar" data-dismiss="modal" class="btn btn-primary btn-sm" >
                         </div>
 <%--                   </form> --%>
 					
@@ -145,7 +145,7 @@
 						
 	
 				<button data-toggle="modal"
-				data-target="#myModalTorneo" class="btn btn-outline-success my-2 my-sm-0" type="submit">{{ctrl.selectedTor.descripcion}}</button>
+				data-target="#myModalTemporada" class="btn btn-outline-success my-2 my-sm-0" type="submit">{{ctrl.selectedTor.descripcion}}</button>
 			
 			</form>
 		</div>

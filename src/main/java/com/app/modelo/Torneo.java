@@ -4,7 +4,7 @@ public class Torneo {
 	
 	private int id;
 	private String nombre;
-	private String descripcion;
+	private int tipoTorneo;
 	public int getId() {
 		return id;
 	}
@@ -17,13 +17,12 @@ public class Torneo {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getDescripcion() {
-		return descripcion;
+	public int getTipoTorneo() {
+		return tipoTorneo;
 	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setTipoTorneo(int tipoTorneo) {
+		this.tipoTorneo = tipoTorneo;
 	}
-	
 	
 
 }

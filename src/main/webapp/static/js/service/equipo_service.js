@@ -4,7 +4,7 @@ angular.module('myApp').factory('EquipoService', ['$http', '$q','CONFIG', functi
  
 	var IP = CONFIG.PROD == false ? CONFIG.IP_DES : CONFIG.IP_PROD
     var REST_SERVICE_URI = IP+'/rest/equipo/';
-    var REST_SERVICE_URI_E = IP+'/rest/torneos/';
+    var REST_SERVICE_URI_E = IP+'/rest/temporada/';
  
     var factory = {
     	buscarTodos     : buscarTodos,
@@ -12,14 +12,14 @@ angular.module('myApp').factory('EquipoService', ['$http', '$q','CONFIG', functi
     	crearEquipo     : crearEquipo,
     	modificarEquipo : modificarEquipo,
     	deleteEquipo    : deleteEquipo,
-    	buscarTorneos   : buscarTorneos
+    	buscarTemporada   : buscarTemporada
     };
  
     return factory;
  
-    function buscarTodos(idTorneo) {
+    function buscarTodos(idTemporada) {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+'buscarTodos/'+idTorneo)
+        $http.get(REST_SERVICE_URI+'buscarTodos/'+idTemporada)
             .then(
             function (response) {
             	console.log(response.data)
@@ -32,9 +32,9 @@ angular.module('myApp').factory('EquipoService', ['$http', '$q','CONFIG', functi
         );
         return deferred.promise;
     }
-    function buscarTorneos() {
+    function buscarTemporada() {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI_E+'buscarTorneos')
+        $http.get(REST_SERVICE_URI_E+'buscarTemporada')
             .then(
             function (response) {
             	console.log(response.data)

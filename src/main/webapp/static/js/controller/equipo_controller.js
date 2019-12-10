@@ -21,7 +21,7 @@ angular.module('myApp').controller('EquipoController',['$scope','$routeParams','
 					
 					self.showEditEquipo = false;
 					
-					self.torneos = [];
+					self.temporada = [];
 					
 
 					self.submit = submit;
@@ -32,25 +32,25 @@ angular.module('myApp').controller('EquipoController',['$scope','$routeParams','
 
 					buscarTodos();
 					buscarDivisiones();
-//					buscarTorneos();
+//					buscarTemporada();
 					$scope.selectedDiv = self.divisiones[0]
 
 					function buscarTodos() {
-						var idTorneo = CONFIG.VARTORNEO.id
-						console.log("[equipo_controller]  idTorneo]:",CONFIG.VARTORNEO.id);
-						EquipoService.buscarTodos(idTorneo).then(function(d) {
+						var idTemporada = CONFIG.VARTEMPORADA.id
+						console.log("[equipo_controller]  idTemporada]:",CONFIG.VARTEMPORADA.id);
+						EquipoService.buscarTodos(idTemporada).then(function(d) {
 							self.equipos = d;
 						}, function(errResponse) {
 							console.error('[equipo_controller] Error while fetching buscarTodos()');
 						});
 					}
 					
-					function buscarTorneos() {
-						EquipoService.buscarTorneos().then(function(d) {
-							self.torneos = d;
-							console.error('Torneos --- >',d);
+					function buscarTemporada() {
+						EquipoService.buscarTemporada().then(function(d) {
+							self.temporada = d;
+							console.error('temporada --- >',d);
 						}, function(errResponse) {
-							console.error('Error while fetching Torneos');
+							console.error('Error while fetching temporada');
 						});
 					}
 					function buscarDivisiones() {

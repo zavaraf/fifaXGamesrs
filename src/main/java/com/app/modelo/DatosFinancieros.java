@@ -9,7 +9,7 @@ public class DatosFinancieros {
 	private int presupuestoFinal;
 	private int presupuestoFinalSponsor;
 	private boolean isOpcional;
-	private Torneo torneo;
+	private Temporada temporada;
 	private Sponsor sponsor;
 	public int getId() {
 		return id;
@@ -47,11 +47,11 @@ public class DatosFinancieros {
 	public void setOpcional(boolean isOpcional) {
 		this.isOpcional = isOpcional;
 	}
-	public Torneo getTorneo() {
-		return torneo;
+	public Temporada getTemporada() {
+		return temporada;
 	}
-	public void setTorneo(Torneo torneo) {
-		this.torneo = torneo;
+	public void setTemporada(Temporada temporada) {
+		this.temporada = temporada;
 	}
 	public Sponsor getSponsor() {
 		return sponsor;

@@ -7,7 +7,7 @@ import com.app.modelo.Equipo;
 
 public interface EquipoService {
 	
-	List<Equipo> buscarTodos(long idtorneo);
+	List<Equipo> buscarTodos(long idTemporada);
 
 	Equipo findById(long id);
 	
@@ -17,8 +17,8 @@ public interface EquipoService {
 
 	List<Division> buscarDivision();
 
-	Equipo findByIdAll(long id, int idTorneo);
+	Equipo findByIdAll(long id, int idTemporada);
 
-	Equipo findEquipoByIdAll(long id,int idTorneo);
+	Equipo findEquipoByIdAll(long id,int idTemporada);
 
 }

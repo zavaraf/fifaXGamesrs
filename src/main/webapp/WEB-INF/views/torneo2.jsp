@@ -71,13 +71,13 @@
       <link href="<c:url value='/static/css/app.css' />" rel="stylesheet">
       </link>
       <script src="<c:url value='/static/js/app/app.js' />"></script>
-      <script src="<c:url value='/static/js/controller/torneoLM_controller.js' />"></script>
-      <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
+      <script src="<c:url value='/static/js/controller/temporadaLM_controller.js' />"></script>
+      <script src="<c:url value='/static/js/service/temporadaLM_service.js' />"></script>
       <%--      <script src="<c:url value='/static/js/service/draft_service.js' />"></script> --%>
       <%--      <script src="<c:url value='/static/js/controller/draft_controller.js' />"></script> --%>
    </head>
    <body class="ng-cloak">
-      <div class="container  container-fluid" ng-controller="TorneoLMController as ctrl">
+      <div class="container  container-fluid" ng-controller="TemporadaLMController as ctrl">
       
       <!-- Modal -->
 		<div class="modal fade " id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">

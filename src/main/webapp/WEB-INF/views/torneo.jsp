@@ -212,7 +212,7 @@
 			<!--  Div verde <div class="formcontainer"> -->
 			
 			<ul class="nav nav-tabs" role="tablist">
-			    <li class="nav-item" ng-repeat="div in ctrl.divisiones">
+			    <li class="nav-item" ng-repeat="div in ctrl.getTorneos()">
 			      <a class="nav-link" ng-click= "ctrl.getInitTorneo(div)" data-toggle="tab" >{{div.nombre}}</a>
 			    </li>   
 			 </ul>

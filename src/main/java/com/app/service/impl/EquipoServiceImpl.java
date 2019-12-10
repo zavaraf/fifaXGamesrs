@@ -16,7 +16,7 @@ public class EquipoServiceImpl implements EquipoService{
 	@Autowired
 	EquipoDao equipoDao;
 
-	public List<Equipo> buscarTodos(long idtorneo) {
+	public List<Equipo> buscarTodos(long idTemporada) {
 		List<Equipo> equipos = new ArrayList<Equipo>();
 		
 //		equipos.add(new Equipo(1L,"B. Dormund","zavaraf","El mejor de todos",25,1600,40000));
@@ -24,7 +24,7 @@ public class EquipoServiceImpl implements EquipoService{
 //		equipos.add(new Equipo(2L,"Man. City","DAVIES","Manchester City",25,3700,20000));
 //		equipos.add(new Equipo(2L,"Man. United","TJ CARLOS","Manchester United",25,1700,45000));
 //		equipos.add(new Equipo(2L,"Arsenal","PANTERA","Arsenal",25,1200,30000));
-		return equipoDao.buscarTodos(idtorneo);
+		return equipoDao.buscarTodos(idTemporada);
 				
 //		return equipos;
 	}
@@ -47,13 +47,13 @@ public class EquipoServiceImpl implements EquipoService{
 		return equipoDao.buscarDivision();
 	}
 
-	public Equipo findByIdAll(long id, int idTorneo) {
-		return equipoDao.findByIdAll(id, idTorneo);
+	public Equipo findByIdAll(long id, int idTemporada) {
+		return equipoDao.findByIdAll(id, idTemporada);
 	}
 
-	public Equipo findEquipoByIdAll(long id,int idTorneo) {
+	public Equipo findEquipoByIdAll(long id,int idTemporada) {
 
-		return equipoDao.findEquipoByIdAll(id, idTorneo);
+		return equipoDao.findEquipoByIdAll(id, idTemporada);
 
 	}
 	

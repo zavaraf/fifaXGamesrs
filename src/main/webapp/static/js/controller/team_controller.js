@@ -127,7 +127,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	function findTeam(){
 		var team = $routeParams.teamID
 		console.log('Equipo a Buscar]:'+team);
-		TeamService.findAll(team,CONFIG.VARTORNEO.id)
+		TeamService.findAll(team,CONFIG.VARTEMPORADA.id)
             .then(
             function(d) {
                 self.equipo = d;
@@ -215,9 +215,9 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	}
 	
 	function submitFinanzas(catalogo,monto){
-		console.log("Crear Finanzas]:",catalogo," Monto]:",monto,CONFIG.VARTORNEO.id)	
+		console.log("Crear Finanzas]:",catalogo," Monto]:",monto,CONFIG.VARTEMPORADA.id)	
 			
-		TeamService.submitFinanzas(catalogo,monto,self.equipo,CONFIG.VARTORNEO.id)
+		TeamService.submitFinanzas(catalogo,monto,self.equipo,CONFIG.VARTEMPORADA.id)
 		.then(findTeam,
 				function(d) {			
 			console.log('submitFinanzas--------->',d)
@@ -229,9 +229,9 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	}
 	function submitDatos(monto){
 		console.log("Crear Finanzas]:"," Monto]:",monto)
-		console.log("-------->idTorneo]:"+CONFIG.VARTORNEO.id)
+		console.log("-------->idTemporada]:"+CONFIG.VARTEMPORADA.id)
 		
-		TeamService.submitDatos(monto,self.equipo,CONFIG.VARTORNEO.id)
+		TeamService.submitDatos(monto,self.equipo,CONFIG.VARTEMPORADA.id)
 		.then(findTeam,
 				function(d) {			
 			console.log('submitDatos--------->',d)
@@ -244,7 +244,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	function guardarObj(objetivos){
 		console.log("guardarObj]:"," Objetivos]:",objetivos)	
 		
-		TeamService.guardarObj(objetivos,self.equipo.id,CONFIG.VARTORNEO.id)
+		TeamService.guardarObj(objetivos,self.equipo.id,CONFIG.VARTEMPORADA.id)
 		.then(findTeam,showEditObj(false),
 			function(d) {			
 				console.log('submitDatos--------->',d);
@@ -292,7 +292,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	
 	function buscarPrestamos(){
 		var team = $routeParams.teamID
-    	TeamService.findPresByIdEquipo(team,CONFIG.VARTORNEO.id).then(function(d) {
+    	TeamService.findPresByIdEquipo(team,CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("Prestamos Players]:",d);
 			self.prestamos = d;
 		}, function(errResponse) {
@@ -317,8 +317,8 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	
 	function buscarJugadoresdraft() {
 		var team = $routeParams.teamID
-		console.log("[teamController: buscarJugadoresdraft] idTorneo]:",CONFIG.VARTORNEO.id);
-    	DraftPCService.buscarJugadoresdraftByID(team,CONFIG.VARTORNEO.id).then(function(d) {
+		console.log("[teamController: buscarJugadoresdraft] idTemporada]:",CONFIG.VARTEMPORADA.id);
+    	DraftPCService.buscarJugadoresdraftByID(team,CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("Jugadores Draft]:",d);
 			self.jugadoresDraft = d;
 		}, function(errResponse) {
@@ -333,8 +333,8 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 		buscarEquipos()
     }
 	function buscarEquipos() {
-		console.log("[teamController]  idTorneo]:",CONFIG.VARTORNEO.id);
-		EquipoService.buscarTodos(CONFIG.VARTORNEO.id).then(function(d) {
+		console.log("[teamController]  idTemporada]:",CONFIG.VARTEMPORADA.id);
+		EquipoService.buscarTodos(CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("Equipos]:",d);
 			self.equipos = d;
 		}, function(errResponse) {
@@ -383,7 +383,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	function submitDraftPCConfirm (jug) {
 		console.log( ' Jugador:',jug);
 
-		DraftPCService.confirmPlayer(jug.id,jug.idEquipoOferta, CONFIG.VARTORNEO.id).then(function(d) {
+		DraftPCService.confirmPlayer(jug.id,jug.idEquipoOferta, CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("initial Draft]:",d);			
 			if(d.status == 1){
 				self.isError = true;

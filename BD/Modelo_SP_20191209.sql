@@ -48,12 +48,12 @@ CREATE TABLE `conceptosfinancieros` (
   `CatalogoConceptos_idCatalogoConceptos` int(11) NOT NULL,
   `DatosFinancieros_idDatosFinancieros` int(11) NOT NULL,
   `DatosFinancieros_Equipos_idEquipo` int(11) NOT NULL,
-  `DatosFinancieros_Torneos_idTorneo` int(11) NOT NULL,
-  PRIMARY KEY (`idConceptosFinancieros`,`CatalogoConceptos_idCatalogoConceptos`,`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`DatosFinancieros_Torneos_idTorneo`),
+  `datosfinancieros_tempodada_idTemporada` int(11) NOT NULL,
+  PRIMARY KEY (`idConceptosFinancieros`,`CatalogoConceptos_idCatalogoConceptos`,`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`datosfinancieros_tempodada_idTemporada`),
   KEY `fk_ConceptosFinancieros_CatalogoConceptos1_idx` (`CatalogoConceptos_idCatalogoConceptos`),
-  KEY `fk_ConceptosFinancieros_DatosFinancieros1_idx` (`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`DatosFinancieros_Torneos_idTorneo`),
+  KEY `fk_ConceptosFinancieros_DatosFinancieros1_idx` (`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`datosfinancieros_tempodada_idTemporada`),
   CONSTRAINT `fk_ConceptosFinancieros_CatalogoConceptos1` FOREIGN KEY (`CatalogoConceptos_idCatalogoConceptos`) REFERENCES `catalogoconceptos` (`idCatalogoConceptos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ConceptosFinancieros_DatosFinancieros1` FOREIGN KEY (`DatosFinancieros_idDatosFinancieros`, `DatosFinancieros_Equipos_idEquipo`, `DatosFinancieros_Torneos_idTorneo`) REFERENCES `datosfinancieros` (`idDatosFinancieros`, `Equipos_idEquipo`, `Torneos_idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ConceptosFinancieros_DatosFinancieros1` FOREIGN KEY (`DatosFinancieros_idDatosFinancieros`, `DatosFinancieros_Equipos_idEquipo`, `datosfinancieros_tempodada_idTemporada`) REFERENCES `datosfinancieros` (`idDatosFinancieros`, `Equipos_idEquipo`, `tempodada_idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,16 +101,16 @@ DROP TABLE IF EXISTS `dadosfinancierossponsor`;
 CREATE TABLE `dadosfinancierossponsor` (
   `DatosFinancieros_idDatosFinancieros` int(11) NOT NULL,
   `DatosFinancieros_Equipos_idEquipo` int(11) NOT NULL,
-  `DatosFinancieros_Torneos_idTorneo` int(11) NOT NULL,
+  `datosfinancieros_tempodada_idTemporada` int(11) NOT NULL,
   `Sponsor_idSponsor` int(11) NOT NULL,
   `ConceptoSponsor_idConcepto` int(11) NOT NULL,
   `cumplio` bit(1) DEFAULT NULL,
-  PRIMARY KEY (`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`DatosFinancieros_Torneos_idTorneo`,`Sponsor_idSponsor`,`ConceptoSponsor_idConcepto`),
-  KEY `fk_DadosFinancierosSponsor_DatosFinancieros1_idx` (`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`DatosFinancieros_Torneos_idTorneo`),
+  PRIMARY KEY (`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`datosfinancieros_tempodada_idTemporada`,`Sponsor_idSponsor`,`ConceptoSponsor_idConcepto`),
+  KEY `fk_DadosFinancierosSponsor_DatosFinancieros1_idx` (`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`datosfinancieros_tempodada_idTemporada`),
   KEY `fk_DadosFinancierosSponsor_Sponsor1_idx` (`Sponsor_idSponsor`),
   KEY `fk_DadosFinancierosSponsor_ConceptoSponsor1_idx` (`ConceptoSponsor_idConcepto`),
   CONSTRAINT `fk_DadosFinancierosSponsor_ConceptoSponsor1` FOREIGN KEY (`ConceptoSponsor_idConcepto`) REFERENCES `conceptosponsor` (`idConcepto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_DadosFinancierosSponsor_DatosFinancieros1` FOREIGN KEY (`DatosFinancieros_idDatosFinancieros`, `DatosFinancieros_Equipos_idEquipo`, `DatosFinancieros_Torneos_idTorneo`) REFERENCES `datosfinancieros` (`idDatosFinancieros`, `Equipos_idEquipo`, `Torneos_idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DadosFinancierosSponsor_DatosFinancieros1` FOREIGN KEY (`DatosFinancieros_idDatosFinancieros`, `DatosFinancieros_Equipos_idEquipo`, `datosfinancieros_tempodada_idTemporada`) REFERENCES `datosfinancieros` (`idDatosFinancieros`, `Equipos_idEquipo`, `tempodada_idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_DadosFinancierosSponsor_Sponsor1` FOREIGN KEY (`Sponsor_idSponsor`) REFERENCES `sponsor` (`idSponsor`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -127,14 +127,14 @@ CREATE TABLE `datosfinancieros` (
   `presupuestoInicial` float DEFAULT NULL,
   `presupuestoFinal` float DEFAULT NULL,
   `Equipos_idEquipo` int(11) NOT NULL,
-  `Torneos_idTorneo` int(11) NOT NULL,
+  `tempodada_idTemporada` int(11) NOT NULL,
   `sponsorOpcional` bit(1) DEFAULT NULL,
   `presupuestoFinalSponsor` float DEFAULT NULL,
-  PRIMARY KEY (`idDatosFinancieros`,`Equipos_idEquipo`,`Torneos_idTorneo`),
+  PRIMARY KEY (`idDatosFinancieros`,`Equipos_idEquipo`,`tempodada_idTemporada`),
   KEY `fk_DatosFinancieros_Equipos1_idx` (`Equipos_idEquipo`),
-  KEY `fk_DatosFinancieros_Torneos1_idx` (`Torneos_idTorneo`),
+  KEY `fk_DatosFinancieros_Temporada1_idx` (`tempodada_idTemporada`),
   CONSTRAINT `fk_DatosFinancieros_Equipos1` FOREIGN KEY (`Equipos_idEquipo`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_DatosFinancieros_Torneos1` FOREIGN KEY (`Torneos_idTorneo`) REFERENCES `torneos` (`idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_DatosFinancieros_Temporada1` FOREIGN KEY (`tempodada_idTemporada`) REFERENCES `temporada` (`idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -170,16 +170,16 @@ CREATE TABLE `draftpc` (
   `Persona_idPersona` int(11) NOT NULL,
   `fechaCompra` datetime(6) DEFAULT NULL,
   `usuarioOferta` varchar(45) DEFAULT NULL,
-  `Torneos_idTorneo` int(11) NOT NULL,
+  `tempodada_idTemporada` int(11) NOT NULL,
   `comentarios` varchar(200) DEFAULT NULL,
   `abierto` bit(1) DEFAULT NULL,
   `ofertaFinal` int(11) DEFAULT NULL,
   `idEquipo` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idDraftPC`,`Persona_idPersona`,`Torneos_idTorneo`),
+  PRIMARY KEY (`idDraftPC`,`Persona_idPersona`,`tempodada_idTemporada`),
   KEY `fk_DraftPC_Persona1_idx` (`Persona_idPersona`),
-  KEY `fk_DraftPC_Torneos1_idx` (`Torneos_idTorneo`),
+  KEY `fk_DraftPC_Temporada1_idx` (`tempodada_idTemporada`),
   CONSTRAINT `fk_DraftPC_Persona1` FOREIGN KEY (`Persona_idPersona`) REFERENCES `persona` (`idPersona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_DraftPC_Torneos1` FOREIGN KEY (`Torneos_idTorneo`) REFERENCES `torneos` (`idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_DraftPC_Temporada1` FOREIGN KEY (`tempodada_idTemporada`) REFERENCES `temporada` (`idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -222,20 +222,20 @@ CREATE TABLE `equipos_has_imagen` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `equipos_has_torneos`
+-- Table structure for table `equipos_has_temporada`
 --
 
-DROP TABLE IF EXISTS `equipos_has_torneos`;
+DROP TABLE IF EXISTS `equipos_has_temporada`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `equipos_has_torneos` (
+CREATE TABLE `equipos_has_temporada` (
   `Equipos_idEquipo` int(11) NOT NULL,
-  `Torneos_idTorneo` int(11) NOT NULL,
-  PRIMARY KEY (`Equipos_idEquipo`,`Torneos_idTorneo`),
-  KEY `fk_Equipos_has_Torneos_Equipos1_idx` (`Equipos_idEquipo`),
-  KEY `fk_Equipos_has_Torneos_Torneos1_idx` (`Torneos_idTorneo`),
-  CONSTRAINT `fk_Equipos_has_Torneos_Equipos1` FOREIGN KEY (`Equipos_idEquipo`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Equipos_has_Torneos_Torneos1` FOREIGN KEY (`Torneos_idTorneo`) REFERENCES `torneos` (`idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `tempodada_idTemporada` int(11) NOT NULL,
+  PRIMARY KEY (`Equipos_idEquipo`,`tempodada_idTemporada`),
+  KEY `fk_Equipos_has_Temporada_Equipos1_idx` (`Equipos_idEquipo`),
+  KEY `fk_Equipos_has_Temporada_Temporada1_idx` (`tempodada_idTemporada`),
+  CONSTRAINT `fk_Equipos_has_Temporada_Equipos1` FOREIGN KEY (`Equipos_idEquipo`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Equipos_has_Temporada_Temporada1` FOREIGN KEY (`tempodada_idTemporada`) REFERENCES `temporada` (`idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -262,7 +262,26 @@ CREATE TABLE `golesjornadas` (
   CONSTRAINT `fk_golesJornadas_equipos1` FOREIGN KEY (`equipos_idEquipo`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_golesJornadas_jornadas_has_equipos1` FOREIGN KEY (`jornadas_has_equipos_id`, `jornadas_has_equipos_jornadas_idJornada`) REFERENCES `jornadas_has_equipos` (`id`, `jornadas_idJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_golesJornadas_persona1` FOREIGN KEY (`persona_idPersona`) REFERENCES `persona` (`idPersona`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `grupos_torneo`
+--
+
+DROP TABLE IF EXISTS `grupos_torneo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grupos_torneo` (
+  `torneo_idtorneo` int(11) NOT NULL,
+  `equipos_idEquipo` int(11) NOT NULL,
+  `nombreGrupo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`torneo_idtorneo`,`equipos_idEquipo`),
+  KEY `fk_torneo_has_equipos_equipos1_idx` (`equipos_idEquipo`),
+  KEY `fk_torneo_has_equipos_torneo1_idx` (`torneo_idtorneo`),
+  CONSTRAINT `fk_torneo_has_equipos_equipos1` FOREIGN KEY (`equipos_idEquipo`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_torneo_has_equipos_torneo1` FOREIGN KEY (`torneo_idtorneo`) REFERENCES `torneo` (`idtorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,13 +298,13 @@ CREATE TABLE `historicodraft` (
   `usuarioOferta` varchar(45) DEFAULT NULL,
   `DraftPC_idDraftPC` int(11) NOT NULL,
   `DraftPC_Persona_idPersona` int(11) NOT NULL,
-  `Torneos_idTorneo` int(11) NOT NULL,
+  `tempodada_idTemporada` int(11) NOT NULL,
   `comentarios` varchar(200) DEFAULT NULL,
   `ofertaFinal` int(11) DEFAULT NULL,
   `idEquipo` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idHistoricoDraft`,`DraftPC_idDraftPC`,`DraftPC_Persona_idPersona`,`Torneos_idTorneo`),
-  KEY `fk_HistoricoDraft_DraftPC1_idx` (`DraftPC_idDraftPC`,`DraftPC_Persona_idPersona`,`Torneos_idTorneo`),
-  CONSTRAINT `fk_HistoricoDraft_DraftPC1` FOREIGN KEY (`DraftPC_idDraftPC`, `DraftPC_Persona_idPersona`, `Torneos_idTorneo`) REFERENCES `draftpc` (`idDraftPC`, `Persona_idPersona`, `Torneos_idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`idHistoricoDraft`,`DraftPC_idDraftPC`,`DraftPC_Persona_idPersona`,`tempodada_idTemporada`),
+  KEY `fk_HistoricoDraft_DraftPC1_idx` (`DraftPC_idDraftPC`,`DraftPC_Persona_idPersona`,`tempodada_idTemporada`),
+  CONSTRAINT `fk_HistoricoDraft_DraftPC1` FOREIGN KEY (`DraftPC_idDraftPC`, `DraftPC_Persona_idPersona`, `tempodada_idTemporada`) REFERENCES `draftpc` (`idDraftPC`, `Persona_idPersona`, `tempodada_idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -316,20 +335,18 @@ DROP TABLE IF EXISTS `jornadas`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `jornadas` (
   `idJornada` int(11) NOT NULL AUTO_INCREMENT,
-  `torneos_idTorneo` int(11) NOT NULL,
-  `division_idDivision` int(11) NOT NULL,
+  `division_idDivision` int(11) DEFAULT NULL,
   `numeroJornada` int(11) DEFAULT NULL,
-  `liga_idLiga` int(11) NOT NULL,
   `activa` int(1) DEFAULT NULL,
   `cerrada` int(1) DEFAULT NULL,
-  PRIMARY KEY (`idJornada`,`division_idDivision`),
-  KEY `fk_jornadas_torneos1_idx` (`torneos_idTorneo`),
+  `nombreJornada` varchar(45) DEFAULT NULL,
+  `torneo_idtorneo` int(11) NOT NULL,
+  PRIMARY KEY (`idJornada`,`torneo_idtorneo`),
   KEY `fk_jornadas_division1_idx` (`division_idDivision`),
-  KEY `fk_jornadas_liga1_idx` (`liga_idLiga`),
+  KEY `fk_jornadas_torneo1_idx` (`torneo_idtorneo`),
   CONSTRAINT `fk_jornadas_division1` FOREIGN KEY (`division_idDivision`) REFERENCES `division` (`idDivision`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_jornadas_liga1` FOREIGN KEY (`liga_idLiga`) REFERENCES `liga` (`idLiga`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_jornadas_torneos1` FOREIGN KEY (`torneos_idTorneo`) REFERENCES `torneos` (`idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=475 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_jornadas_torneo1` FOREIGN KEY (`torneo_idtorneo`) REFERENCES `torneo` (`idtorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=526 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +370,7 @@ CREATE TABLE `jornadas_has_equipos` (
   CONSTRAINT `fk_jornadas_has_equipos_equipos1` FOREIGN KEY (`equipos_idEquipoLocal`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_jornadas_has_equipos_equipos2` FOREIGN KEY (`equipos_idEquipoVisita`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_jornadas_has_equipos_jornadas1` FOREIGN KEY (`jornadas_idJornada`) REFERENCES `jornadas` (`idJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6991 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7417 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -428,14 +445,14 @@ CREATE TABLE `prestamos` (
   `Persona_idPersona` int(11) NOT NULL,
   `Equipos_idEquipo` int(11) NOT NULL,
   `activo` decimal(1,0) DEFAULT NULL,
-  `Torneos_idTorneo` int(11) NOT NULL,
-  PRIMARY KEY (`Persona_idPersona`,`Equipos_idEquipo`,`Torneos_idTorneo`),
+  `tempodada_idTemporada` int(11) NOT NULL,
+  PRIMARY KEY (`Persona_idPersona`,`Equipos_idEquipo`,`tempodada_idTemporada`),
   KEY `fk_Prestamos_Persona1_idx` (`Persona_idPersona`),
   KEY `fk_Prestamos_Equipos1_idx` (`Equipos_idEquipo`),
-  KEY `fk_Prestamos_Torneos1_idx` (`Torneos_idTorneo`),
+  KEY `fk_Prestamos_Temporada1_idx` (`tempodada_idTemporada`),
   CONSTRAINT `fk_Prestamos_Equipos1` FOREIGN KEY (`Equipos_idEquipo`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Prestamos_Persona1` FOREIGN KEY (`Persona_idPersona`) REFERENCES `persona` (`idPersona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Prestamos_Torneos1` FOREIGN KEY (`Torneos_idTorneo`) REFERENCES `torneos` (`idTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Prestamos_Temporada1` FOREIGN KEY (`tempodada_idTemporada`) REFERENCES `temporada` (`idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -493,6 +510,24 @@ CREATE TABLE `sponsor_has_concepto` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `temporada`
+--
+
+DROP TABLE IF EXISTS `temporada`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `temporada` (
+  `idTemporada` int(11) NOT NULL AUTO_INCREMENT,
+  `NombreTemporada` varchar(100) DEFAULT NULL,
+  `Descripcion` varchar(100) DEFAULT NULL,
+  `Liga_idLiga` int(11) NOT NULL,
+  PRIMARY KEY (`idTemporada`),
+  KEY `Liga_idLiga_idx` (`Liga_idLiga`),
+  CONSTRAINT `fk_Temporada_Liga1` FOREIGN KEY (`Liga_idLiga`) REFERENCES `liga` (`idLiga`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `tipoconcepto`
 --
 
@@ -523,21 +558,37 @@ CREATE TABLE `tipoimagen` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `torneos`
+-- Table structure for table `tipotorneo`
 --
 
-DROP TABLE IF EXISTS `torneos`;
+DROP TABLE IF EXISTS `tipotorneo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `torneos` (
-  `idTorneo` int(11) NOT NULL AUTO_INCREMENT,
-  `NombreTorneo` varchar(100) DEFAULT NULL,
-  `Descripcion` varchar(100) DEFAULT NULL,
-  `Liga_idLiga` int(11) NOT NULL,
-  PRIMARY KEY (`idTorneo`),
-  KEY `Liga_idLiga_idx` (`Liga_idLiga`),
-  CONSTRAINT `fk_Torneos_Liga1` FOREIGN KEY (`Liga_idLiga`) REFERENCES `liga` (`idLiga`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+CREATE TABLE `tipotorneo` (
+  `idtipoTorneo` int(11) NOT NULL,
+  `tipo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idtipoTorneo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `torneo`
+--
+
+DROP TABLE IF EXISTS `torneo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `torneo` (
+  `idtorneo` int(11) NOT NULL AUTO_INCREMENT,
+  `nombreTorneo` varchar(45) DEFAULT NULL,
+  `tempodada_idTemporada` int(11) NOT NULL,
+  `tipoTorneo_idtipoTorneo` int(11) NOT NULL,
+  PRIMARY KEY (`idtorneo`),
+  KEY `fk_torneo_tempodada1_idx` (`tempodada_idTemporada`),
+  KEY `fk_torneo_tipoTorneo1_idx` (`tipoTorneo_idtipoTorneo`),
+  CONSTRAINT `fk_torneo_tempodada1` FOREIGN KEY (`tempodada_idTemporada`) REFERENCES `tempodada` (`idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_torneo_tipoTorneo1` FOREIGN KEY (`tipoTorneo_idtipoTorneo`) REFERENCES `tipotorneo` (`idtipoTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -740,7 +791,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `confirmPlayer`(IN idJugador INT,
                             IN idEquipoOferta INT,
-                            IN idTorneo INT,
+                            IN idTemporada INT,
                             out isError int, 
                             out message varchar(200))
 BEGIN
@@ -750,20 +801,20 @@ DECLARE idJugadorExist int;
 DECLARE idEquipoExist int;
 
 DECLARE idEquipoVar int;
-DECLARE idTorneoVar int;
+DECLARE idTemporadaVar int;
 declare activoVar bit;
 declare horasConfir int;
 
 
 select draftpc.Persona_idPersona,draftpc.idEquipo into  idJugadorVal,idEquipoVar
 from draftpc
-where draftpc.Persona_idPersona = idJugador and draftpc.Torneos_idTorneo = idTorneo;
+where draftpc.Persona_idPersona = idJugador and draftpc.tempodada_idTemporada = idTemporada;
 
 select persona.idPersona , persona.Equipos_idEquipo into  idJugadorExist, idEquipoExist
 from persona
 where persona.idPersona = idJugador;
 
-set  idTorneoVar = idTorneo;
+set  idTemporadaVar = idTemporada;
 
 
 
@@ -775,7 +826,7 @@ limit 1;
 SELECT timestampdiff(Minute, fechaCompra, now()) >= horasConfir as activo INTO activoVar
 FROM draftpc
 where draftpc.Persona_idPersona =  idJugadorVal
-and Torneos_idTorneo = idTorneoVar
+and tempodada_idTemporada = idTemporadaVar
 ;
 
 select idJugadorVal;
@@ -826,7 +877,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `crearJornada`(IN equipoLocal int , 
                                IN equipoVisita int,
@@ -848,15 +899,18 @@ DECLARE idjornadaVal int;
 DECLARE idjornadaValInsert int;
 declare idJ int;
 
+
 set isError = 1 ;
 set message = 'El jugador no Existe';
 
 
+select equipos.Division_idDivision into division
+from equipos where equipos.idEquipo = equipoLocal;
+
 select jornadas.idJornada into idjornadaVal
 from jornadas
 where jornadas.numeroJornada = numJornada
-and jornadas.torneos_idTorneo = torneo
-and jornadas.liga_idLiga = liga
+and jornadas.torneo_idtorneo = torneo
 and jornadas.division_idDivision = division;
 
 
@@ -866,21 +920,23 @@ if idjornadaVal is null then
 
 INSERT INTO `fifaxgamersbd`.`jornadas`
 (`idJornada`,
-`torneos_idTorneo`,
 `division_idDivision`,
 `numeroJornada`,
-`liga_idLiga`,
 `activa`,
-`cerrada`)
+`cerrada`,
+`nombreJornada`,
+`torneo_idtorneo`)
 VALUES
 (null,
-torneo,
 division,
 numJornada,
-liga,
 activa,
-cerrada
+cerrada,
+'',
+torneo
 );
+
+
 
 else if idjornadaVal is not null then
 
@@ -889,7 +945,7 @@ SET
 `activa` = activa,
 `cerrada` = cerrada
 
-WHERE `idJornada` = idjornadaVal AND `division_idDivision` = division;
+WHERE `idJornada` = idjornadaVal AND `torneo_idtorneo` = torneo;
 end if;
 
 
@@ -898,8 +954,7 @@ end if;
 select jornadas.idJornada into idjornadaVal
 from jornadas
 where jornadas.numeroJornada = numJornada
-and jornadas.torneos_idTorneo = torneo
-and jornadas.liga_idLiga = liga
+and jornadas.torneo_idtorneo = torneo
 and jornadas.division_idDivision = division;
 
 
@@ -951,7 +1006,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `crearJugador`(IN nombreCompleto var
                                IN raiting INT,
                                IN idEquipo INT,
                                IN link varchar(200),
-                               IN idTorneo INT
+                               IN idTemporada INT
                                )
 BEGIN
 
@@ -992,23 +1047,107 @@ ORDER by persona.idPersona DESC limit 1),
 
 
 select Equipos_idEquipo into idEquipoVar 
- from equipos_has_torneos eht 
- where eht.Equipos_idEquipo = idEquipo and eht.Torneos_idTorneo = idTorneo;
+ from equipos_has_temporada eht 
+ where eht.Equipos_idEquipo = idEquipo and eht.tempodada_idTemporada = idTemporada;
  
  if idEquipoVar is null and idEquipo != 1 then
  
- INSERT INTO `fifaxgamersbd`.`equipos_has_torneos`
+ INSERT INTO `fifaxgamersbd`.`equipos_has_temporada`
 (`Equipos_idEquipo`,
-`Torneos_idTorneo`)
+`tempodada_idTemporada`)
 VALUES
 (idEquipo,
-idTorneo);
+idTemporada);
 
  
  end if ;
 
 
         
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `crearTorneo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `crearTorneo`(IN nombreTorneo varchar(45),
+							   in idTemporada int,
+                               in tipoTorneo int,
+                               out isError int, 
+                               out message varchar(200))
+BEGIN
+
+declare isTorneo int;
+
+declare torneoval int; 
+
+set isError = 1 ;
+set message = 'El jugador no Existe';
+
+
+select torneo.idtorneo into isTorneo 
+from torneo
+where torneo.tempodada_idTemporada = idTemporada
+and torneo.nombreTorneo = nombreTorneo;
+
+if isTorneo is null then 
+
+if tipotorneo = 1 then
+
+INSERT INTO `fifaxgamersbd`.`torneo`
+(`idtorneo`,
+`nombreTorneo`,
+`tempodada_idTemporada`,
+`tipoTorneo_idtipoTorneo`)
+
+(select null, nombre,idTemporada,tipotorneo from division);
+
+ 	  
+	  INSERT INTO `fifaxgamersbd`.`grupos_torneo`
+		(`torneo_idtorneo`,
+		`equipos_idEquipo`,
+		`nombreGrupo`)
+		
+		(select idTorneo, idEquipo,null
+		from torneo,division, equipos
+		where torneo.nombreTorneo = division.nombre 
+		and equipos.Division_idDivision = division.idDivision and equipos.idEquipo!=1
+		and torneo.tempodada_idTemporada = 5);
+       
+ 
+else  
+
+INSERT INTO `fifaxgamersbd`.`torneo`
+(`idtorneo`,
+`nombreTorneo`,
+`tempodada_idTemporada`,
+`tipoTorneo_idtipoTorneo`)
+VALUES
+(null,
+nombreTorneo,
+idTemporada,
+tipotorneo);
+
+end if;
+
+
+end if;
+
+set isError = 0 ;
+set message = 'OK';
+
+
 
 END ;;
 DELIMITER ;
@@ -1031,7 +1170,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `createInitialDraft`(IN idJugador IN
                                     IN manager varchar(100),
                                     IN observaciones varchar(100), 
                                     IN idEquipoOferta INT,
-                                    IN idTorneo INT,
+                                    IN idTemporada INT,
                                     out isError int, 
                                     out message varchar(200))
 BEGIN
@@ -1039,26 +1178,26 @@ BEGIN
 DECLARE idJugadorVal int;
 DECLARE idJugadorExist int;
 DECLARE montoBD int;
-DECLARE idTorneoVar int;
+DECLARE idTemporadaVar int;
 DECLARE sumaDraftPC int;
 DECLARE ofertaInicial int;
 
 
 select draftpc.Persona_idPersona into  idJugadorVal
 from draftpc
-where draftpc.Persona_idPersona = idJugador and draftpc.Torneos_idTorneo = idTorneo;
+where draftpc.Persona_idPersona = idJugador and draftpc.tempodada_idTemporada = idTemporada;
 
 select persona.idPersona into idJugadorExist
 from persona
 where persona.idPersona = idJugador;
 
-set idTorneoVar = idTorneo;
+set idTemporadaVar = idTemporada;
 
 
 select dat.presupuestoFinal into montoBD
 from datosfinancieros dat
 where dat.Equipos_idEquipo = idEquipoOferta
-and dat.Torneos_idTorneo = idTorneoVar;
+and dat.tempodada_idTemporada = idTemporadaVar;
 
 select monto into ofertaInicial
 from configuraciondraft
@@ -1092,7 +1231,7 @@ elseif idJugador is not null then
 	`Persona_idPersona`,
 	`fechaCompra`,
 	`usuarioOferta`,
-	`Torneos_idTorneo`,
+	`tempodada_idTemporada`,
 	`comentarios`,
 	`abierto`,
     `ofertaFinal`,
@@ -1103,7 +1242,7 @@ elseif idJugador is not null then
 	idJugador,
 	SYSDATE(),
 	manager,
-	(select idTorneo from torneos order by torneos.idTorneo desc limit 1),
+	(select idTemporada from temporada order by temporada.idTemporada desc limit 1),
 	observaciones,
 	1,
     montoOferta,
@@ -1116,7 +1255,7 @@ elseif idJugador is not null then
 		`usuarioOferta`,
 		`DraftPC_idDraftPC`,
 		`DraftPC_Persona_idPersona`,
-		`Torneos_idTorneo`,
+		`tempodada_idTemporada`,
 		`comentarios`,
 		`ofertaFinal`,
         `idEquipo`)
@@ -1126,13 +1265,13 @@ elseif idJugador is not null then
 			draftpc.usuarioOferta,
 			draftpc.idDraftPC,
 			draftpc.Persona_idPersona,
-			draftpc.Torneos_idTorneo,
+			draftpc.tempodada_idTemporada,
 			draftpc.comentarios,
 			draftpc.ofertaFinal,
             draftpc.idEquipo
 			from draftpc
 		where draftpc.Persona_idPersona = idJugador
-        and draftpc.Torneos_idTorneo = (select idTorneo from torneos order by torneos.idTorneo desc limit 1)
+        and draftpc.tempodada_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
         and draftpc.idDraftPC = 1
         limit 1);
         
@@ -1172,13 +1311,13 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdateDatosFinancieros`(IN idDatos INT, IN monto INT,IN idEquipo INT)
 BEGIN
 
-DECLARE idTorneoVar int;
+DECLARE idTemporadaVar int;
 DECLARE idDatosVar  int;
 DECLARE isUpdate  int;
 
-select idTorneo into idTorneoVar
-from torneos
-order by torneos.idTorneo desc
+select idTemporada into idTemporadaVar
+from temporada
+order by temporada.idTemporada desc
 limit 1;
 
 
@@ -1186,7 +1325,7 @@ select datos.idDatosFinancieros INTO idDatosVar
 from datosfinancieros datos
 where datos.Equipos_idEquipo = idEquipo 
 
-and datos.Torneos_idTorneo = idTorneoVar
+and datos.tempodada_idTemporada = idTemporadaVar
 limit 1
 ;
 
@@ -1196,7 +1335,7 @@ where con.CatalogoConceptos_idCatalogoConceptos = idDatos
 and con.DatosFinancieros_idDatosFinancieros = idDatosVar
 and con.DatosFinancieros_Equipos_idEquipo = idEquipo
 
-and con.DatosFinancieros_Torneos_idTorneo = idTorneoVar;
+and con.datosfinancieros_tempodada_idTemporada = idTemporadaVar;
 
 	IF isUpdate is null or isUpdate = 0  then
 
@@ -1211,7 +1350,7 @@ and con.DatosFinancieros_Torneos_idTorneo = idTorneoVar;
 		`CatalogoConceptos_idCatalogoConceptos`,
         `DatosFinancieros_Equipos_idEquipo`,
         
-        `DatosFinancieros_Torneos_idTorneo`)
+        `datosfinancieros_tempodada_idTemporada`)
 		VALUES
 		(null,
         idDatosVar,
@@ -1219,7 +1358,7 @@ and con.DatosFinancieros_Torneos_idTorneo = idTorneoVar;
 		idDatos,
         idEquipo,
         
-        idTorneoVar);
+        idTemporadaVar);
     
     elseif isUpdate is not null then
     
@@ -1230,7 +1369,7 @@ and con.DatosFinancieros_Torneos_idTorneo = idTorneoVar;
 		AND `CatalogoConceptos_idCatalogoConceptos` = idDatos
         and `DatosFinancieros_Equipos_idEquipo` = idEquipo
 		
-		and `DatosFinancieros_Torneos_idTorneo` = idTorneoVar;
+		and `datosfinancieros_tempodada_idTemporada` = idTemporadaVar;
 
 	
 	END IF;
@@ -1256,39 +1395,39 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdateDatosSponsor`(IN idEquipo INT, IN idSponsor INT, IN opcionales INT)
 BEGIN
 
-DECLARE idTorneoVar int;
+DECLARE idTemporadaVar int;
 DECLARE idDatosVar  int;
 
-select idTorneo into idTorneoVar
-from torneos
-order by torneos.idTorneo desc
+select idTemporada into idTemporadaVar
+from temporada
+order by temporada.idTemporada desc
 limit 1;
 
-select idTorneoVar;
+select idTemporadaVar;
 
 select datos.idDatosFinancieros INTO idDatosVar
 from datosfinancieros datos
 where datos.Equipos_idEquipo = idEquipo 
-and datos.Torneos_idTorneo = idTorneoVar
+and datos.tempodada_idTemporada = idTemporadaVar
 limit 1
 ;
 
 select idDatosVar;
 
-IF idTorneoVar is not null  and idDatosVar is null then
+IF idTemporadaVar is not null  and idDatosVar is null then
    INSERT INTO `fifaxgamersbd`.`datosfinancieros`
 (`idDatosFinancieros`,
 `presupuestoInicial`,
 `presupuestoFinal`,
 `Equipos_idEquipo`,
-`Torneos_idTorneo`,
+`tempodada_idTemporada`,
 `sponsorOpcional`)
 VALUES
 (1,
 0,
 0,
 idEquipo,
-idTorneoVar,
+idTemporadaVar,
 opcionales);
 
 elseif idDatosVar is not null then
@@ -1297,7 +1436,7 @@ UPDATE `fifaxgamersbd`.`datosfinancieros`
 SET 
 `sponsorOpcional` = opcionales
 WHERE  `Equipos_idEquipo` = idEquipo
-AND `Torneos_idTorneo` = idTorneoVar;
+AND `tempodada_idTemporada` = idTemporadaVar;
 
 
 END IF;
@@ -1307,11 +1446,11 @@ END IF;
     INSERT INTO `fifaxgamersbd`.`dadosfinancierossponsor`
 	(`DatosFinancieros_idDatosFinancieros`,
 	`DatosFinancieros_Equipos_idEquipo`,
-	`DatosFinancieros_Torneos_idTorneo`,
+	`datosfinancieros_tempodada_idTemporada`,
 	`Sponsor_idSponsor`,
 	`ConceptoSponsor_idConcepto`,
 	`cumplio`)
-	select 1,idEquipo,idTorneoVar,idSponsor,cons.idConcepto,0
+	select 1,idEquipo,idTemporadaVar,idSponsor,cons.idConcepto,0
 			from sponsor
 			join sponsor_has_concepto sponc on sponsor.idSponsor = sponc.Sponsor_idSponsor
 			join conceptosponsor cons on sponc.Concepto_idConcepto = cons.idConcepto
@@ -1323,11 +1462,11 @@ END IF;
 		INSERT INTO `fifaxgamersbd`.`dadosfinancierossponsor`
 			(`DatosFinancieros_idDatosFinancieros`,
 			`DatosFinancieros_Equipos_idEquipo`,
-			`DatosFinancieros_Torneos_idTorneo`,
+			`datosfinancieros_tempodada_idTemporada`,
 			`Sponsor_idSponsor`,
 			`ConceptoSponsor_idConcepto`,
 			`cumplio`)
-		select 1,idEquipo,idTorneoVar,idSponsor,cons.idConcepto,0
+		select 1,idEquipo,idTemporadaVar,idSponsor,cons.idConcepto,0
         from sponsor
         join sponsor_has_concepto sponc on sponsor.idSponsor = sponc.Sponsor_idSponsor
 		join conceptosponsor cons on sponc.Concepto_idConcepto = cons.idConcepto
@@ -1353,7 +1492,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdateObjetivos`(IN `json` JSON,IN idEquipo INT, IN idSponsor INT,IN idTorneo INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdateObjetivos`(IN `json` JSON,IN idEquipo INT, IN idSponsor INT,IN idTemporada INT)
 BEGIN
 
 DECLARE `json_items` BIGINT UNSIGNED DEFAULT JSON_LENGTH(`json`);
@@ -1388,7 +1527,7 @@ DECLARE `json_items` BIGINT UNSIGNED DEFAULT JSON_LENGTH(`json`);
 		`cumplio` = cum
 		WHERE `DatosFinancieros_idDatosFinancieros` = 1
         AND `DatosFinancieros_Equipos_idEquipo` = idEquipo
-        AND `DatosFinancieros_Torneos_idTorneo` = idTorneo
+        AND `datosfinancieros_tempodada_idTemporada` = idTemporada
         AND `Sponsor_idSponsor` = idSponsor
         AND `ConceptoSponsor_idConcepto` = var;
 
@@ -1419,20 +1558,20 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdatePresupuesto`(IN idEquipo INT,  IN monto INT, IN montoFinal INT,
 										  IN montoFinalSponsor INT,
-                                          IN idTorneo INT)
+                                          IN idTemporada INT)
 BEGIN
 
-DECLARE idTorneoVar int;
+DECLARE idTemporadaVar int;
 DECLARE idDatosVar  int;
 DECLARE isUpdate  int;
 
 
-set idTorneoVar = idTorneo;
+set idTemporadaVar = idTemporada;
 
 select datos.idDatosFinancieros INTO idDatosVar
 from datosfinancieros datos
 where datos.Equipos_idEquipo = idEquipo 
-and datos.Torneos_idTorneo = idTorneoVar;
+and datos.tempodada_idTemporada = idTemporadaVar;
 
 
 
@@ -1443,7 +1582,7 @@ INSERT INTO `fifaxgamersbd`.`datosfinancieros`
 `presupuestoInicial`,
 `presupuestoFinal`,
 `Equipos_idEquipo`,
-`Torneos_idTorneo`,
+`tempodada_idTemporada`,
 `sponsorOpcional`,
 `presupuestoFinalSponsor`)
 VALUES
@@ -1451,7 +1590,7 @@ VALUES
 monto,
 montoFinal,
 idEquipo,
-idTorneoVar,
+idTemporadaVar,
 0,
 montoFinalSponsor);
 
@@ -1467,7 +1606,7 @@ SET
 WHERE `idDatosFinancieros` = idDatosVar 
 AND `Equipos_idEquipo` = idEquipo
 
-AND `Torneos_idTorneo` = idTorneoVar;
+AND `tempodada_idTemporada` = idTemporadaVar;
 
 end if;
 
@@ -1487,7 +1626,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createPrestamo`(IN idJugador INT,IN idEquipo INT,IN idTorneo INT,IN opcion INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createPrestamo`(IN idJugador INT,IN idEquipo INT,IN idTemporada INT,IN opcion INT)
 BEGIN
 
 DECLARE idEquipoAnterior int;
@@ -1496,7 +1635,7 @@ DECLARE idJugadorVal int;
 select prestamos.Persona_idPersona into idJugadorVal
 from prestamos
 where prestamos.Persona_idPersona = idJugador
-and prestamos.Torneos_idTorneo = idTorneo;
+and prestamos.tempodada_idTemporada = idTemporada;
 
 IF opcion is null or opcion = 1 then 
 
@@ -1518,12 +1657,12 @@ IF opcion is null or opcion = 1 then
 		INSERT INTO `fifaxgamersbd`.`prestamos`
 		(`Persona_idPersona`,
 		`Equipos_idEquipo`,
-        `Torneos_idTorneo`,
+        `tempodada_idTemporada`,
 		`activo`)
 		VALUES
 		(idJugador,
 		idEquipoAnterior,
-        idTorneo,
+        idTemporada,
 		1);
 
 	END IF;
@@ -1538,12 +1677,12 @@ elseif opcion = 2 then
 		SET
 		`Equipos_idEquipo` = idEquipoAnterior,
 		`prestamo` = 0
-		WHERE `idPersona` = idJugadorVal and `Torneos_idTorneo` = idTorneo;
+		WHERE `idPersona` = idJugadorVal and `tempodada_idTemporada` = idTemporada;
 
 	delete from prestamos 
     where prestamos.Persona_idPersona = idJugadorVal
     and prestamos.Equipos_idEquipo = idEquipoAnterior
-    and prestamos.Torneos_idTorneo = idTorneo;
+    and prestamos.tempodada_idTemporada = idTemporada;
 
 end if;
 
@@ -1553,7 +1692,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `createTorneo` */;
+/*!50003 DROP PROCEDURE IF EXISTS `createTemporada` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1563,29 +1702,29 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createTorneo`( IN nombreTorneo varchar(200) , IN descripcionTorneo varchar(200))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createTemporada`( IN NombreTemporada varchar(200) , IN descripcionTemporada varchar(200))
 BEGIN
 
-DECLARE idTorneoVar int;
+DECLARE idTemporadaVar int;
 
-INSERT INTO `fifaxgamersbd`.`torneos`
+INSERT INTO `fifaxgamersbd`.`temporada`
 (
-`NombreTorneo`,
+`NombreTemporada`,
 `Descripcion`)
 VALUES
 (
-NombreTorneo,
-descripcionTorneo);
+NombreTemporada,
+descripcionTemporada);
 
-select idTorneo into idTorneoVar
-from torneos
-order by torneos.idTorneo desc
+select idTemporada into idTemporadaVar
+from temporada
+order by temporada.idTemporada desc
 limit 1;
 
-INSERT INTO `fifaxgamersbd`.`equipos_has_torneos`
+INSERT INTO `fifaxgamersbd`.`equipos_has_temporada`
 (`Equipos_idEquipo`,
-`Torneos_idTorneo`)
-(select idEquipo,idTorneoVar 
+`tempodada_idTemporada`)
+(select idEquipo,idTemporadaVar 
 from equipos);
 
 
@@ -1612,7 +1751,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarJugador`(IN nombreCompleto
                                    IN idEquipo INT, 
                                    IN idJugador INT,
                                    IN link varchar(300),
-                                   IN idTorneo INT
+                                   IN idTemporada INT
                                    )
 BEGIN
 
@@ -1627,17 +1766,17 @@ update persona set persona.NombreCompleto = nombreCompleto,
 where persona.idPersona = idJugador;
 
 select Equipos_idEquipo into idEquipoVar 
- from equipos_has_torneos eht 
- where eht.Equipos_idEquipo = idEquipo and eht.Torneos_idTorneo = idTorneo;
+ from equipos_has_temporada eht 
+ where eht.Equipos_idEquipo = idEquipo and eht.tempodada_idTemporada = idTemporada;
  
  if idEquipoVar is null and idEquipo != 1 then
  
- INSERT INTO `fifaxgamersbd`.`equipos_has_torneos`
+ INSERT INTO `fifaxgamersbd`.`equipos_has_temporada`
 (`Equipos_idEquipo`,
-`Torneos_idTorneo`)
+`tempodada_idTemporada`)
 VALUES
 (idEquipo,
-idTorneo);
+idTemporada);
 
  
  end if ;
@@ -1689,7 +1828,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateDraft`(IN idJugador INT,
                             IN manager varchar(100),
                             IN observaciones varchar(100), 
                             IN idEquipoOferta INT,
-                            IN idTorneo INT,
+                            IN idTemporada INT,
                             out isError int, 
                             out message varchar(200))
 BEGIN
@@ -1698,7 +1837,7 @@ DECLARE idJugadorVal int;
 DECLARE idJugadorExist int;
 DECLARE montoFinalVal int;
 DECLARE idEquipo int;
-DECLARE idTorneoVar int;
+DECLARE idTemporadaVar int;
 DECLARE montoBD int;
 DECLARE sumaDraftPC int;
 DECLARE idEquipoAnterior int;
@@ -1717,18 +1856,18 @@ declare minDia_ceroVar int;
 
 select draftpc.Persona_idPersona,draftpc.ofertaFinal into  idJugadorVal,montoFinalVal
 from draftpc
-where draftpc.Persona_idPersona = idJugador and draftpc.Torneos_idTorneo = idTorneo;
+where draftpc.Persona_idPersona = idJugador and draftpc.tempodada_idTemporada = idTemporada;
 
 select persona.idPersona into idJugadorExist
 from persona
 where persona.idPersona = idJugador;
 
-set idTorneoVar = idTorneo ;
+set idTemporadaVar = idTemporada ;
 
 select dat.presupuestoFinal into montoBD
 from datosfinancieros dat
 where dat.Equipos_idEquipo = idEquipoOferta
-and dat.Torneos_idTorneo = idTorneoVar;
+and dat.tempodada_idTemporada = idTemporadaVar;
 
 select monto into contraoferta
 from configuraciondraft
@@ -1774,7 +1913,7 @@ timestampdiff(day,DATE(draftpc.fechaCompra),Date(NOW())) as diasSe,
 timestampdiff(MINUTE, draftpc.fechaCompra, now()) MINUTOSDIA_CERO,
 timestampdiff(MINUTE, draftpc.fechaCompra, DATE_ADD(DATE(draftpc.fechaCompra),INTERVAL 24 HOUR)) MINUTOSDIA,
 timestampdiff(MINUTE, DATE_ADD(DATE(now()),INTERVAL 9 HOUR), now()) Minutos_dia_Actual
-from draftpc where draftpc.Persona_idPersona =  42 and draftpc.Torneos_idTorneo = 2) ta
+from draftpc where draftpc.Persona_idPersona =  42 and draftpc.tempodada_idTemporada = 2) ta
 ;
 
 select idJugadorVal;
@@ -1820,7 +1959,7 @@ elseif idJugador is not null then
      from draftpc
      WHERE `idDraftPC` = 1
      AND `Persona_idPersona` = idJugador
-     AND `Torneos_idTorneo` = (select idTorneo from torneos order by torneos.idTorneo desc limit 1);
+     AND `tempodada_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
 	
     UPDATE `fifaxgamersbd`.`draftpc`
 	SET
@@ -1832,7 +1971,7 @@ elseif idJugador is not null then
     `idEquipo` = idEquipoOferta
 	WHERE `idDraftPC` = 1
     AND `Persona_idPersona` = idJugador
-    AND `Torneos_idTorneo` = (select idTorneo from torneos order by torneos.idTorneo desc limit 1);
+    AND `tempodada_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
 
 	INSERT INTO `fifaxgamersbd`.`historicodraft`
 		(`idHistoricoDraft`,
@@ -1841,7 +1980,7 @@ elseif idJugador is not null then
 		`usuarioOferta`,
 		`DraftPC_idDraftPC`,
 		`DraftPC_Persona_idPersona`,
-		`Torneos_idTorneo`,
+		`tempodada_idTemporada`,
 		`comentarios`,
 		`ofertaFinal`,
         `idEquipo`)
@@ -1851,13 +1990,13 @@ elseif idJugador is not null then
 			draftpc.usuarioOferta,
 			draftpc.idDraftPC,
 			draftpc.Persona_idPersona,
-			draftpc.Torneos_idTorneo,
+			draftpc.tempodada_idTemporada,
 			draftpc.comentarios,
 			montoOferta,
             draftpc.idEquipo
 			from draftpc
 		where draftpc.Persona_idPersona = idJugador
-        and draftpc.Torneos_idTorneo = (select idTorneo from torneos order by torneos.idTorneo desc limit 1)
+        and draftpc.tempodada_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
         and draftpc.idDraftPC = 1
         limit 1);
         
@@ -2056,4 +2195,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-30 11:12:16
+-- Dump completed on 2019-12-09 12:36:26

@@ -18,22 +18,38 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	self.isEdit = false;
 	self.isJornadaInsert = false;
 	self.jornadasEdit = [];
+	self.equiposTorneo = [];
+	self.equiposSelect;
 	
 	
 	self.getGenerarJornadas = getGenerarJornadas;
 	self.getJornadas = getJornadas;
 	self.addJornadas = addJornadas;
-	self.print = print;
+	
 	self.addJornadasEdit = addJornadasEdit;
+	self.getTorneos = getTorneos;
+	self.buscarTodos = buscarTodos;
+	self.addEquipo = addEquipo;
 	
 	
 	buscarDivisiones();
 	
-	function print(e){
-		console.log("--------->",e)
-		console.log("--------->",self.jornadas)
+	function getTorneos(e){
+		return CONFIG.VARTEMPORADA.torneos;
 	}
-	
+	function addEquipo(equi){
+		console.log("EquipoADD]:",equi)
+		self.equiposTorneo.push(equi);
+	}
+	function buscarTodos() {
+		var idTemporada = CONFIG.VARTEMPORADA.id
+		console.log("[adminTorneo_controller]  idTemporada]:",CONFIG.VARTEMPORADA.id);
+		EquipoService.buscarTodos(idTemporada).then(function(d) {
+			self.equipos = d;
+		}, function(errResponse) {
+			console.error('[adminTorneo_controller] Error while fetching buscarTodos()');
+		});
+	}
 	function addJornadasEdit(jor){
 		var isJornada = false;
 		if(self.isEdit== true){
@@ -59,7 +75,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 				console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",d)
 				self.divisiones = d;
 				if(self.divisiones!= null && self.divisiones.length >0){
-					 self.divisionSelect = self.divisiones[0];
+					 self.divisionSelect = (CONFIG.VARTEMPORADA.torneos != null && CONFIG.VARTEMPORADA.torneos.length>0) ? CONFIG.VARTEMPORADA.torneos[0] : null
 					 console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",self.divisionSelect)
 					 getJornadas();	
 				 }
@@ -74,14 +90,15 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	
 	
 	 function getGenerarJornadas(){
+		console.log("------------------->torneo]:"+self.divisionSelect.id) 
 		TorneoLMService.getGenerarJornadas(self.divisionSelect.id,0)
 	            .then(
 	            function(d) {
 	            	
 	            	self.jornadas = d;
 	                
-	                console.log("TorneoLMService-getTablaJornadas]:",self.jornadas)
-	                console.log("TorneoLMService-getTablaJornadas]: -----------FIN-----------")
+	                console.log("TorneoLMService-getGenerarJornadas]:",self.jornadas)
+	                console.log("TorneoLMService-getGenerarJornadas]: -----------FIN-----------")
 	                
 	                return d;
 	            },
@@ -93,6 +110,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	    }
 	 
 	 function getJornadas(){
+		 console.log("torneoSeleccionado]:"+self.divisionSelect.id)
 			TorneoLMService.getJornadas(self.divisionSelect.id,0)
 	                .then(
 	                function(d) {

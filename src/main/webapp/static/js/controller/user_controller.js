@@ -156,8 +156,8 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
     }
     function obtenerEquipo(equipo) {
         var allTeams = null  
-        console.log("[user_controller] Entrando a buscar Equipos----  >",CONFIG.VARTORNEO.id)
-        EquipoService.buscarTodos(CONFIG.VARTORNEO.id).then(function(d) {
+        console.log("[user_controller] Entrando a buscar Equipos----  >",CONFIG.VARTEMPORADA.id)
+        EquipoService.buscarTodos(CONFIG.VARTEMPORADA.id).then(function(d) {
             allTeams = d;
             for(var i = 0; i < allTeams.length; i++){
                 console.log("[user_controller] -->equipo]:"+equipo + " = ", allTeams[i]) 

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.EquipoDao;
-import com.app.dao.TorneoDao;
+import com.app.dao.TemporadaDao;
 import com.app.enums.CodigoResponse;
 import com.app.modelo.Equipo;
 import com.app.modelo.GolesJornadas;
@@ -18,35 +18,35 @@ import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
 import com.app.modelo.TablaGeneral;
-import com.app.modelo.Torneo;
-import com.app.service.TorneoService;
+import com.app.modelo.Temporada;
+import com.app.service.TemporadaService;
 import com.app.utils.GenerarJornadasUtil;
 
 @Service
-public class TorneoServiceImpl implements TorneoService{
+public class TemporadaServiceImpl implements TemporadaService{
 	@Autowired
-	TorneoDao torneoDao;
+	TemporadaDao temporadaDao;
 	@Autowired
 	EquipoDao equipoDao;
 	
-	public List<Torneo> buscarTodos() {
+	public List<Temporada> buscarTodos() {
 
-		return torneoDao.buscarTodos();
+		return temporadaDao.buscarTodos();
 	}
 	
-	public List<TablaGeneral> getTablaGeneral(int idTorneo, int idDivision){
+	public List<TablaGeneral> getTablaGeneral(int idTemporada, int idDivision){
 		
-		return torneoDao.getTablaGeneral(idTorneo,idDivision);
+		return temporadaDao.getTablaGeneral(idTemporada,idDivision);
 	}
 	
-	public List<Jornadas> getJornadas(int idTorneo, int idDivision,int activa){
+	public List<Jornadas> getJornadas(int idTemporada, int idDivision,int activa){
 		
-		return torneoDao.getJornadas(idTorneo,idDivision,activa);
+		return temporadaDao.getJornadas(idTemporada,idDivision,activa);
 	}
 	
-	public List<Jornadas> getArmarJornadasInicial(int idTorneo, int idDivision){
+	public List<Jornadas> getArmarJornadasInicial(int idTemporada, int idTorneo){
 		
-		List<Equipo> equipos = equipoDao.findEquiposByDivision(idTorneo, idDivision);
+		List<Equipo> equipos = equipoDao.findEquiposByTorneo(idTemporada, idTorneo);
 		
 		
 		
@@ -62,17 +62,17 @@ public class TorneoServiceImpl implements TorneoService{
 		String idEquipoLocal,
 		String idEquipoVisita){
 		
-		return torneoDao.getGolesJornadas( idJornada, id, idEquipoLocal, idEquipoVisita);
+		return temporadaDao.getGolesJornadas( idJornada, id, idEquipoLocal, idEquipoVisita);
 	}
 	
 	public Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita){
 		
 		Jornada jornada = new Jornada();
 		
-		jornada = torneoDao.getJornada( idJornada, id, idEquipoLocal, idEquipoVisita);
+		jornada = temporadaDao.getJornada( idJornada, id, idEquipoLocal, idEquipoVisita);
 		
-		List<GolesJornadas> goles = torneoDao.getGolesJornadas( idJornada, id, idEquipoLocal, idEquipoVisita);
-		List<String> imagenes = torneoDao.getImagenes(idJornada, id);
+		List<GolesJornadas> goles = temporadaDao.getGolesJornadas( idJornada, id, idEquipoLocal, idEquipoVisita);
+		List<String> imagenes = temporadaDao.getImagenes(idJornada, id);
 		
 		List<HashMap<String,String>> mapaImg = new ArrayList<HashMap<String,String>>();
 		
@@ -100,7 +100,7 @@ public class TorneoServiceImpl implements TorneoService{
 		HashMap<String, String> map = new HashMap<String, String>();
 		ResponseData response = new ResponseData();
 
-		map = torneoDao.addGol(idJugador, idEquipo,id,idJornada);
+		map = temporadaDao.addGol(idJugador, idEquipo,id,idJornada);
 		
 		
 
@@ -123,7 +123,7 @@ public class TorneoServiceImpl implements TorneoService{
 		HashMap<String, String> map = new HashMap<String, String>();
 		ResponseData response = new ResponseData();
 
-		map = torneoDao.addImagen( idEquipo,id,idJornada,img);
+		map = temporadaDao.addImagen( idEquipo,id,idJornada,img);
 		
 		
 
@@ -143,7 +143,7 @@ public class TorneoServiceImpl implements TorneoService{
 	}
 
 	@Override
-	public ResponseData addJornadas(int idTorneo, int idDivision, List<Jornadas> jornadas) {
+	public ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas) {
 		
 		
 		ResponseData response = new ResponseData();
@@ -152,7 +152,7 @@ public class TorneoServiceImpl implements TorneoService{
 		for(Jornadas jornada : jornadas ){
 			for(Jornada juegos : jornada.getJornada()){
 				if(juegos.getIdEquipoLocal() != -1 && juegos.getIdEquipoVisita() !=-1){
-					map = torneoDao.addJornada( idTorneo,idDivision,juegos,jornada.getActiva(),jornada.getCerrada());
+					map = temporadaDao.addJornada( idTemporada,idDivision,juegos,jornada.getActiva(),jornada.getCerrada());
 				}
 			}
 		}

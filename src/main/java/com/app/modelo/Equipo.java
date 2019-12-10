@@ -15,7 +15,7 @@ public class Equipo {
 	private Division division;
 	private List<User> jugadores;
 	private DatosFinancieros datosFinancieros;
-	private Torneo torneo;
+	private Temporada temporada;
 	private List<CatalogoFinanciero> finanzas;
 	private int presupuestoInicial;
 	private int presupuestoFinal;
@@ -113,12 +113,12 @@ public class Equipo {
 		this.datosFinancieros = datosFinancieros;
 	}
 
-	public Torneo getTorneo() {
-		return torneo;
+	public Temporada getTemporada() {
+		return temporada;
 	}
 
-	public void setTorneo(Torneo torneo) {
-		this.torneo = torneo;
+	public void setTemporada(Temporada temporada) {
+		this.temporada = temporada;
 	}
 
 	public List<CatalogoFinanciero> getFinanzas() {

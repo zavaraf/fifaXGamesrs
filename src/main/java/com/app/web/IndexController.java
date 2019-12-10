@@ -77,13 +77,13 @@ public class IndexController {
 		 return m;
 	 }
 	 @RequestMapping(value="/Torneo", method = RequestMethod.GET)
-	 public ModelAndView torneo(HttpServletRequest request,
+	 public ModelAndView temporada(HttpServletRequest request,
 			 HttpServletResponse response, Model model) throws Exception {
 		 ModelAndView m = new ModelAndView("torneo");
 		 return m;
 	 }
 	 @RequestMapping(value="/adminTorneo", method = RequestMethod.GET)
-	 public ModelAndView adminTorneo(HttpServletRequest request,
+	 public ModelAndView adminTemporada(HttpServletRequest request,
 			 HttpServletResponse response, Model model) throws Exception {
 		 ModelAndView m = new ModelAndView("adminTorneo");
 		 return m;

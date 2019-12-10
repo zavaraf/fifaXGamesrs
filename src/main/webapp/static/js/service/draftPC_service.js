@@ -16,9 +16,9 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
  
     return factory;
 	
-    function buscarJugadoresdraft(idTorneo) {
+    function buscarJugadoresdraft(idTemporada) {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+'findAllPC/'+idTorneo)
+        $http.get(REST_SERVICE_URI+'findAllPC/'+idTemporada)
             .then(
             function (response) {
             	console.log(response.data)
@@ -31,9 +31,9 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
         );
         return deferred.promise;
     }
-    function buscarJugadoresdraftByID(idEquipo, idTorneo) {
+    function buscarJugadoresdraftByID(idEquipo, idTemporada) {
     	var deferred = $q.defer();
-    	$http.get(REST_SERVICE_URI+'findAll/'+idEquipo+'/'+idTorneo)
+    	$http.get(REST_SERVICE_URI+'findAll/'+idEquipo+'/'+idTemporada)
     	.then(
     			function (response) {
     				console.log(response.data)
@@ -46,10 +46,10 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     	);
     	return deferred.promise;
     }
-    function createInitialDraft(id,monto,manager,observaciones,idEquipo,idTorneo) {
+    function createInitialDraft(id,monto,manager,observaciones,idEquipo,idTemporada) {
     	var deferred = $q.defer();
     	var request = REST_SERVICE_URI+'initialDraft/'+id+"/"+monto+"/"+manager
-    								+"/"+observaciones+"/"+idEquipo+"/"+idTorneo;
+    								+"/"+observaciones+"/"+idEquipo+"/"+idTemporada;
     	
     	
     	console.log(request);
@@ -66,10 +66,10 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     	);
     	return deferred.promise;
     }
-    function updateDraft(id,monto,manager,observaciones,ofertaInicial,idEquipo,idTorneo) {
+    function updateDraft(id,monto,manager,observaciones,ofertaInicial,idEquipo,idTemporada) {
     	var deferred = $q.defer();
     	var request = REST_SERVICE_URI+'updateDraft/'+id+"/"+monto+"/"+manager
-    							+"/"+observaciones+"/"+ofertaInicial+"/"+idEquipo+"/"+idTorneo;
+    							+"/"+observaciones+"/"+ofertaInicial+"/"+idEquipo+"/"+idTemporada;
     	console.log(request);
     	$http.post(request)
     	.then(
@@ -84,9 +84,9 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     	);
     	return deferred.promise;
     }
-    function confirmPlayer(id,idEquipo,idTorneo) {
+    function confirmPlayer(id,idEquipo,idTemporada) {
     	var deferred = $q.defer();
-    	var request = REST_SERVICE_URI+'confirmPlayer/'+id+"/"+idEquipo+"/"+idTorneo;
+    	var request = REST_SERVICE_URI+'confirmPlayer/'+id+"/"+idEquipo+"/"+idTemporada;
     	console.log(request);
     	$http.post(request)
     	.then(

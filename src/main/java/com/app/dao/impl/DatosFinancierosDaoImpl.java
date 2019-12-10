@@ -18,7 +18,7 @@ import com.app.modelo.DatosFinancieros;
 import com.app.modelo.Equipo;
 import com.app.modelo.ObjetivosSponsor;
 import com.app.modelo.Sponsor;
-import com.app.modelo.Torneo;
+import com.app.modelo.Temporada;
 
 
 @Service
@@ -37,15 +37,15 @@ public class DatosFinancierosDaoImpl implements DatosFinancierosDao {
 				+" dat.presupuestoFinalSponsor, "
 				+" dat.presupuestoInicial, "
 				+" dat.sponsorOpcional, "
-				+" dat.Torneos_idTorneo, "
+				+" dat.tempodada_idTemporada, "
 				+" datS.Sponsor_idSponsor "
 				+" from datosfinancieros dat "
 				+" left join dadosfinancierossponsor datS on datS.DatosFinancieros_idDatosFinancieros = dat.idDatosFinancieros "
 				+"        and datS.DatosFinancieros_Equipos_idEquipo = dat.Equipos_idEquipo "
-				+"        and datS.DatosFinancieros_Torneos_idTorneo = dat.Torneos_idTorneo "
+				+"        and datS.datosfinancieros_tempodada_idTemporada = dat.tempodada_idTemporada "
 				+" where dat.idDatosFinancieros = 1 "
 				+" and dat.Equipos_idEquipo = " +  equipo.getId() 
-				+" and dat.Torneos_idTorneo = " +  equipo.getTorneo().getId(); 
+				+" and dat.tempodada_idTemporada = " +  equipo.getTemporada().getId(); 
 		
 		
 		Collection datosF = jdbcTemplate.query(
@@ -134,7 +134,7 @@ public List<ObjetivosSponsor> findObjetivosSponsor(Equipo equipo, Sponsor sponso
 				+" join conceptosponsor cons on cons.idConcepto = dathas.ConceptoSponsor_idConcepto"
 				+" where dathas.DatosFinancieros_Equipos_idEquipo = " + equipo.getId()
 				+" and dathas.Sponsor_idSponsor = " + sponsor.getId()
-				+" and dathas.DatosFinancieros_Torneos_idTorneo = " + equipo.getTorneo().getId();;
+				+" and dathas.datosfinancieros_tempodada_idTemporada = " + equipo.getTemporada().getId();;
 		
 		Collection objetivos = jdbcTemplate.query(
                 query
@@ -194,9 +194,9 @@ public void test() {
 	
 	Equipo equipo = new Equipo();
 	equipo.setId(2);
-	Torneo torneo = new Torneo();
-	torneo.setId(1);
-	equipo.setTorneo(torneo);
+	Temporada temporada = new Temporada();
+	temporada.setId(1);
+	equipo.setTemporada(temporada);
 	getDatosFinancieros(equipo);
 		
 	}

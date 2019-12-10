@@ -33,25 +33,25 @@ public class DraftController {
 	UserService userService;
 	
 	
-	@RequestMapping(value="/buscarTodos/{idTorneo}",method = RequestMethod.GET,
+	@RequestMapping(value="/buscarTodos/{idTemporada}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<List<User>> listJugadoresPrestados(@PathVariable("idTorneo") int idTorneo){
+	public ResponseEntity<List<User>> listJugadoresPrestados(@PathVariable("idTemporada") int idTemporada){
 		
-		List<User> listJugadores = draftService.buscarTodos(idTorneo);
+		List<User> listJugadores = draftService.buscarTodos(idTemporada);
 		
 		if(listJugadores.isEmpty()){
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<List<User>>(listJugadores, HttpStatus.OK);
 	}
-	@RequestMapping(value="/buscarTodos/{idEquipo}/{idTorneo}",method = RequestMethod.GET,
+	@RequestMapping(value="/buscarTodos/{idEquipo}/{idTemporada}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<List<User>> listJugadoresPrestadosByIdEquipo(@PathVariable("idEquipo") long id,
-			@PathVariable("idTorneo") int idTorneo){
+			@PathVariable("idTemporada") int idTemporada){
 		
-		List<User> listJugadores = draftService.buscarTodosByidEquipo(id, idTorneo);
+		List<User> listJugadores = draftService.buscarTodosByidEquipo(id, idTemporada);
 		
 		if(listJugadores.isEmpty()){
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
@@ -59,16 +59,16 @@ public class DraftController {
 		return new ResponseEntity<List<User>>(listJugadores, HttpStatus.OK);
 	}
 	
-	 @RequestMapping(value = "/{idEquipo}/{idTorneo}", method = RequestMethod.POST)
+	 @RequestMapping(value = "/{idEquipo}/{idTemporada}", method = RequestMethod.POST)
 	    public ResponseEntity<Void> createPrestamo(@PathVariable("idEquipo") long id,
-	    										@PathVariable("idTorneo") int idTorneo,
+	    										@PathVariable("idTemporada") int idTemporada,
 	    										@RequestBody User jugador,    
 	    										UriComponentsBuilder ucBuilder) {
 	        System.out.println("Creating Prestamo " +jugador.toString());
 	        System.out.println("Creating Prestamo Equpo]: " +id);
-	        System.out.println("Creating Prestamo IDTorneo]: " +idTorneo);
+	        System.out.println("Creating Prestamo idTemporada]: " +idTemporada);
 	  
-	        draftService.crearPrestamo(jugador,id,idTorneo);
+	        draftService.crearPrestamo(jugador,id,idTemporada);
 	  
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(jugador.getId()).toUri());
@@ -97,27 +97,27 @@ public class DraftController {
 	  */
 	 
 	 
-	 @RequestMapping(value="/pc/findAllPC/{idTorneo}",method = RequestMethod.GET,
+	 @RequestMapping(value="/pc/findAllPC/{idTemporada}",method = RequestMethod.GET,
 				headers="Accept=application/json")
 		@ResponseBody
 		public ResponseEntity<List<JugadorDraft>> listJugadoresDraft(
-				@PathVariable("idTorneo") int idTorneo){
+				@PathVariable("idTemporada") int idTemporada){
 			
-			List<JugadorDraft> listJugadores = draftService.findJugadoresDraft(idTorneo);
+			List<JugadorDraft> listJugadores = draftService.findJugadoresDraft(idTemporada);
 			
 			if(listJugadores.isEmpty()){
 				return new ResponseEntity<List<JugadorDraft>>(HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<List<JugadorDraft>>(listJugadores, HttpStatus.OK);
 		}
-	 @RequestMapping(value="/pc/findAll/{idEquipo}/{idTorneo}",method = RequestMethod.GET,
+	 @RequestMapping(value="/pc/findAll/{idEquipo}/{idTemporada}",method = RequestMethod.GET,
 				headers="Accept=application/json")
 		@ResponseBody
 		public ResponseEntity<List<JugadorDraft>> listJugadoresDrafByIdEquipo(
 				@PathVariable("idEquipo") int idEquipo,
-				@PathVariable("idTorneo") int idTorneo){
+				@PathVariable("idTemporada") int idTemporada){
 			
-			List<JugadorDraft> listJugadores = draftService.findJugadoresDraftByIdEquipo(idEquipo, idTorneo);
+			List<JugadorDraft> listJugadores = draftService.findJugadoresDraftByIdEquipo(idEquipo, idTemporada);
 			
 			if(listJugadores.isEmpty()){
 				return new ResponseEntity<List<JugadorDraft>>(HttpStatus.NO_CONTENT);
@@ -125,7 +125,7 @@ public class DraftController {
 			return new ResponseEntity<List<JugadorDraft>>(listJugadores, HttpStatus.OK);
 		}
 	 
-	 @RequestMapping(value="/pc/initialDraft/{idJugador}/{monto}/{namager}/{observaciones}/{idEquipo}/{idTorneo}",
+	 @RequestMapping(value="/pc/initialDraft/{idJugador}/{monto}/{namager}/{observaciones}/{idEquipo}/{idTemporada}",
 			 method = RequestMethod.POST,
 				headers="Accept=application/json")
 		@ResponseBody
@@ -135,7 +135,7 @@ public class DraftController {
 				@PathVariable("namager") String manager,
 				@PathVariable("observaciones") String observaciones,
 				@PathVariable("idEquipo") int idEquipo,
-				@PathVariable("idTorneo") int idTorneo
+				@PathVariable("idTemporada") int idTemporada
 				){
 			
 		 ResponseData response = new ResponseData();	
@@ -143,7 +143,7 @@ public class DraftController {
 			 
 //			 System.out.println(request.getUserPrincipal().getName());
 		 
-			response = draftService.initialDraft(id,monto,manager,observaciones,idEquipo, idTorneo);
+			response = draftService.initialDraft(id,monto,manager,observaciones,idEquipo, idTemporada);
 		 }catch(Exception e){
 			 System.out.println("Error]:"+e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
@@ -153,7 +153,7 @@ public class DraftController {
 			
 			return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 		}
-	 @RequestMapping(value="/pc/updateDraft/{idJugador}/{monto}/{namager}/{observaciones}/{montoInicial}/{idEquipo}/{idTorneo}",
+	 @RequestMapping(value="/pc/updateDraft/{idJugador}/{monto}/{namager}/{observaciones}/{montoInicial}/{idEquipo}/{idTemporada}",
 			 method = RequestMethod.POST,
 			 headers="Accept=application/json")
 	 @ResponseBody
@@ -164,13 +164,13 @@ public class DraftController {
 			 @PathVariable("observaciones") String observaciones,
 			 @PathVariable("montoInicial") int montoInicial,
 			 @PathVariable("idEquipo") int idEquipo,
-			 @PathVariable("idTorneo") int idTorneo
+			 @PathVariable("idTemporada") int idTemporada
 			 ){
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
 			 
-			 response = draftService.updateDraft(id,monto,manager,observaciones,montoInicial,idEquipo,  idTorneo);
+			 response = draftService.updateDraft(id,monto,manager,observaciones,montoInicial,idEquipo,  idTemporada);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
@@ -181,20 +181,20 @@ public class DraftController {
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
 	 
-	 @RequestMapping(value="/pc/confirmPlayer/{idJugador}/{idEquipo}/{idTorneo}",
+	 @RequestMapping(value="/pc/confirmPlayer/{idJugador}/{idEquipo}/{idTemporada}",
 			 method = RequestMethod.POST,
 			 headers="Accept=application/json")
 	 @ResponseBody
 	 public ResponseEntity<ResponseData> confirmPlayer(
 			 @PathVariable("idJugador") long id,
 			 @PathVariable("idEquipo") int idEquipo,
-			 @PathVariable("idTorneo") int idTorneo
+			 @PathVariable("idTemporada") int idTemporada
 			 ){
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
 			 System.out.println( "jugador:"+id+" Equipo]:"+idEquipo);
-			 response = draftService.confirmPlayer(id,idEquipo,idTorneo);
+			 response = draftService.confirmPlayer(id,idEquipo,idTemporada);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());

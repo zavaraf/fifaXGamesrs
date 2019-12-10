@@ -24,7 +24,7 @@ angular.module('myApp')
     actualizar();
     
     function buscarJugadoresdraft() {
-    	DraftPCService.buscarJugadoresdraft(CONFIG.VARTORNEO.id).then(function(d) {
+    	DraftPCService.buscarJugadoresdraft(CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("Jugadores Draft]:",d);
 			self.jugadoresDraft = d;
 		}, function(errResponse) {
@@ -34,7 +34,7 @@ angular.module('myApp')
     function findTeam(){
 		var team = 1;
 		console.log('Equipo a Buscar]:'+team);
-		TeamService.findEquipoAll(team, CONFIG.VARTORNEO.id)
+		TeamService.findEquipoAll(team, CONFIG.VARTEMPORADA.id)
             .then(
             function(d) {
                 self.equipo = d;
@@ -64,7 +64,7 @@ angular.module('myApp')
     	console.log('monto:'+monto+' manager]:'+manager+' obser]:'+equipo.nombre+ ' Jugador:',jug);
 //    	self.isError= !self.isError  
     	if(self.isUpdate == false){
-	    	DraftPCService.createInitialDraft(jug.id,monto,manager,equipo.nombre,equipo.id, CONFIG.VARTORNEO.id).then(function(d) {
+	    	DraftPCService.createInitialDraft(jug.id,monto,manager,equipo.nombre,equipo.id, CONFIG.VARTEMPORADA.id).then(function(d) {
 				console.log("initial Draft]:",d);
 				//self.jugadoresDraft = d;
 				
@@ -81,7 +81,7 @@ angular.module('myApp')
 				console.error('Error while create initial Draft');
 			});
     	}else{
-    		DraftPCService.updateDraft(jug.id,monto,manager,equipo.nombre,jug.ofertaFinal,equipo.id, CONFIG.VARTORNEO.id).then(function(d) {
+    		DraftPCService.updateDraft(jug.id,monto,manager,equipo.nombre,jug.ofertaFinal,equipo.id, CONFIG.VARTEMPORADA.id).then(function(d) {
 				console.log("update Draft]:",d);
 				//self.jugadoresDraft = d;
 				
@@ -102,8 +102,8 @@ angular.module('myApp')
     	
 	}
     function buscarEquipos() {
-    	console.log("[draftPC]  idTorneo]:",CONFIG.VARTORNEO.id);
-		EquipoService.buscarTodos(CONFIG.VARTORNEO.id).then(function(d) {
+    	console.log("[draftPC]  idTemporada]:",CONFIG.VARTEMPORADA.id);
+		EquipoService.buscarTodos(CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("Equipos]:",d);
 			self.equipos = d;
 		}, function(errResponse) {

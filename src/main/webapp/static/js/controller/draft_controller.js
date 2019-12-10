@@ -29,7 +29,7 @@ angular.module('myApp')
     	$scope.showDraftV = op
     }
     function buscarTodos() {
-    	DraftService.buscarTodos(CONFIG.VARTORNEO.id).then(function(d) {
+    	DraftService.buscarTodos(CONFIG.VARTEMPORADA.id).then(function(d) {
 			self.jugadoresPres = d;
 			console.log("JugadoresPrestados]:",d);
 		}, function(errResponse) {
@@ -38,7 +38,7 @@ angular.module('myApp')
 	}
     
     function crearPrestamo(user,idEquipo) {
-    	DraftService.crearPrestamo(user,idEquipo,CONFIG.VARTORNEO.id).then(buscarTodos,
+    	DraftService.crearPrestamo(user,idEquipo,CONFIG.VARTEMPORADA.id).then(buscarTodos,
 				function(errResponse) {
 					console.error('Error while creating User');
 				});
@@ -50,8 +50,8 @@ angular.module('myApp')
     	});
     }
     function buscarEquipos() {
-    	console.log("[draft_controller]  idTorneo]:",CONFIG.VARTORNEO.id);
-		EquipoService.buscarTodos(CONFIG.VARTORNEO.id).then(function(d) {
+    	console.log("[draft_controller]  idTemporada]:",CONFIG.VARTEMPORADA.id);
+		EquipoService.buscarTodos(CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("Equipos]:",d);
 			self.equipos = d;
 			self.equiposP = d;

@@ -48,9 +48,9 @@ angular.module('myApp')
 		buscarRoles()
 	}
 	function buscarEquipos() {
-		var idTorneo = CONFIG.VARTORNEO.id
-		console.log("[AdminUserController]  idTorneo]:",idTorneo);
-		EquipoService.buscarTodos(idTorneo).then(function(d) {
+		var idTemporada = CONFIG.VARTEMPORADA.id
+		console.log("[AdminUserController]  idTemporada]:",idTemporada);
+		EquipoService.buscarTodos(idTemporada).then(function(d) {
 			console.log("[AdminUserController]  Equipos]:",d);
 			self.equipos = d;
 		}, function(errResponse) {

@@ -22,7 +22,7 @@ public interface SponsorDao {
 	
 	public List<CatalogoFinanciero> getCatalogoFinanzasByID(Equipo equipo);
 
-	void createPresupuesto(Equipo equipo, long monto,long montoFinal,long montoFinalSponsor, int idTorneo);
+	void createPresupuesto(Equipo equipo, long monto,long montoFinal,long montoFinalSponsor, int idTemporada);
 
 	void updateObjetivosByIdEquipo(Equipo equipoBD, String objetivos);
 

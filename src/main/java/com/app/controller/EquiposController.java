@@ -27,12 +27,12 @@ public class EquiposController {
 	@Autowired 
 	EquipoService equipoService;
 	
-	@RequestMapping(value="/buscarTodos/{idTorneo}",method = RequestMethod.GET,
+	@RequestMapping(value="/buscarTodos/{idTemporada}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<List<Equipo>> ListEquipos(@PathVariable("idTorneo") long idtorneo){
+	public ResponseEntity<List<Equipo>> ListEquipos(@PathVariable("idTemporada") long idTemporada){
 		
-		List<Equipo> listEquipos = equipoService.buscarTodos(idtorneo);
+		List<Equipo> listEquipos = equipoService.buscarTodos(idTemporada);
 		
 		if(listEquipos.isEmpty()){
 			return new ResponseEntity<List<Equipo>>(HttpStatus.NO_CONTENT);
@@ -54,24 +54,24 @@ public class EquiposController {
 	}
 	
 //-------------------Retrieve Single User--------------------------------------------------------
-	@RequestMapping(value = "/team/{id}/{idTorneo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/team/{id}/{idTemporada}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Equipo> getTeam(
     		@PathVariable("id") long id,
-    		@PathVariable("idTorneo") int idTorneo
+    		@PathVariable("idTemporada") int idTemporada
     		) {
         System.out.println("Fetching User with id " + id);
-        Equipo equipo = equipoService.findByIdAll(id, idTorneo);
+        Equipo equipo = equipoService.findByIdAll(id, idTemporada);
         if (equipo == null) {
             System.out.println("Equipo with id " + id + " not found");
             return new ResponseEntity<Equipo>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Equipo>(equipo, HttpStatus.OK);
     }
-	@RequestMapping(value = "/team/all/{id}/{idTorneo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/team/all/{id}/{idTemporada}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Equipo> getTeamAll(@PathVariable("id") long id,
-    		@PathVariable("idTorneo") int idTorneo) {
+    		@PathVariable("idTemporada") int idTemporada) {
 		System.out.println("Fetching User with id " + id);
-		Equipo equipo = equipoService.findEquipoByIdAll(id, idTorneo);
+		Equipo equipo = equipoService.findEquipoByIdAll(id, idTemporada);
 		if (equipo == null) {
 			System.out.println("Equipo with id " + id + " not found");
 			return new ResponseEntity<Equipo>(HttpStatus.NOT_FOUND);

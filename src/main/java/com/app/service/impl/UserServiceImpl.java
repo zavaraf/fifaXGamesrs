@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	        return null;
 	    }
 	     
-	    public void saveUser(User user,int idTorneo) {
+	    public void saveUser(User user,int idTemporada) {
 	        user.setId(counter.incrementAndGet());
 	        users.add(user);
 	    }
@@ -88,12 +88,12 @@ public class UserServiceImpl implements UserService {
 			return userDao.findAllPlayers();
 		}
 
-		public void savePlayer(User user,int idTorneo) {
-			userDao.savePlayer(user,idTorneo);			
+		public void savePlayer(User user,int idTemporada) {
+			userDao.savePlayer(user,idTemporada);			
 		}
 
-		public void updatePlayer(User currentUser,int idTorneo) {
-			userDao.updatePlayer(currentUser,idTorneo);
+		public void updatePlayer(User currentUser,int idTemporada) {
+			userDao.updatePlayer(currentUser,idTemporada);
 			
 		}
 

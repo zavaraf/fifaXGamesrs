@@ -254,7 +254,7 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 						+" join tipoconcepto tipo on tipo.idTipoConcepto = cat.TipoConcepto_idTipoConcepto "
 						+" where con.DatosFinancieros_Equipos_idEquipo = " + equipo.getId()
 						+" and con.DatosFinancieros_idDatosFinancieros =  " + equipo.getDatosFinancieros().getId()
-						+" and con.DatosFinancieros_Torneos_idTorneo =  " + equipo.getTorneo().getId();
+						+" and con.datosfinancieros_tempodada_idTemporada =  " + equipo.getTemporada().getId();
 								
 		Collection catalogos = jdbcTemplate.query(
                 query
@@ -300,7 +300,7 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 					  );
 	}
 
-	public void createPresupuesto(Equipo equipo, long monto,long montoFinal,long montoFinalSponsor, int idTorneo) {
+	public void createPresupuesto(Equipo equipo, long monto,long montoFinal,long montoFinalSponsor, int idTemporada) {
 		
 		
 		// idEquipo,idSponsor,montoInicial,montoFinal,
@@ -314,23 +314,23 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 			    monto,
 			    montoFinal,
 			    montoFinalSponsor,
-			    idTorneo
+			    idTemporada
 			  );
 		
 	}
 
 	public void updateObjetivosByIdEquipo(Equipo equipo, String objetivos) {
-		// createOrUpdateObjetivos(IN `json` JSON,IN idEquipo INT, IN idSponsor INT,IN idTorneo INT)
+		// createOrUpdateObjetivos(IN `json` JSON,IN idEquipo INT, IN idSponsor INT,IN idTemporada INT)
 				String query = "call fifaxgamersbd.createOrUpdateObjetivos(?,?,?,?)";
 				
 				System.out.println("createOrUpdatePresupuesto("+objetivos+","+equipo.getId()+""
-						+","+equipo.getDatosFinancieros().getSponsor().getId() +","+equipo.getTorneo().getId()+ ")");
+						+","+equipo.getDatosFinancieros().getSponsor().getId() +","+equipo.getTemporada().getId()+ ")");
 				
 				jdbcTemplate.update(query,
 					    objetivos,
 					    equipo.getId(),
 					    equipo.getDatosFinancieros().getSponsor().getId(),
-					    equipo.getTorneo().getId()
+					    equipo.getTemporada().getId()
 					  );
 		
 	}

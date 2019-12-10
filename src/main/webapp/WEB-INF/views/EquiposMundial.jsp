@@ -89,9 +89,9 @@
 <!-- 	                                  <select ng-model="selectedDiv" class="lastname form-control input-sm" > -->
 <!-- 										<option   ng-repeat="x in ctrl.divisiones" value="{{x.id}}">{{x.nombre}}</option> -->
 									<select  ng-model="selectedDiv" ng-options="division as division.nombre for division in ctrl.divisiones track by division.id" class="lastname form-control input-sm">
-									        <option value="">--Elige opcion--</option>
-									      </select>
+									     <option value="">--Elige opcion--</option>
 									</select>
+									
 									
 	                              </div>
                           </div>

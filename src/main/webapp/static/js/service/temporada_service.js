@@ -1,18 +1,18 @@
 'use strict';
  
-angular.module('myApp').factory('TorneoService', ['$http', '$q','CONFIG', function($http, $q,CONFIG){
+angular.module('myApp').factory('TemporadaService', ['$http', '$q','CONFIG', function($http, $q,CONFIG){
  
 	var IP = CONFIG.PROD == false ? CONFIG.IP_DES : CONFIG.IP_PROD
-    var REST_SERVICE_URI_E = IP+'/rest/torneos/';
+    var REST_SERVICE_URI_E = IP+'/rest/temporada/';
  
     var factory = {
-    	buscarTorneos   : buscarTorneos
+    	buscarTemporada   : buscarTemporada
     };
  
     return factory;
  
  
-    function buscarTorneos() {
+    function buscarTemporada() {
         var deferred = $q.defer();
         const headerDict = {
         		  'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ angular.module('myApp').factory('TorneoService', ['$http', '$q','CONFIG', functi
         		  headers: new Headers(headerDict), 
         		};
         
-        $http.get(REST_SERVICE_URI_E+'buscarTorneos',requestOptions)
+        $http.get(REST_SERVICE_URI_E+'buscarTemporada',requestOptions)
             .then(
             function (response) {
             	console.log(response.data)

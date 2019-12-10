@@ -26,12 +26,12 @@ public class DraftServiceImpl implements DraftService {
 	@Autowired
 	SponsorServiceImpl sponsorService;
 
-	public List<User> buscarTodos(int idTorneo) {
-		return draftDao.buscarTodos( idTorneo);
+	public List<User> buscarTodos(int idTemporada) {
+		return draftDao.buscarTodos( idTemporada);
 	}
 
-	public void crearPrestamo(User jugador, long id, int idTorneo) {
-		draftDao.crearPrestamo(jugador, id,idTorneo);
+	public void crearPrestamo(User jugador, long id, int idTemporada) {
+		draftDao.crearPrestamo(jugador, id,idTemporada);
 
 	}
 
@@ -40,22 +40,22 @@ public class DraftServiceImpl implements DraftService {
 
 	}
 
-	public List<User> buscarTodosByidEquipo(long idEquipo,int idTorneo) {
+	public List<User> buscarTodosByidEquipo(long idEquipo,int idTemporada) {
 
-		return draftDao.buscarTodosByidEquipo(idEquipo, idTorneo);
+		return draftDao.buscarTodosByidEquipo(idEquipo, idTemporada);
 	}
 
-	public List<JugadorDraft> findJugadoresDraft(int idTorneo) {
+	public List<JugadorDraft> findJugadoresDraft(int idTemporada) {
 
-		return draftDao.findJugadoresDraft(idTorneo);
+		return draftDao.findJugadoresDraft(idTemporada);
 	}
 
 	public ResponseData initialDraft(long id, int monto, String manager, 
-			String observaciones, int idEquipo, int idTorneo) {
+			String observaciones, int idEquipo, int idTemporada) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		ResponseData response = new ResponseData();
 
-		map = draftDao.initialDraft(id, monto, manager, observaciones, idEquipo, idTorneo);
+		map = draftDao.initialDraft(id, monto, manager, observaciones, idEquipo, idTemporada);
 
 		
 
@@ -69,10 +69,10 @@ public class DraftServiceImpl implements DraftService {
 			if(status.equals("0")){
 				Equipo equipoBD = new Equipo();
 
-				equipoBD = equipoDao.findByIdAll(idEquipo, idTorneo);
+				equipoBD = equipoDao.findByIdAll(idEquipo, idTemporada);
 				if (equipoBD.getDatosFinancieros() != null) {
 					
-					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTorneo);
+					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTemporada);
 				}
 			}
 		}
@@ -81,11 +81,11 @@ public class DraftServiceImpl implements DraftService {
 	}
 
 	public ResponseData updateDraft(long id, int monto, String manager, String observaciones, int montoFinal,
-			int idEquipo, int idTorneo) {
+			int idEquipo, int idTemporada) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		ResponseData response = new ResponseData();
 
-		map = draftDao.updateDraft(id, monto, manager, observaciones, montoFinal, idEquipo,idTorneo);
+		map = draftDao.updateDraft(id, monto, manager, observaciones, montoFinal, idEquipo,idTemporada);
 		
 		
 
@@ -101,10 +101,10 @@ public class DraftServiceImpl implements DraftService {
 			if(status.equals("0")){
 				Equipo equipoBD = new Equipo();
 
-				equipoBD = equipoDao.findByIdAll(idEquipo,idTorneo);
+				equipoBD = equipoDao.findByIdAll(idEquipo,idTemporada);
 				if (equipoBD.getDatosFinancieros() != null) {
 					
-					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTorneo);
+					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTemporada);
 				}
 			}
 		}
@@ -113,16 +113,16 @@ public class DraftServiceImpl implements DraftService {
 	}
 
 	@Override
-	public List<JugadorDraft> findJugadoresDraftByIdEquipo(int idEquipo, int idTorneo) {
-		return draftDao.findJugadoresDraftByIdEquipo(idEquipo,  idTorneo);
+	public List<JugadorDraft> findJugadoresDraftByIdEquipo(int idEquipo, int idTemporada) {
+		return draftDao.findJugadoresDraftByIdEquipo(idEquipo,  idTemporada);
 	}
 
 	@Override
-	public ResponseData confirmPlayer(long id, int idEquipo, int idTorneo) {
+	public ResponseData confirmPlayer(long id, int idEquipo, int idTemporada) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		ResponseData response = new ResponseData();
 
-		map = draftDao.confirmPlayer(id, idEquipo,idTorneo);
+		map = draftDao.confirmPlayer(id, idEquipo,idTemporada);
 		
 		
 
@@ -138,10 +138,10 @@ public class DraftServiceImpl implements DraftService {
 			if(status.equals("0")){
 				Equipo equipoBD = new Equipo();
 				
-				equipoBD = equipoDao.findByIdAll(idEquipo,idTorneo);
+				equipoBD = equipoDao.findByIdAll(idEquipo,idTemporada);
 				if (equipoBD.getDatosFinancieros() != null) {
 					
-					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTorneo);
+					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTemporada);
 				}
 			}
 		}

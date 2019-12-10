@@ -16,10 +16,10 @@ angular.module('myApp').factory('DraftService', ['$http', '$q','CONFIG', functio
  
     return factory;
  
-    function buscarTodos(idTorneo) {
+    function buscarTodos(idTemporada) {
         var deferred = $q.defer();
         
-        $http.get(REST_SERVICE_URI+'buscarTodos/'+idTorneo)
+        $http.get(REST_SERVICE_URI+'buscarTodos/'+idTemporada)
             .then(
             function (response) {
                console.log(response.data)
@@ -33,10 +33,10 @@ angular.module('myApp').factory('DraftService', ['$http', '$q','CONFIG', functio
         return deferred.promise;
     }
     
-    function crearPrestamo(jugador,idEquipo,idTorneo) {
+    function crearPrestamo(jugador,idEquipo,idTemporada) {
         var deferred = $q.defer();
         
-        var request = REST_SERVICE_URI+idEquipo+"/"+idTorneo;
+        var request = REST_SERVICE_URI+idEquipo+"/"+idTemporada;
         $http.post(request,jugador)
             .then(
             function (response) {

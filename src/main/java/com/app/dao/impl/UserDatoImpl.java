@@ -162,7 +162,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 	
 }
 
-	public void savePlayer(User player,int idTorneo) {
+	public void savePlayer(User player,int idTemporada) {
 		System.out.println("Plyer]:"+player.toString());
 		System.out.println("Equipo]:"+player.toString());
 		//NOmbre
@@ -178,13 +178,13 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 			    player.getRaiting(),
 			    player.getEquipo().getId(),
 			    player.getLink(),
-			    idTorneo
+			    idTemporada
 			  );
 		
 		
 	}
 
-	public void updatePlayer(User currentUser, int idTorneo) {
+	public void updatePlayer(User currentUser, int idTemporada) {
 		
 		System.out.println("------->Plyer]:"+currentUser.toString());
 		System.out.println("Equipo]:"+currentUser.toString());
@@ -202,7 +202,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 				currentUser.getEquipo().getId(),
 				currentUser.getId(),
 				currentUser.getLink(),
-				idTorneo
+				idTemporada
 			  );
 	}
 

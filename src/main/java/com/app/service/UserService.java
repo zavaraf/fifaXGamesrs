@@ -24,9 +24,9 @@ public interface UserService {
 
 		List<User> findAllPlayers();
 
-		void savePlayer(User user,int idTorneo);
+		void savePlayer(User user,int idTemporada);
 
-		void updatePlayer(User currentUser,int idTorneo);
+		void updatePlayer(User currentUser,int idTemporada);
 
 		List<User> findAllPlayersByIdEquipo(long id);
 		List<User> findAllPlayersByIdEquipo(long id,long idVisita);

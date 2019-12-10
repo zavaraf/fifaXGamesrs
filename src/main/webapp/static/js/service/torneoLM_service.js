@@ -6,7 +6,7 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
 
  
 	var IP = CONFIG.PROD == false ? CONFIG.IP_DES : CONFIG.IP_PROD
-    var REST_SERVICE_URI_E = IP+'/rest/torneos/lm/';
+    var REST_SERVICE_URI_E = IP+'/rest/temporada/lm/';
  
     var factory = {
     		getTablaGeneral   : getTablaGeneral,
@@ -22,10 +22,12 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     return factory;
  
  
+    
+    
     function getTablaGeneral(idDivision) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        $http.get(REST_SERVICE_URI_E+'getTablaGeneral'+"/"+CONFIG.VARTORNEO.id+'/'+idDivision)
+        $http.get(REST_SERVICE_URI_E+'getTablaGeneral'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision)
             .then(
             function (response) {
             	console.log(response.data)
@@ -42,7 +44,9 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     function getJornadas(idDivision,activa) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        $http.get(REST_SERVICE_URI_E+'getJornadas'+"/"+CONFIG.VARTORNEO.id+'/'+idDivision+"/"+activa)
+        var url = REST_SERVICE_URI_E+'getJornadas'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision+"/"+activa
+        console.log("utl]:"+ url)
+        $http.get(url)
             .then(
             function (response) {
             	console.log(response.data)
@@ -132,7 +136,9 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     function getGenerarJornadas(idDivision) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        $http.get(REST_SERVICE_URI_E+'getArmarJornadasInicial'+"/"+CONFIG.VARTORNEO.id+'/'+idDivision)
+        var url = REST_SERVICE_URI_E+'getArmarJornadasInicial'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision
+        console.log(url);
+        $http.get(url)
             .then(
             function (response) {
             	console.log(response.data)
@@ -149,7 +155,7 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     function addJornadas(idDivision,jornadas) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        $http.post(REST_SERVICE_URI_E+'addJornadas'+"/"+CONFIG.VARTORNEO.id+'/'+idDivision,jornadas)
+        $http.post(REST_SERVICE_URI_E+'addJornadas'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision,jornadas)
             .then(
             function (response) {
             	console.log(response.data)

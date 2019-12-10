@@ -20,10 +20,10 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
 	    };
 	return factory;
 	
-	function findAll(teamID,idTorneo) {
+	function findAll(teamID,idTemporada) {
 		
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+teamID+"/"+idTorneo)
+        $http.get(REST_SERVICE_URI+teamID+"/"+idTemporada)
             .then(
             function (response) {
             	console.log(response.data)
@@ -36,10 +36,10 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
         );
         return deferred.promise;
     }
-	function findEquipoAll(teamID, idTorneo) {
+	function findEquipoAll(teamID, idTemporada) {
 		
 		var deferred = $q.defer();
-		$http.get(REST_SERVICE_URI+"all/"+teamID+"/"+idTorneo)
+		$http.get(REST_SERVICE_URI+"all/"+teamID+"/"+idTemporada)
 		.then(
 				function (response) {
 					console.log(response.data)
@@ -102,10 +102,10 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
 		);
 		return deferred.promise;
 	}
-	function submitFinanzas(catFinanzas,monto,equipo,idTorneo) {
+	function submitFinanzas(catFinanzas,monto,equipo,idTemporada) {
 		
 		var deferred = $q.defer();
-		$http.post(REST_SERVICE_URIS+"finanzas/"+catFinanzas.id+"/"+monto+"/"+idTorneo,equipo)
+		$http.post(REST_SERVICE_URIS+"finanzas/"+catFinanzas.id+"/"+monto+"/"+idTemporada,equipo)
 		.then(
 				function (response) {
 					console.log(response.data)
@@ -118,10 +118,10 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
 		);
 		return deferred.promise;
 	}
-	function submitDatos(monto,equipo,idTorneo) {
+	function submitDatos(monto,equipo,idTemporada) {
 		
 		var deferred = $q.defer();
-		$http.post(REST_SERVICE_URIS+"finanzas/presupuesto/"+monto+"/"+idTorneo,equipo)
+		$http.post(REST_SERVICE_URIS+"finanzas/presupuesto/"+monto+"/"+idTemporada,equipo)
 		.then(
 				function (response) {
 					console.log(response.data)
@@ -134,11 +134,11 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
 		);
 		return deferred.promise;
 	}
-	function guardarObj(objetivos,idEquipo,idTorneo) {
+	function guardarObj(objetivos,idEquipo,idTemporada) {
 		
 		var deferred = $q.defer();
 		var myJSON = JSON.stringify(objetivos)
-		$http.post(REST_SERVICE_URIS+"finanzas/presupuesto/objetivos/"+idEquipo+"/"+idTorneo,myJSON)
+		$http.post(REST_SERVICE_URIS+"finanzas/presupuesto/objetivos/"+idEquipo+"/"+idTemporada,myJSON)
 		.then(
 				function (response) {
 					console.log(response.data)
@@ -152,9 +152,9 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
 		return deferred.promise;
 	}
 	
-	function findPresByIdEquipo(idEquipo,idTorneo){
+	function findPresByIdEquipo(idEquipo,idTemporada){
     	var deferred = $q.defer();
-    	var request = REST_SERVICE_URIDRAFT+"buscarTodos/"+idEquipo+"/"+idTorneo;
+    	var request = REST_SERVICE_URIDRAFT+"buscarTodos/"+idEquipo+"/"+idTemporada;
     	$http.get(request)
     	.then(
     			function (response) {

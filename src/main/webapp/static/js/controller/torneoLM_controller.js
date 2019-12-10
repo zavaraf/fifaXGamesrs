@@ -27,9 +27,14 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.getJornadaActual = getJornadaActual;
 	self.setJornadaActual = setJornadaActual;
 	self.showEditJornada = showEditJornada;
+	self.getTorneos = getTorneos;
 	
 	
 	buscarDivisiones()
+	
+	function getTorneos(){
+		return CONFIG.VARTEMPORADA.torneos;
+	}
 	
 	function getJornadaActual (){
 		self.jornadaSelect = [];
@@ -210,7 +215,7 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 				console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",d)
 				self.divisiones = d;
 				if(self.divisiones!= null && self.divisiones.length >0){
-					 self.divisionSelect = self.divisiones[0];
+					self.divisionSelect = (CONFIG.VARTEMPORADA.torneos != null && CONFIG.VARTEMPORADA.torneos.length>0) ? CONFIG.VARTEMPORADA.torneos[0] : null
 				 }
 				
 				getTablaGeneral()
