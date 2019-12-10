@@ -92,7 +92,6 @@
                                              id="nomcom" class="lastname form-control input-sm"
                                              placeholder="Nombre completo" required ng-minlength="3" />
                                           <div class="has-error" ng-show="myFormJuga.$dirty">
-                                             <span ng-show="myFormJuga.nomcom.$error.required">Es
                                              requerido</span> <span ng-show="myFormJuga.nomcom.$error.minlength">La
                                              longitud minima es 3</span> <span ng-show="myFormJuga.nomcom.$invalid">Este
                                              campo es Invalido</span>
