@@ -5,7 +5,7 @@
 angular.module('myApp')
 .constant('CONFIG', {
     'VARTEMPORADA' : '',
-    'PROD': true,
+    'PROD': false,
     'IP_PROD': 'http://fifaapp-env-1.kvdjpbscsv.us-east-2.elasticbeanstalk.com',
     'IP_DES':'http://localhost:8081/fifaApp'
 })
