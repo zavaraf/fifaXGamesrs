@@ -85,23 +85,6 @@
                                  <input type="hidden" ng-model="ctrlJuga.player.id" />
                                  <div class="row">
                                     <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="nomcom">Nombre
-                                       Completo</label>
-                                       <div class="col-md-7">
-                                          <input type="text" ng-model="ctrlJuga.player.nombreCompleto"
-                                             id="nomcom" class="lastname form-control input-sm"
-                                             placeholder="Nombre completo" required ng-minlength="3" />
-                                          <div class="has-error" ng-show="myFormJuga.$dirty">
-                                             <span ng-show="myFormJuga.nomcom.$error.required">Es
-                                             requerido</span> <span ng-show="myFormJuga.nomcom.$error.minlength">La
-                                             longitud minima es 3</span> <span ng-show="myFormJuga.nomcom.$invalid">Este
-                                             campo es Invalido</span>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="row">
-                                    <div class="form-group col-md-12">
                                        <label class="col-md-2 control-lable" for="sobreNom">Nombre
                                        Corto</label>
                                        <div class="col-md-7">
@@ -114,6 +97,23 @@
                                              longitud minima es 3</span> <span
                                                 ng-show="myFormJuga.sobreNom.$invalid">Este campo es
                                              Invalido</span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                       <label class="col-md-2 control-lable" for="nomcom">Nombre
+                                       Completo</label>
+                                       <div class="col-md-7">
+                                          <input type="text" ng-model="ctrlJuga.player.nombreCompleto"
+                                             id="nomcom" class="lastname form-control input-sm"
+                                             placeholder="Nombre completo" required ng-minlength="3" />
+                                          <div class="has-error" ng-show="myFormJuga.$dirty">
+                                             <span ng-show="myFormJuga.nomcom.$error.required">Es
+                                             requerido</span> <span ng-show="myFormJuga.nomcom.$error.minlength">La
+                                             longitud minima es 3</span> <span ng-show="myFormJuga.nomcom.$invalid">Este
+                                             campo es Invalido</span>
                                           </div>
                                        </div>
                                     </div>
