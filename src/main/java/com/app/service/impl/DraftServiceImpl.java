@@ -35,8 +35,8 @@ public class DraftServiceImpl implements DraftService {
 
 	}
 
-	public void deletePresById(long id, long idEquipo) {
-		draftDao.deletePresById(id, idEquipo);
+	public void deletePresById(long id, long idEquipo,int idTemporada) {
+		draftDao.deletePresById(id, idEquipo, idTemporada);
 
 	}
 

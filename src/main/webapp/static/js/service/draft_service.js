@@ -71,13 +71,13 @@ angular.module('myApp').factory('DraftService', ['$http', '$q','CONFIG', functio
     function deletePrestamo(id) {
         var deferred = $q.defer();
         
-        $http.delete(REST_SERVICE_URI+"player/"+id)
+        $http.delete(REST_SERVICE_URI+"player/"+id+"/"+CONFIG.VARTEMPORADA.id)
             .then(
             function (response) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
-                console.error('Error while deleting User');
+                console.error('Error while deletePrestamo ');
                 deferred.reject(errResponse);
             }
         );

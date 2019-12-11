@@ -15,7 +15,7 @@ public interface DraftService {
 
 	void crearPrestamo(User jugador, long id,int idTemporada);
 
-	void deletePresById(long id, long idEquipo);
+	void deletePresById(long id, long idEquipo,int idTemporada);
 
 	List<User> buscarTodosByidEquipo(long idEquipo,int idTemporada);
 

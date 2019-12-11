@@ -91,12 +91,12 @@ public class DraftDaoImpl implements DraftDao {
 
 	}
 
-	public void deletePresById(long id, long idEquipo) {
+	public void deletePresById(long id, long idEquipo,int idTemporada) {
 		System.out.println("Crear prestamo call createPrestamo(" + id + "," + idEquipo + ",2);");
 
 		String query = "call fifaxgamersbd.createPrestamo(?,?,?,2)";
 
-		jdbcTemplate.update(query, id, idEquipo);
+		jdbcTemplate.update(query, id, idEquipo,idTemporada);
 
 	}
 

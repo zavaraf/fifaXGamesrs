@@ -75,8 +75,9 @@ public class DraftController {
 	        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	    }
 	 
-	 @RequestMapping(value = "/player/{id}", method = RequestMethod.DELETE)
-	    public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
+	 @RequestMapping(value = "/player/{id}/{idTemporada}", method = RequestMethod.DELETE)
+	    public ResponseEntity<User> deleteUser(@PathVariable("id") long id,
+	    						@PathVariable("idTemporada") int idTemporada) {
 	        System.out.println("Fetching & Deleting User with id " + id);
 	  
 	        User user = userService.findById(id);
@@ -85,7 +86,7 @@ public class DraftController {
 	            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	        }
 	  
-	        draftService.deletePresById(id,user.getEquipo().getId());
+	        draftService.deletePresById(id,user.getEquipo().getId(),idTemporada);
 	        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 	    }
 	 
