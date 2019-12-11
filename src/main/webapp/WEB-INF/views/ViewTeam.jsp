@@ -85,22 +85,6 @@
                                  <input type="hidden" ng-model="ctrlJuga.player.id" />
                                  <div class="row">
                                     <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="nomcom">Nombre
-                                       Completo</label>
-                                       <div class="col-md-7">
-                                          <input type="text" ng-model="ctrlJuga.player.nombreCompleto"
-                                             id="nomcom" class="lastname form-control input-sm"
-                                             placeholder="Nombre completo" required ng-minlength="3" />
-                                          <div class="has-error" ng-show="myFormJuga.$dirty">
-                                             requerido</span> <span ng-show="myFormJuga.nomcom.$error.minlength">La
-                                             longitud minima es 3</span> <span ng-show="myFormJuga.nomcom.$invalid">Este
-                                             campo es Invalido</span>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="row">
-                                    <div class="form-group col-md-12">
                                        <label class="col-md-2 control-lable" for="sobreNom">Nombre
                                        Corto</label>
                                        <div class="col-md-7">
@@ -113,6 +97,23 @@
                                              longitud minima es 3</span> <span
                                                 ng-show="myFormJuga.sobreNom.$invalid">Este campo es
                                              Invalido</span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                       <label class="col-md-2 control-lable" for="nomcom">Nombre
+                                       Completo</label>
+                                       <div class="col-md-7">
+                                          <input type="text" ng-model="ctrlJuga.player.nombreCompleto"
+                                             id="nomcom" class="lastname form-control input-sm"
+                                             placeholder="Nombre completo" required ng-minlength="3" />
+                                          <div class="has-error" ng-show="myFormJuga.$dirty">
+                                             <span ng-show="myFormJuga.nomcom.$error.required">Es
+                                             requerido</span> <span ng-show="myFormJuga.nomcom.$error.minlength">La
+                                             longitud minima es 3</span> <span ng-show="myFormJuga.nomcom.$invalid">Este
+                                             campo es Invalido</span>
                                           </div>
                                        </div>
                                     </div>
@@ -509,8 +510,11 @@
 			    <div class="col-sm">
 			    <form ng-submit="ctrl.submitDatos(ctrl.preInicial)" name="myFormDat" class="form-horizontal">
 			    <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+<!-- 			    <button type="button" ng-click="ctrl.showEditDat()" class="btn btn-info btn-sm"  -->
+<%-- 			    ng-disabled="ctrl.showEdit( '${user.authorities}',ctrl.equipo.id,'${user.idEquipo}') == false" --%>
+<!-- 			     ng-show="!ctrl.showInicial" >Editar</button> -->
 			    <button type="button" ng-click="ctrl.showEditDat()" class="btn btn-info btn-sm" 
-			    ng-disabled="ctrl.showEdit( '${user.authorities}',ctrl.equipo.id,'${user.idEquipo}') == false"
+			    ng-disabled="ctrl.showEdit( '${user.authorities}',ctrl.equipo.id,'1') == false"
 			     ng-show="!ctrl.showInicial" >Editar</button>
 			     </sec:authorize>
 				<button type="submit" ng-click="ctrl.showGuarDat()" class="btn btn-info btn-sm" 
