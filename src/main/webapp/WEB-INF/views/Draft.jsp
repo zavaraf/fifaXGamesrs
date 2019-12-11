@@ -156,7 +156,7 @@
                               <th>ID.</th>
                               <th>Nombre</th>
                               <th>Equipo</th>
-                              <th>Equipo a Prestao</th>
+                              <th>Equipo a Prestamo</th>
                           </tr>
                       </thead>
                       <tbody>

@@ -129,7 +129,7 @@
 			</div>
 		</div>
 	
-  		<div class="panel-heading"><span class="lead">FIFA XGAMERS Draf PC</span></div>
+  		<div class="panel-heading"><span class="lead">FIFA XGAMERS Draft PC</span></div>
 <!--   		<button type="button" class="btn btn-info btn-sm" data-toggle="modal"  -->
 <!-- 			data-target="#myModalDraf">Prestamo</button> -->
 		
@@ -153,7 +153,7 @@
                               <th>ID.</th>
                               <th>Nombre</th>
                               <th>Equipo</th>
-                              <th>Raiging</th>
+                              <th>Raiting</th>
                           </tr>
                       </thead>
                       <tbody>
