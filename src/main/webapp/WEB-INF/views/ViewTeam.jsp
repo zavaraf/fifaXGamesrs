@@ -420,7 +420,6 @@
 				</div>
 			</div>
 		</div>
-  
 <div class="container">
   <br>
   <!-- Nav tabs -->
@@ -438,6 +437,9 @@
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" ng-click="ctrl.showDraftPC(true)" >Draft PC</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" ng-click="ctrl.showPublicacion()" >Publicacion de Plantilla</a>
     </li>
   </ul>
 
@@ -492,6 +494,113 @@
 				</div>
 			</div> 
 			
+		
+    </div>
+    </div>
+    <div id="home" class="container tab-pane active" >
+      <div class="container-fluid bg-3 text-center"> 
+
+      <div class="formcontainer" ng-show="ctrl.vistaPublicacion">
+				<div class="table-responsive-sm">
+					<table class="">
+						<tr>
+							<td><h6>[align=center][imgcenter]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>{{ctrl.equipo.img}}[/imgcenter]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[glow=red][b][size=300]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>{{ctrl.equipo.nombre}}[/size][/b][/glow]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[size=300][shadow=black]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>============[ LISTA DE JUGADORES ]============[/shadow][/size]</h6></td>
+						</tr>
+						<tr>
+							<td><h7>[font=Verdana][size=130]<h7></td>
+						</tr>
+						<tr ng-repeat="u in ctrl.equipo.jugadores | orderBy : '-raiting' | filter : test">
+							<td>[b]<span ng-bind="u.sobrenombre"></span>[/b]</td>
+							<td ng-show="u.link!=null">({{u.nombreCompleto}})</td>
+	                             <td ng-show="u.link==null">({{u.nombreCompleto}})</td>
+							<td> - <span ng-bind="u.raiting"></span></td>
+						</tr>
+						<tr>
+							<td><h7>[/size][/font]<h7></td>
+						</tr>
+						<tr>
+							<td><h6>[b][size=200]Total de Jugadores: {{ctrl.equipo.totalJugadores}}[/size][/b]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[size=300][shadow=black]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>==================[ DRAFT ]==================[/shadow][/size]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[size=270]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>------------------------------------[ [shadow=blue]Altas[/shadow] ]------------------------------------[/size]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[size=150]Indica en "Altas" todos los movimientos referentes a perdidas de dinero y entradas de jugadores.</h6></td>
+						</tr>
+						<tr ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' | filter : test">
+                              <td>[b]Compra a la CPU -[/b] <span ng-bind="e.sobrenombre"></span></td>
+                              <td>Costo: <span ng-bind="e.ofertaFinal"></span> Millones</td>
+                        </tr>
+						<tr>
+							<td><h6>[/size][size=270]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>------------------------------------[ [shadow=red]Bajas[/shadow] ]------------------------------------[/size]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[size=150]Indica en "Bajas" todos los movimientos referentes a ganancias de dinero y salidas de jugadores.</h6></td>
+						</tr>
+						<tr ng-repeat="e in ctrl.prestamos | orderBy : 'sobrenombre' | filter : test">
+                              <td>[b]Prestamo -[/b] <span ng-bind="e.sobrenombre"></span></td>
+                              <td>al <span ng-bind="e.equipoPres.nombre"></span> Temporadas: #</td>
+                        </tr>
+						<tr>
+							<td><h6>[/size][size=300]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[shadow=black]============[ BALANCE Y SALARIOS ]============[/shadow][/size]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[b][size=150]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[highlight=yellow][shadow=black]PRESUPUESTO INICIAL : {{ctrl.equipo.datosFinancieros.presupuestoInicial | currency}} Millones[/shadow][/highlight][/b]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[shadow=blue]Altas[/shadow] : Ingrese la cantidad de dinero perdida en "Altas"</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[shadow=red]Bajas[/shadow] : Ingrese la cantidad de dinero ganada en "Bajas"</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[b][highlight=yellow][shadow=black]PRESUPUESTO FINAL : {{ctrl.equipo.datosFinancieros.presupuestoFinal | currency}} Millones</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[/shadow][/highlight][/size][/b]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[size=150][b]Total Rating:[/b] {{ctrl.equipo.totalRaiting}}</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[b]Salarios:[/b] {{ctrl.equipo.salarios | currency}} Millones[/size]</h6></td>
+						</tr>
+					</table>
+				</div>
+			</div> 
 		
     </div>
     </div>

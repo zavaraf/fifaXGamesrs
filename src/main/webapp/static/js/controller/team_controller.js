@@ -9,6 +9,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	self.vistaDat = false
 	self.vistaPrestamos = false
 	self.vistaDraftPC = false
+	self.vistaPublicacion = false
 	
 	
 	self.preInicial
@@ -38,6 +39,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	self.showDraftPC       = showDraftPC;
 	self.showEdit          = showEdit;
 	self.showEditPlayer    = showEditPlayer;
+	self.showPublicacion   = showPublicacion;
 	
 	
 
@@ -90,6 +92,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 			self.vistaDat = false
 			self.vistaDraftPC = false
 			buscarPrestamos()
+			self.vistaPublicacion = false;
 		}
 	}
 	function showDraftPC(val){
@@ -99,6 +102,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 			self.vistaDat = false
 			self.vistaPrestamos = false
 			buscarJugadoresdraft()
+			self.vistaPublicacion = false;
 		}
 	}
 	function showEditObj(val){
@@ -115,6 +119,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 		self.vistaDat = true;
 		showPrestamos(false)
 		showDraftPC(false)
+		self.vistaPublicacion = false;
 			
 	}
 	function ocultaDatos(){
@@ -122,6 +127,17 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 		self.vistaDat = false;
 		showPrestamos(false)
 		showDraftPC(false)
+		self.vistaPublicacion = false;
+				
+	}
+	function showPublicacion(){
+		self.vistaJuga = false;
+		self.vistaDat = false;
+		showPrestamos(false)
+		showDraftPC(false)
+		buscarPrestamos()
+		self.vistaPublicacion = true;
+		buscarJugadoresdraft()
 				
 	}
 	function findTeam(){
@@ -387,7 +403,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 			console.log("initial Draft]:",d);			
 			if(d.status == 1){
 				self.isError = true;
-				self.Error = d.mensaje;					
+				self.Error = d.mensaje;		
 			}else{
 				actualizar();
 			}
