@@ -207,6 +207,24 @@ public class DraftController {
 	 }
 	 
 	 
+	 @RequestMapping(value="/pc/getHistorico/{idDraft}/{idJugador}/{idTemporada}",
+			 method = RequestMethod.GET,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<List<JugadorDraft>> getHistoricoDraft(
+			 @PathVariable("idDraft") int idDraft,
+			 @PathVariable("idJugador") int idJugador,
+			 @PathVariable("idTemporada") int idTemporada
+			 ){
+	List<JugadorDraft> listJugadores = draftService.getHistoricoDraft(idDraft, idJugador, idTemporada);
+			
+			if(listJugadores.isEmpty()){
+				return new ResponseEntity<List<JugadorDraft>>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<JugadorDraft>>(listJugadores, HttpStatus.OK);
+		 
+	 }
+	 
 	 
 	 
 	 @RequestMapping(value="/test",method = RequestMethod.GET,
@@ -226,6 +244,34 @@ public class DraftController {
 		 response.setStatus(1);
 		 response.setMensaje("Error");
 		 response.setData(listJugadores);
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
+	 
+	 @RequestMapping(value="/pc/updateDraftAdmin/{idJugador}/{monto}/{namager}/{observaciones}/{montoInicial}/{idEquipo}/{idTemporada}",
+			 method = RequestMethod.POST,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<ResponseData> updateDraftAdmin(
+			 @PathVariable("idJugador") long id,
+			 @PathVariable("monto") int monto,
+			 @PathVariable("namager") String manager,
+			 @PathVariable("observaciones") String observaciones,
+			 @PathVariable("montoInicial") int montoInicial,
+			 @PathVariable("idEquipo") int idEquipo,
+			 @PathVariable("idTemporada") int idTemporada
+			 ){
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+			 
+			 response = draftService.updateDraftAdmin(id,monto,manager,observaciones,montoInicial,idEquipo,  idTemporada);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
 		 
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }

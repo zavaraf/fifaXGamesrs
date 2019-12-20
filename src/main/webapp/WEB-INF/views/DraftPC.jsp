@@ -57,7 +57,7 @@
 				<div class="modal-content">
 				<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
 <!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
-				  <strong>�Error!</strong> {{ctrl.Error}}
+				  <strong>¡Error!</strong> {{ctrl.Error}}
 				</div>
 					<div class="modal-header">
 						<h4 class="modal-title">{{ctrl.jugador.sobrenombre + ' - Raiting: ' + ctrl.jugador.raiting}}</h4>
@@ -128,8 +128,138 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Modal Historico-->
+		<div class="modal fade " id="ModalHistoricoScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      <sec:authentication var="user" property="principal" />
+		        <blockquote class="blockquote text-center">
+					  <p class="mb-0">RESUMEN</p>
+					  <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+					  
+					  <button  
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+					    corregir oferta
+					  </button>
+					  </sec:authorize>
+					  <div class="collapse" id="collapseExample">
+					  <div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+				<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
+<!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
+				  <strong>¡Error!</strong> {{ctrl.Error}}
+				</div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<form ng-submit="ctrl.updateDraftAdmin(ctrl.jugador,ctrl.montoOferta,ctrl.manager,selectedEquipo)" name="myFormCon" class="form-horizontal">
+                      <div class="row">
+							<div class="form-group col-md-12">
+								<div class="input-group mb-3 input-group-sm">
+								     <div class="input-group-prepend">
+								       <span class="input-group-text">Equipo Oferta</span>					       
+								    </div>
+								    <select ng-model="selectedEquipo"
+								    		ng-options="equipo as equipo.nombre for equipo in ctrl.equipos track by equipo.id" class="lastname form-control input-sm">
+									        <option value="">--Elige opcion--</option>
+									</select>
+								 </div>
+								
+								<div class="input-group mb-3 input-group-sm">
+								     <div class="input-group-prepend">
+								       <span class="input-group-text">Monto</span>					       
+								    </div>
+								    <input type="text" ng-model="ctrl.montoOferta" id="montoOfer" class="form-control input-sm" placeholder="Monto" required ng-minlength="3"/>
+								 </div>
+								<div class="input-group mb-3 input-group-sm">
+								     <div class="input-group-prepend">
+								       <span class="input-group-text">Manager</span>					       
+								    </div>
+								    <input type="text" ng-model="ctrl.manager" id="manager" class="form-control input-sm" placeholder="Manager" required ng-minlength="3"/>
+								 </div>
+							</div>
+						</div>    
+					<div class="modal-footer">
+						<div class="form-actions floatRight">
+                           <input type="submit" value="Guardar" class="btn btn-primary btn-sm" ng-disabled="ctrl.montoOferta==null && ctrl.selectedEquipo ==null" >
+                        </div>
+						<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Close</button>
+					</div>
+                  </form>
+					
+					
+					</div>
+					
+				</div>
+			</div>
+					</div>
+				</blockquote>
+		        <div class="container text-center" >
+				   <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>ID.</th>
+                              <th>Nombre</th>
+                              <th>Equipo Oferta</th>
+                              <th>Manager</th>
+                              <th>Oferta</th>
+                              <th>Oferta Final</th>
+                              <th>Fecha</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr class="{{ctrl.selectColor(e)}}"  ng-repeat="e in ctrl.historicoDraft | orderBy : 'sobrenombre' | filter : test">
+                              <td><span ng-bind="e.id"></span></td>
+                              <td ng-show="e.link!=null"><a href="{{e.link}}" target="_blank" >{{e.sobrenombre}}</td>
+                                <td ng-show="e.link==null">{{e.sobrenombre}}</td>
+<!--                               <td><span ng-bind="e.sobrenombre"></span></td> -->
+                              <td><a href="#!team/{{e.idEquipoOferta}}"><span ng-bind="e.comentarios"></span></a></td>
+                              <td><span ng-bind="e.manager"></span></td>
+                              <td><span ng-bind="e.montoOferta"></span></td>
+                              <td><span ng-bind="e.ofertaFinal"></span></td>
+                              <td><span ng-bind="e.fecha"></span></td>
+                              <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+                              <td><button type="button"  data-toggle="modal" 
+									data-target="#myModalDraf" ng-click="ctrl.updateDraft(e)" class="btn btn-info btn-sm" ng-show="e.idEquipoOferta != e.equipo.id">Contraofertar</button></td>
+							  </sec:authorize>
+                          </tr>
+                      </tbody>
+                  </table>
+				</div>
+<!-- 		        <img src="https://i.imgur.com/qHTsbGs.png" class="img-fluid" alt="Responsive image"> -->
+<!-- 		        <img src="https://i.imgur.com/Pwac2HN.png" class="img-fluid" alt="Responsive image"> -->
+		        <img ng-repeat="img in ctrl.jornadaEdit.imagenes" src="{{img.img}}" class="img-fluid" alt="Responsive image">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	
   		<div class="panel-heading"><span class="lead">FIFA XGAMERS Draft PC</span></div>
+  			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li class="nav-item">
+			      <a class="nav-link active" data-toggle="tab" ng-click = "ctrl.visibleJugadores = true; ctrl.visibleOfertas = false"">Jugadores</a>
+			      
+			    </li>
+			    <li class="nav-item">
+			      <a class="nav-link" data-toggle="tab" ng-click = "ctrl.visibleJugadores = false; ctrl.visibleOfertas = true" >Jugadores Ofertados</a>
+			    </li>
+			    
+			  </ul>
 <!--   		<button type="button" class="btn btn-info btn-sm" data-toggle="modal"  -->
 <!-- 			data-target="#myModalDraf">Prestamo</button> -->
 		
@@ -138,6 +268,9 @@
                   <div class="panel panel-default">
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">Draft PC Mundial </span></div>
+            
+			
+				
               <div class="table-responsive-sm">
               		<div class="row">
                           <div class="form-group col-md-12">
@@ -147,7 +280,7 @@
                           </div>
               		</div>
               		
-              	  <table class="table table-hover">
+              	  <table ng-show = "ctrl.visibleJugadores == true" class="table table-hover">
                       <thead>
                           <tr>
                               <th>ID.</th>
@@ -172,7 +305,7 @@
                       </tbody>
                   </table>
               
-                  <table class="table table-hover">
+                  <table ng-show = "ctrl.visibleOfertas == true"class="table table-hover">
                       <thead>
                           <tr>
                               <th>ID.</th>
@@ -187,7 +320,9 @@
                       <tbody>
                           <tr class="{{ctrl.selectColor(e)}}"  ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' | filter : test">
                               <td><span ng-bind="e.id"></span></td>
-                              <td><span ng-bind="e.sobrenombre"></span></td>
+                              <td ng-show="e.link!=null"><a href="{{e.link}}" target="_blank" >{{e.sobrenombre}}</td>
+                                <td ng-show="e.link==null">{{e.sobrenombre}}</td>
+<!--                               <td><span ng-bind="e.sobrenombre"></span></td> -->
                               <td><a href="#!team/{{e.idEquipoOferta}}"><span ng-bind="e.comentarios"></span></a></td>
                               <td><span ng-bind="e.manager"></span></td>
                               <td><span ng-bind="e.montoOferta"></span></td>
@@ -196,6 +331,8 @@
                               <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
                               <td><button type="button"  data-toggle="modal" 
 									data-target="#myModalDraf" ng-click="ctrl.updateDraft(e)" class="btn btn-info btn-sm" ng-show="e.idEquipoOferta != e.equipo.id">Contraofertar</button></td>
+							  <td><button type="button"  data-toggle="modal" 
+									data-target="#ModalHistoricoScrollable" ng-click="ctrl.getHistoricoDraft(1,e.id); ctrl.buscarEquipos();ctrl.updateDraft(e);" class="btn btn-info btn-sm" >Historial</button></td>		
 							  </sec:authorize>
                           </tr>
                       </tbody>

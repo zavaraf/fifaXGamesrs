@@ -24,9 +24,12 @@ public interface DraftDao {
 	HashMap<String, String> initialDraft(long id, int monto, String manager, String observaciones,int idEquipo, int idTemporada);
 
 	HashMap<String, String> updateDraft(long id, int monto, String manager, String observaciones, int montoFinal,int idEquipo, int idTemporada);
+	HashMap<String, String> updateDraftAdmin(long id, int monto, String manager, String observaciones, int montoFinal,int idEquipo, int idTemporada);
 
 	List<JugadorDraft> findJugadoresDraftByIdEquipo(int idEquipo, int idTemporada);
 
 	HashMap<String, String> confirmPlayer(long id, int idEquipo, int idTemporada);
+	
+	List<JugadorDraft> getHistoricoDraft(int idDraft,int idJugador, int idTemporada);
 
 }

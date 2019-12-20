@@ -163,7 +163,8 @@ public class DraftDaoImpl implements DraftDao {
 		String query = " select persona.idPersona, " 
 				+ " persona.NombreCompleto, " 
 				+ " persona.sobrenombre, "
-				+ " persona.raiting, " 
+				+ " persona.raiting, "
+				+ " persona.link, "
 				+ " equipos.idEquipo, " 
 				+ " equipos.nombreEquipo, " 
 				+ " draftpc.fechaCompra, "
@@ -190,6 +191,7 @@ public class DraftDaoImpl implements DraftDao {
 				jugador.setNombreCompleto(rs.getString("NombreCompleto"));
 				jugador.setSobrenombre(rs.getString("sobrenombre"));
 				jugador.setRaiting(rs.getInt("raiting"));
+				jugador.setLink(rs.getString("link"));
 
 				jugador.setMontoOferta(rs.getInt("oferta"));
 				jugador.setAbierto(rs.getBoolean("abierto"));
@@ -265,6 +267,44 @@ public class DraftDaoImpl implements DraftDao {
 
 		System.out.println("----->updateDraft]:" + idEquipo);
 		String query = "updateDraft";
+
+		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
+
+		// Sql parameter mapping
+		SqlParameter idJugador = new SqlParameter("idJugador", Types.INTEGER);
+		SqlParameter montoInicial1 = new SqlParameter("montoInicial", Types.INTEGER);
+		SqlParameter montoOferta = new SqlParameter("montoOferta", Types.INTEGER);
+		SqlParameter manager1 = new SqlParameter("manager", Types.VARCHAR);
+		SqlParameter observaciones1 = new SqlParameter("observaciones", Types.VARCHAR);
+		SqlParameter idEquipoOferta = new SqlParameter("idEquipoOferta", Types.VARCHAR);
+		SqlParameter idTemporadaOferta = new SqlParameter("idTemporada", Types.VARCHAR);
+		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
+		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
+
+		System.out.println("------->[updateDraft]\t id:" +id +"\t montoInicial:" +montoInicial +"\t monto:" +monto +"\t manager:" +manager +"\t observaciones:" +observaciones +"\t idEquipo:" +idEquipo +"\t idTemporada:" +idTemporada);
+		SqlParameter[] paramArray = { idJugador, montoInicial1, montoOferta, manager1, observaciones1, idEquipoOferta,idTemporadaOferta,
+				isError, message };
+
+		myStoredProcedure.setParameters(paramArray);
+		myStoredProcedure.compile();
+
+		// Call stored procedure
+		Map storedProcResult = myStoredProcedure.execute(id, montoInicial, monto, manager, observaciones, idEquipo,idTemporada);
+		System.out.println(storedProcResult);
+
+		HashMap<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("status", storedProcResult.get("isError").toString());
+		mapa.put("mensaje", storedProcResult.get("message").toString());
+		System.out.println(mapa);
+
+		return mapa;
+	}
+	public HashMap<String, String> updateDraftAdmin(long id, int monto, String manager, String observaciones,
+			int montoInicial, int idEquipo, int idTemporada) {
+
+		System.out.println("----->updateDraftCorreccion]:" + idEquipo);
+		String query = "updateDraftCorreccion";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
 
@@ -399,6 +439,69 @@ public class DraftDaoImpl implements DraftDao {
 		System.out.println(mapa);
 
 		return mapa;
+	}
+	
+	public List<JugadorDraft> getHistoricoDraft(int idDraft,int idJugador, int idTemporada) {
+		List<JugadorDraft> listJuadores = new ArrayList<JugadorDraft>();
+		String query = " select persona.NombreCompleto, "
+				+" persona.sobrenombre, "
+				+" persona.link, "
+				+" persona.raiting,"
+				+" DraftPC_idDraftPC , "
+				+" fechaOferta, "
+				+" updateDate, "
+				+" oferta, "
+				+" ofertaFinal, "
+				+" usuarioOferta, "
+				+" DraftPC_Persona_idPersona, "
+				+" comentarios, "
+				+" equipos.idEquipo, "
+				+" equipos.nombreEquipo "
+				+" from historicodraft "
+				+" join persona on persona.idPersona = historicodraft.DraftPC_Persona_idPersona "
+				+" join equipos on equipos.idEquipo = historicodraft.idEquipo " 
+				+" where "
+				+" persona.idPersona =  "+ idJugador 
+				+" and historicodraft.tempodada_idTemporada = " +idTemporada;
+
+		Collection jugadores = jdbcTemplate.query(query, new RowMapper() {
+
+			public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+				JugadorDraft jugador = new JugadorDraft();
+				jugador.setId(rs.getLong("DraftPC_Persona_idPersona"));
+				jugador.setNombreCompleto(rs.getString("NombreCompleto"));
+				jugador.setSobrenombre(rs.getString("sobrenombre"));
+				jugador.setRaiting(rs.getInt("raiting"));
+				jugador.setIdEquipoOferta(rs.getInt("idEquipo"));
+				jugador.setMontoOferta(rs.getInt("oferta"));
+				
+				jugador.setFecha(rs.getString("updateDate"));
+				jugador.setManager(rs.getString("usuarioOferta"));
+				jugador.setComentarios(rs.getString("comentarios"));
+				jugador.setOfertaFinal(rs.getInt("ofertaFinal"));
+
+//				Temporada temporada = new Temporada();
+//
+//				temporada.setId(rs.getInt("idTemporada"));
+//				temporada.setNombre(rs.getString("NombreTemporada"));
+
+				Equipo equipo = new Equipo();
+
+				equipo.setId(rs.getLong("idEquipo"));
+				equipo.setNombre(rs.getNString("nombreEquipo"));
+//				equipo.setTemporada(temporada);
+
+				jugador.setEquipo(equipo);
+
+				return jugador;
+			}
+		});
+
+		for (Object jugador : jugadores) {
+			listJuadores.add((JugadorDraft) jugador);
+		}
+
+		return listJuadores;
 	}
 
 }

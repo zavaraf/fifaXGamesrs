@@ -11,11 +11,30 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     	buscarJugadoresdraftByID : buscarJugadoresdraftByID,
     	createInitialDraft       : createInitialDraft,
     	updateDraft              : updateDraft,
-    	confirmPlayer            : confirmPlayer
+    	confirmPlayer            : confirmPlayer,
+    	getHistoricoDraft        : getHistoricoDraft,
+    	updateDraftAdmin         : updateDraftAdmin
     };
  
     return factory;
 	
+    function getHistoricoDraft(idDraft,idJugador) {
+    	console.log("SErvice getHIstorico:"+idDraft+" - idJugador:"+idJugador)
+        var deferred = $q.defer();
+        $http.get(REST_SERVICE_URI+'getHistorico/'+idDraft+'/'+idJugador+'/'+CONFIG.VARTEMPORADA.id)
+            .then(
+            function (response) {
+            	console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while getHistorico Users');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+    
     function buscarJugadoresdraft(idTemporada) {
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI+'findAllPC/'+idTemporada)
@@ -31,6 +50,7 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
         );
         return deferred.promise;
     }
+    
     function buscarJugadoresdraftByID(idEquipo, idTemporada) {
     	var deferred = $q.defer();
     	$http.get(REST_SERVICE_URI+'findAll/'+idEquipo+'/'+idTemporada)
@@ -69,6 +89,24 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     function updateDraft(id,monto,manager,observaciones,ofertaInicial,idEquipo,idTemporada) {
     	var deferred = $q.defer();
     	var request = REST_SERVICE_URI+'updateDraft/'+id+"/"+monto+"/"+manager
+    							+"/"+observaciones+"/"+ofertaInicial+"/"+idEquipo+"/"+idTemporada;
+    	console.log(request);
+    	$http.post(request)
+    	.then(
+    			function (response) {
+    				console.log(response.data)
+    				deferred.resolve(response.data);
+    			},
+    			function(errResponse){
+    				console.error('Error while fetching Users');
+    				deferred.reject(errResponse);
+    			}
+    	);
+    	return deferred.promise;
+    }
+    function updateDraftAdmin(id,monto,manager,observaciones,ofertaInicial,idEquipo,idTemporada) {
+    	var deferred = $q.defer();
+    	var request = REST_SERVICE_URI+'updateDraftAdmin/'+id+"/"+monto+"/"+manager
     							+"/"+observaciones+"/"+ofertaInicial+"/"+idEquipo+"/"+idTemporada;
     	console.log(request);
     	$http.post(request)

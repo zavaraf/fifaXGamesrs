@@ -24,9 +24,12 @@ public interface DraftService {
 	ResponseData initialDraft(long id, int monto, String manager, String observaciones,int idEquipo,int idTemporada);
 
 	ResponseData updateDraft(long id, int monto, String manager, String observaciones, int montoInicial,int idEquipo, int idTemporada);
+	ResponseData updateDraftAdmin(long id, int monto, String manager, String observaciones, int montoInicial,int idEquipo, int idTemporada);
 
 	List<JugadorDraft> findJugadoresDraftByIdEquipo(int idEquipo, int idTemporada);
 
 	ResponseData confirmPlayer(long id, int idEquipo, int idTemporada);
+	
+	List<JugadorDraft> getHistoricoDraft(int idDraft,int idJugador, int idTemporada);
 
 }

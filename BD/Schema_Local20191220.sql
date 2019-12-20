@@ -54,7 +54,7 @@ CREATE TABLE `conceptosfinancieros` (
   KEY `fk_ConceptosFinancieros_DatosFinancieros1_idx` (`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`datosfinancieros_tempodada_idTemporada`),
   CONSTRAINT `fk_ConceptosFinancieros_CatalogoConceptos1` FOREIGN KEY (`CatalogoConceptos_idCatalogoConceptos`) REFERENCES `catalogoconceptos` (`idCatalogoConceptos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ConceptosFinancieros_DatosFinancieros1` FOREIGN KEY (`DatosFinancieros_idDatosFinancieros`, `DatosFinancieros_Equipos_idEquipo`, `datosfinancieros_tempodada_idTemporada`) REFERENCES `datosfinancieros` (`idDatosFinancieros`, `Equipos_idEquipo`, `tempodada_idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,6 +175,7 @@ CREATE TABLE `draftpc` (
   `abierto` bit(1) DEFAULT NULL,
   `ofertaFinal` int(11) DEFAULT NULL,
   `idEquipo` int(11) DEFAULT NULL,
+  `updateDraft` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idDraftPC`,`Persona_idPersona`,`tempodada_idTemporada`),
   KEY `fk_DraftPC_Persona1_idx` (`Persona_idPersona`),
   KEY `fk_DraftPC_Temporada1_idx` (`tempodada_idTemporada`),
@@ -199,7 +200,7 @@ CREATE TABLE `equipos` (
   PRIMARY KEY (`idEquipo`,`Division_idDivision`),
   KEY `fk_Equipos_Division1_idx` (`Division_idDivision`),
   CONSTRAINT `fk_Equipos_Division1` FOREIGN KEY (`Division_idDivision`) REFERENCES `division` (`idDivision`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,10 +303,11 @@ CREATE TABLE `historicodraft` (
   `comentarios` varchar(200) DEFAULT NULL,
   `ofertaFinal` int(11) DEFAULT NULL,
   `idEquipo` int(11) DEFAULT NULL,
+  `updateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idHistoricoDraft`,`DraftPC_idDraftPC`,`DraftPC_Persona_idPersona`,`tempodada_idTemporada`),
   KEY `fk_HistoricoDraft_DraftPC1_idx` (`DraftPC_idDraftPC`,`DraftPC_Persona_idPersona`,`tempodada_idTemporada`),
   CONSTRAINT `fk_HistoricoDraft_DraftPC1` FOREIGN KEY (`DraftPC_idDraftPC`, `DraftPC_Persona_idPersona`, `tempodada_idTemporada`) REFERENCES `draftpc` (`idDraftPC`, `Persona_idPersona`, `tempodada_idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,7 +325,7 @@ CREATE TABLE `imagenesjornadas` (
   PRIMARY KEY (`id`),
   KEY `fk_imagenesJornadas_jornadas_has_equipos1_idx` (`jornadas_has_equipos_id`,`jornadas_has_equipos_jornadas_idJornada`),
   CONSTRAINT `fk_imagenesJornadas_jornadas_has_equipos1` FOREIGN KEY (`jornadas_has_equipos_id`, `jornadas_has_equipos_jornadas_idJornada`) REFERENCES `jornadas_has_equipos` (`id`, `jornadas_idJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -413,7 +415,7 @@ CREATE TABLE `persona` (
   PRIMARY KEY (`idPersona`),
   KEY `fk_Persona_Equipos1_idx` (`Equipos_idEquipo`),
   CONSTRAINT `fk_Persona_Equipos1` FOREIGN KEY (`Equipos_idEquipo`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1247 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1248 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1677,7 +1679,7 @@ elseif opcion = 2 then
 		SET
 		`Equipos_idEquipo` = idEquipoAnterior,
 		`prestamo` = 0
-		WHERE `idPersona` = idJugadorVal and `tempodada_idTemporada` = idTemporada;
+		WHERE `idPersona` = idJugadorVal ;
 
 	delete from prestamos 
     where prestamos.Persona_idPersona = idJugadorVal
@@ -2037,6 +2039,132 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updateDraftCorreccion` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateDraftCorreccion`(IN idJugador INT,
+							IN montoInicial INT,
+                            IN montoOferta INT,
+                            IN manager varchar(100),
+                            IN observaciones varchar(100), 
+                            IN idEquipoOferta INT,
+                            IN idTemporada INT,
+                            out isError int, 
+                            out message varchar(200))
+BEGIN
+
+DECLARE idJugadorVal int;
+DECLARE idJugadorExist int;
+DECLARE montoFinalVal int;
+DECLARE idEquipo int;
+DECLARE idTemporadaVar int;
+DECLARE montoBD int;
+DECLARE sumaDraftPC int;
+DECLARE idEquipoAnterior int;
+DECLARE contraoferta int;
+declare activoVar bit;
+declare minConfirm int;
+declare horaInicio int;
+declare horaFin int;
+declare minDiaVar int;
+declare diasVar int;
+declare minDiaActualVar int;
+declare sumaVar int;
+declare sumaminutosdia_cero_Var int;
+declare minDia_ceroVar int;
+
+
+set isError = 1 ;
+  set message = 'Error al intentar modificar';
+	 
+     select draftpc.idEquipo into idEquipoAnterior
+     from draftpc
+     WHERE `idDraftPC` = 1
+     AND `Persona_idPersona` = idJugador
+     AND tempodada_idTemporada = idTemporada;
+	
+    UPDATE `fifaxgamersbd`.`draftpc`
+	SET
+    `oferta`      = montoInicial,
+	`ofertaFinal` = montoOferta,
+	`fechaCompra` = sysdate(),
+	`usuarioOferta` = manager,
+	`comentarios` = observaciones,
+    `idEquipo` = idEquipoOferta
+	WHERE `idDraftPC` = 1
+    AND `Persona_idPersona` = idJugador
+    AND tempodada_idTemporada = idTemporada;
+
+	INSERT INTO `fifaxgamersbd`.`historicodraft`
+		(`idHistoricoDraft`,
+		`oferta`,
+		`fechaOferta`,
+		`usuarioOferta`,
+		`DraftPC_idDraftPC`,
+		`DraftPC_Persona_idPersona`,
+		`tempodada_idTemporada`,
+		`comentarios`,
+		`ofertaFinal`,
+        `idEquipo`)
+		(select null,
+			montoFinalVal,
+			draftpc.fechaCompra,
+			draftpc.usuarioOferta,
+			draftpc.idDraftPC,
+			draftpc.Persona_idPersona,
+			draftpc.tempodada_idTemporada,
+			draftpc.comentarios,
+			montoOferta,
+            draftpc.idEquipo
+			from draftpc
+		where draftpc.Persona_idPersona = idJugador
+        and draftpc.tempodada_idTemporada = idTemporada
+        and draftpc.idDraftPC = 1
+        limit 1);
+        
+        select sum(draftpc.ofertaFinal) into sumaDraftPC
+		from draftpc
+		where draftpc.idEquipo = idEquipoOferta;
+        
+        call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
+											where nombre = 'altasPC' limit 1), 
+                                            sumaDraftPC,
+                                            idEquipoOferta);
+                                            
+		
+        
+        if idEquipoAnterior != idEquipoOferta then 
+        
+			select sum(draftpc.ofertaFinal) into sumaDraftPC
+			from draftpc
+			where draftpc.idEquipo = idEquipoAnterior;
+			
+            call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
+											where nombre = 'altasPC' limit 1), 
+                                            sumaDraftPC,
+                                            idEquipoAnterior);
+		end if;
+	
+    
+    set isError = 0 ;
+	set message = 'OK';
+    
+    
+
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `updateResultadoJornada` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2195,4 +2323,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-09 12:36:26
+-- Dump completed on 2019-12-20 10:39:32

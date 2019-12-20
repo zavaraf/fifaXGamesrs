@@ -111,6 +111,37 @@ public class DraftServiceImpl implements DraftService {
 
 		return response;
 	}
+	public ResponseData updateDraftAdmin(long id, int monto, String manager, String observaciones, int montoFinal,
+			int idEquipo, int idTemporada) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		ResponseData response = new ResponseData();
+
+		map = draftDao.updateDraftAdmin(id, monto, manager, observaciones, montoFinal, idEquipo,idTemporada);
+		
+		
+
+		if (map == null || map.isEmpty()) {
+			response.setStatus(CodigoResponse.ERROR.getCodigo());
+			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+		} else {
+
+			String status = map.get("status");
+
+			response.setStatus(Integer.parseInt(status));
+			response.setMensaje(map.get("mensaje"));
+			if(status.equals("0")){
+				Equipo equipoBD = new Equipo();
+
+				equipoBD = equipoDao.findByIdAll(idEquipo,idTemporada);
+				if (equipoBD.getDatosFinancieros() != null) {
+					
+					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTemporada);
+				}
+			}
+		}
+
+		return response;
+	}
 
 	@Override
 	public List<JugadorDraft> findJugadoresDraftByIdEquipo(int idEquipo, int idTemporada) {
@@ -146,6 +177,11 @@ public class DraftServiceImpl implements DraftService {
 			}
 		}
 		return response;
+	}
+	
+	public List<JugadorDraft> getHistoricoDraft(int idDraft,int idJugador, int idTemporada){
+
+		return draftDao.getHistoricoDraft(idDraft, idJugador, idTemporada);
 	}
 
 }

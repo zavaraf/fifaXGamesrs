@@ -10,7 +10,9 @@ angular.module('myApp')
     self.isError = false
     self.Error = ''
     self.manage = ''
-    
+    self.visibleJugadores = true;
+    self.visibleOfertas == false;
+    self.historicoDraft ;
     
     self.buscarJugadoresdraft  =  buscarJugadoresdraft;
     self.findTeam              =  findTeam;
@@ -19,9 +21,22 @@ angular.module('myApp')
     self.updateDraft            =  updateDraft;
     self.buscarEquipos          =  buscarEquipos;
     self.selectColor            = selectColor;
+    self.updateDraftAdmin       = updateDraftAdmin;
+    
+    self.getHistoricoDraft      = getHistoricoDraft;
     
     
     actualizar();
+    
+    function getHistoricoDraft(idDraft,idJugador){
+    	  		console.log("getHIstorico:"+idDraft+" - idJugador:"+idJugador)
+    		DraftPCService.getHistoricoDraft(idDraft,idJugador).then(function(d) {
+    			console.log("historico Draft]:",d);
+    			self.historicoDraft = d;
+    		}, function(errResponse) {
+    			console.error('Error while historico draft Users');
+    		});
+    }
     
     function buscarJugadoresdraft() {
     	DraftPCService.buscarJugadoresdraft(CONFIG.VARTEMPORADA.id).then(function(d) {
@@ -101,6 +116,26 @@ angular.module('myApp')
     	  	
     	
 	}
+    
+    function updateDraftAdmin(jug, monto,manager,equipo){
+    	
+    	DraftPCService.updateDraftAdmin(jug.id,monto,manager,equipo.nombre,jug.ofertaFinal,equipo.id, CONFIG.VARTEMPORADA.id).then(function(d) {
+			console.log("update updateDraftAdmin]:",d);
+			//self.jugadoresDraft = d;
+			
+			if(d.status == 1){
+				self.isError = true;
+				self.Error = d.mensaje;					
+			}else{
+				actualizar();
+			}
+			
+		}, function(errResponse) {
+			self.isError = true;
+			self.Error = 'Error while create initial Draft'
+			console.error('Error while create initial Draft');
+		});
+    }
     function buscarEquipos() {
     	console.log("[draftPC]  idTemporada]:",CONFIG.VARTEMPORADA.id);
 		EquipoService.buscarTodos(CONFIG.VARTEMPORADA.id).then(function(d) {
