@@ -64,9 +64,52 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
 	
 	self.deletePrestamo         = deletePrestamo;
 	
-	
+	var separador = document.getElementById('montoCon');
+	var separadorPI = document.getElementById('montoInicial');
 	findTeam()
 //	buscarDivisiones()
+	separador.addEventListener('keyup', (e) => {
+        var entrada = e.target.value.split(',').join('');
+        entrada = entrada.split('').reverse();
+        
+        var salida = [];
+        var aux = '';
+        
+        var paginador = Math.ceil(entrada.length / 3);
+        
+        for(let i = 0; i < paginador; i++) {
+            for(let j = 0; j < 3; j++) {
+                if(entrada[j + (i*3)] != undefined) {
+                    aux += entrada[j + (i*3)];
+                }
+            }
+            salida.push(aux);
+            aux = '';
+            document.querySelector('#montoSeparado').innerText = salida.join(',').split("").reverse().join('');
+        }
+    }, false);
+	
+	separadorPI.addEventListener('keyup', (e) => {
+        var entrada = e.target.value.split(',').join('');
+        entrada = entrada.split('').reverse();
+        
+        var salida = [];
+        var aux = '';
+        
+        var paginador = Math.ceil(entrada.length / 3);
+        
+        for(let i = 0; i < paginador; i++) {
+            for(let j = 0; j < 3; j++) {
+                if(entrada[j + (i*3)] != undefined) {
+                    aux += entrada[j + (i*3)];
+                }
+            }
+            salida.push(aux);
+            aux = '';
+            document.querySelector('#montoSeparadoPI').innerText = salida.join(',').split("").reverse().join('');
+        }
+    }, false);
+	
 	function showEditPlayer(equipo,userEquipoId,roles){
     	var ban = false;
     	

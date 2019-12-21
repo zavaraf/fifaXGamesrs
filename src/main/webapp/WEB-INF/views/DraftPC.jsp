@@ -84,6 +84,7 @@
 								       <span class="input-group-text">Monto</span>					       
 								    </div>
 								    <input type="text" ng-model="ctrl.montoOferta" id="montoOfer" class="form-control input-sm" placeholder="Monto" required ng-minlength="3"/>
+								    <label id="montoSeparado" class="form-control input-sm">0</label>
 								 </div>
 								<fieldset disabled> 
 								<div class="input-group mb-3 input-group-sm">
@@ -180,6 +181,7 @@
 								       <span class="input-group-text">Monto</span>					       
 								    </div>
 								    <input type="text" ng-model="ctrl.montoOferta" id="montoOfer" class="form-control input-sm" placeholder="Monto" required ng-minlength="3"/>
+								    <label id="montoSeparado" class="form-control input-sm">0</label>
 								 </div>
 								<div class="input-group mb-3 input-group-sm">
 								     <div class="input-group-prepend">
@@ -225,8 +227,8 @@
 <!--                               <td><span ng-bind="e.sobrenombre"></span></td> -->
                               <td><a href="#!team/{{e.idEquipoOferta}}"><span ng-bind="e.comentarios"></span></a></td>
                               <td><span ng-bind="e.manager"></span></td>
-                              <td><span ng-bind="e.montoOferta"></span></td>
-                              <td><span ng-bind="e.ofertaFinal"></span></td>
+                              <td><span>{{e.montoOferta | currency}}</span></td>
+                              <td><span>{{e.ofertaFinal | currency}}</span></td>
                               <td><span ng-bind="e.fecha"></span></td>
                               <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
                               <td><button type="button"  data-toggle="modal" 
@@ -325,8 +327,8 @@
 <!--                               <td><span ng-bind="e.sobrenombre"></span></td> -->
                               <td><a href="#!team/{{e.idEquipoOferta}}"><span ng-bind="e.comentarios"></span></a></td>
                               <td><span ng-bind="e.manager"></span></td>
-                              <td><span ng-bind="e.montoOferta"></span></td>
-                              <td><span ng-bind="e.ofertaFinal"></span></td>
+                              <td><span>{{e.montoOferta | currency}}</span></td>
+                              <td><span>{{e.ofertaFinal | currency}}</span></td>
                               <td><span ng-bind="e.fecha"></span></td>
                               <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
                               <td><button type="button"  data-toggle="modal" 

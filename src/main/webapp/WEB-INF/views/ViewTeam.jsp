@@ -317,9 +317,10 @@
 								       <span class="input-group-text">Monto</span>					       
 								    </div>
 								    <input type="text" ng-model="ctrl.montoCatalogo" id="montoCon" class="form-control input-sm" placeholder="Monto" required ng-minlength="3"/>
+								    <label id="montoSeparado" class="form-control input-sm">0</label>
 								 </div>
 							</div>
-						</div>    
+						</div>
 					<div class="modal-footer">
 						<div class="form-actions floatRight">
                            <input type="submit" value="Guardar" class="btn btn-primary btn-sm" ng-disabled="ctrl.montoCatalogo==null" >
@@ -526,8 +527,6 @@
 						</tr>
 						<tr ng-repeat="u in ctrl.equipo.jugadores | orderBy : '-raiting' | filter : test">
 							<td>[b]<span ng-bind="u.sobrenombre"></span>[/b]</td>
-							<td ng-show="u.link!=null">({{u.nombreCompleto}})</td>
-	                             <td ng-show="u.link==null">({{u.nombreCompleto}})</td>
 							<td> - <span ng-bind="u.raiting"></span></td>
 						</tr>
 						<tr>
@@ -553,7 +552,7 @@
 						</tr>
 						<tr ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' | filter : test">
                               <td>[b]Compra a la CPU -[/b] <span ng-bind="e.sobrenombre"></span></td>
-                              <td>Costo: <span ng-bind="e.ofertaFinal"></span> Millones</td>
+                              <td>- <span>{{e.ofertaFinal | currency}}</span></td>
                         </tr>
 						<tr>
 							<td><h6>[/size][size=270]</h6></td>
@@ -578,16 +577,16 @@
 							<td><h6>[b][size=150]</h6></td>
 						</tr>
 						<tr>
-							<td><h6>[highlight=yellow][shadow=black]PRESUPUESTO INICIAL : {{ctrl.equipo.datosFinancieros.presupuestoInicial | currency}} Millones[/shadow][/highlight][/b]</h6></td>
+							<td><h6>[highlight=yellow][shadow=black]PRESUPUESTO INICIAL : {{ctrl.equipo.datosFinancieros.presupuestoInicial | currency}}[/shadow][/highlight][/b]</h6></td>
 						</tr>
 						<tr>
-							<td><h6>[shadow=blue]Altas[/shadow] : Ingrese la cantidad de dinero perdida en "Altas"</h6></td>
+							<td><h6>[shadow=blue]Altas[/shadow] : Ingrese la cantidad total de dinero perdida en "Altas"</h6></td>
 						</tr>
 						<tr>
-							<td><h6>[shadow=red]Bajas[/shadow] : Ingrese la cantidad de dinero ganada en "Bajas"</h6></td>
+							<td><h6>[shadow=red]Bajas[/shadow] : Ingrese la cantidad total de dinero ganada en "Bajas"</h6></td>
 						</tr>
 						<tr>
-							<td><h6>[b][highlight=yellow][shadow=black]PRESUPUESTO FINAL : {{ctrl.equipo.datosFinancieros.presupuestoFinal | currency}} Millones</h6></td>
+							<td><h6>[b][highlight=yellow][shadow=black]PRESUPUESTO FINAL : {{ctrl.equipo.datosFinancieros.presupuestoFinal | currency}}</h6></td>
 						</tr>
 						<tr>
 							<td><h6>[/shadow][/highlight][/size][/b]</h6></td>
@@ -596,7 +595,13 @@
 							<td><h6>[size=150][b]Total Rating:[/b] {{ctrl.equipo.totalRaiting}}</h6></td>
 						</tr>
 						<tr>
-							<td><h6>[b]Salarios:[/b] {{ctrl.equipo.salarios | currency}} Millones[/size]</h6></td>
+							<td><h6>[b]Salarios:[/b] {{ctrl.equipo.salarios | currency}}[/size]</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[b][size=150]Link de sofifa: (Pega el link de sofifa aqui)</h6></td>
+						</tr>
+						<tr>
+							<td><h6>[/size][/b]</h6></td>
 						</tr>
 					</table>
 				</div>
@@ -635,7 +640,7 @@
 					    </div>
 					    <input type="text" class="form-control" ng-show="!ctrl.showInicial" readonly value="{{ctrl.equipo.datosFinancieros.presupuestoInicial | currency}}">
 					    <input type="text" ng-model="ctrl.preInicial" ng-show="ctrl.showInicial" id="montoInicial" class="form-control input-sm" placeholder="Presupuesto Inicial" required ng-minlength="3"/>
-					    
+					    <label id="montoSeparadoPI" class="form-control input-sm" ng-show="ctrl.showInicial">0</label>
 					  </div>
 				      <div class="col-sm">
 <!-- 					     <div class="input-group-prepend"> -->
@@ -753,8 +758,8 @@
                               <td><span ng-bind="e.sobrenombre"></span></td>
                               <td><span ng-bind="e.comentarios"></span></td>
                               <td><span ng-bind="e.manager"></span></td>
-                              <td><span ng-bind="e.montoOferta"></span></td>
-                              <td><span ng-bind="e.ofertaFinal"></span></td>
+                              <td><span>{{e.montoOferta | currency}}</span></td>
+                              <td><span>{{e.ofertaFinal | currency}}</span></td>
                               <td><span ng-bind="e.fecha"></span></td>
                               <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
                               <td><button type="button"  data-toggle="modal" 
