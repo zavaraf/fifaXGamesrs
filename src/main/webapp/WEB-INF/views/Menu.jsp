@@ -111,6 +111,8 @@
 				<p>
 				${user.authorities}.includes('Manager')
 				
-	<div ng-view></div>
+				<div ng-include="'http://fifa-xgamers.com'"></div>
+				
+<!-- 	<div ng-view></div> -->
 </body>
 </html>

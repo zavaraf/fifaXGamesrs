@@ -19,6 +19,7 @@ import com.app.dao.DatosFinancierosDao;
 import com.app.enums.CodigoResponse;
 import com.app.modelo.Equipo;
 import com.app.modelo.GolesJornadas;
+import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
@@ -183,6 +184,23 @@ public class TemporadaController {
 				return new ResponseEntity<List<Jornadas>>(HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<List<Jornadas>>(listTemporada, HttpStatus.OK);
+		}
+	 
+	 @RequestMapping(value="/lm/getArmarJornadasGrupos/{idTemporada}/{idTorneo}/{numGrupos}",method = RequestMethod.POST,
+				headers="Accept=application/json")
+		@ResponseBody
+		public ResponseEntity<List<Grupos>> getArmarJornadasGrupos(
+				@PathVariable("idTemporada") int idTemporada,
+				@PathVariable("idTorneo") int idTorneo,
+				@PathVariable("numGrupos") int numGrupos,
+				@RequestBody List<Equipo> equipos){
+			
+			List<Grupos> listTemporada = temporadaService.getArmarJornadasGrupos(idTemporada,idTorneo,numGrupos,equipos);
+			
+			if(listTemporada.isEmpty()){
+				return new ResponseEntity<List<Grupos>>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<Grupos>>(listTemporada, HttpStatus.OK);
 		}
 
 	 

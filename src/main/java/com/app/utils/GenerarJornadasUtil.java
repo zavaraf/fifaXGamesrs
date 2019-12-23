@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import com.app.modelo.Equipo;
+import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
 
@@ -54,6 +55,49 @@ public class GenerarJornadasUtil {
 		return jornadas;
 	}
 	
+	public HashMap<Integer,List<String>> generarJornadasVuelta(int teams){
+		
+		HashMap<Integer,List<String>> jornadas = new HashMap<Integer,List<String>>();
+		
+		int totalRounds = (teams - 1)*1;
+	    int matchesPerRound = teams / 2;
+	    String[][] rounds = new String[totalRounds][matchesPerRound];
+	    
+	    for (int round = totalRounds-1; round >=0 ; round--) {
+	    	List<String> juegos = new ArrayList<String>();
+	        for (int match = 0; match < matchesPerRound; match++) {
+	            int home = (round + match) % (teams - 1);
+	            int away = (teams - 1 - match + round) % (teams - 1);
+
+	      
+	            // Last team stays in the same place while the others
+	            // rotate around it.
+	            if (match == 0) {
+	                away = teams -1;
+	            }
+	            //System.out.println("home]:"+home+ " away:"+away);
+	            
+
+	            // Add one so teams are number 1 to teams not 0 to teams - 1
+	            // upon display.
+	            rounds[round][match] = ("" + (away + 1) + "-" + (home + 1));
+	            String juego = (away+1) +"-" + (home + 1);
+	            juegos.add(juego);
+	        }
+	        jornadas.put((round), juegos);
+	    }
+	    
+	    // Display the rounds    
+	    for (int i = 0; i < rounds.length; i++) {
+	        System.out.println("Round " + (i + 1));
+	        System.out.println(Arrays.asList(rounds[i]));
+	        System.out.println();
+	    }
+		
+		
+		return jornadas;
+	}
+
 	public List<Jornadas> getJornadas(List<Equipo> equiposL){
 		
 		List<Equipo> equipos = agruparArreglo(equiposL);
@@ -144,45 +188,120 @@ public class GenerarJornadasUtil {
 		return arrayEquipos;
 	}
 	
-//	public static void main(String[] args) {
-//
-//	    //obtain the number of teams from user input
-//	    Scanner input = new Scanner(System.in);
-//	    System.out.print("How many teams should the fixture table have?");
-//
-//	    int teams;
-//	    teams = input.nextInt();
-//
-//
-//	    // Generate the schedule using round robin algorithm.
-//	    int totalRounds = (teams - 1)*1;
-//	    int matchesPerRound = teams / 2;
-//	    String[][] rounds = new String[totalRounds][matchesPerRound];
-//
-//	    for (int round = 0; round < totalRounds; round++) {
-//	        for (int match = 0; match < matchesPerRound; match++) {
-//	            int home = (round + match) % (teams - 1);
-//	            int away = (teams - 1 - match + round) % (teams - 1);
-//
-//	            // Last team stays in the same place while the others
-//	            // rotate around it.
-//	            if (match == 0) {
-//	                away = teams - 1;
-//	            }
-//
-//	            // Add one so teams are number 1 to teams not 0 to teams - 1
-//	            // upon display.
-//	            rounds[round][match] = ("" + (home + 1) + "-" + (away + 1));
-//	        }
-//	    }
-//
-//	    // Display the rounds    
-//	    for (int i = 0; i < rounds.length; i++) {
-//	        System.out.println("Round " + (i + 1));
-//	        System.out.println(Arrays.asList(rounds[i]));
-//	        System.out.println();
-//	    }
-//
-//	}
+	public List<Grupos> generarGrupos(List<Equipo> equipos, int numero){
+		
+		List<Grupos> grupos = new ArrayList<Grupos>();
+		
+		
+		int numeroGrupo = equipos.size()/numero;
+		
+		
+		
+		
+		
+		for (int i=0; i< numeroGrupo; i++) {
+			int startArray =0;
+			if(i>0) {
+				startArray = i * numero;
+			}
+			
+			Grupos grupo = new Grupos();
+			List<Equipo> equiposGrupo = new ArrayList<Equipo>();
+			for(int j=startArray; j < (i+1)*numero ; j++) {
+					
+					grupo.setNumero(i+1);
+					
+					equiposGrupo.add(equipos.get(j));
+					
+					
+					
+				}
+			grupo.setEquipos(equiposGrupo);
+			grupos.add(grupo);
+				
+				
+			}
+			
+		
+		
+		
+		
+		
+		return grupos;
+	}
+	
+	public static void main(String[] args) {
+
+	    //obtain the number of teams from user input
+	    Scanner input = new Scanner(System.in);
+	    System.out.print("How many teams should the fixture table have?");
+
+	    int teams;
+	    teams = input.nextInt();
+
+
+	    // Generate the schedule using round robin algorithm.
+	    int totalRounds = (teams - 1)*1;
+	    int matchesPerRound = teams / 2;
+	    String[][] rounds = new String[totalRounds][matchesPerRound];
+
+	    for (int round = 0; round < totalRounds; round++) {
+	        for (int match = 0; match < matchesPerRound; match++) {
+	            int home = (round + match) % (teams - 1);
+	            int away = (teams - 1 - match + round) % (teams - 1);
+
+	            // Last team stays in the same place while the others
+	            // rotate around it.
+	            if (match == 0) {
+	                away = teams - 1;
+	            }
+
+	            // Add one so teams are number 1 to teams not 0 to teams - 1
+	            // upon display.
+	            rounds[round][match] = ("" + (home + 1) + "-" + (away + 1));
+	        }
+	    }
+
+	    // Display the rounds  
+	    for (int i = 0; i < rounds.length; i++) {
+	        System.out.println("Round " + (i + 1));
+	        System.out.println(Arrays.asList(rounds[i]));
+	        System.out.println();
+	    }
+	    
+	   
+	    
+	  System.out.println("Total de Jornadas:"+totalRounds);
+	  System.out.println("Total de Juegos:"+matchesPerRound);
+	  String[][] rounds1 = new String[totalRounds][matchesPerRound];
+
+	    for (int round = totalRounds-1; round >=0 ; round--) {
+	        for (int match = 0; match < matchesPerRound; match++) {
+	            int home = (round + match) % (teams - 1);
+	            int away = (teams - 1 - match + round) % (teams - 1);
+
+	      
+	            // Last team stays in the same place while the others
+	            // rotate around it.
+	            if (match == 0) {
+	                away = teams -1;
+	            }
+	            //System.out.println("home]:"+home+ " away:"+away);
+	            
+
+	            // Add one so teams are number 1 to teams not 0 to teams - 1
+	            // upon display.
+	            rounds1[round][match] = ("" + (away + 1) + "-" + (home + 1));
+	        }
+	    }
+
+	    
+	    for (int i = 0; i < rounds1.length; i++) {
+	        System.out.println("Round Vuelta " + (i + 1));
+	        System.out.println("IDA]:"+Arrays.asList(rounds[i])+" vUELTA"+Arrays.asList(rounds1[i]));
+	        System.out.println();
+	    }
+
+	}
 
 }

@@ -1,8 +1,6 @@
 package com.app.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +12,7 @@ import com.app.dao.TemporadaDao;
 import com.app.enums.CodigoResponse;
 import com.app.modelo.Equipo;
 import com.app.modelo.GolesJornadas;
+import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
@@ -53,11 +52,28 @@ public class TemporadaServiceImpl implements TemporadaService{
 		GenerarJornadasUtil generarJornadas = new GenerarJornadasUtil();
 		
 		
+		
+		
 		List<Jornadas> jornadasList = generarJornadas.getJornadas(equipos);		
 		
 		
 		return jornadasList;
 	}
+	
+	public List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo, int numGrupos,List<Equipo> equiposL){
+			
+			
+			GenerarJornadasUtil generarJornadas = new GenerarJornadasUtil();
+			
+			
+			List<Equipo> equipos = generarJornadas.agruparArreglo(equiposL);
+			
+			List<Grupos> grupos = generarJornadas.generarGrupos(equipos, numGrupos);
+//			List<Jornadas> jornadasList = generarJornadas.getJornadas(equipos);		
+			
+			
+			return grupos;
+		}
 	public List<GolesJornadas> getGolesJornadas(String idJornada,String id,
 		String idEquipoLocal,
 		String idEquipoVisita){

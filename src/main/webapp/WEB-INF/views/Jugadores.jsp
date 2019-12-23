@@ -190,8 +190,9 @@
                         <div >
                            <div class="panel panel-default">
                               <!-- Default panel contents -->
+                              <!-- HTML to write -->	
                               <div class="panel-heading">
-                                 <span class="lead">Lista de Jugadores</span>
+                                 <span class="lead">Lista de Jugadores</span>                                 
                               </div>
                            </div>
                            <div >

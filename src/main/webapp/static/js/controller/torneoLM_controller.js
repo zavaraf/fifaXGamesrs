@@ -17,6 +17,8 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.divisionSelect;
 	self.jornadaSelect = [];
 	
+
+	
 	self.findPlayersJornada = findPlayersJornada;
 	self.getGolesJornadas = getGolesJornadas;
 	self.getPlayers = getPlayers;

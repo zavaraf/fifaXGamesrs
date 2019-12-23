@@ -52,6 +52,8 @@
       <script src="<c:url value='/static/js/app/app.js' />"></script>
       <script src="<c:url value='/static/js/controller/torneoLM_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
+      
+      <script src="<c:url value='/static/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js' />"></script>
       <%--      <script src="<c:url value='/static/js/service/draft_service.js' />"></script> --%>
       <%--      <script src="<c:url value='/static/js/controller/draft_controller.js' />"></script> --%>
    </head>
@@ -80,28 +82,32 @@
 				    <div class="col">
 				      <input type="text" class="form-control" placeholder="Nombre del torneo">
 				    </div>
+				    <div class="col">
+				      <input type="text" class="form-control" ng-model="equiposXGrupo" placeholder="Numero de equpos x Grupo">
+				    </div>
 				</div>
 				<div class="form-row align-items-center">
 				    <div class="col-auto my-1">
 				      
-				      <select ng-model="equiposSelect" ng-dblclick="ctrl.addEquipo(equiposSelect)" ng-options="equi as equi.nombre for equi in ctrl.equipos | orderBy  : 'nombre' track by equi.nombre " class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-<!--                      <select  class="custom-select mr-sm-2" id="inlineFormCustomSelect"> -->
-				        
-				        <option value="1"></option>
-				        
-				      </select>
+
+				      
+				      <multiselect ng-model="selection" options="options" id-prop="id" display-prop="nombre" show-search="true">
+ 					  </multiselect>
+ 					  <button type="button" ng-click="ctrl.getJornadasGrupos(selection,equiposXGrupo)" class="btn btn-primary">Generar Grupos</button>
+					  
 				    </div>
 				    
-				    <div class="col-auto my-1">
-				      <button type="submit" ng-click="ctrl.addEquipo(equiposSelect)" class="btn btn-primary">Agregar</button>
-				    </div>
+<!-- 				    <div class="col-auto my-1"> -->
+<!-- 				      <button type="submit" ng-click="ctrl.addEquipo(equiposSelect)" class="btn btn-primary">Agregar</button> -->
+<!-- 				    </div> -->
 				  </div>
 				  
 				  <div  class="list-group" >
 				  <span   class="list-group-item list-group-item-action">
 				  	<div class="container" >
 					  <div  class="row text-center">
-					    <div ng-repeat="e in ctrl.equiposTorneo " class="col-sm-2 ">
+					    <div ng-repeat="e in selection " class="col-sm-2 ">
+					    
 					    <img src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
 					      {{e.nombre}}
 					    </div>
@@ -109,11 +115,36 @@
 					</div>
 				  </span>
 			     </div>
+			     
+			     <div class="col"  ng-repeat="grupo in ctrl.gruposSe | orderBy : 'numero'" >
+							<blockquote class="blockquote text-center">
+								  <p class="mb-0">Grupo {{grupo.numero}} </p>
+								  
+							</blockquote>
+							
+							<div  class="list-group">
+							  <span  ng-repeat="e in grupo.equipos" class="list-group-item list-group-item-action">
+							  	<div class="container" >
+								  <div class="row text-center">
+								    <div class="col " >
+								      <img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."> 
+								       {{e.nombre}}
+								    </div>
+								  </div>
+								</div>
+							  </span>
+							 
+						
+							
+							
+							</div>
+				</div>
+					     
 				
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-		        <button type="button" class="btn btn-primary">Guardar</button>
+		        <button type="button"  class="btn btn-primary">Guardar</button>
 		      </div>
 		    </div>
 		  </div>

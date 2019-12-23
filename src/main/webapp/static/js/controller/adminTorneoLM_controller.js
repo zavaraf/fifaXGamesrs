@@ -20,6 +20,8 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	self.jornadasEdit = [];
 	self.equiposTorneo = [];
 	self.equiposSelect;
+	self.gruposSe = [];
+	
 	
 	
 	self.getGenerarJornadas = getGenerarJornadas;
@@ -30,6 +32,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	self.getTorneos = getTorneos;
 	self.buscarTodos = buscarTodos;
 	self.addEquipo = addEquipo;
+	self.getJornadasGrupos = getJornadasGrupos;
 	
 	
 	buscarDivisiones();
@@ -46,6 +49,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 		console.log("[adminTorneo_controller]  idTemporada]:",CONFIG.VARTEMPORADA.id);
 		EquipoService.buscarTodos(idTemporada).then(function(d) {
 			self.equipos = d;
+			$scope.options = self.equipos;
 		}, function(errResponse) {
 			console.error('[adminTorneo_controller] Error while fetching buscarTodos()');
 		});
@@ -160,6 +164,25 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
             );
             return null;
         }
+	 
+	 function getJornadasGrupos(equipos,numeroGrupos){
+			console.log("------------------->Torneo]:"+self.divisionSelect.id) 
+			TorneoLMService.getJornadasGrupos(equipos,self.divisionSelect.id,numeroGrupos)
+		            .then(
+		            function(d) {
+		            	
+		            	self.gruposSe = d;
+		                
+		                console.log("TorneoLMService-getJornadasGrupos]:",self.gruposSe)
+		                
+		                return d;
+		            },
+		            function(errResponse){
+		                console.error('[getJornadasGrupos] Error while fetching TorneoLMService()');
+		            }
+		        );
+		        return null;
+		    }
 	 
 	
 	

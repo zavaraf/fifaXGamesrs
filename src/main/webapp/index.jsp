@@ -39,6 +39,9 @@
 <!-- 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> -->
   
 	<script src="<c:url value='/static/js/app/app.js' />"></script>
+	
+	<script src="<c:url value='/static/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js' />"></script>
+	
 	<script
 		src="<c:url value='/static/js/controller/menu_controller.js' />"></script>
 	<script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
@@ -151,7 +154,11 @@
 		</div>
 	</nav>
 	</div>
-	
+	<div class="container">
+
+
+</div>
+
 	<div ng-view></div>
 </body>
 </html>

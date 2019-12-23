@@ -54,6 +54,8 @@
 <body ng-app="myApp" >
       <script src="<c:url value='/static/js/controller/torneoLM_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
+      
+
   
   	
 	<div class="container container-fluid" ng-controller="TorneoLMController as ctrl">

@@ -1,0 +1,52 @@
+<div class="btn-group" style="width: 100%">
+    <button type="button" class="btn dropdown-toggle" ng-class="classesBtn" ng-click="toggleDropdown()" ng-disabled="disabled" style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">
+        {{getButtonText()}}&nbsp;<span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-form"
+        ng-style="{display: open ? 'block' : 'none'}" style="width: 100%; overflow-x: auto">
+
+        <li ng-show="showSelectAll">
+            <a ng-click="selectAll()" href="">
+                <span class="glyphicon glyphicon-ok"></span> {{labels.selectAll || 'Select All'}}
+            </a>
+        </li>
+        <li ng-show="showUnselectAll">
+            <a ng-click="unselectAll()" href="">
+                <span class="glyphicon glyphicon-remove"></span> {{labels.unselectAll || 'Unselect All'}}
+            </a>
+        </li>
+        <li ng-show="(showSelectAll || showUnselectAll)"
+            class="divider">
+        </li>
+
+        <li role="presentation" ng-repeat="option in selectedOptions" class="active">
+            <a class="item-selected" href="" title="{{showTooltip ? getDisplay(option) : ''}}" ng-click="toggleItem(option); $event.stopPropagation()" style="overflow-x: hidden;text-overflow: ellipsis">
+                <span class="glyphicon glyphicon-remove"></span>
+                {{getDisplay(option)}}
+            </a>
+        </li>
+        <li ng-show="selectedOptions.length > 0" class="divider"></li>
+
+        <li ng-show="showSearch">
+            <div class="dropdown-header">
+                <input type="text" class="form-control input-sm" style="width: 100%;"
+                       ng-model="searchFilter" placeholder="{{labels.search || 'Search...'}}" ng-change="updateOptions()"/>
+            </div>
+        </li>
+
+        <li ng-show="showSearch" class="divider"></li>
+        <li role="presentation" ng-repeat="option in unselectedOptions | filter:search() | limitTo: searchLimit"
+            ng-if="!isSelected(option)"
+            ng-class="{disabled : selectionLimit && selectedOptions.length >= selectionLimit}">
+            <a class="item-unselected" href="" title="{{showTooltip ? getDisplay(option) : ''}}" ng-click="toggleItem(option); $event.stopPropagation()" style="overflow-x: hidden;text-overflow: ellipsis">
+                {{getDisplay(option)}}
+            </a>
+        </li>
+
+        <li class="divider" ng-show="selectionLimit > 1"></li>
+        <li role="presentation" ng-show="selectionLimit > 1">
+            <a>{{selectedOptions.length || 0}} / {{selectionLimit}} {{labels.itemsSelected || 'selected'}}</a>
+        </li>
+
+    </ul>
+</div>

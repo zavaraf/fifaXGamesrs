@@ -2,7 +2,9 @@ package com.app.service;
 
 import java.util.List;
 
+import com.app.modelo.Equipo;
 import com.app.modelo.GolesJornadas;
+import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
@@ -18,6 +20,7 @@ public interface TemporadaService {
 	Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
 	
 	List<Jornadas> getArmarJornadasInicial(int idTemporada, int idTorneo);
+	List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo,int numGrupos, List<Equipo> equipos);
 	
 	ResponseData addGol(int idJugador,int idEquipo,int id,int idJornada);
 	

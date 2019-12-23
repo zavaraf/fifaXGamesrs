@@ -16,7 +16,8 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     		getJornada        : getJornada,
     		addImagen         : addImagen,
     		getGenerarJornadas: getGenerarJornadas,
-    		addJornadas       : addJornadas
+    		addJornadas       : addJornadas,
+    		getJornadasGrupos : getJornadasGrupos
     };
  
     return factory;
@@ -156,6 +157,25 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         var deferred = $q.defer();
         var idTorneo = 1;
         $http.post(REST_SERVICE_URI_E+'addJornadas'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision,jornadas)
+            .then(
+            function (response) {
+            	console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while getJornadas');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+    
+    function getJornadasGrupos(equipos,idTorneo,numeroGrupos) {
+        var deferred = $q.defer();
+        var idTorneo = 1;
+        var url = REST_SERVICE_URI_E+'getArmarJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+idTorneo+'/'+numeroGrupos
+        console.log(url,equipos);
+        $http.post(url,equipos)
             .then(
             function (response) {
             	console.log(response.data)

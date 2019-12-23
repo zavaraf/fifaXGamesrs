@@ -1,6 +1,6 @@
 'use strict';
  
-var app = angular.module("myApp", ["ngRoute","ngPagination"]);
+var app = angular.module("myApp", ["ngRoute","ngPagination",'btorfs.multiselect']);
     app.config(function($routeProvider) {
         $routeProvider
         .when("/", {
