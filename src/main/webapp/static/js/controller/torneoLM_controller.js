@@ -30,6 +30,8 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.setJornadaActual = setJornadaActual;
 	self.showEditJornada = showEditJornada;
 	self.getTorneos = getTorneos;
+	self.getGruposTorneo = getGruposTorneo;
+	self.getTablaGrupo = getTablaGrupo;
 	
 	
 	buscarDivisiones()
@@ -76,7 +78,7 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
                 function(d) {
                     self.tablaGeneral = d;
                     
-                    console.log("TorneoLMService]:",self.tablaGeneral)
+                    console.log("TorneoLMService getTablaGeneral]:",self.tablaGeneral)
                     
                     return d;
                 },
@@ -180,6 +182,9 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
              
              getJornada(jornadaVar.idJornada,jornadaVar.id,jornadaVar.idEquipoLocal,jornadaVar.idEquipoVisita)
              
+             getTablaGeneral()
+             getJornadas()
+             
              
              return d;
          },
@@ -238,6 +243,54 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 			return false;
 		}
 	 
+	 function getGruposTorneo(torneoSelect){
+			console.log("-----------getGruposTorneo-------->Torneo]:",torneoSelect) 
+			if(torneoSelect.tipoTorneo){
+			TorneoLMService.getGruposTorneo(torneoSelect.id)
+		            .then(
+		            function(d) {
+		            	
+		            	self.gruposTorneo = d;
+		            	
+		                console.log("TorneoLMService-getGruposTorneo]:",d)
+		                
+		                
+		                return d;
+		            },
+		            function(errResponse){
+		                console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
+		            }
+		        );
+			}else{
+				self.gruposTorneo = [];
+			}
+		        return null;
+		    }
+	 
+	 function getTablaGrupo(grupo){
+		 console.log("Gurpo----",grupo)
+		 
+		 var tablaGeneralGrupo = [];
+		 
+		 if (self.tablaGeneral!= null){
+		 for (var i = 0 ; i<=self.tablaGeneral.length ; i ++){
+			 try{
+				if(self.tablaGeneral[i].nombreGrupo == grupo.numero){
+					//console.log("Registro..ADD....",self.tablaGeneral[i])
+					tablaGeneralGrupo.push( self.tablaGeneral[i]); 
+					
+				}
+		     }catch(error){}
+				
+			}
+		 }
+		 return tablaGeneralGrupo;
+		 
+		 
+		 
+	 }
+	 
+	
 	
 	
 

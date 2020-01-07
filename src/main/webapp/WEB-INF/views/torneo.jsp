@@ -215,7 +215,7 @@
 			
 			<ul class="nav nav-tabs" role="tablist">
 			    <li class="nav-item" ng-repeat="div in ctrl.getTorneos()">
-			      <a class="nav-link" ng-click= "ctrl.getInitTorneo(div)" data-toggle="tab" >{{div.nombre}}</a>
+			      <a class="nav-link" ng-click= "ctrl.getInitTorneo(div);ctrl.getGruposTorneo(div)" data-toggle="tab" >{{div.nombre}}</a>
 			    </li>   
 			 </ul>
 	        <div class="formcontainer"	>
@@ -226,9 +226,9 @@
                        <span class="lead">Tabla General</span>
                     </div>
                 </div>
-                <div class="row">
+                <div  class="row">
                 	<div class="col-xs-12 col-md-8">
-		                <table class="table table-sm table-hover table-striped">
+		                <table ng-show = "ctrl.divisionSelect.tipoTorneo ==1" class="table table-sm table-hover table-striped">
 		                	<thead class="thead-dark">
 		                          <tr>
 		                          	  <th>*</th>
@@ -241,6 +241,7 @@
 		                              <th>GE</th>
 		                              <th>DIF</th>
 		                              <th>PTS</th>
+		                              
 		                          </tr>
 		                      </thead>
 		                      <tbody>
@@ -255,6 +256,40 @@
 		                              <td><span ng-bind="e.ge"></span></td>
 		                              <td><span ng-bind="e.dif"></span></td>
 		                              <td><span ng-bind="e.pts"></span></td>
+		                              
+		                          </tr>
+		                      </tbody>
+		    			</table>
+		    			
+		    			<table ng-show = "ctrl.divisionSelect.tipoTorneo ==2" ng-repeat="grupo in ctrl.gruposTorneo" class="table table-sm table-hover table-striped">
+		                	<thead class="thead-dark">
+		                          <tr>
+		                          	  <th>*</th>
+		                              <th>Equipo</th>
+		                              <th>PJ</th>
+		                              <th>PG</th>
+		                              <th>PE</th>
+		                              <th>PP</th>
+		                              <th>GF</th>
+		                              <th>GE</th>
+		                              <th>DIF</th>
+		                              <th>PTS</th>
+		                              
+		                          </tr>
+		                      </thead>
+		                      <tbody>
+		                          <tr ng-repeat="e in ctrl.getTablaGrupo(grupo)">
+		                          	  <td><img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td><a>{{e.nombreEquipo}}</a></td>
+		                              <td><span ng-bind="e.pj"></span></td>
+		                              <td><span ng-bind="e.pg"></span></td>
+		                              <td><span ng-bind="e.pe"></span></td>
+		                              <td><span ng-bind="e.pp"></span></td>
+		                              <td><span ng-bind="e.gf"></span></td>
+		                              <td><span ng-bind="e.ge"></span></td>
+		                              <td><span ng-bind="e.dif"></span></td>
+		                              <td><span ng-bind="e.pts"></span></td>
+		                              
 		                          </tr>
 		                      </tbody>
 		    			</table>

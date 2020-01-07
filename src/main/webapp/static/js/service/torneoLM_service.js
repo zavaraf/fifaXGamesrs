@@ -17,7 +17,9 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     		addImagen         : addImagen,
     		getGenerarJornadas: getGenerarJornadas,
     		addJornadas       : addJornadas,
-    		getJornadasGrupos : getJornadasGrupos
+    		getJornadasGrupos : getJornadasGrupos,
+    		addTorneoGrupo    : addTorneoGrupo,
+    		getGruposTorneo   : getGruposTorneo
     };
  
     return factory;
@@ -170,12 +172,49 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         return deferred.promise;
     }
     
-    function getJornadasGrupos(equipos,idTorneo,numeroGrupos) {
+    function getJornadasGrupos(equiposSeleccionados,idTorneo,numeroGrupos,confJor) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        var url = REST_SERVICE_URI_E+'getArmarJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+idTorneo+'/'+numeroGrupos
-        console.log(url,equipos);
-        $http.post(url,equipos)
+        var url = REST_SERVICE_URI_E+'getArmarJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+idTorneo+'/'+numeroGrupos+'/'+confJor
+        console.log(url,equiposSeleccionados);
+        $http.post(url,equiposSeleccionados)
+            .then(
+            function (response) {
+            	console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while getJornadas');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+    
+    function addTorneoGrupo(grupos,nombre,confTor) {
+        var deferred = $q.defer();
+      
+        var url = REST_SERVICE_URI_E+'addJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+nombre+'/'+confTor
+        console.log(url,grupos);
+        $http.post(url,grupos)
+            .then(
+            function (response) {
+            	console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while getJornadas');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+    function getGruposTorneo(idGrupo) {
+        var deferred = $q.defer();
+      
+        var url = REST_SERVICE_URI_E+'getGruposTorneo'+"/"+CONFIG.VARTEMPORADA.id+'/'+idGrupo
+        console.log(url);
+        $http.get(url)
             .then(
             function (response) {
             	console.log(response.data)

@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `fifaxgamersbd` /*!40100 DEFAULT CHARACTER SET ut
 USE `fifaxgamersbd`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: fifaxgamersbd
+-- Host: database-1.c5pfdjducnqe.us-east-2.rds.amazonaws.com    Database: fifaxgamersbd
 -- ------------------------------------------------------
--- Server version	5.7.19-log
+-- Server version	5.7.22-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -54,7 +54,7 @@ CREATE TABLE `conceptosfinancieros` (
   KEY `fk_ConceptosFinancieros_DatosFinancieros1_idx` (`DatosFinancieros_idDatosFinancieros`,`DatosFinancieros_Equipos_idEquipo`,`datosfinancieros_tempodada_idTemporada`),
   CONSTRAINT `fk_ConceptosFinancieros_CatalogoConceptos1` FOREIGN KEY (`CatalogoConceptos_idCatalogoConceptos`) REFERENCES `catalogoconceptos` (`idCatalogoConceptos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ConceptosFinancieros_DatosFinancieros1` FOREIGN KEY (`DatosFinancieros_idDatosFinancieros`, `DatosFinancieros_Equipos_idEquipo`, `datosfinancieros_tempodada_idTemporada`) REFERENCES `datosfinancieros` (`idDatosFinancieros`, `Equipos_idEquipo`, `tempodada_idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +200,7 @@ CREATE TABLE `equipos` (
   PRIMARY KEY (`idEquipo`,`Division_idDivision`),
   KEY `fk_Equipos_Division1_idx` (`Division_idDivision`),
   CONSTRAINT `fk_Equipos_Division1` FOREIGN KEY (`Division_idDivision`) REFERENCES `division` (`idDivision`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -307,7 +307,7 @@ CREATE TABLE `historicodraft` (
   PRIMARY KEY (`idHistoricoDraft`,`DraftPC_idDraftPC`,`DraftPC_Persona_idPersona`,`tempodada_idTemporada`),
   KEY `fk_HistoricoDraft_DraftPC1_idx` (`DraftPC_idDraftPC`,`DraftPC_Persona_idPersona`,`tempodada_idTemporada`),
   CONSTRAINT `fk_HistoricoDraft_DraftPC1` FOREIGN KEY (`DraftPC_idDraftPC`, `DraftPC_Persona_idPersona`, `tempodada_idTemporada`) REFERENCES `draftpc` (`idDraftPC`, `Persona_idPersona`, `tempodada_idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,7 +325,7 @@ CREATE TABLE `imagenesjornadas` (
   PRIMARY KEY (`id`),
   KEY `fk_imagenesJornadas_jornadas_has_equipos1_idx` (`jornadas_has_equipos_id`,`jornadas_has_equipos_jornadas_idJornada`),
   CONSTRAINT `fk_imagenesJornadas_jornadas_has_equipos1` FOREIGN KEY (`jornadas_has_equipos_id`, `jornadas_has_equipos_jornadas_idJornada`) REFERENCES `jornadas_has_equipos` (`id`, `jornadas_idJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +348,7 @@ CREATE TABLE `jornadas` (
   KEY `fk_jornadas_torneo1_idx` (`torneo_idtorneo`),
   CONSTRAINT `fk_jornadas_division1` FOREIGN KEY (`division_idDivision`) REFERENCES `division` (`idDivision`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_jornadas_torneo1` FOREIGN KEY (`torneo_idtorneo`) REFERENCES `torneo` (`idtorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=526 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=696 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -372,7 +372,7 @@ CREATE TABLE `jornadas_has_equipos` (
   CONSTRAINT `fk_jornadas_has_equipos_equipos1` FOREIGN KEY (`equipos_idEquipoLocal`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_jornadas_has_equipos_equipos2` FOREIGN KEY (`equipos_idEquipoVisita`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_jornadas_has_equipos_jornadas1` FOREIGN KEY (`jornadas_idJornada`) REFERENCES `jornadas` (`idJornada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7417 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8457 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,7 +415,7 @@ CREATE TABLE `persona` (
   PRIMARY KEY (`idPersona`),
   KEY `fk_Persona_Equipos1_idx` (`Equipos_idEquipo`),
   CONSTRAINT `fk_Persona_Equipos1` FOREIGN KEY (`Equipos_idEquipo`) REFERENCES `equipos` (`idEquipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1248 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1407 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -586,11 +586,11 @@ CREATE TABLE `torneo` (
   `tempodada_idTemporada` int(11) NOT NULL,
   `tipoTorneo_idtipoTorneo` int(11) NOT NULL,
   PRIMARY KEY (`idtorneo`),
-  KEY `fk_torneo_tempodada1_idx` (`tempodada_idTemporada`),
   KEY `fk_torneo_tipoTorneo1_idx` (`tipoTorneo_idtipoTorneo`),
-  CONSTRAINT `fk_torneo_tempodada1` FOREIGN KEY (`tempodada_idTemporada`) REFERENCES `tempodada` (`idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_torneo_tempodada1_idx` (`tempodada_idTemporada`),
+  CONSTRAINT `fk_torneo_tempodada1` FOREIGN KEY (`tempodada_idTemporada`) REFERENCES `temporada` (`idTemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_torneo_tipoTorneo1` FOREIGN KEY (`tipoTorneo_idtipoTorneo`) REFERENCES `tipotorneo` (`idtipoTorneo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -625,23 +625,23 @@ CREATE TABLE `usuarios_has_roles` (
   CONSTRAINT `fk_Usuarios_has_Roles_Roles1` FOREIGN KEY (`Roles_idRoles`) REFERENCES `roles` (`idRoles`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Usuarios_has_Roles_Usuarios1` FOREIGN KEY (`Usuarios_userName`) REFERENCES `usuarios` (`userName`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+/* !40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping routines for database 'fifaxgamersbd'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `addGoles` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DROP PROCEDURE IF EXISTS `addGoles` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addGoles`(IN idJornada int ,
-							   IN id int , 
+CREATE  PROCEDURE `addGoles`(IN idJornada int ,
+                 IN id int , 
                                IN idJugador int,
                                IN idEquipo int,
                                out isError int, 
@@ -673,7 +673,7 @@ where idPersona = idJugador
 set isAutogol = 0;
 
 if idEquipoJugador != idEquipo then 
-	set isAutogol = 1;
+  set isAutogol = 1;
 end if;
 
 
@@ -729,22 +729,22 @@ set message = 'OK';
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `addImagen` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `addImagen` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addImagen`(IN idJornada int ,
-							   IN id int , 
+CREATE  PROCEDURE `addImagen`(IN idJornada int ,
+                 IN id int , 
                                IN idEquipo int,
                                IN img varchar(300),
                                out isError int, 
@@ -777,21 +777,21 @@ end if;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `confirmPlayer` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `confirmPlayer` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `confirmPlayer`(IN idJugador INT,
+CREATE  PROCEDURE `confirmPlayer`(IN idJugador INT,
                             IN idEquipoOferta INT,
                             IN idTemporada INT,
                             out isError int, 
@@ -834,32 +834,32 @@ and tempodada_idTemporada = idTemporadaVar
 select idJugadorVal;
 
 if idJugadorExist is null then 
-	set isError = 1 ;
+  set isError = 1 ;
   set message = 'El jugador no Existe';
   
 elseif activoVar = 0 then 
-	set isError = 1 ;
+  set isError = 1 ;
     set message = 'Aun no concluye el tiempo para confirmar';
 elseif idEquipoVar != idEquipoOferta then
-	set isError = 1 ;
+  set isError = 1 ;
     set message = 'Solamente el equipo que gano al jugador puede confirmar';
 
 elseif idEquipoExist = idEquipoVar then
-	set isError = 1 ;
+  set isError = 1 ;
     set message = 'El Jugador y se confirmo';
-	
+  
 
 elseif idJugador is not null then 
-	 
+   
      UPDATE `fifaxgamersbd`.`persona`
-	SET
-	  `Equipos_idEquipo` = idEquipoVar
+  SET
+    `Equipos_idEquipo` = idEquipoVar
 
-	WHERE `idPersona` = idJugador;
-	
+  WHERE `idPersona` = idJugador;
+  
     
     set isError = 0 ;
-	set message = 'OK';
+  set message = 'OK';
     
     
 end if;
@@ -867,23 +867,23 @@ end if;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `crearJornada` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `crearJornada` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `crearJornada`(IN equipoLocal int , 
+CREATE  PROCEDURE `crearJornada`(IN equipoLocal int , 
                                IN equipoVisita int,
-							   IN numJornada INT,
+                 IN numJornada INT,
                                IN torneo INT,
                                IN division int,
                                IN liga int,
@@ -989,22 +989,22 @@ set message = 'OK';
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `crearJugador` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `crearJugador` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `crearJugador`(IN nombreCompleto varchar(200) , 
-							   IN sobrenonbre varchar(200),
+CREATE  PROCEDURE `crearJugador`(IN nombreCompleto varchar(200) , 
+                 IN sobrenonbre varchar(200),
                                IN raiting INT,
                                IN idEquipo INT,
                                IN link varchar(200),
@@ -1028,14 +1028,14 @@ INSERT INTO `fifaxgamersbd`.`persona`
 VALUES
 (null,
         nombreCompleto,
-		sobrenonbre,
+    sobrenonbre,
         null,
         raiting,
         0,
         idEquipo,
         1,
         link
-	    );
+      );
     
         
 INSERT INTO `fifaxgamersbd`.`persona_has_roles`
@@ -1069,22 +1069,22 @@ idTemporada);
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `crearTorneo` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `crearTorneo` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `crearTorneo`(IN nombreTorneo varchar(45),
-							   in idTemporada int,
+CREATE  PROCEDURE `crearTorneo`(IN nombreTorneo varchar(45),
+                 in idTemporada int,
                                in tipoTorneo int,
                                out isError int, 
                                out message varchar(200))
@@ -1095,8 +1095,12 @@ declare isTorneo int;
 declare torneoval int; 
 
 set isError = 1 ;
-set message = 'El jugador no Existe';
+set message = 'El torneo ya Existe';
 
+if tipotorneo = 1 then 
+  select nombre into nombreTorneo 
+  from division where idDivision = 1;
+end if;
 
 select torneo.idtorneo into isTorneo 
 from torneo
@@ -1115,20 +1119,25 @@ INSERT INTO `fifaxgamersbd`.`torneo`
 
 (select null, nombre,idTemporada,tipotorneo from division);
 
- 	  
-	  INSERT INTO `fifaxgamersbd`.`grupos_torneo`
-		(`torneo_idtorneo`,
-		`equipos_idEquipo`,
-		`nombreGrupo`)
-		
-		(select idTorneo, idEquipo,null
-		from torneo,division, equipos
-		where torneo.nombreTorneo = division.nombre 
-		and equipos.Division_idDivision = division.idDivision and equipos.idEquipo!=1
-		and torneo.tempodada_idTemporada = 5);
+    
+    INSERT INTO `fifaxgamersbd`.`grupos_torneo`
+    (`torneo_idtorneo`,
+    `equipos_idEquipo`,
+    `nombreGrupo`)
+    
+    (select idTorneo, idEquipo,null
+    from torneo,division, equipos
+    where torneo.nombreTorneo = division.nombre 
+    and equipos.Division_idDivision = division.idDivision and equipos.idEquipo!=1
+    and torneo.tempodada_idTemporada = idTemporada);
        
  
 else  
+
+
+select nombreTorneo,
+idTemporada,
+tipotorneo;
 
 INSERT INTO `fifaxgamersbd`.`torneo`
 (`idtorneo`,
@@ -1140,6 +1149,8 @@ VALUES
 nombreTorneo,
 idTemporada,
 tipotorneo);
+
+
 
 end if;
 
@@ -1153,22 +1164,22 @@ set message = 'OK';
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `createInitialDraft` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `createInitialDraft` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createInitialDraft`(IN idJugador INT,
-									IN montoOferta INT,
+CREATE  PROCEDURE `createInitialDraft`(IN idJugador INT,
+                  IN montoOferta INT,
                                     IN manager varchar(100),
                                     IN observaciones varchar(100), 
                                     IN idEquipoOferta INT,
@@ -1209,7 +1220,7 @@ limit 1;
 select idJugadorVal;
 
 if idJugadorExist is null then 
-	set isError = 1 ;
+  set isError = 1 ;
   set message = 'El jugador no Existe';
 elseif  montoBD is null or montoBD < montoOferta then 
   set isError = 1 ;
@@ -1227,68 +1238,68 @@ elseif manager is null  then
   set message = 'El manager es incorrecto';
 
 elseif idJugador is not null then 
-	INSERT INTO `fifaxgamersbd`.`draftpc`
-	(`idDraftPC`,
-	`oferta`,
-	`Persona_idPersona`,
-	`fechaCompra`,
-	`usuarioOferta`,
-	`tempodada_idTemporada`,
-	`comentarios`,
-	`abierto`,
+  INSERT INTO `fifaxgamersbd`.`draftpc`
+  (`idDraftPC`,
+  `oferta`,
+  `Persona_idPersona`,
+  `fechaCompra`,
+  `usuarioOferta`,
+  `tempodada_idTemporada`,
+  `comentarios`,
+  `abierto`,
     `ofertaFinal`,
     `idEquipo`)
-	VALUES
-	(1,
-	montoOferta,
-	idJugador,
-	SYSDATE(),
-	manager,
-	(select idTemporada from temporada order by temporada.idTemporada desc limit 1),
-	observaciones,
-	1,
+  VALUES
+  (1,
+  montoOferta,
+  idJugador,
+  SYSDATE(),
+  manager,
+  (select idTemporada from temporada order by temporada.idTemporada desc limit 1),
+  observaciones,
+  1,
     montoOferta,
     idEquipoOferta);
     
     INSERT INTO `fifaxgamersbd`.`historicodraft`
-		(`idHistoricoDraft`,
-		`oferta`,
-		`fechaOferta`,
-		`usuarioOferta`,
-		`DraftPC_idDraftPC`,
-		`DraftPC_Persona_idPersona`,
-		`tempodada_idTemporada`,
-		`comentarios`,
-		`ofertaFinal`,
+    (`idHistoricoDraft`,
+    `oferta`,
+    `fechaOferta`,
+    `usuarioOferta`,
+    `DraftPC_idDraftPC`,
+    `DraftPC_Persona_idPersona`,
+    `tempodada_idTemporada`,
+    `comentarios`,
+    `ofertaFinal`,
         `idEquipo`)
-		(select null,
-			draftpc.oferta,
-			draftpc.fechaCompra,
-			draftpc.usuarioOferta,
-			draftpc.idDraftPC,
-			draftpc.Persona_idPersona,
-			draftpc.tempodada_idTemporada,
-			draftpc.comentarios,
-			draftpc.ofertaFinal,
+    (select null,
+      draftpc.oferta,
+      draftpc.fechaCompra,
+      draftpc.usuarioOferta,
+      draftpc.idDraftPC,
+      draftpc.Persona_idPersona,
+      draftpc.tempodada_idTemporada,
+      draftpc.comentarios,
+      draftpc.ofertaFinal,
             draftpc.idEquipo
-			from draftpc
-		where draftpc.Persona_idPersona = idJugador
+      from draftpc
+    where draftpc.Persona_idPersona = idJugador
         and draftpc.tempodada_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
         and draftpc.idDraftPC = 1
         limit 1);
         
         select sum(draftpc.ofertaFinal) into sumaDraftPC
-		from draftpc
-		where draftpc.idEquipo = idEquipoOferta;
+    from draftpc
+    where draftpc.idEquipo = idEquipoOferta;
         
         call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
-											where nombre = 'altasPC' limit 1), 
+                      where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
                                             idEquipoOferta);
 
     
     set isError = 0 ;
-	set message = 'OK';
+  set message = 'OK';
     
     
 end if;
@@ -1296,21 +1307,243 @@ end if;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `createOrUpdateDatosFinancieros` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `createOrTorneoGrupos` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdateDatosFinancieros`(IN idDatos INT, IN monto INT,IN idEquipo INT)
+CREATE  PROCEDURE `createOrTorneoGrupos`(IN `json` JSON,
+                    IN nombreTorneo varchar(200),
+                   IN idTemporada INT,
+                               out isError int, 
+                               out message varchar(200))
+BEGIN
+
+  DECLARE `json_items` BIGINT UNSIGNED DEFAULT JSON_LENGTH(`json`);
+  DECLARE `_index` BIGINT UNSIGNED DEFAULT 0;
+  
+  DECLARE `json_items_Equipos` BIGINT ;
+  DECLARE `_index_Equipos` BIGINT UNSIGNED DEFAULT 0;
+  
+  DECLARE `json_items_Jornadas` BIGINT ;
+  DECLARE `_index_Jornadas` BIGINT UNSIGNED DEFAULT 0;
+  
+  DECLARE `json_items_Juegos` BIGINT ;
+  DECLARE `_index_Juegos` BIGINT UNSIGNED DEFAULT 0;
+  
+  declare jsonEquipos JSON;
+  declare jsonJornadas JSON;
+  declare jsonJuego    JSON;
+  declare var varchar(200);
+  declare cumplido varchar(100);
+  declare cum int(10);
+  
+  declare idTorneo int;
+  
+  declare idEquipoJson int;
+  declare numeroGrupoJson int;
+  declare idjornadaVal int;
+  declare idJ int;
+  
+  
+  set isError = 1 ;
+set message = 'Error al crear grupos';
+  
+-- call crearTorneo(nombreTorneo,idTemporada,2,@iserr,@ip);
+
+select torneo.idtorneo into idTorneo
+from torneo
+where torneo.nombreTorneo = nombreTorneo;
+
+if idTorneo is null then 
+  call crearTorneo(nombreTorneo,idTemporada,2,@iserr,@ip);
+  
+  select torneo.idtorneo into idTorneo
+  from torneo
+  where torneo.nombreTorneo = nombreTorneo;
+
+
+end if;
+
+
+
+  WHILE `_index` < `json_items` DO
+    set cumplido = '';
+        set _index_Equipos = 0;
+        set _index_Jornadas = 0;
+    select JSON_EXTRACT(`json`, CONCAT('$[', `_index`, '].numero')) into var;
+        
+      
+        
+        SELECT JSON_EXTRACT(`json`, CONCAT('$[', `_index`, '].equipos')) into jsonEquipos ;
+        
+         -- select jsonEquipos;
+        
+        set `json_items_Equipos` = JSON_LENGTH(jsonEquipos);
+        
+        
+        
+        WHILE `_index_Equipos` < `json_items_Equipos` DO
+        
+       -- select _index_Equipos,json_items_Equipos, jsonEquipos,idTorneo;
+        
+        
+        select JSON_EXTRACT(`jsonEquipos`, CONCAT('$[', `_index_Equipos`, '].id')) into idEquipoJson;
+        
+      
+        
+        
+                INSERT INTO `fifaxgamersbd`.`grupos_torneo`
+        (`torneo_idtorneo`,
+        `equipos_idEquipo`,
+        `nombreGrupo`)
+        VALUES
+        (idTorneo,
+        idEquipoJson,
+        var);
+
+        
+        SET `_index_Equipos` := `_index_Equipos` + 1;
+        
+        END WHILE;
+        
+        
+        
+        SELECT JSON_EXTRACT(`json`, CONCAT('$[', `_index`, '].jornadas')) into jsonJornadas ;
+        
+        
+         -- select jsonEquipos;
+        
+        set `json_items_Jornadas` = JSON_LENGTH(jsonJornadas);
+        
+        
+        
+        WHILE `_index_Jornadas` < `json_items_Jornadas` DO
+        
+        set idjornadaVal = null;
+        set _index_Juegos = 0;
+      
+      select jornadas.idJornada into idjornadaVal
+      from jornadas
+      where jornadas.numeroJornada = (SELECT JSON_EXTRACT(`jsonJornadas`, CONCAT('$[', `_index_Jornadas`, '].numeroJornada')))
+      and jornadas.torneo_idtorneo = idTorneo;
+
+        if idjornadaVal is null then
+              INSERT INTO `fifaxgamersbd`.`jornadas`
+              (`idJornada`,
+              `division_idDivision`,
+              `numeroJornada`,
+              `activa`,
+              `cerrada`,
+              `nombreJornada`,
+              `torneo_idtorneo`)
+              VALUES
+              (null,
+              null,
+              (SELECT JSON_EXTRACT(`jsonJornadas`, CONCAT('$[', `_index_Jornadas`, '].numeroJornada'))),
+              1,
+              0,
+              '',
+              idTorneo
+              );
+        end if;
+        
+        
+                
+        
+       -- select _index_Equipos,json_items_Equipos, jsonEquipos,idTorneo; jsonJuego
+        SELECT JSON_EXTRACT(`jsonJornadas`, CONCAT('$[', `_index_Jornadas`, '].jornada')) into jsonJuego ;
+        
+     set `json_items_Juegos` = JSON_LENGTH(jsonJuego);
+        
+      WHILE `_index_Juegos` < `json_items_Juegos` DO
+            set idJ =  null;
+            set idjornadaVal = null;
+        
+                select jornadas.idJornada into idjornadaVal
+        from jornadas
+        where jornadas.numeroJornada = (SELECT JSON_EXTRACT(`jsonJornadas`, CONCAT('$[', `_index_Jornadas`, '].numeroJornada')))
+        and jornadas.torneo_idtorneo = idTorneo;
+          
+                select (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoLocal') ) ) idEquipoLocal,
+                (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoVisita') ) ) idEquipoVisita;
+                
+          select hje.id into idJ
+          from jornadas_has_equipos hje
+          where 
+          hje.equipos_idEquipoLocal = (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoLocal') ) )
+          and hje.equipos_idEquipoVisita = (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoVisita') ))
+          and hje.jornadas_idJornada = idjornadaVal;
+
+        -- if idJ is null then 
+
+            INSERT INTO `fifaxgamersbd`.`jornadas_has_equipos`
+            (`id`,
+            `jornadas_idJornada`,
+            `equipos_idEquipoLocal`,
+            `equipos_idEquipoVisita`)
+            VALUES
+            (null,
+            idjornadaVal,
+            (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoLocal') ) ) ,
+            (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoVisita') ))
+            );
+
+        --  end if;
+        
+        
+        
+       SET `_index_Juegos` := `_index_Juegos` + 1;
+      
+      END WHILE;
+        
+        
+     
+       
+        
+        SET `_index_Jornadas` := `_index_Jornadas` + 1;
+        
+        END WHILE;
+        
+       
+        
+    -- select _index,_index_Equipos;
+        
+    SET `_index` := `_index` + 1;
+    
+    
+  END WHILE;
+
+  
+set isError = 0 ;
+set message = 'OK';
+
+END ;;
+DELIMITER ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `createOrUpdateDatosFinancieros` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE  PROCEDURE `createOrUpdateDatosFinancieros`(IN idDatos INT, IN monto INT,IN idEquipo INT)
 BEGIN
 
 DECLARE idTemporadaVar int;
@@ -1339,62 +1572,62 @@ and con.DatosFinancieros_Equipos_idEquipo = idEquipo
 
 and con.datosfinancieros_tempodada_idTemporada = idTemporadaVar;
 
-	IF isUpdate is null or isUpdate = 0  then
+  IF isUpdate is null or isUpdate = 0  then
 
 
 
 
 
-	INSERT INTO `fifaxgamersbd`.`conceptosfinancieros`
-		(`idConceptosFinancieros`,
-		`DatosFinancieros_idDatosFinancieros`,
-		`monto`,
-		`CatalogoConceptos_idCatalogoConceptos`,
+  INSERT INTO `fifaxgamersbd`.`conceptosfinancieros`
+    (`idConceptosFinancieros`,
+    `DatosFinancieros_idDatosFinancieros`,
+    `monto`,
+    `CatalogoConceptos_idCatalogoConceptos`,
         `DatosFinancieros_Equipos_idEquipo`,
         
         `datosfinancieros_tempodada_idTemporada`)
-		VALUES
-		(null,
+    VALUES
+    (null,
         idDatosVar,
-		monto,
-		idDatos,
+    monto,
+    idDatos,
         idEquipo,
         
         idTemporadaVar);
     
     elseif isUpdate is not null then
     
-		UPDATE `fifaxgamersbd`.`conceptosfinancieros`
-		SET	`monto` = monto
-		WHERE `idConceptosFinancieros` = isUpdate 
-		AND `DatosFinancieros_idDatosFinancieros` = idDatosVar 
-		AND `CatalogoConceptos_idCatalogoConceptos` = idDatos
+    UPDATE `fifaxgamersbd`.`conceptosfinancieros`
+    SET `monto` = monto
+    WHERE `idConceptosFinancieros` = isUpdate 
+    AND `DatosFinancieros_idDatosFinancieros` = idDatosVar 
+    AND `CatalogoConceptos_idCatalogoConceptos` = idDatos
         and `DatosFinancieros_Equipos_idEquipo` = idEquipo
-		
-		and `datosfinancieros_tempodada_idTemporada` = idTemporadaVar;
+    
+    and `datosfinancieros_tempodada_idTemporada` = idTemporadaVar;
 
-	
-	END IF;
+  
+  END IF;
 
 
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `createOrUpdateDatosSponsor` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `createOrUpdateDatosSponsor` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdateDatosSponsor`(IN idEquipo INT, IN idSponsor INT, IN opcionales INT)
+CREATE  PROCEDURE `createOrUpdateDatosSponsor`(IN idEquipo INT, IN idSponsor INT, IN opcionales INT)
 BEGIN
 
 DECLARE idTemporadaVar int;
@@ -1443,58 +1676,58 @@ AND `tempodada_idTemporada` = idTemporadaVar;
 
 END IF;
 
-	IF opcionales = 0 then 
+  IF opcionales = 0 then 
     
     INSERT INTO `fifaxgamersbd`.`dadosfinancierossponsor`
-	(`DatosFinancieros_idDatosFinancieros`,
-	`DatosFinancieros_Equipos_idEquipo`,
-	`datosfinancieros_tempodada_idTemporada`,
-	`Sponsor_idSponsor`,
-	`ConceptoSponsor_idConcepto`,
-	`cumplio`)
-	select 1,idEquipo,idTemporadaVar,idSponsor,cons.idConcepto,0
-			from sponsor
-			join sponsor_has_concepto sponc on sponsor.idSponsor = sponc.Sponsor_idSponsor
-			join conceptosponsor cons on sponc.Concepto_idConcepto = cons.idConcepto
-			where sponsor.idSponsor = idSponsor
-			and cons.opcional = opcionales;
+  (`DatosFinancieros_idDatosFinancieros`,
+  `DatosFinancieros_Equipos_idEquipo`,
+  `datosfinancieros_tempodada_idTemporada`,
+  `Sponsor_idSponsor`,
+  `ConceptoSponsor_idConcepto`,
+  `cumplio`)
+  select 1,idEquipo,idTemporadaVar,idSponsor,cons.idConcepto,0
+      from sponsor
+      join sponsor_has_concepto sponc on sponsor.idSponsor = sponc.Sponsor_idSponsor
+      join conceptosponsor cons on sponc.Concepto_idConcepto = cons.idConcepto
+      where sponsor.idSponsor = idSponsor
+      and cons.opcional = opcionales;
 
         
-	ELSEIF opcionales = 1 then
-		INSERT INTO `fifaxgamersbd`.`dadosfinancierossponsor`
-			(`DatosFinancieros_idDatosFinancieros`,
-			`DatosFinancieros_Equipos_idEquipo`,
-			`datosfinancieros_tempodada_idTemporada`,
-			`Sponsor_idSponsor`,
-			`ConceptoSponsor_idConcepto`,
-			`cumplio`)
-		select 1,idEquipo,idTemporadaVar,idSponsor,cons.idConcepto,0
+  ELSEIF opcionales = 1 then
+    INSERT INTO `fifaxgamersbd`.`dadosfinancierossponsor`
+      (`DatosFinancieros_idDatosFinancieros`,
+      `DatosFinancieros_Equipos_idEquipo`,
+      `datosfinancieros_tempodada_idTemporada`,
+      `Sponsor_idSponsor`,
+      `ConceptoSponsor_idConcepto`,
+      `cumplio`)
+    select 1,idEquipo,idTemporadaVar,idSponsor,cons.idConcepto,0
         from sponsor
         join sponsor_has_concepto sponc on sponsor.idSponsor = sponc.Sponsor_idSponsor
-		join conceptosponsor cons on sponc.Concepto_idConcepto = cons.idConcepto
-		where sponsor.idSponsor = idSponsor
-		;
-	END IF;
+    join conceptosponsor cons on sponc.Concepto_idConcepto = cons.idConcepto
+    where sponsor.idSponsor = idSponsor
+    ;
+  END IF;
 
 
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `createOrUpdateObjetivos` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `createOrUpdateObjetivos` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdateObjetivos`(IN `json` JSON,IN idEquipo INT, IN idSponsor INT,IN idTemporada INT)
+CREATE  PROCEDURE `createOrUpdateObjetivos`(IN `json` JSON,IN idEquipo INT, IN idSponsor INT,IN idTemporada INT)
 BEGIN
 
 DECLARE `json_items` BIGINT UNSIGNED DEFAULT JSON_LENGTH(`json`);
@@ -1507,27 +1740,27 @@ DECLARE `json_items` BIGINT UNSIGNED DEFAULT JSON_LENGTH(`json`);
   
 
   WHILE `_index` < `json_items` DO
-		set cumplido = '';
-		select JSON_EXTRACT(`json`, CONCAT('$[', `_index`, '].id')) into var;
+    set cumplido = '';
+    select JSON_EXTRACT(`json`, CONCAT('$[', `_index`, '].id')) into var;
         select JSON_EXTRACT(`json`, CONCAT('$[', `_index`, '].cumplido')) into cumplido;
         
         select var, cumplido;
         
         IF cumplido = 'true' then
-		
-			set cum = 1;
-		
+    
+      set cum = 1;
+    
         ELSEIF cumplido = 'false' then
         
-			set cum = 0;
+      set cum = 0;
             
         end if;
         
         
         UPDATE `fifaxgamersbd`.`dadosfinancierossponsor`
-		SET
-		`cumplio` = cum
-		WHERE `DatosFinancieros_idDatosFinancieros` = 1
+    SET
+    `cumplio` = cum
+    WHERE `DatosFinancieros_idDatosFinancieros` = 1
         AND `DatosFinancieros_Equipos_idEquipo` = idEquipo
         AND `datosfinancieros_tempodada_idTemporada` = idTemporada
         AND `Sponsor_idSponsor` = idSponsor
@@ -1544,22 +1777,22 @@ DECLARE `json_items` BIGINT UNSIGNED DEFAULT JSON_LENGTH(`json`);
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `createOrUpdatePresupuesto` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `createOrUpdatePresupuesto` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createOrUpdatePresupuesto`(IN idEquipo INT,  IN monto INT, IN montoFinal INT,
-										  IN montoFinalSponsor INT,
+CREATE  PROCEDURE `createOrUpdatePresupuesto`(IN idEquipo INT,  IN monto INT, IN montoFinal INT,
+                      IN montoFinalSponsor INT,
                                           IN idTemporada INT)
 BEGIN
 
@@ -1614,21 +1847,21 @@ end if;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `createPrestamo` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `createPrestamo` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createPrestamo`(IN idJugador INT,IN idEquipo INT,IN idTemporada INT,IN opcion INT)
+CREATE  PROCEDURE `createPrestamo`(IN idJugador INT,IN idEquipo INT,IN idTemporada INT,IN opcion INT)
 BEGIN
 
 DECLARE idEquipoAnterior int;
@@ -1641,47 +1874,47 @@ and prestamos.tempodada_idTemporada = idTemporada;
 
 IF opcion is null or opcion = 1 then 
 
-	if(idJugadorVal is null) then
+  if(idJugadorVal is null) then
 
-		select persona.Equipos_idEquipo into  idEquipoAnterior
-		from persona
-		where persona.idPersona = idJugador;
+    select persona.Equipos_idEquipo into  idEquipoAnterior
+    from persona
+    where persona.idPersona = idJugador;
 
-		select idEquipoAnterior;
+    select idEquipoAnterior;
 
-		UPDATE `fifaxgamersbd`.`persona`
-		SET
-		`Equipos_idEquipo` = idEquipo,
-		`prestamo` = 1
-		WHERE `idPersona` = idJugador;
+    UPDATE `fifaxgamersbd`.`persona`
+    SET
+    `Equipos_idEquipo` = idEquipo,
+    `prestamo` = 1
+    WHERE `idPersona` = idJugador;
 
 
-		INSERT INTO `fifaxgamersbd`.`prestamos`
-		(`Persona_idPersona`,
-		`Equipos_idEquipo`,
+    INSERT INTO `fifaxgamersbd`.`prestamos`
+    (`Persona_idPersona`,
+    `Equipos_idEquipo`,
         `tempodada_idTemporada`,
-		`activo`)
-		VALUES
-		(idJugador,
-		idEquipoAnterior,
+    `activo`)
+    VALUES
+    (idJugador,
+    idEquipoAnterior,
         idTemporada,
-		1);
+    1);
 
-	END IF;
+  END IF;
 
 elseif opcion = 2 then
 
-	select prestamos.Equipos_idEquipo  into  idEquipoAnterior
-	from prestamos
-	where prestamos.Persona_idPersona  = idJugador;
+  select prestamos.Equipos_idEquipo  into  idEquipoAnterior
+  from prestamos
+  where prestamos.Persona_idPersona  = idJugador;
     
     UPDATE `fifaxgamersbd`.`persona`
-		SET
-		`Equipos_idEquipo` = idEquipoAnterior,
-		`prestamo` = 0
-		WHERE `idPersona` = idJugadorVal ;
+    SET
+    `Equipos_idEquipo` = idEquipoAnterior,
+    `prestamo` = 0
+    WHERE `idPersona` = idJugadorVal ;
 
-	delete from prestamos 
+  delete from prestamos 
     where prestamos.Persona_idPersona = idJugadorVal
     and prestamos.Equipos_idEquipo = idEquipoAnterior
     and prestamos.tempodada_idTemporada = idTemporada;
@@ -1690,21 +1923,21 @@ end if;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `createTemporada` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `createTemporada` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createTemporada`( IN NombreTemporada varchar(200) , IN descripcionTemporada varchar(200))
+CREATE  PROCEDURE `createTemporada`( IN NombreTemporada varchar(200) , IN descripcionTemporada varchar(200))
 BEGIN
 
 DECLARE idTemporadaVar int;
@@ -1733,22 +1966,22 @@ from equipos);
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `modificarJugador` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `modificarJugador` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarJugador`(IN nombreCompleto varchar(200) , 
-								   IN sobrenonbre varchar(200),
+CREATE  PROCEDURE `modificarJugador`(IN nombreCompleto varchar(200) , 
+                   IN sobrenonbre varchar(200),
                                    IN raiting INT,
                                    IN idEquipo INT, 
                                    IN idJugador INT,
@@ -1786,21 +2019,21 @@ idTemporada);
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `spTest` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `spTest` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spTest`()
+CREATE  PROCEDURE `spTest`()
 BEGIN
 
 
@@ -1810,22 +2043,22 @@ select * from conceptosponsor;
  
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `updateDraft` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `updateDraft` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateDraft`(IN idJugador INT,
-							IN montoInicial INT,
+CREATE  PROCEDURE `updateDraft`(IN idJugador INT,
+              IN montoInicial INT,
                             IN montoOferta INT,
                             IN manager varchar(100),
                             IN observaciones varchar(100), 
@@ -1921,7 +2154,7 @@ from draftpc where draftpc.Persona_idPersona =  42 and draftpc.tempodada_idTempo
 select idJugadorVal;
 
 if idJugadorExist is null then 
-	set isError = 1 ;
+  set isError = 1 ;
   set message = 'El jugador no Existe';
 
   
@@ -1929,11 +2162,11 @@ elseif (diasVar = 1 and sumaVar >= minConfirm )
    or (diasVar = 0 and minDia_ceroVar >= minConfirm )
    
 then 
-	set isError = 1 ;
+  set isError = 1 ;
     set message = 'Ya no se puede ofertar este Jugador paso el tiempo para ofertar';
 
 elseif montoBD is null or  montoOferta > montoBD then 
-	set isError = 1 ;
+  set isError = 1 ;
   set message = 'Monto insuficiente';
 elseif idJugadorVal is null then
   set isError = 1 ;
@@ -1956,78 +2189,78 @@ elseif manager is null  then
   set message = 'El manager es incorrecto';
 
 elseif idJugador is not null then 
-	 
+   
      select draftpc.idEquipo into idEquipoAnterior
      from draftpc
      WHERE `idDraftPC` = 1
      AND `Persona_idPersona` = idJugador
      AND `tempodada_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
-	
+  
     UPDATE `fifaxgamersbd`.`draftpc`
-	SET
+  SET
     `oferta`      = montoInicial,
-	`ofertaFinal` = montoOferta,
-	`fechaCompra` = sysdate(),
-	`usuarioOferta` = manager,
-	`comentarios` = observaciones,
+  `ofertaFinal` = montoOferta,
+  `fechaCompra` = sysdate(),
+  `usuarioOferta` = manager,
+  `comentarios` = observaciones,
     `idEquipo` = idEquipoOferta
-	WHERE `idDraftPC` = 1
+  WHERE `idDraftPC` = 1
     AND `Persona_idPersona` = idJugador
     AND `tempodada_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
 
-	INSERT INTO `fifaxgamersbd`.`historicodraft`
-		(`idHistoricoDraft`,
-		`oferta`,
-		`fechaOferta`,
-		`usuarioOferta`,
-		`DraftPC_idDraftPC`,
-		`DraftPC_Persona_idPersona`,
-		`tempodada_idTemporada`,
-		`comentarios`,
-		`ofertaFinal`,
+  INSERT INTO `fifaxgamersbd`.`historicodraft`
+    (`idHistoricoDraft`,
+    `oferta`,
+    `fechaOferta`,
+    `usuarioOferta`,
+    `DraftPC_idDraftPC`,
+    `DraftPC_Persona_idPersona`,
+    `tempodada_idTemporada`,
+    `comentarios`,
+    `ofertaFinal`,
         `idEquipo`)
-		(select null,
-			montoFinalVal,
-			draftpc.fechaCompra,
-			draftpc.usuarioOferta,
-			draftpc.idDraftPC,
-			draftpc.Persona_idPersona,
-			draftpc.tempodada_idTemporada,
-			draftpc.comentarios,
-			montoOferta,
+    (select null,
+      montoFinalVal,
+      draftpc.fechaCompra,
+      draftpc.usuarioOferta,
+      draftpc.idDraftPC,
+      draftpc.Persona_idPersona,
+      draftpc.tempodada_idTemporada,
+      draftpc.comentarios,
+      montoOferta,
             draftpc.idEquipo
-			from draftpc
-		where draftpc.Persona_idPersona = idJugador
+      from draftpc
+    where draftpc.Persona_idPersona = idJugador
         and draftpc.tempodada_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
         and draftpc.idDraftPC = 1
         limit 1);
         
         select sum(draftpc.ofertaFinal) into sumaDraftPC
-		from draftpc
-		where draftpc.idEquipo = idEquipoOferta;
+    from draftpc
+    where draftpc.idEquipo = idEquipoOferta;
         
         call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
-											where nombre = 'altasPC' limit 1), 
+                      where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
                                             idEquipoOferta);
                                             
-		
+    
         
         if idEquipoAnterior != idEquipoOferta then 
         
-			select sum(draftpc.ofertaFinal) into sumaDraftPC
-			from draftpc
-			where draftpc.idEquipo = idEquipoAnterior;
-			
+      select sum(draftpc.ofertaFinal) into sumaDraftPC
+      from draftpc
+      where draftpc.idEquipo = idEquipoAnterior;
+      
             call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
-											where nombre = 'altasPC' limit 1), 
+                      where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
                                             idEquipoAnterior);
-		end if;
-	
+    end if;
+  
     
     set isError = 0 ;
-	set message = 'OK';
+  set message = 'OK';
     
     
 end if;
@@ -2035,22 +2268,22 @@ end if;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `updateDraftCorreccion` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `updateDraftCorreccion` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateDraftCorreccion`(IN idJugador INT,
-							IN montoInicial INT,
+CREATE  PROCEDURE `updateDraftCorreccion`(IN idJugador INT,
+              IN montoInicial INT,
                             IN montoOferta INT,
                             IN manager varchar(100),
                             IN observaciones varchar(100), 
@@ -2083,100 +2316,100 @@ declare minDia_ceroVar int;
 
 set isError = 1 ;
   set message = 'Error al intentar modificar';
-	 
+   
      select draftpc.idEquipo into idEquipoAnterior
      from draftpc
      WHERE `idDraftPC` = 1
      AND `Persona_idPersona` = idJugador
      AND tempodada_idTemporada = idTemporada;
-	
+  
     UPDATE `fifaxgamersbd`.`draftpc`
-	SET
+  SET
     `oferta`      = montoInicial,
-	`ofertaFinal` = montoOferta,
-	`fechaCompra` = sysdate(),
-	`usuarioOferta` = manager,
-	`comentarios` = observaciones,
+  `ofertaFinal` = montoOferta,
+  `fechaCompra` = sysdate(),
+  `usuarioOferta` = manager,
+  `comentarios` = observaciones,
     `idEquipo` = idEquipoOferta
-	WHERE `idDraftPC` = 1
+  WHERE `idDraftPC` = 1
     AND `Persona_idPersona` = idJugador
     AND tempodada_idTemporada = idTemporada;
 
-	INSERT INTO `fifaxgamersbd`.`historicodraft`
-		(`idHistoricoDraft`,
-		`oferta`,
-		`fechaOferta`,
-		`usuarioOferta`,
-		`DraftPC_idDraftPC`,
-		`DraftPC_Persona_idPersona`,
-		`tempodada_idTemporada`,
-		`comentarios`,
-		`ofertaFinal`,
+  INSERT INTO `fifaxgamersbd`.`historicodraft`
+    (`idHistoricoDraft`,
+    `oferta`,
+    `fechaOferta`,
+    `usuarioOferta`,
+    `DraftPC_idDraftPC`,
+    `DraftPC_Persona_idPersona`,
+    `tempodada_idTemporada`,
+    `comentarios`,
+    `ofertaFinal`,
         `idEquipo`)
-		(select null,
-			montoFinalVal,
-			draftpc.fechaCompra,
-			draftpc.usuarioOferta,
-			draftpc.idDraftPC,
-			draftpc.Persona_idPersona,
-			draftpc.tempodada_idTemporada,
-			draftpc.comentarios,
-			montoOferta,
+    (select null,
+      montoFinalVal,
+      draftpc.fechaCompra,
+      draftpc.usuarioOferta,
+      draftpc.idDraftPC,
+      draftpc.Persona_idPersona,
+      draftpc.tempodada_idTemporada,
+      draftpc.comentarios,
+      montoOferta,
             draftpc.idEquipo
-			from draftpc
-		where draftpc.Persona_idPersona = idJugador
+      from draftpc
+    where draftpc.Persona_idPersona = idJugador
         and draftpc.tempodada_idTemporada = idTemporada
         and draftpc.idDraftPC = 1
         limit 1);
         
         select sum(draftpc.ofertaFinal) into sumaDraftPC
-		from draftpc
-		where draftpc.idEquipo = idEquipoOferta;
+    from draftpc
+    where draftpc.idEquipo = idEquipoOferta;
         
         call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
-											where nombre = 'altasPC' limit 1), 
+                      where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
                                             idEquipoOferta);
                                             
-		
+    
         
         if idEquipoAnterior != idEquipoOferta then 
         
-			select sum(draftpc.ofertaFinal) into sumaDraftPC
-			from draftpc
-			where draftpc.idEquipo = idEquipoAnterior;
-			
+      select sum(draftpc.ofertaFinal) into sumaDraftPC
+      from draftpc
+      where draftpc.idEquipo = idEquipoAnterior;
+      
             call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
-											where nombre = 'altasPC' limit 1), 
+                      where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
                                             idEquipoAnterior);
-		end if;
-	
+    end if;
+  
     
     set isError = 0 ;
-	set message = 'OK';
+  set message = 'OK';
     
     
 
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `updateResultadoJornada` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `updateResultadoJornada` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateResultadoJornada`(IN idJornada int ,
-							   IN equipoLocal int , 
+CREATE  PROCEDURE `updateResultadoJornada`(IN idJornada int ,
+                 IN equipoLocal int , 
                                IN equipoVisita int,
                                IN golesLocal int,
                                in golesVisita int)
@@ -2206,26 +2439,26 @@ AND `jornadas_idJornada` = idJornada
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `updateUserManager` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+DROP PROCEDURE IF EXISTS `updateUserManager` ;
+/* !50003 SET @saved_cs_client      = @@character_set_client */ ;
+/* !50003 SET @saved_cs_results     = @@character_set_results */ ;
+/* !50003 SET @saved_col_connection = @@collation_connection */ ;
+/* !50003 SET character_set_client  = utf8 */ ;
+/* !50003 SET character_set_results = utf8 */ ;
+/* !50003 SET collation_connection  = utf8_general_ci */ ;
+/* !50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/* !50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateUserManager`(IN idUsuario VARCHAR(30), 
-								   IN idEquipo INT,
+CREATE  PROCEDURE `updateUserManager`(IN idUsuario VARCHAR(30), 
+                   IN idEquipo INT,
                                    IN rolesJson JSON, 
                                    
                                    out isError int, 
-								   out message varchar(200)
+                   out message varchar(200)
                                    )
 BEGIN
 
@@ -2250,77 +2483,77 @@ usuarios.userName = idUsuario
 
 if userNameActVar is not null then
 
-	if idEquipo is not null and idEquipo > 0 then
-		UPDATE `fifaxgamersbd`.`usuarios`
-		SET	
-		`idequipo` = idEquipo
-		
-		WHERE `userName` = userNameActVar;
-	else 
-		UPDATE `fifaxgamersbd`.`usuarios`
-		SET	
-		`idequipo` = null
-		
-		WHERE `userName` = userNameActVar;
+  if idEquipo is not null and idEquipo > 0 then
+    UPDATE `fifaxgamersbd`.`usuarios`
+    SET 
+    `idequipo` = idEquipo
+    
+    WHERE `userName` = userNameActVar;
+  else 
+    UPDATE `fifaxgamersbd`.`usuarios`
+    SET 
+    `idequipo` = null
+    
+    WHERE `userName` = userNameActVar;
     end if;
 
-	if rolesJson is not null then 
-		WHILE `_index` < `json_items` DO
-			
+  if rolesJson is not null then 
+    WHILE `_index` < `json_items` DO
+      
             select JSON_EXTRACT(`rolesJson`, CONCAT('$[', `_index`, '].id')) into idRolVar;
-			
+      
             SELECT roles.idRoles into idRolExist
             FROM roles WHERE roles.idRoles = idRolVar;
             
             IF idRolExist IS NOT NULL THEN 
-				if deleteRol = 0  then
-					DELETE FROM `fifaxgamersbd`.`usuarios_has_roles` 
-					WHERE Usuarios_userName = userNameActVar ;
+        if deleteRol = 0  then
+          DELETE FROM `fifaxgamersbd`.`usuarios_has_roles` 
+          WHERE Usuarios_userName = userNameActVar ;
                     set deleteRol = 1;
-				end if;
+        end if;
              
                 
-					INSERT INTO `fifaxgamersbd`.`usuarios_has_roles`
-					(`Usuarios_userName`,
-					`Roles_idRoles`)
-					VALUES
-					(userNameActVar,
-					idRolExist);
+          INSERT INTO `fifaxgamersbd`.`usuarios_has_roles`
+          (`Usuarios_userName`,
+          `Roles_idRoles`)
+          VALUES
+          (userNameActVar,
+          idRolExist);
 
                 
             END IF;
             
             
-			SET `_index` := `_index` + 1;
+      SET `_index` := `_index` + 1;
     
     
-		END WHILE;
+    END WHILE;
     end if;
     
-	set isError = 0 ;
-	set message = 'OK';
+  set isError = 0 ;
+  set message = 'OK';
 
 
 elseif userNameActVar is null then
-	set isError = 1 ;
-	set message = 'El usuario no existe';
+  set isError = 1 ;
+  set message = 'El usuario no existe';
     
 end if;
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+/* !50003 SET sql_mode              = @saved_sql_mode */ ;
+/* !50003 SET character_set_client  = @saved_cs_client */ ;
+/* !50003 SET character_set_results = @saved_cs_results */ ;
+/* !50003 SET collation_connection  = @saved_col_connection */ ;
+/* !40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/* !40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/* !40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/* !40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/* !40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/* !40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/* !40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/* !40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-20 10:39:32
+-- Dump completed on 2020-01-06 18:06:51

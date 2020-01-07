@@ -20,12 +20,14 @@ public interface TemporadaService {
 	Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
 	
 	List<Jornadas> getArmarJornadasInicial(int idTemporada, int idTorneo);
-	List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo,int numGrupos, List<Equipo> equipos);
+	List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo,int numGrupos, List<Equipo> equipos, int confJor);
 	
 	ResponseData addGol(int idJugador,int idEquipo,int id,int idJornada);
 	
 	ResponseData addImagen(int idEquipo,int id,int idJornada,String img);
 	ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas);
+	ResponseData addJornadasGrupos(int idTemporada, String nombre, String grupos,int confTor);
+	List<Grupos> getGruposTorneo(int idTemporada, int idTorneo);
 	
 
 }

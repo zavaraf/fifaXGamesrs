@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,16 +187,17 @@ public class TemporadaController {
 			return new ResponseEntity<List<Jornadas>>(listTemporada, HttpStatus.OK);
 		}
 	 
-	 @RequestMapping(value="/lm/getArmarJornadasGrupos/{idTemporada}/{idTorneo}/{numGrupos}",method = RequestMethod.POST,
+	 @RequestMapping(value="/lm/getArmarJornadasGrupos/{idTemporada}/{idTorneo}/{numGrupos}/{confJor}",method = RequestMethod.POST,
 				headers="Accept=application/json")
 		@ResponseBody
 		public ResponseEntity<List<Grupos>> getArmarJornadasGrupos(
 				@PathVariable("idTemporada") int idTemporada,
 				@PathVariable("idTorneo") int idTorneo,
 				@PathVariable("numGrupos") int numGrupos,
+				 @PathVariable("confJor") int confJor,
 				@RequestBody List<Equipo> equipos){
 			
-			List<Grupos> listTemporada = temporadaService.getArmarJornadasGrupos(idTemporada,idTorneo,numGrupos,equipos);
+			List<Grupos> listTemporada = temporadaService.getArmarJornadasGrupos(idTemporada,idTorneo,numGrupos,equipos,confJor);
 			
 			if(listTemporada.isEmpty()){
 				return new ResponseEntity<List<Grupos>>(HttpStatus.NO_CONTENT);
@@ -226,6 +228,55 @@ public class TemporadaController {
 		 }
 		 
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
+	 
+	 @RequestMapping(value="/lm/addJornadasGrupos/{idTemporada}/{nombreTorneo}/{confTor}",
+			 method = RequestMethod.POST,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<ResponseData> addJornadasGrupos(
+			 @PathVariable("idTemporada") int idTemporada,
+			 @PathVariable("nombreTorneo") String nombreTorneo,
+			 @PathVariable("confTor") int confTor,
+			 @RequestBody String grupos
+			 ){
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+			 response = temporadaService.addJornadasGrupos(idTemporada,nombreTorneo,grupos,confTor);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
+	 
+	 @RequestMapping(value="/lm/getGruposTorneo/{idTemporada}/{idTorneo}",
+			 method = RequestMethod.GET,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<List<Grupos>> getGruposTorneo(
+			 @PathVariable("idTemporada") int idTemporada,
+			 @PathVariable("idTorneo") int idTorneo
+			 ){
+		 
+		 List<Grupos> response = new ArrayList<Grupos>();	
+		 try{
+			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+			 response = temporadaService.getGruposTorneo(idTemporada, idTorneo);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 
+		 }
+		 if(response.isEmpty()){
+				return new ResponseEntity<List<Grupos>>(HttpStatus.NO_CONTENT);
+			}
+		 
+		 return new ResponseEntity<List<Grupos>>(response, HttpStatus.OK);
 	 }
 	 
 	 

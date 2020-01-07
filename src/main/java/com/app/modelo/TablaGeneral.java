@@ -5,6 +5,7 @@ public class TablaGeneral {
 	private int idEquipo;
 	private String img;
 	private String nombreEquipo;
+	private String nombreGrupo;
 	private int pj;
 	private int pg;
 	private int pe;
@@ -78,6 +79,12 @@ public class TablaGeneral {
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+	public String getNombreGrupo() {
+		return nombreGrupo;
+	}
+	public void setNombreGrupo(String nombreGrupo) {
+		this.nombreGrupo = nombreGrupo;
 	}
 	
 	

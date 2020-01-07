@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.app.modelo.GolesJornadas;
+import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
@@ -24,5 +25,8 @@ public interface TemporadaDao {
 	HashMap<String, String> addGol(int idJugador,int idEquipo,int id,int idJornada);
 	HashMap<String, String> addImagen(int idEquipo,int id,int idJornada,String img);
 	HashMap<String, String> addJornada(int idTemporada, int idDivision, Jornada juegos,int activa,int cerrada);
+	HashMap<String, String> addJornadasGrupos(int idTemporada, String nombre , String grupos);
+	HashMap<String, String> crearTorneo(int idTemporada, String nombre );
+	List<Grupos> getGruposTorneo(int idTemporada, int idTorneo);
 
 }

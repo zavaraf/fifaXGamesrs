@@ -4,8 +4,8 @@ var app = angular.module('myApp');
 
 
 
-app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLMService','UserService','EquipoService',
-			function($scope,$routeParams,CONFIG,TorneoLMService,UserService,EquipoService) {
+app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLMService','UserService','EquipoService','TemporadaService',
+			function($scope,$routeParams,CONFIG,TorneoLMService,UserService,EquipoService,TemporadaService) {
 	var self = this;
 	
 	self.tablaGeneral;
@@ -21,6 +21,9 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	self.equiposTorneo = [];
 	self.equiposSelect;
 	self.gruposSe = [];
+	self.gruposTorneo = [];
+	self.confJor = 2;
+	self.confTor = 2;
 	
 	
 	
@@ -33,6 +36,8 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	self.buscarTodos = buscarTodos;
 	self.addEquipo = addEquipo;
 	self.getJornadasGrupos = getJornadasGrupos;
+	self.addTorneoGrupo = addTorneoGrupo;
+	self.getGruposTorneo = getGruposTorneo;
 	
 	
 	buscarDivisiones();
@@ -165,15 +170,17 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
             return null;
         }
 	 
-	 function getJornadasGrupos(equipos,numeroGrupos){
-			console.log("------------------->Torneo]:"+self.divisionSelect.id) 
-			TorneoLMService.getJornadasGrupos(equipos,self.divisionSelect.id,numeroGrupos)
+	 function getJornadasGrupos(equiposSeleccionados,numeroGrupos){
+			console.log("------------------->Torneo]:",equiposSeleccionados) 
+			TorneoLMService.getJornadasGrupos(equiposSeleccionados,self.divisionSelect.id,numeroGrupos,self.confJor)
 		            .then(
 		            function(d) {
 		            	
 		            	self.gruposSe = d;
 		                
 		                console.log("TorneoLMService-getJornadasGrupos]:",self.gruposSe)
+		                
+		                //console.log("Grupos]:"+ JSON.stringify(self.gruposSe))
 		                
 		                return d;
 		            },
@@ -184,6 +191,64 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 		        return null;
 		    }
 	 
+	 function addTorneoGrupo(grupos,nombreTorneo){
+			console.log("------------------->Torneo]:"+nombreTorneo) 
+			TorneoLMService.addTorneoGrupo(grupos,nombreTorneo,self.confTor)
+		            .then(
+		            function(d) {
+		            	
+		                console.log("TorneoLMService-addTorneoGrupo]:",d)
+		                
+		                buscarTemporada();
+		                return d;
+		            },
+		            function(errResponse){
+		                console.error('[addTorneoGrupo] Error while fetching TorneoLMService()');
+		            }
+		        );
+		        return null;
+		    }
+	 
+	 
+	 function getGruposTorneo(torneoSelect){
+			console.log("-----------getGruposTorneo-------->Torneo]:",torneoSelect) 
+			if(torneoSelect.tipoTorneo){
+			TorneoLMService.getGruposTorneo(torneoSelect.id)
+		            .then(
+		            function(d) {
+		            	
+		            	self.gruposTorneo = d;
+		            	
+		                console.log("TorneoLMService-getGruposTorneo]:",d)
+		                
+		                
+		                return d;
+		            },
+		            function(errResponse){
+		                console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
+		            }
+		        );
+			}else{
+				self.gruposTorneo = [];
+			}
+		        return null;
+		    }
+	 
+	 function buscarTemporada() {
+			TemporadaService.buscarTemporada().then(function(d) {
+				var temporada = d;
+				console.error('temporada --- >',d);
+				var selectedTor = temporada.length >0 ? temporada[temporada.length-1] : null;
+				//$scope.idTemporada = ($scope.idTemporada == null || $scope.idTemporada === undefined) ? self.selectedTor : $scope.idTemporada; 
+			    
+				CONFIG.VARTEMPORADA.torneos = selectedTor.torneos
+						
+			    console.log('temporada Seleccionado--- >',CONFIG.VARTEMPORADA );
+				console.log('temporada Seleccionado2--- >',self.selectedTor);
+			}, function(errResponse) {
+				console.error('Error while fetching temporada');
+			});
+		}
 	
 	
 

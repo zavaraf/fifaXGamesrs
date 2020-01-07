@@ -71,80 +71,97 @@
 		      </div>
 		      <div class="modal-body">
 		        <div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+				  <input class="form-check-input" type="radio" ng-model="ctrl.confTor" name="inlineRadioOptions" id="inlineRadio1" ng-value=1>
 				  <label class="form-check-label" for="inlineRadio1">Por división</label>
 				</div>
 				<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+				  <input class="form-check-input" type="radio" ng-model="ctrl.confTor" name="inlineRadioOptions" id="inlineRadio2" ng-value=2>
 				  <label class="form-check-label" for="inlineRadio2">Por Grupos</label>
 				</div>
-				<div class="row">
-				    <div class="col">
-				      <input type="text" class="form-control" placeholder="Nombre del torneo">
-				    </div>
-				    <div class="col">
-				      <input type="text" class="form-control" ng-model="equiposXGrupo" placeholder="Numero de equpos x Grupo">
-				    </div>
+				<div ng-show="ctrl.confTor == 1">
+					<h5 class="modal-title" id="exampleModalLongTitle">Preciona Guardar para generar los torneos por división</h5>
 				</div>
-				<div class="form-row align-items-center">
-				    <div class="col-auto my-1">
-				      
-
-				      
-				      <multiselect ng-model="selection" options="options" id-prop="id" display-prop="nombre" show-search="true">
- 					  </multiselect>
- 					  <button type="button" ng-click="ctrl.getJornadasGrupos(selection,equiposXGrupo)" class="btn btn-primary">Generar Grupos</button>
-					  
-				    </div>
-				    
-<!-- 				    <div class="col-auto my-1"> -->
-<!-- 				      <button type="submit" ng-click="ctrl.addEquipo(equiposSelect)" class="btn btn-primary">Agregar</button> -->
-<!-- 				    </div> -->
-				  </div>
-				  
-				  <div  class="list-group" >
-				  <span   class="list-group-item list-group-item-action">
-				  	<div class="container" >
-					  <div  class="row text-center">
-					    <div ng-repeat="e in selection " class="col-sm-2 ">
-					    
-					    <img src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
-					      {{e.nombre}}
+				<div ng-show="ctrl.confTor == 2">
+					<div class="row">
+					    <div class="col">
+					      <input type="text" class="form-control" ng-model="torneoNombre"placeholder="Nombre del torneo">
 					    </div>
+					    <div class="col">
+					      <input type="text" class="form-control" ng-model="equiposXGrupo" placeholder="Numero de equpos x Grupo">
+					    </div>
+					</div>
+					<div class="row">
+					 <div class="col">
+					    <div class="form-check form-check-inline">
+						  <input class="form-check-input" type="radio" ng-model="ctrl.confJor" name="inlineRadioOptionsJ" id="inlineRadioJ1" ng-value=1>
+						  <label class="form-check-label" for="inlineRadioJ1">Solo Ida</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="radio" ng-model="ctrl.confJor" name="inlineRadioOptionsJ" id="inlineRadioJ2" ng-value=2>
+						  <label class="form-check-label" for="inlineRadioJ2">Ida y Vuelta</label>
+						</div>
+						
 					  </div>
 					</div>
-				  </span>
-			     </div>
-			     
-			     <div class="col"  ng-repeat="grupo in ctrl.gruposSe | orderBy : 'numero'" >
-							<blockquote class="blockquote text-center">
-								  <p class="mb-0">Grupo {{grupo.numero}} </p>
-								  
-							</blockquote>
+					<div class="form-row align-items-center">
+					    <div class="col-auto my-1">
+					      
+	
+					      
+					      <multiselect ng-model="selection" options="options" id-prop="id" display-prop="nombre" show-search="true">
+	 					  </multiselect>
+	 					  <button type="button" ng-click="ctrl.getJornadasGrupos(selection,equiposXGrupo)" class="btn btn-primary">Generar Grupos</button>
+						  
+					    </div>
+					    
+	<!-- 				    <div class="col-auto my-1"> -->
+	<!-- 				      <button type="submit" ng-click="ctrl.addEquipo(equiposSelect)" class="btn btn-primary">Agregar</button> -->
+	<!-- 				    </div> -->
+					  </div>
+					  
+					  <div  class="list-group" >
+					  <span   class="list-group-item list-group-item-action">
+					  	<div class="container" >
+						  <div  class="row text-center">
+						    <div ng-repeat="e in selection " class="col-sm-2 ">
+						    
+						    <img src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
+						      {{e.nombre}}
+						    </div>
+						  </div>
+						</div>
+					  </span>
+				     </div>
+				     
+				     <div class="col"  ng-repeat="grupo in ctrl.gruposSe | orderBy : 'numero'" >
+								<blockquote class="blockquote text-center">
+									  <p class="mb-0">Grupo {{grupo.numero}} </p>
+									  
+								</blockquote>
+								
+								<div  class="list-group">
+								  <span  ng-repeat="e in grupo.equipos" class="list-group-item list-group-item-action">
+								  	<div class="container" >
+									  <div class="row text-center">
+									    <div class="col " >
+									      <img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."> 
+									       {{e.nombre}}
+									    </div>
+									  </div>
+									</div>
+								  </span>
+								 
 							
-							<div  class="list-group">
-							  <span  ng-repeat="e in grupo.equipos" class="list-group-item list-group-item-action">
-							  	<div class="container" >
-								  <div class="row text-center">
-								    <div class="col " >
-								      <img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."> 
-								       {{e.nombre}}
-								    </div>
-								  </div>
+								
+								
 								</div>
-							  </span>
-							 
-						
-							
-							
-							</div>
-				</div>
+					</div>
 					     
-				
+				</div>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-		        <button type="button"  class="btn btn-primary">Guardar</button>
+		        <button type="button"  class="btn btn-primary"ng-click="ctrl.addTorneoGrupo(ctrl.gruposSe,torneoNombre)" data-dismiss="modal">Guardar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -156,7 +173,7 @@
 			
 			<ul class="nav nav-tabs" role="tablist">
 			    <li class="nav-item" ng-repeat="tor in ctrl.getTorneos()">
-			      <a class="nav-link"  ng-click= "ctrl.divisionSelect=tor ;ctrl.isJornadaInsert = false; ctrl.getJornadas()" data-toggle="tab" >{{tor.nombre}}</a>
+			      <a class="nav-link"  ng-click= "ctrl.divisionSelect=tor ;ctrl.isJornadaInsert = false; ctrl.getJornadas();ctrl.getGruposTorneo(tor)" data-toggle="tab" >{{tor.nombre}}</a>
 			    </li>
 			    <li class="nav-item dropdown">
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Agregar torneo</a>
@@ -174,13 +191,36 @@
                 </div>
                 <button type="button" class="btn btn-primary"  ng-show="ctrl.isJornadaInsert==false"  ng-click="ctrl.getGenerarJornadas()">Generar Jornadas</button>
                 <button type="button" class="btn btn-primary" ng-show="ctrl.jornadas!=null && ctrl.jornadas != '' " ng-click="ctrl.addJornadas()">Guardar</button>
+                
+                <div class="row">
+                <div class="col"  ng-repeat="grupo in ctrl.gruposTorneo| orderBy : 'numero'" >
+							<blockquote class="blockquote text-center">
+								  <p class="mb-0">Grupo {{grupo.numero}} </p>
+								  
+							</blockquote>
+							
+							<div  class="list-group">
+							  <span  ng-repeat="e in grupo.equipos" class="list-group-item list-group-item-action">
+							  	<div class="container" >
+								  <div class="row text-center">
+								    <div class="col " >
+								      <img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."> 
+								       {{e.nombre}}
+								    </div>
+								  </div>
+								</div>
+							  </span>
+							</div>
+				</div>
+				</div>
+							
                 <div class="row" >
                 	
 		    		<div class="col" >
 					
 		    			<div class="row"   >
 		    			
-							<div class="col-lg-4" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada'">
+							<div class="col-lg-6" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada'">
 							<div class="row"   >
 								<div class="col" >
 									<blockquote class="blockquote text-center">

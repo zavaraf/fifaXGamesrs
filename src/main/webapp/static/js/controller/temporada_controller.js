@@ -7,7 +7,7 @@ angular.module('myApp')
     'VARTEMPORADA' : '',
     'PROD': false,
     'IP_PROD': 'http://fifaapp-env-1.kvdjpbscsv.us-east-2.elasticbeanstalk.com',
-    'IP_DES':'http://localhost:8081/fifaApp'
+    'IP_DES':'http://localhost:8080/fifaApp'
 })
 .controller('TemporadaController',['$scope','$routeParams','CONFIG','TemporadaService',function($scope, $routeParams,CONFIG,TemporadaService) {
 					

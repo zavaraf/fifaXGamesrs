@@ -60,7 +60,7 @@ public class TemporadaServiceImpl implements TemporadaService{
 		return jornadasList;
 	}
 	
-	public List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo, int numGrupos,List<Equipo> equiposL){
+	public List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo, int numGrupos,List<Equipo> equiposL,int vuelta){
 			
 			
 			GenerarJornadasUtil generarJornadas = new GenerarJornadasUtil();
@@ -69,6 +69,11 @@ public class TemporadaServiceImpl implements TemporadaService{
 			List<Equipo> equipos = generarJornadas.agruparArreglo(equiposL);
 			
 			List<Grupos> grupos = generarJornadas.generarGrupos(equipos, numGrupos);
+			
+			for(Grupos grupo : grupos){
+				List<Jornadas> jornadas = generarJornadas.getJornadasIdaYVuelta(grupo.getEquipos(),vuelta);
+				grupo.setJornadas(jornadas);
+			}
 //			List<Jornadas> jornadasList = generarJornadas.getJornadas(equipos);		
 			
 			
@@ -186,5 +191,40 @@ public class TemporadaServiceImpl implements TemporadaService{
 		}
 		
 		return response;
+	}
+	
+	public ResponseData addJornadasGrupos(int idTemporada, String nombre, String grupos,int confTor){
+		ResponseData response = new ResponseData();
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		if(confTor == 2){
+			map = temporadaDao.addJornadasGrupos(idTemporada, nombre, grupos);
+		}else {
+			map = temporadaDao.crearTorneo(idTemporada, nombre);
+		}
+		
+		if (map == null || map.isEmpty()) {
+			response.setStatus(CodigoResponse.ERROR.getCodigo());
+			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+		} else {
+
+			String status = map.get("status");
+
+			response.setStatus(Integer.parseInt(status));
+			response.setMensaje(map.get("mensaje"));
+		
+		}
+		
+		return response;
+	}
+	
+	public List<Grupos> getGruposTorneo(int idTemporada, int idTorneo){
+		
+		
+		List<Grupos> grupos = temporadaDao.getGruposTorneo(idTemporada, idTorneo);
+		
+		
+		return grupos;
+		
 	}
 }
