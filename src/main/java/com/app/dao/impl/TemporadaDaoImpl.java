@@ -502,7 +502,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" where "
 				+" jhe.golesVisita < jhe.golesLocal "
 				+" "
-				+" group by jhe.equipos_idEquipoLocal "
+				+" group by jhe.equipos_idEquipoVisita "
 				+" order by equipos.idEquipo "
 				+" "
 				+" "
