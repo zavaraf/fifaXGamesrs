@@ -97,8 +97,13 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 		http.rememberMe() 
 		.rememberMeParameter("remember-me-param")
 		.rememberMeCookieName("my-remember-me")
-		.tokenValiditySeconds(864000);
+		;
 		
+//		http.rememberMe() 
+//		.rememberMeParameter("remember-me-param")
+//		.rememberMeCookieName("my-remember-me")
+//		.tokenValiditySeconds(864000);
+//		
 		http
 		.logout()
 			.logoutSuccessUrl("/paginas/desconectado.jsp")
