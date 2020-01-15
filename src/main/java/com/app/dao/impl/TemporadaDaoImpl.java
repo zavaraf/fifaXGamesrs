@@ -331,7 +331,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" tablaGeneral.idTorneo,"
 				+" tablaGeneral.idEquipo,  "
 				+" tablaGeneral.nombreEquipo, "
-				+" sum(tablaGeneral.pj) as pj, "
+				+" (sum(tablaGeneral.pg)+sum(tablaGeneral.pe)+sum(tablaGeneral.pp)) as pj, "
 				+" sum(tablaGeneral.pg) as pg,  "
 				+" sum(tablaGeneral.pe) as pe, "
 				+" sum(tablaGeneral.pp) as pp, "
