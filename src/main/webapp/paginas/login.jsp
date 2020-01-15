@@ -63,6 +63,9 @@
 						aria-describedby="sizing-addon1" required>
 				</div>
 				<br>
+				Recordar
+				<input type="checkbox" name="remember-me-param">
+				<br>
 				<button class="btn btn-lg btn-primary btn-block btn-signin"
 					id="IngresoLog" type="submit">Entrar</button>
 				<div class="opcioncontra">

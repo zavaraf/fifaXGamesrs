@@ -94,15 +94,13 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable();
 		
+//		http
+//		.rememberMe().key("uniqueAndSecret");
+		
 		http.rememberMe() 
 		.rememberMeParameter("remember-me-param")
 		.rememberMeCookieName("my-remember-me")
-		;
-		
-//		http.rememberMe() 
-//		.rememberMeParameter("remember-me-param")
-//		.rememberMeCookieName("my-remember-me")
-//		.tokenValiditySeconds(864000);
+		.tokenValiditySeconds(864000);
 //		
 		http
 		.logout()

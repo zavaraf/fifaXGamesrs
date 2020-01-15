@@ -113,6 +113,7 @@
 <!-- 						  </select> -->
 						<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 				            <button type="button" class="btn btn-primary btn-sm" 
+				            ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 				            ng-click= "ctrl.addGoles(selectedPlayer.id,ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit)">Agregar</button>
 					   	</sec:authorize>
 					   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >Cancelar</button>
@@ -127,7 +128,7 @@
 			            <input ng-model="selectedImg" type="text" class="form-control" id="recipient-name">
 			            <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 			            	<button type="button" class="btn btn-primary btn-sm" 
-			            	 
+			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 			            	ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit,selectedImg)" >Agregar</button>
 			            </sec:authorize>
 				   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
@@ -172,7 +173,9 @@
                             <option value="">--Elige opcion--</option>
                          </select>
                          <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
-			            	<button type="button" class="btn btn-primary btn-sm" ng-click= "ctrl.addGoles(selectedPlayerV.id,ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit)" >Agregar</button>
+			            	<button type="button" class="btn btn-primary btn-sm"
+			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+			            	ng-click= "ctrl.addGoles(selectedPlayerV.id,ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit)" >Agregar</button>
 			            </sec:authorize>
 				   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample" >Cancelar</button>
 			          </div>
@@ -184,7 +187,9 @@
 			            <label for="recipient-name" class="col-form-label">Add Img:</label>
 			            <input ng-model="selectedImg1"type="text" class="form-control" id="recipient-name">
 			            <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
-			            	<button type="button" class="btn btn-primary btn-sm" ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit,selectedImg1)"  >Agregar</button>
+			            	<button type="button" class="btn btn-primary btn-sm"
+			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+			            	ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit,selectedImg1)"  >Agregar</button>
 			            </sec:authorize>
 				   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg1" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
 			          </div>
