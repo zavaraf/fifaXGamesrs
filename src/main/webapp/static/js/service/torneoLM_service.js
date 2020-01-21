@@ -172,10 +172,10 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         return deferred.promise;
     }
     
-    function getJornadasGrupos(equiposSeleccionados,idTorneo,numeroGrupos,confJor) {
+    function getJornadasGrupos(equiposSeleccionados,idTorneo,numeroGrupos,confJor,confAle) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        var url = REST_SERVICE_URI_E+'getArmarJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+idTorneo+'/'+numeroGrupos+'/'+confJor
+        var url = REST_SERVICE_URI_E+'getArmarJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+idTorneo+'/'+numeroGrupos+'/'+confJor+'/'+confAle
         console.log(url,equiposSeleccionados);
         $http.post(url,equiposSeleccionados)
             .then(

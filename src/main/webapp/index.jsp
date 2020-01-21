@@ -40,7 +40,7 @@
   
 	<script src="<c:url value='/static/js/app/app.js' />"></script>
 	
-	<script src="<c:url value='/static/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js' />"></script>
+<%-- 	<script src="<c:url value='/static/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js' />"></script> --%>
 	
 	<script
 		src="<c:url value='/static/js/controller/menu_controller.js' />"></script>
@@ -73,6 +73,8 @@
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
       
       <script src="<c:url value='/static/js/controller/adminTorneoLM_controller.js' />"></script>
+
+	<script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script>
     
     <div ng-controller="TemporadaController as ctrl">
     <!-- Modal DraftPC  Cambiar Temporada-->

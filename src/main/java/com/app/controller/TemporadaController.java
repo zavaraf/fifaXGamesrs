@@ -187,7 +187,7 @@ public class TemporadaController {
 			return new ResponseEntity<List<Jornadas>>(listTemporada, HttpStatus.OK);
 		}
 	 
-	 @RequestMapping(value="/lm/getArmarJornadasGrupos/{idTemporada}/{idTorneo}/{numGrupos}/{confJor}",method = RequestMethod.POST,
+	 @RequestMapping(value="/lm/getArmarJornadasGrupos/{idTemporada}/{idTorneo}/{numGrupos}/{confJor}/{conAle}",method = RequestMethod.POST,
 				headers="Accept=application/json")
 		@ResponseBody
 		public ResponseEntity<List<Grupos>> getArmarJornadasGrupos(
@@ -195,9 +195,10 @@ public class TemporadaController {
 				@PathVariable("idTorneo") int idTorneo,
 				@PathVariable("numGrupos") int numGrupos,
 				 @PathVariable("confJor") int confJor,
+				 @PathVariable("conAle") int conAle,
 				@RequestBody List<Equipo> equipos){
 			
-			List<Grupos> listTemporada = temporadaService.getArmarJornadasGrupos(idTemporada,idTorneo,numGrupos,equipos,confJor);
+			List<Grupos> listTemporada = temporadaService.getArmarJornadasGrupos(idTemporada,idTorneo,numGrupos,equipos,confJor,conAle);
 			
 			if(listTemporada.isEmpty()){
 				return new ResponseEntity<List<Grupos>>(HttpStatus.NO_CONTENT);

@@ -236,8 +236,7 @@ public class GenerarJornadasUtil {
 		return jornadasList;
 		
 	}
-	
-	public List<Equipo> agruparArreglo(List<Equipo> equipos){
+public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		
 		List<Equipo> arrayEquipos= new ArrayList<Equipo>();
 		if(equipos== null || equipos.size()==0){
@@ -267,6 +266,70 @@ public class GenerarJornadasUtil {
 		}
 		return arrayEquipos;
 	}
+	
+	public List<Equipo> agruparArreglo(List<Equipo> equipos,int numEquipos){
+		
+		List<Equipo> arrayEquipos= new ArrayList<Equipo>();
+		if(equipos== null || equipos.size()==0){
+			return null;
+		}
+		int grupos = equipos.size()/numEquipos;
+		
+		HashMap<Integer,List<Equipo>> mapEquipos = new HashMap<Integer,List<Equipo>>();
+		
+		for (int i=0 ; i<grupos;i++){
+			
+			List<Equipo> arrayE= new ArrayList<Equipo>();
+			
+			if(i==0){
+				arrayE = getEquiposGru(equipos, i, (i+1)*numEquipos, true);
+				mapEquipos.put(i, arrayE);
+			}
+			else{
+				int endArray = (grupos*numEquipos) - ((i-1)*numEquipos);
+				int startArray = (numEquipos*grupos)-(i*numEquipos);
+				System.out.println(startArray+" - "+endArray);
+				arrayE = getEquiposGru(equipos, startArray , endArray , false);
+				mapEquipos.put(i, arrayE);
+			}
+//			System.out.println("grupo:"+i);
+//			
+//			for(int j=0; j<arrayE.size();j++){
+//				System.out.println("grupo:"+i + " equpos:"+arrayE.get(j));
+//				arrayEquipos.add(arrayE.get(j));
+//			}
+			
+		}
+		
+		for (int i=0 ; i<grupos;i++){
+			for(int j = 0; j< mapEquipos.size();j++){
+				arrayEquipos.add(mapEquipos.get(j).get(i));
+			}
+		}
+		
+		
+		
+		return arrayEquipos;
+	}
+	public List<Equipo> getEquiposGru(List<Equipo> equipos,int startArray, int endArray, boolean isOrder){
+
+		List<Equipo> arrayEquipos= new ArrayList<Equipo>();
+		
+		if(isOrder){
+			for(int i = startArray; i < endArray; i++ ){
+				arrayEquipos.add(equipos.get(i));
+			}
+		}else{
+			for(int i = endArray; i > startArray; i--){
+				arrayEquipos.add(equipos.get(i-1));
+			}
+		}
+		
+		
+		return arrayEquipos;
+		
+	}
+	
 	
 	public List<Grupos> generarGrupos(List<Equipo> equipos, int numero){
 		

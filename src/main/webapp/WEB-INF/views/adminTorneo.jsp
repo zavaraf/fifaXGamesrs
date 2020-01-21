@@ -49,13 +49,17 @@
       <%--         <script src="<c:url value='/static/js/libs/angular-ui-bootstrap/ui-bootstrap-tpls-2.1.2.min.js' />"></script> --%>
       <link href="<c:url value='/static/css/app.css' />" rel="stylesheet">
       </link>
+       <link data-require="font-awesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="https://rawgit.com/rajush/angular-dropdown-multiselect/master/dist/angular-dropdownMultiselect.min.css" />	
       <script src="<c:url value='/static/js/app/app.js' />"></script>
       <script src="<c:url value='/static/js/controller/torneoLM_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
       
-      <script src="<c:url value='/static/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js' />"></script>
+<%--       <script src="<c:url value='/static/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js' />"></script> --%>
       <%--      <script src="<c:url value='/static/js/service/draft_service.js' />"></script> --%>
       <%--      <script src="<c:url value='/static/js/controller/draft_controller.js' />"></script> --%>
+           <script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script>
+<!--       <script src="/static/js/app/script.js"></script> -->
    </head>
    <body class="ng-cloak">
       <div class="container  container-fluid" ng-controller="AdminTorneoLMController as ctrl">
@@ -103,14 +107,31 @@
 						
 					  </div>
 					</div>
+					<div class="row">
+					 <div class="col">
+					    <div class="form-check form-check-inline">
+						  <input class="form-check-input" type="radio" ng-model="ctrl.confAle" name="inlineRadioOptionsA" id="inlineRadioA1" ng-value=1>
+						  <label class="form-check-label" for="inlineRadioA1">Aleatorio</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="radio" ng-model="ctrl.confAle" name="inlineRadioOptionsA" id="inlineRadioA2" ng-value=2>
+						  <label class="form-check-label" for="inlineRadioA2">Posición</label>
+						</div>
+						
+					  </div>
+					</div>
 					<div class="form-row align-items-center">
 					    <div class="col-auto my-1">
 					      
 	
 					      
-					      <multiselect ng-model="selection" options="options" id-prop="id" display-prop="nombre" show-search="true">
-	 					  </multiselect>
-	 					  <button type="button" ng-click="ctrl.getJornadasGrupos(selection,equiposXGrupo)" class="btn btn-primary">Generar Grupos</button>
+<!-- 					      <multiselect ng-model="selection" options="options" id-prop="id" display-prop="nombre" show-search="true"> -->
+<!-- 	 					  </multiselect> -->
+						 <div ng-dropdown-multiselect="" options="example9data" selected-model="example9model" extra-settings="example9settings"></div>
+	 					
+					      <br>
+<!-- 					       <pre> Selected Items = {{example9model | json}} </pre> -->
+	 					  <button type="button" ng-click="ctrl.getJornadasGrupos(example9model,equiposXGrupo)" class="btn btn-primary">Generar Grupos</button>
 						  
 					    </div>
 					    
@@ -123,7 +144,7 @@
 					  <span   class="list-group-item list-group-item-action">
 					  	<div class="container" >
 						  <div  class="row text-center">
-						    <div ng-repeat="e in selection " class="col-sm-2 ">
+						    <div ng-repeat="e in example9model " class="col-sm-2 ">
 						    
 						    <img src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
 						      {{e.nombre}}

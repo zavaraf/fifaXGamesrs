@@ -8,6 +8,11 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 			function($scope,$routeParams,CONFIG,TorneoLMService,UserService,EquipoService,TemporadaService) {
 	var self = this;
 	
+    
+	
+	
+ 
+	
 	self.tablaGeneral;
 	self.jornadas;
 	self.jornadaEdit;
@@ -24,6 +29,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	self.gruposTorneo = [];
 	self.confJor = 2;
 	self.confTor = 2;
+	self.confAle = 2;
 	
 	
 	
@@ -39,6 +45,12 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	self.addTorneoGrupo = addTorneoGrupo;
 	self.getGruposTorneo = getGruposTorneo;
 	
+	$scope.example9model = []; 
+//	$scope.example9data = [ {id: 1, nombre: "David"}, {id: 2, nombre: "Jhon"}, {id: 3, nombre: "Danny"}];
+//	$scope.example9data = buscarTodos();
+	$scope.example9settings = {enableSearch: true, displayProp : "nombre",checkBoxes: true,scrollable: true  };
+	
+    
 	
 	buscarDivisiones();
 	
@@ -51,10 +63,16 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	}
 	function buscarTodos() {
 		var idTemporada = CONFIG.VARTEMPORADA.id
-		console.log("[adminTorneo_controller]  idTemporada]:",CONFIG.VARTEMPORADA.id);
+		console.log("[adminTorneo_controller]  entre idTemporada]:",CONFIG.VARTEMPORADA.id);
 		EquipoService.buscarTodos(idTemporada).then(function(d) {
 			self.equipos = d;
 			$scope.options = self.equipos;
+			$scope.example9data = self.equipos;
+			
+			
+			 
+			return  $scope.options;
+			
 		}, function(errResponse) {
 			console.error('[adminTorneo_controller] Error while fetching buscarTodos()');
 		});
@@ -172,7 +190,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	 
 	 function getJornadasGrupos(equiposSeleccionados,numeroGrupos){
 			console.log("------------------->Torneo]:",equiposSeleccionados) 
-			TorneoLMService.getJornadasGrupos(equiposSeleccionados,self.divisionSelect.id,numeroGrupos,self.confJor)
+			TorneoLMService.getJornadasGrupos(equiposSeleccionados,self.divisionSelect.id,numeroGrupos,self.confJor,self.confAle)
 		            .then(
 		            function(d) {
 		            	

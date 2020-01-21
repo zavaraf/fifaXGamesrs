@@ -20,7 +20,7 @@ public interface TemporadaService {
 	Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
 	
 	List<Jornadas> getArmarJornadasInicial(int idTemporada, int idTorneo);
-	List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo,int numGrupos, List<Equipo> equipos, int confJor);
+	List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo,int numGrupos, List<Equipo> equipos, int confJor,int confAle);
 	
 	ResponseData addGol(int idJugador,int idEquipo,int id,int idJornada);
 	

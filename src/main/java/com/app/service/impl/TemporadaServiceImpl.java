@@ -60,13 +60,20 @@ public class TemporadaServiceImpl implements TemporadaService{
 		return jornadasList;
 	}
 	
-	public List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo, int numGrupos,List<Equipo> equiposL,int vuelta){
+	public List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo, int numGrupos,List<Equipo> equiposL,int vuelta,int confAle){
 			
 			
 			GenerarJornadasUtil generarJornadas = new GenerarJornadasUtil();
 			
 			
-			List<Equipo> equipos = generarJornadas.agruparArreglo(equiposL);
+			List<Equipo> equipos = null;
+			
+			if(confAle== 1){
+				equipos = generarJornadas.agruparArreglo(equiposL);
+			}else{
+				equipos = generarJornadas.agruparArreglo(equiposL,numGrupos);
+				
+			}
 			
 			List<Grupos> grupos = generarJornadas.generarGrupos(equipos, numGrupos);
 			
