@@ -30,7 +30,8 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     function getTablaGeneral(idDivision) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        $http.get(REST_SERVICE_URI_E+'getTablaGeneral'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision)
+//        $http.get(REST_SERVICE_URI_E+'getTablaGeneral'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision)
+        $http.get(REST_SERVICE_URI_E+'getTorneoGeneral'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision)
             .then(
             function (response) {
             	console.log(response.data)

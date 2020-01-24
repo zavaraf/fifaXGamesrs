@@ -300,13 +300,14 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 //			}
 			
 		}
-		
+		try{
 		for (int i=0 ; i<grupos;i++){
 			for(int j = 0; j< mapEquipos.size();j++){
+				System.out.println(j +" ---- "+i);
 				arrayEquipos.add(mapEquipos.get(j).get(i));
 			}
 		}
-		
+		}catch(Exception e){}
 		
 		
 		return arrayEquipos;

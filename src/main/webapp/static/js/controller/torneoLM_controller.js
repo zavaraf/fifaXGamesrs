@@ -272,12 +272,12 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 		 
 		 var tablaGeneralGrupo = [];
 		 
-		 if (self.tablaGeneral!= null){
-		 for (var i = 0 ; i<=self.tablaGeneral.length ; i ++){
+		 if (self.tablaGeneral.tablaGeneral!= null){
+		 for (var i = 0 ; i<=self.tablaGeneral.tablaGeneral.length ; i ++){
 			 try{
-				if(self.tablaGeneral[i].nombreGrupo == grupo.numero){
+				if(self.tablaGeneral.tablaGeneral[i].nombreGrupo == grupo.numero){
 					//console.log("Registro..ADD....",self.tablaGeneral[i])
-					tablaGeneralGrupo.push( self.tablaGeneral[i]); 
+					tablaGeneralGrupo.push( self.tablaGeneral.tablaGeneral[i]); 
 					
 				}
 		     }catch(error){}

@@ -48,7 +48,7 @@ app.controller('AdminTorneoLMController', ['$scope','$routeParams','CONFIG','Tor
 	$scope.example9model = []; 
 //	$scope.example9data = [ {id: 1, nombre: "David"}, {id: 2, nombre: "Jhon"}, {id: 3, nombre: "Danny"}];
 //	$scope.example9data = buscarTodos();
-	$scope.example9settings = {enableSearch: true, displayProp : "nombre",checkBoxes: true,scrollable: true  };
+	$scope.example9settings = {enableSearch: true, displayProp : "nombre",checkBoxes: true,scrollable: true,selectedToTop: true  };
 	
     
 	

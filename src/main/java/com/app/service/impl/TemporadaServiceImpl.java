@@ -18,6 +18,7 @@ import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
 import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
+import com.app.modelo.Torneo;
 import com.app.service.TemporadaService;
 import com.app.utils.GenerarJornadasUtil;
 
@@ -37,6 +38,11 @@ public class TemporadaServiceImpl implements TemporadaService{
 		
 		return temporadaDao.getTablaGeneral(idTemporada,idDivision);
 	}
+	public Torneo getTorneoGeneral(int idTemporada, int idDivision){
+		
+		return temporadaDao.getTorneoGeneral(idTemporada,idDivision);
+	}
+	
 	
 	public List<Jornadas> getJornadas(int idTemporada, int idDivision,int activa){
 		
@@ -234,4 +240,5 @@ public class TemporadaServiceImpl implements TemporadaService{
 		return grupos;
 		
 	}
+	
 }

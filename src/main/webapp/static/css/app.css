@@ -1,5 +1,5 @@
 body, #mainWrapper {
-	height: 70%;
+	height: 90%;
 	background-color:rgb(245, 245, 245);
 }
 
@@ -18,7 +18,11 @@ body, .form-control{
 
 .formcontainer{
 	background-color: #DAE8E8;
-	padding: 20px;
+	 padding: 20px;
+}
+.formcontainer2{
+	background-color: #DAE8;
+	 padding: 20px;
 }
 
 .tablecontainer{
@@ -26,11 +30,11 @@ body, .form-control{
 }
 
 .generic-container {
-  width:80%;
-  margin-left: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 20px;
+  width:90%;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
   background-color: #EAE7E7;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -38,5 +42,5 @@ body, .form-control{
 }
 
 .custom-width {
-    width: 80px !important;
+    width: 90px !important;
 }

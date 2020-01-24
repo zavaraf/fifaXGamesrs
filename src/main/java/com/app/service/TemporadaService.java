@@ -10,11 +10,13 @@ import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
 import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
+import com.app.modelo.Torneo;
 
 public interface TemporadaService {
 
 	List<Temporada> buscarTodos();
 	List<TablaGeneral> getTablaGeneral(int idTemporada, int idDivision);
+	Torneo getTorneoGeneral(int idTemporada, int idDivision);
 	List<Jornadas> getJornadas(int idTemporada, int idDivision,int activa);
 	List<GolesJornadas> getGolesJornadas(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
 	Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
@@ -28,6 +30,7 @@ public interface TemporadaService {
 	ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas);
 	ResponseData addJornadasGrupos(int idTemporada, String nombre, String grupos,int confTor);
 	List<Grupos> getGruposTorneo(int idTemporada, int idTorneo);
+	
 	
 
 }

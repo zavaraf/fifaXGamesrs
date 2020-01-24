@@ -7,14 +7,15 @@ import com.app.modelo.GolesJornadas;
 import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
-import com.app.modelo.ResponseData;
 import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
+import com.app.modelo.Torneo;
 
 public interface TemporadaDao {
 
 	List<Temporada> buscarTodos();
 	List<TablaGeneral> getTablaGeneral(int idTemporada, int idDivision);
+	Torneo getTorneoGeneral(int idTemporada, int idDivision);
 	List<Jornadas> getJornadas(int idTemporada, int idDivision,int activa);
 	List<GolesJornadas> getGolesJornadas(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
 	Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);

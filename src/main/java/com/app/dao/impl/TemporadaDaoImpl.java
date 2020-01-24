@@ -89,6 +89,17 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		return torneodaList;
 	}
 	
+	public Torneo getTorneoGeneral(int idTemporada, int idTorneo) {
+		
+		Torneo torneo = new Torneo();
+		
+		torneo.setTablaGeneral(getTablaGeneral(idTemporada, idTorneo));
+		torneo.setGolesTorneo(getGolesTorneo(idTorneo));
+		
+		return torneo;
+		
+	}
+	
 	public List<TablaGeneral> getTablaGeneral(int idTemporada, int idTorneo) {
 		List<TablaGeneral> tablaGeneralList = new ArrayList<TablaGeneral>();
 		/*  String query = " SELECT "
@@ -339,12 +350,68 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" sum(tablaGeneral.ge) as ge, "
 				+" (sum(tablaGeneral.gf) - sum(tablaGeneral.ge)) as dif, "
 				+" ((sum(tablaGeneral.pg) * 3) + sum(tablaGeneral.pe)) as pts "
-				+" from "
+				+" "
+				+" from ( "
+				+" "
+				+" /* PARTIDOS JUGADOS */  "
 				+" ( "
+				+" select jhe.id, "
+				+" jornadas.division_idDivision, "
+				+" torneo.tempodada_idTemporada, "
+				+" torneo.idTorneo,"
+				+" equipos.idEquipo as idEquipo,  "
+				+" equipos.nombreEquipo,  "
+				+" count(equipos.idEquipo) as pj, "
+				+" 0 as pg, "
+				+" 0 as pp, "
+				+" 0 as pe, "
+				+" 0 as gf, "
+				+" 0 as ge "
+				+" from jornadas_has_equipos jhe "
+				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada"
+				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo, "
+				+" equipos  "
+				+" where (jhe.equipos_idEquipoLocal = equipos.idEquipo "
+				+" or jhe.equipos_idEquipoVisita = equipos.idEquipo) "
+				+" and jornadas.activa = 1 "
+				+" "
+				+" group by torneo.idtorneo,equipos.idEquipo "
+				+" order by equipos.idEquipo "
+				+" "
+				+" ) "
+				+" "
+				+" UNION "
+				+" "
+				+" /* PARTIDOS GANADOS LOCAL*/  "
+				+" ("
+				+" select jhe.id, "
+				+" jornadas.division_idDivision, "
+				+" torneo.tempodada_idTemporada, "
+				+" torneo.idTorneo,"
+				+" jhe.equipos_idEquipoVisita as idEquipo,  "
+				+" equipos.nombreEquipo,"
+				+" 0 as pj, "
+				+" count(jhe.equipos_idEquipoVisita) as pg, "
+				+" 0 as pp, "
+				+" 0 as pe, "
+				+" sum(jhe.golesVisita) as gf,  "
+				+" sum(jhe.golesLocal) as ge "
+				+" from jornadas_has_equipos jhe "
+				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
+				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
+				+" join equipos on equipos.idEquipo = jhe.equipos_idEquipoVisita "
+				+" where "
+				+" jhe.golesVisita> jhe.golesLocal "
 				+" "
 				+" "
-				+" ( "
-				+" /* PARTIDOS GANADOS LOCAL  */ "
+				+" group by jhe.equipos_idEquipoVisita, torneo.idtorneo  "
+				+" order by equipos.idEquipo "
+				+" "
+				+" )"
+				+" union"
+				+" "
+				+" /* PARTIDOS GANADOS VISITA */  "
+				+" ("
 				+" select jhe.id, "
 				+" jornadas.division_idDivision, "
 				+" torneo.tempodada_idTemporada, "
@@ -363,40 +430,10 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada"
 				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
 				+" where jhe.golesLocal > jhe.golesVisita "
+				+" "
 				+" group by jhe.equipos_idEquipoLocal , torneo.idtorneo  "
-				+" order by equipos.idEquipo "
-				+" "
-				+" ) "
-				+" "
-				+" UNION "
-				+" "
-				+" "
-				+" ( "
-				+" /* PARTIDOS GANADOS VISITA */ "
-				+" "
-				+" select jhe.id, "
-				+" jornadas.division_idDivision, "
-				+" torneo.tempodada_idTemporada, "
-				+" torneo.idTorneo,"
-				+" jhe.equipos_idEquipoVisita as idEquipo,  "
-				+" equipos.nombreEquipo, "
-				+" 0 as pj, "
-				+" count(jhe.equipos_idEquipoVisita) as pg, "
-				+" 0 as pp, "
-				+" 0 as pe, "
-				+" sum(jhe.golesVisita) as gf,  "
-				+" sum(jhe.golesLocal) as ge "
-				+" from jornadas_has_equipos jhe "
-				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
-				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
-				+" join equipos on equipos.idEquipo = jhe.equipos_idEquipoVisita "
-				+" where "
-				+" jhe.golesVisita> jhe.golesLocal "
-				+" "
-				+" group by jhe.equipos_idEquipoLocal, torneo.idtorneo  "
-				+" order by equipos.idEquipo "
-				+" ) "
-				+" "
+				+" order by equipos.idEquipo"
+				+" )"
 				+" UNION "
 				+" /* PARTIDOS EMPATADOS */ "
 				+" ( "
@@ -427,34 +464,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" ) "
 				+" "
 				+" UNION "
-				+" /* PARTIDOS JUGADOS */  "
-				+" ( "
-				+" select jhe.id, "
-				+" jornadas.division_idDivision, "
-				+" torneo.tempodada_idTemporada, "
-				+" torneo.idTorneo,"
-				+" equipos.idEquipo as idEquipo,  "
-				+" equipos.nombreEquipo,  "
-				+" count(equipos.idEquipo) as pj, "
-				+" 0 as pg, "
-				+" 0 as pp, "
-				+" 0 as pe, "
-				+" 0 as gf, "
-				+" 0 as ge "
-				+" from jornadas_has_equipos jhe "
-				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada"
-				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo, "
-				+" equipos  "
-				+" where (jhe.equipos_idEquipoLocal = equipos.idEquipo "
-				+" or jhe.equipos_idEquipoVisita = equipos.idEquipo) "
-				+" and jornadas.activa = 1 "
 				+" "
-				+" group by torneo.idtorneo,equipos.idEquipo "
-				+" order by equipos.idEquipo "
-				+" "
-				+" ) "
-				+" "
-				+" UNION  "
 				+" ( "
 				+" /* PARTIDOS PERDIDOS LOCAL  */ "
 				+" select jhe.id, "
@@ -507,13 +517,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" "
 				+" "
 				+" ) "
-				+" "
-				+" )tablaGeneral "
+				+" )"
+				+" as tablaGeneral"
 				+" "
 				+" where tablaGeneral.idTorneo = " + idTorneo
-				+" and   tablaGeneral.tempodada_idTemporada = " + idTemporada
+				+" and   tablaGeneral.tempodada_idTemporada = "+ idTemporada
+				+" group by tablaGeneral.idEquipo"
 				+" "
-				+" group by tablaGeneral.idEquipo "
 				+" ) tablaGeneral "
 				+" join grupos_torneo on (grupos_torneo.equipos_idEquipo = tablaGeneral.idEquipo"
 				+" and grupos_torneo.torneo_idtorneo = tablaGeneral.idTorneo)"
@@ -523,7 +533,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" group by grupos_torneo.nombreGrupo, tablaGeneral.idEquipo"
 				+" order by grupos_torneo.nombreGrupo, tablaGeneral.pts desc,      "
 				+" "
-				+" tablaGeneral.dif desc " ;
+				+" tablaGeneral.dif desc ";
 		Collection tablaGeneral = jdbcTemplate.query(
                 query
                 , new RowMapper() {
@@ -546,6 +556,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
                     	tablaG.setImg(rs.getString("img"));
                     	tablaG.setNombreGrupo(rs.getString("nombreGrupo"));
                     	
+                    	
+                    	
                     	return tablaG;
                     }
                 });
@@ -555,6 +567,53 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	        }
 	        
 		return tablaGeneralList;
+	}
+	
+	public List<GolesJornadas> getGolesTorneo(int idTorneo) {
+		List<GolesJornadas> golesList = new ArrayList<GolesJornadas>();
+		String query =" select count(persona.idPersona) goles, "
+				+" persona.idPersona,"
+				+" persona.NombreCompleto, "
+				+" persona.sobrenombre, "
+				+" equipos.idEquipo,"
+				+" equipos.nombreEquipo,"
+				+" jornadas.torneo_idtorneo,"
+				+" ehi.imagen"
+				+" from golesjornadas"
+				+" join jornadas on jornadas.idJornada = golesjornadas.jornadas_has_equipos_jornadas_idJornada"
+				+" join persona on persona.idPersona = golesjornadas.persona_idPersona"
+				+" join equipos on equipos.idEquipo = persona.Equipos_idEquipo"
+				+" join equipos_has_imagen ehi on equipos.idEquipo = ehi.equipos_idEquipo"
+				+" where jornadas.torneo_idtorneo = " + idTorneo
+				+" and golesjornadas.isautogol =0"
+				+" and ehi.tipoImagen_idTipoImagen = 1"
+				+" group by persona.idPersona,jornadas.torneo_idtorneo"
+				+" order by jornadas.torneo_idtorneo, goles  desc"
+				+" limit 10";
+		Collection goles = jdbcTemplate.query(
+                query
+                , new RowMapper() {
+
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        
+                    	GolesJornadas goles = new GolesJornadas();
+                    	goles.setIdEquipo(rs.getInt("idEquipo"));
+                    	goles.setIdPersona(rs.getInt("idPersona"));
+                    	goles.setNombreCompleto(rs.getString("NombreCompleto"));
+                    	goles.setNombreEquipo(rs.getString("nombreEquipo"));
+                    	goles.setSobrenombre(rs.getString("sobrenombre"));
+                    	goles.setGoles(rs.getInt("goles"));
+                    	goles.setImg(rs.getString("imagen"));
+                    	return goles;
+                    }
+                });
+		 for (Object gol : goles) {
+	           
+	            golesList.add( (GolesJornadas)gol);
+	        }
+	        
+		return golesList;
 	}
 	
 	public List<Jornadas> getJornadas(int idTemporada, int idTorneo,int activa) {

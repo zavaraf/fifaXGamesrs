@@ -1,5 +1,7 @@
 package com.app.modelo;
 
+import java.util.List;
+
 public class TablaGeneral {
 	
 	private int idEquipo;
@@ -14,6 +16,7 @@ public class TablaGeneral {
 	private int ge;
 	private int dif;
 	private int pts;
+	private List<GolesJornadas> golesTemporada;
 	public int getIdEquipo() {
 		return idEquipo;
 	}
@@ -85,6 +88,12 @@ public class TablaGeneral {
 	}
 	public void setNombreGrupo(String nombreGrupo) {
 		this.nombreGrupo = nombreGrupo;
+	}
+	public List<GolesJornadas> getGolesTemporada() {
+		return golesTemporada;
+	}
+	public void setGolesTemporada(List<GolesJornadas> golesTemporada) {
+		this.golesTemporada = golesTemporada;
 	}
 	
 	

@@ -26,6 +26,7 @@ import com.app.modelo.Jornadas;
 import com.app.modelo.ResponseData;
 import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
+import com.app.modelo.Torneo;
 import com.app.service.TemporadaService;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*", methods= {RequestMethod.GET,RequestMethod.POST})
@@ -75,6 +76,19 @@ public class TemporadaController {
 			return new ResponseEntity<List<TablaGeneral>>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<List<TablaGeneral>>(listTemporada, HttpStatus.OK);
+	}
+	@RequestMapping(value="/lm/getTorneoGeneral/{idTemporada}/{idDivision}",method = RequestMethod.GET,
+			headers="Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<Torneo> getTorneoGeneral(@PathVariable("idTemporada") int idTemporada,
+			@PathVariable("idDivision") int idDivision){
+		
+		Torneo listTorneo = temporadaService.getTorneoGeneral(idTemporada,idDivision);
+		
+		if(listTorneo == null){
+			return new ResponseEntity<Torneo>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<Torneo>(listTorneo, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/lm/getJornadas/{idTemporada}/{idDivision}/{activa}",method = RequestMethod.GET,
@@ -279,6 +293,7 @@ public class TemporadaController {
 		 
 		 return new ResponseEntity<List<Grupos>>(response, HttpStatus.OK);
 	 }
+	
 	 
 	 
 }

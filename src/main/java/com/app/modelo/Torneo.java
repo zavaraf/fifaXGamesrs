@@ -1,10 +1,14 @@
 package com.app.modelo;
 
+import java.util.List;
+
 public class Torneo {
 	
 	private int id;
 	private String nombre;
 	private int tipoTorneo;
+	private List<GolesJornadas> golesTorneo;
+	private List<TablaGeneral> tablaGeneral;
 	public int getId() {
 		return id;
 	}
@@ -23,6 +27,19 @@ public class Torneo {
 	public void setTipoTorneo(int tipoTorneo) {
 		this.tipoTorneo = tipoTorneo;
 	}
+	public List<GolesJornadas> getGolesTorneo() {
+		return golesTorneo;
+	}
+	public void setGolesTorneo(List<GolesJornadas> golesTorneo) {
+		this.golesTorneo = golesTorneo;
+	}
+	public List<TablaGeneral> getTablaGeneral() {
+		return tablaGeneral;
+	}
+	public void setTablaGeneral(List<TablaGeneral> tablaGeneral) {
+		this.tablaGeneral = tablaGeneral;
+	}
+	
 	
 
 }

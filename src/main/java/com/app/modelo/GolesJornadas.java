@@ -8,6 +8,8 @@ public class GolesJornadas {
 	private String sobrenombre;
 	private String nombreCompleto;
 	private int isAutogol;
+	private String img;
+	private int goles;
 	public int getIdEquipo() {
 		return idEquipo;
 	}
@@ -43,6 +45,18 @@ public class GolesJornadas {
 	}
 	public void setIsAutogol(int isAutogol) {
 		this.isAutogol = isAutogol;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public int getGoles() {
+		return goles;
+	}
+	public void setGoles(int goles) {
+		this.goles = goles;
 	}
 	
 	
