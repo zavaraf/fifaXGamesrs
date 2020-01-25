@@ -277,20 +277,27 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		
 		HashMap<Integer,List<Equipo>> mapEquipos = new HashMap<Integer,List<Equipo>>();
 		
-		for (int i=0 ; i<grupos;i++){
+		for (int i=0 ; i<numEquipos;i++){
 			
 			List<Equipo> arrayE= new ArrayList<Equipo>();
 			
 			if(i==0){
-				arrayE = getEquiposGru(equipos, i, (i+1)*numEquipos, true);
+				int endArray = (i+1)*grupos;
+				int startArray = i;
+				arrayE = getEquiposGru(equipos, i, (i+1)*grupos, true);
+				
 				mapEquipos.put(i, arrayE);
+				System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
+
+				
 			}
 			else{
-				int endArray = (grupos*numEquipos) - ((i-1)*numEquipos);
-				int startArray = (numEquipos*grupos)-(i*numEquipos);
-				System.out.println(startArray+" - "+endArray);
+				int endArray = (grupos*numEquipos) - ((i-1)*grupos);
+				int startArray = (numEquipos*grupos)-(i*grupos);
+//				System.out.println(startArray+" - "+endArray);
 				arrayE = getEquiposGru(equipos, startArray , endArray , false);
 				mapEquipos.put(i, arrayE);
+				System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
 			}
 //			System.out.println("grupo:"+i);
 //			
@@ -302,14 +309,15 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		}
 		try{
 		for (int i=0 ; i<grupos;i++){
-			for(int j = 0; j< mapEquipos.size();j++){
-				System.out.println(j +" ---- "+i);
+			for(int j = 0; j< numEquipos;j++){
+				System.out.println(i +" ---- "+j+" Equipo]:");
+				System.out.println(i +" ---- "+j+" Equipo]:"+mapEquipos.get(j).get(i).getNombre());
 				arrayEquipos.add(mapEquipos.get(j).get(i));
 			}
 		}
 		}catch(Exception e){}
 		
-		
+		System.out.println("Ordenado---->"+arrayEquipos);
 		return arrayEquipos;
 	}
 	public List<Equipo> getEquiposGru(List<Equipo> equipos,int startArray, int endArray, boolean isOrder){
@@ -341,7 +349,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		
 		
 		
-		
+		System.out.println("Grupos]:"+numeroGrupo+" Equipos]:"+equipos.size()+" NumeroGrupos]:"+numero);
 		
 		for (int i=0; i< numeroGrupo; i++) {
 			int startArray =0;
@@ -351,6 +359,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 			
 			Grupos grupo = new Grupos();
 			List<Equipo> equiposGrupo = new ArrayList<Equipo>();
+			System.out.println("Grupo]:"+i+ " StayArry]:"+startArray+ " End]:"+(i+1)*numero);
 			for(int j=startArray; j < (i+1)*numero ; j++) {
 					
 					grupo.setNumero(i+1);
@@ -368,7 +377,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 			
 		
 		
-		
+		System.out.println("Grupos Generados]:"+grupos.size());
 		
 		
 		return grupos;
