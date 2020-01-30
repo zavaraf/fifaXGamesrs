@@ -21,6 +21,7 @@ import com.app.modelo.Temporada;
 import com.app.modelo.Torneo;
 import com.app.service.TemporadaService;
 import com.app.utils.GenerarJornadasUtil;
+import com.google.gson.Gson;
 
 @Service
 public class TemporadaServiceImpl implements TemporadaService{
@@ -149,6 +150,42 @@ public class TemporadaServiceImpl implements TemporadaService{
 			response.setMensaje(map.get("mensaje"));
 		
 		}
+		return response;
+	}
+	
+	public ResponseData addResultJornada(int idTorneo,int idTemporada,Jornada jornada){
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		ResponseData response = new ResponseData();
+		
+		Gson gson = new Gson();
+		
+		String json = gson.toJson(jornada);
+		
+		System.out.println(json);
+
+		map = temporadaDao.addResultJornada(idTorneo, idTemporada, json);
+		
+		
+		
+		if (map == null || map.isEmpty()) {
+			response.setStatus(CodigoResponse.ERROR.getCodigo());
+			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+			
+			
+		} else {
+
+			String status = map.get("status");
+
+			response.setStatus(Integer.parseInt(status));
+			response.setMensaje(map.get("mensaje"));
+			
+			Torneo torneo = temporadaDao.getTorneoGeneral(idTemporada, idTorneo);
+			response.setData(torneo);
+			
+		
+		}
+		
 		return response;
 	}
 	

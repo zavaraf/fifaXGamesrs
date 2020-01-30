@@ -9,6 +9,7 @@ public class Torneo {
 	private int tipoTorneo;
 	private List<GolesJornadas> golesTorneo;
 	private List<TablaGeneral> tablaGeneral;
+	private List<Jornadas>  jornadas;
 	public int getId() {
 		return id;
 	}
@@ -38,6 +39,12 @@ public class Torneo {
 	}
 	public void setTablaGeneral(List<TablaGeneral> tablaGeneral) {
 		this.tablaGeneral = tablaGeneral;
+	}
+	public List<Jornadas> getJornadas() {
+		return jornadas;
+	}
+	public void setJornadas(List<Jornadas> jornadas) {
+		this.jornadas = jornadas;
 	}
 	
 	

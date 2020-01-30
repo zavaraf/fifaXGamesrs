@@ -8,8 +8,10 @@ public class GolesJornadas {
 	private String sobrenombre;
 	private String nombreCompleto;
 	private int isAutogol;
+	private int deleted;
 	private String img;
 	private int goles;
+	private int id;
 	public int getIdEquipo() {
 		return idEquipo;
 	}
@@ -57,6 +59,18 @@ public class GolesJornadas {
 	}
 	public void setGoles(int goles) {
 		this.goles = goles;
+	}
+	public int getDeleted() {
+		return deleted;
+	}
+	public void setDeleted(int deleted) {
+		this.deleted = deleted;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

@@ -161,6 +161,30 @@ public class TemporadaController {
 		 
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
+	 @RequestMapping(value="/lm/addResultJornada/{idTorneo}/{idTempodrada}",
+			 method = RequestMethod.POST,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<ResponseData> addResultJornada(
+			 @PathVariable("idTorneo") int idTorneo,
+			 @PathVariable("idTempodrada") int idTempodrada,
+			 @RequestBody Jornada jornadaEdit
+			 ){
+		 
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+			 System.out.println( "jugador:"+idTorneo+" Equipo]:"+idTempodrada);
+			 response = temporadaService.addResultJornada(idTorneo,idTempodrada,jornadaEdit);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
 	 
 	 @RequestMapping(value="/lm/addImg/{idEquipo}/{id}/{idJornada}",
 			 method = RequestMethod.POST,

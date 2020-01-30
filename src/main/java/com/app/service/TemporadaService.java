@@ -25,6 +25,7 @@ public interface TemporadaService {
 	List<Grupos> getArmarJornadasGrupos(int idTemporada, int idTorneo,int numGrupos, List<Equipo> equipos, int confJor,int confAle);
 	
 	ResponseData addGol(int idJugador,int idEquipo,int id,int idJornada);
+	ResponseData addResultJornada(int idTorneo,int idTemporada,Jornada jornada);
 	
 	ResponseData addImagen(int idEquipo,int id,int idJornada,String img);
 	ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas);

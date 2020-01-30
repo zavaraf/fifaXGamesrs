@@ -72,6 +72,9 @@
 		      </div>
 		      <div class="modal-body">
 		      <sec:authentication var="user" property="principal" />
+		      <div class="alert alert-warning text-center" role="alert">
+				  No seas CULO da click "Guardar" para salvar el resultado ;)
+				</div>
 		        <blockquote class="blockquote text-center">
 					  <p class="mb-0">RESUMEN</p>
 				</blockquote>
@@ -114,7 +117,7 @@
 						<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 				            <button type="button" class="btn btn-primary btn-sm" 
 				            ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
-				            ng-click= "ctrl.addGoles(selectedPlayer.id,ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit)">Agregar</button>
+				            ng-click= "ctrl.addGoles(selectedPlayer,ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit)">Agregar</button>
 					   	</sec:authorize>
 					   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >Cancelar</button>
 				   		
@@ -136,7 +139,16 @@
 					  </div>
 					</div>
 				    
-					  <footer class="blockquote-footer text-right {{ p.isAutogol == 1 ? 'alert alert-danger' : ''}} " ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer>
+				    <footer class="bg-light text-right  ">
+					  
+					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
+					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}} 
+					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  ng-click= "ctrl.deletedGol(p,ctrl.jornadaEdit.idEquipoLocal)">(-)</a>
+					  </p>
+					</footer>
+					
+<!-- 					  <footer class="blockquote-footer text-right {{ p.isAutogol == 1 ? 'alert alert-danger' : ''}} " ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer> -->
 					  
 					</blockquote>
 				    </div>
@@ -175,7 +187,7 @@
                          <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 			            	<button type="button" class="btn btn-primary btn-sm"
 			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
-			            	ng-click= "ctrl.addGoles(selectedPlayerV.id,ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit)" >Agregar</button>
+			            	ng-click= "ctrl.addGoles(selectedPlayerV,ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit)" >Agregar</button>
 			            </sec:authorize>
 				   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample" >Cancelar</button>
 			          </div>
@@ -196,7 +208,14 @@
 					  </div>
 					</div>
 					
-						<footer class="blockquote-footer text-left {{p.isAutogol == 1 ? 'alert alert-danger' : ''}} " ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer>
+					<footer class="bg-light text-left  ">
+					  
+					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
+					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}
+					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					   ng-click= "ctrl.deletedGol(p,ctrl.jornadaEdit.idEquipoVisita)">(-)</a>
+					</footer>
+<!-- 						<footer class="blockquote-footer text-left {{p.isAutogol == 1 ? 'alert alert-danger' : ''}} " ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer> -->
 					
 					  
 					</blockquote>
@@ -209,7 +228,9 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
+		        <button type="button" class="btn btn-primary"  data-dismiss="modal" 
+		        ng-model="status" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+		         ng-click="status = ctrl.guardarJornada(ctrl.jornadaEdit)">Guardar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -220,20 +241,23 @@
 			
 			<ul class="nav nav-tabs" role="tablist">
 			    <li class="nav-item" ng-repeat="div in ctrl.getTorneos()">
-			      <a class="nav-link" ng-click= "ctrl.getInitTorneo(div);ctrl.getGruposTorneo(div)" data-toggle="tab" >{{div.nombre}}</a>
+			      <a class="nav-link" ng-click= "ctrl.jornadaSelect = [];ctrl.getInitTorneo(div);ctrl.getGruposTorneo(div);" data-toggle="tab" >{{div.nombre}}</a>
 			    </li>   
 			 </ul>
 	        <div class="formcontainer"	>
 	        
             	<div class="panel panel-default">
                     <div class="panel-heading">
+                        <img src="<c:url value='/imagenes/LigaMundialXGamers.png'/>" class="rounded mx-auto d-block" style="width: 200px; height: 200px;" alt="Cinque Terre">
                         
-                       <span class="lead">Tabla General</span>
+<!--                         https://i.imgur.com/iOfwGBr.png -->
+<!--                        <span class="lead">Tabla General</span> -->
                     </div>
                 </div>
                 <div  class="row">
                 	<div class="col-xs-12 col-md-7">
-		                <table ng-show = "ctrl.divisionSelect.tipoTorneo ==1" class="table table-sm table-hover table-striped">
+		                <table  ng-show = "ctrl.divisionSelect.tipoTorneo ==1" class="table  table-sm table-hover table-striped">
+<%-- 		               style="background: url(<c:url value='/imagenes/LigaMundialXGamers.png'/>) " > --%>
 		                	<thead class="thead-dark">
 		                          <tr>
 		                          	  <th>*</th>

@@ -6,7 +6,7 @@ var app = angular.module("myApp", ["ngRoute","ngPagination",'angularjs-dropdown-
         $routeProvider
         .when("/", {
            // templateUrl : "Jugadores.htm"
-        	templateUrl : "Jugadores"
+        	templateUrl : "Torneo"
         })
         .when("/jugadores", {
             templateUrl : "Jugadores.htm"

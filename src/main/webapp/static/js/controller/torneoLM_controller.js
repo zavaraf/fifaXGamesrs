@@ -32,7 +32,8 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.getTorneos = getTorneos;
 	self.getGruposTorneo = getGruposTorneo;
 	self.getTablaGrupo = getTablaGrupo;
-	
+	self.guardarJornada = guardarJornada;
+	self.deletedGol   = deletedGol;
 	
 	buscarDivisiones()
 	
@@ -41,7 +42,9 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	}
 	
 	function getJornadaActual (){
-		self.jornadaSelect = [];
+		
+		if(self.jornadaSelect == null || self.jornadaSelect.length == 0){
+			self.jornadaSelect = [];
 			if(self.jornadas!= null && self.jornadas!= ''){
 				for (var i = 0 ; i<=self.jornadas.length ; i ++){
 					if(self.jornadas[i].numeroJornada == 1){
@@ -52,6 +55,20 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 					
 				}
 			}
+		}else{
+			if(self.jornadas!= null && self.jornadas!= ''){
+				for (var i = 0 ; i<=self.jornadas.length ; i ++){
+					if(self.jornadas[i].numeroJornada == self.jornadaSelect[0].numeroJornada){
+						self.jornadaSelect = [];
+					    self.jornadaSelect.push( self.jornadas[i]); 
+						console.log("get Jornada Select]:",self.jornadaSelect);
+						break;
+					}
+					
+				}
+			}
+			
+		}
 		
 				
 	}
@@ -80,6 +97,7 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
                     
                     console.log("TorneoLMService getTablaGeneral]:",self.tablaGeneral)
                     
+                    getJornadas();
                     return d;
                 },
                 function(errResponse){
@@ -90,20 +108,22 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
         }
 	
 	 function getJornadas(){
-			TorneoLMService.getJornadas(self.divisionSelect.id,1)
-	                .then(
-	                function(d) {
-	                    self.jornadas = d;
+//			TorneoLMService.getJornadas(self.divisionSelect.id,1)
+//	                .then(
+//	                function(d) {
+//	                    self.jornadas = d;
+		 
+		 				self.jornadas = self.tablaGeneral.jornadas;
 	                    
 	                    console.log("TorneoLMService-getTablaJornadas]:",self.jornadas)
 	                    console.log("TorneoLMService-getTablaJornadas]: -----------FIN-----------")
 	                    getJornadaActual()
-	                    return d;
-	                },
-	                function(errResponse){
-	                    console.error('[TorneoLMService] Error while fetching TorneoLMService()');
-	                }
-	            );
+//	                    return d;
+//	                },
+//	                function(errResponse){
+//	                    console.error('[TorneoLMService] Error while fetching TorneoLMService()');
+//	                }
+//	            );
 	            return null;
 	        }
 	 
@@ -161,7 +181,7 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 		 if(golesJornada!=null){
 		 for(var i=0;i<golesJornada.length;i++){
 				
-				if(golesJornada[i].idEquipo == idEquipo){
+				if(golesJornada[i].idEquipo == idEquipo && golesJornada[i].deleted == 0){
 					playersGoles.push(golesJornada[i]);
 				}			
 			}
@@ -171,52 +191,208 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 		 
 	 }
 	 
-	 function addGoles(idJugador,idEquipo,jornadaVar) {
+//	 function addGoles(idJugador,idEquipo,jornadaVar) {
+//		 
+//		 TorneoLMService.addGoles(idJugador,idEquipo,jornadaVar.id,jornadaVar.idJornada)
+//         .then(
+//         function(d) {
+//             self.golesJornada = d;
+//             
+//             console.log("TorneoLMService-addGoles]:",self.golesJornada)
+//             
+//             getJornada(jornadaVar.idJornada,jornadaVar.id,jornadaVar.idEquipoLocal,jornadaVar.idEquipoVisita)
+//             
+//             getTablaGeneral()
+//             getJornadas()
+//             
+//             
+//             return d;
+//         },
+//         function(errResponse){
+//             console.error('[addGoles] Error while addGoles()');
+//         }
+//     );
+//     return null;
+//		 
+//	 }
+function addGoles(jugador,idEquipo,jornadaVar) {
 		 
-		 TorneoLMService.addGoles(idJugador,idEquipo,jornadaVar.id,jornadaVar.idJornada)
-         .then(
-         function(d) {
-             self.golesJornada = d;
-             
-             console.log("TorneoLMService-addGoles]:",self.golesJornada)
-             
-             getJornada(jornadaVar.idJornada,jornadaVar.id,jornadaVar.idEquipoLocal,jornadaVar.idEquipoVisita)
-             
-             getTablaGeneral()
-             getJornadas()
+//		 TorneoLMService.addGoles(jugador.id,idEquipo,jornadaVar.id,jornadaVar.idJornada)
+//         .then(
+//         function(d) {
+//             self.golesJornada = d;
+//             
+//             console.log("TorneoLMService-addGoles]:",self.golesJornada)
              
              
-             return d;
-         },
-         function(errResponse){
-             console.error('[addGoles] Error while addGoles()');
-         }
-     );
-     return null;
-		 
-	 }
-	 
-	 function addImagen(idEquipo,jornadaVar,img) {
-		 
-		 TorneoLMService.addImagen(idEquipo,jornadaVar.id,jornadaVar.idJornada,img)
-         .then(
-         function(d) {
+             
+             //getTablaGeneral()
+
+
             
              
-             console.log("TorneoLMService-addImagen]:",d)
+             console.log("Jugador Agregar gol]-------",jugador)
+        	 var jugadorVal = new Object();
+        	 jugadorVal.idEquipo          = idEquipo;
+        	 jugadorVal.idPersona         = jugador.id;
+        	 jugadorVal.sobrenombre       = jugador.sobrenombre;
+        	 jugadorVal.nombreCompleto    = jugador.nombreCompleto;
+        	 jugadorVal.isAutogol         = (jugador.equipo.id == idEquipo) ? 0 : 1;
+        	 jugadorVal.deleted           = 0;
+        	 jugadorVal.id                = 0;
+        	 
+        	 
+        	 
+             if(self.jornadaEdit.golesJornada != null){
+            	 self.jornadaEdit.golesJornada.push(jugadorVal);
+             }else{
+            	 var golesJornadaVal = [];
+            	 golesJornadaVal.push(jugadorVal);
+            	 self.jornadaEdit.golesJornada = golesJornadaVal;
+            	 
+             }
              
-             getJornada(jornadaVar.idJornada,jornadaVar.id,jornadaVar.idEquipoLocal,jornadaVar.idEquipoVisita)
+             
+             if(self.jornadaEdit.idEquipoLocal == idEquipo){
+            	 if(self.jornadaEdit.golesLocal == null){
+            		 self.jornadaEdit.golesLocal = 1
+            		 self.jornadaEdit.golesVisita = 0
+            	 }else{
+            		 var golesVal = 0;
+            		 self.jornadaEdit.golesJornada.forEach(function (elemento, indice, array) {
+            			    if(elemento.idEquipo == self.jornadaEdit.idEquipoLocal && elemento.deleted == 0 ){
+            			    	golesVal ++;
+            			    }
+            			});
+            		 self.jornadaEdit.golesLocal = golesVal
+            	 }
+             }
+             if(self.jornadaEdit.idEquipoVisita == idEquipo){
+            	 if(self.jornadaEdit.golesVisita == null){
+            		 self.jornadaEdit.golesVisita = 1
+            		 self.jornadaEdit.golesLocal = 0
+            	 }else{
+            		 var golesVal = 0;
+            		 self.jornadaEdit.golesJornada.forEach(function (elemento, indice, array) {
+            			    if(elemento.idEquipo == self.jornadaEdit.idEquipoVisita && elemento.deleted == 0 ){
+            			    	golesVal ++;
+            			    }
+            			});
+            		 self.jornadaEdit.golesVisita = golesVal
+            	 }
+             }
+             
+//    		 if(jornadaVar!=null){
+//    			 console.log("------------------>Entrando",jornadaVar)
+//    		 for(var i=0;i<self.jornadas.length;i++){
+//    			 console.log("------------------>Entrando Jornadas",self.jornadas[i])
+//    				if(self.jornadas[i].idJornda == jornadaVar.idJornada){
+//    					console.log("Jornada encontrada",self.jornadas[i])
+//    					    					
+//    					for(var j=0;j<self.jornadas[i].jornada.length;j++){
+//    						console.log("------>Entrando  +++++ Juegos",self.jornadas[i].jornada[j])
+//    						if(self.jornadas[i].jornada[j].id == jornadaVar.id){
+//    							console.log("Igualando jornada ",self.jornadaEdit)
+//    							self.jornadas[i].jornada[j] = self.jornadaEdit;
+//    							break;
+//    						}
+//    						
+//    					}
+//    					break;
+//    				}			
+//    			}
+//    		 }
              
              
-             return d;
-         },
-         function(errResponse){
-             console.error('[addGoles] Error while addGoles()');
-         }
-     );
-     return null;
+//        va queurn null;
 		 
 	 }
+	function deletedGol(jugador,idEquipo) {
+		
+		var indexJ =  self.jornadaEdit.golesJornada.indexOf(jugador);
+		
+		console.log(indexJ)
+		self.jornadaEdit.golesJornada[indexJ].deleted = 1;
+		
+		if(self.jornadaEdit.idEquipoLocal == idEquipo){
+			self.jornadaEdit.golesLocal = self.jornadaEdit.golesLocal -1;
+		}
+		if(self.jornadaEdit.idEquipoVisita == idEquipo){
+			self.jornadaEdit.golesVisita = self.jornadaEdit.golesVisita -1;
+		}
+		
+		
+	}
+	 
+//	 function addImagen(idEquipo,jornadaVar,img) {
+//		 
+//		 TorneoLMService.addImagen(idEquipo,jornadaVar.id,jornadaVar.idJornada,img)
+//         .then(
+//         function(d) {
+//            
+//             
+//             console.log("TorneoLMService-addImagen]:",d)
+//             
+//             getJornada(jornadaVar.idJornada,jornadaVar.id,jornadaVar.idEquipoLocal,jornadaVar.idEquipoVisita)
+//             
+//             
+//             return d;
+//         },
+//         function(errResponse){
+//             console.error('[addGoles] Error while addGoles()');
+//         }
+//     );
+//     return null;
+//		 
+//	 }
+    
+	function addImagen(idEquipo,jornadaVar,img) {	           
+            
+            console.log("TorneoLMService-addImagen]:")
+            
+            //getJornada(jornadaVar.idJornada,jornadaVar.id,jornadaVar.idEquipoLocal,jornadaVar.idEquipoVisita)
+            
+            if(self.jornadaEdit.imagenes == null ){
+            	var imagenes = [];
+            	
+            	self.jornadaEdit.imagenes = imagenes; 
+            }
+            var imgO = new Object();
+            imgO.img = img;
+            self.jornadaEdit.imagenes.push(imgO);
+            
+            console.log("TorneoLMService-addImagen]:",self.jornadaEdit)
+		 
+	 }
+	
+	
+	function guardarJornada(jornadaVar) {	           
+        
+		console.log("Jornada a editar]:",self.divisionSelect)
+			 TorneoLMService.guardarJornada(jornadaVar,self.divisionSelect.id)
+		      .then(
+		      function(d) {
+		         
+		          
+		          console.log("TorneoLMService-guardarJornada]:",d)
+		          if(d.status == 0){
+			          self.tablaGeneral = d.data
+			          getJornadas();
+		          }
+		          
+		         // getJornada(jornadaVar.idJornada,jornadaVar.id,jornadaVar.idEquipoLocal,jornadaVar.idEquipoVisita)
+		          
+		          
+		          return d;
+		      },
+		      function(errResponse){
+		          console.error('[guardarJornada] Error while addGoles()');
+		      }
+		  );
+		 return null;
+	 
+	}
+	
 	 function buscarDivisiones() {
 			EquipoService.buscarDivisiones().then(function(d) {
 				console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",d)

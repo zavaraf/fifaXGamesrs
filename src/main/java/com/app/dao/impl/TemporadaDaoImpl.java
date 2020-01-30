@@ -95,6 +95,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		
 		torneo.setTablaGeneral(getTablaGeneral(idTemporada, idTorneo));
 		torneo.setGolesTorneo(getGolesTorneo(idTorneo));
+		torneo.setJornadas(getJornadas(idTemporada, idTorneo, 1));
 		
 		return torneo;
 		
@@ -751,7 +752,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 			String idEquipoLocal,
 			String idEquipoVisita) {
 		List<GolesJornadas> golesList = new ArrayList<GolesJornadas>();
-		String query ="  select equipos.idEquipo, " +
+		String query ="  select equipos.idEquipo,golesjornadas.id, " +
 				"  equipos.nombreEquipo, " +
 				"  persona.idPersona, " +
 				"  persona.sobrenombre, " +
@@ -770,6 +771,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
                             throws SQLException {
                         
                     	GolesJornadas goles = new GolesJornadas();
+                    	goles.setId(rs.getInt("id"));
                     	goles.setIdEquipo(rs.getInt("idEquipo"));
                     	goles.setIdPersona(rs.getInt("idPersona"));
                     	goles.setNombreCompleto(rs.getString("NombreCompleto"));
@@ -910,6 +912,41 @@ public class TemporadaDaoImpl implements TemporadaDao {
 
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(idJornada, id, idJugador, idEquipo);
+
+		System.out.println(storedProcResult);
+
+		HashMap<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("status", storedProcResult.get("isError").toString());
+		mapa.put("mensaje", storedProcResult.get("message").toString());
+		System.out.println(mapa);
+
+		return mapa;
+	}
+	
+	public HashMap<String, String> addResultJornada(int idTorneo,int idTemporada,String jornada) {
+
+		System.out.println("----->registrarJornada]:" + idTorneo+",idEqupo]:"+idTemporada+",id]:"+idTemporada+",idJonada]:");
+		String query = "registrarJornada";
+
+		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
+
+		// Sql parameter mapping
+		SqlParameter jsonVar = new SqlParameter("json", Types.VARCHAR);
+		SqlParameter nombreTorneoID = new SqlParameter("nombreTorneo", Types.VARCHAR);
+		SqlParameter idTemporadaVar = new SqlParameter("idTemporada", Types.INTEGER);
+		
+		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
+		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
+
+		SqlParameter[] paramArray = { jsonVar, nombreTorneoID,idTemporadaVar,
+				isError, message };
+
+		myStoredProcedure.setParameters(paramArray);
+		myStoredProcedure.compile();
+
+		// Call stored procedure
+		Map storedProcResult = myStoredProcedure.execute(jornada, "nombre", 1);
 
 		System.out.println(storedProcResult);
 
@@ -1160,5 +1197,6 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	 return equiposList;
 		
 	}
+
 
 }
