@@ -10,6 +10,8 @@ public class Jornada {
 	private int activa;
 	private int cerrada;
 	private int numeroJornada;
+	private String nombreJornada;
+	private int tipoJornada;
 	private int idEquipoLocal;
 	private String nombreEquipoLocal;
 	private int idEquipoVisita;
@@ -110,6 +112,18 @@ public class Jornada {
 	}
 	public void setImgVisita(String imgVisita) {
 		this.imgVisita = imgVisita;
+	}
+	public String getNombreJornada() {
+		return nombreJornada;
+	}
+	public void setNombreJornada(String nombreJornada) {
+		this.nombreJornada = nombreJornada;
+	}
+	public int getTipoJornada() {
+		return tipoJornada;
+	}
+	public void setTipoJornada(int tipoJornada) {
+		this.tipoJornada = tipoJornada;
 	}
 	
 	

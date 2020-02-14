@@ -146,6 +146,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
                         player.setRaiting(rs.getInt("raiting"));
                         player.setPrestamo(rs.getInt("prestamo"));
                         player.setLink(rs.getString("link"));
+                        player.setEquipos_idEquipo(rs.getInt("Equipos_idEquipo"));
                         Equipo equipo = new Equipo();
                         equipo.setId(rs.getLong("Equipos_idEquipo"));
                         equipo.setNombre(rs.getString("nombreEquipo"));

@@ -15,10 +15,20 @@
 <!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
 <!-- 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+<!-- 		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<!-- 		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script> -->
+<!-- 		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
+<%--   <script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script> --%>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
@@ -52,6 +62,10 @@
   </style>
 </head>
 <body ng-app="myApp" >
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+<script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script>
+<!-- <script src="bower_components/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js"></script> -->
       <script src="<c:url value='/static/js/controller/torneoLM_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
       
@@ -62,7 +76,7 @@
 	
 	<!-- Modal -->
 		<div class="modal fade " id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+		  <div class="modal-dialog  modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        
@@ -70,6 +84,7 @@
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
+
 		      <div class="modal-body">
 		      <sec:authentication var="user" property="principal" />
 		      <div class="alert alert-warning text-center" role="alert">
@@ -78,9 +93,11 @@
 		        <blockquote class="blockquote text-center">
 					  <p class="mb-0">RESUMEN</p>
 				</blockquote>
-		        <div class="container text-center" >
-				  <div class="row">
-				    <div class="col">
+		       <div class="table-responsive-sm  text-center">
+<!-- 		        <div class="container text-center" > -->
+		        <table class="table text-center ">
+				  <tr >
+				    <td >
 				      
 				    <blockquote class="blockquote ">
 				    <img src="{{ctrl.jornadaEdit.imgLocal}}" style="width: 30%;"class="card-img-center" alt="...">
@@ -104,12 +121,14 @@
 					   
 			            <label for="recipient-name" class="col-form-label">Add Gol:</label>
 			           
-			            
-			            <select ng-model="selectedPlayer"
-                            ng-options="pla as pla.nombreCompleto for pla in ctrl.players | orderBy : 'nombreCompleto' track by pla.id"
-                            class="custom-select input-sm">
-                            <option value="">--Elige opcion--</option>
-                         </select>
+			           <div  ng-dropdown-multiselect="" options="example9data" selected-model="example9model" extra-settings="example9settings" translation-texts="example5customTexts"></div>
+			           
+			           
+<!-- 			            <select ng-model="selectedPlayer" -->
+<!--                             ng-options="pla as pla.nombreCompleto for pla in ctrl.players | orderBy : 'nombreCompleto' track by pla.id" -->
+<!--                             class="custom-select input-sm"> -->
+<!--                             <option value="">--Elige opcion--</option> -->
+<!--                          </select> -->
 			            
 <!-- 			            <select class="custom-select" id="inputGroupSelect01"> -->
 <!-- 						    <option ng-repeat="pla in ctrl.players | orderBy : 'nombreCompleto'" >{{pla.nombreCompleto}}</option>   -->
@@ -117,7 +136,7 @@
 						<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 				            <button type="button" class="btn btn-primary btn-sm" 
 				            ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
-				            ng-click= "ctrl.addGoles(selectedPlayer,ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit)">Agregar</button>
+				            ng-click= "ctrl.addGoles(example9model[0],ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit)">Agregar</button>
 					   	</sec:authorize>
 					   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >Cancelar</button>
 				   		
@@ -125,6 +144,7 @@
 					  </div>
 					</div>
 					<div class="collapse" id="collapseImg">
+					
 					  <div class="card card-body">
 					    <div class="form-group">
 			            <label for="recipient-name" class="col-form-label">Add Img:</label>
@@ -137,6 +157,7 @@
 				   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
 			          </div>
 					  </div>
+					
 					</div>
 				    
 				    <footer class="bg-light text-right  ">
@@ -151,14 +172,14 @@
 <!-- 					  <footer class="blockquote-footer text-right {{ p.isAutogol == 1 ? 'alert alert-danger' : ''}} " ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer> -->
 					  
 					</blockquote>
-				    </div>
-				    <div class="col-2">				      
+				    </td>
+				    <td >				      
 				      <blockquote class="blockquote ">
 					  <p class="mb-0">{{ctrl.jornadaEdit.golesLocal}}-{{ctrl.jornadaEdit.golesVisita}}</p>
 					  </blockquote>
-				    </div>
+				    </td>
 				   
-				    <div class="col">
+				    <td >
 				      
 				      <blockquote class="blockquote ">
 				      <img src="{{ctrl.jornadaEdit.imgVisita}}" style="width: 30%;"class="card-img-center" alt="...">
@@ -179,15 +200,19 @@
 					  <div class="card card-body">
 					    <div class="form-group">
 			            <label for="recipient-name" class="col-form-label">Add Gol:</label>
-			            <select ng-model="selectedPlayerV"
-                            ng-options="pla as pla.nombreCompleto for pla in ctrl.players | orderBy : 'nombreCompleto' track by pla.id"
-                            class="custom-select input-sm">
-                            <option value="">--Elige opcion--</option>
-                         </select>
+			            
+			            <div ng-dropdown-multiselect="" options="example9data" selected-model="example9modelV" extra-settings="example9settings" translation-texts="example5customTexts"></div>
+			            
+<!-- 			            <select ng-model="selectedPlayerV" -->
+<!--                             ng-options="pla as pla.nombreCompleto for pla in ctrl.players | orderBy : 'nombreCompleto' track by pla.id" -->
+<!--                             class="custom-select input-sm"> -->
+<!--                             <option value="">--Elige opcion--</option> -->
+<!--                          </select> -->
+                         
                          <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 			            	<button type="button" class="btn btn-primary btn-sm"
 			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
-			            	ng-click= "ctrl.addGoles(selectedPlayerV,ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit)" >Agregar</button>
+			            	ng-click= "ctrl.addGoles(example9modelV[0],ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit)" >Agregar</button>
 			            </sec:authorize>
 				   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample" >Cancelar</button>
 			          </div>
@@ -219,8 +244,9 @@
 					
 					  
 					</blockquote>
-				    </div>
-				  </div>
+				    </td>
+				  </tr>
+				</table>
 				</div>
 <!-- 		        <img src="https://i.imgur.com/qHTsbGs.png" class="img-fluid" alt="Responsive image"> -->
 <!-- 		        <img src="https://i.imgur.com/Pwac2HN.png" class="img-fluid" alt="Responsive image"> -->
@@ -238,7 +264,7 @@
 			
 		<div id="jugadores">
 			<!--  Div verde <div class="formcontainer"> -->
-			
+		
 			<ul class="nav nav-tabs" role="tablist">
 			    <li class="nav-item" ng-repeat="div in ctrl.getTorneos()">
 			      <a class="nav-link" ng-click= "ctrl.jornadaSelect = [];ctrl.getInitTorneo(div);ctrl.getGruposTorneo(div);" data-toggle="tab" >{{div.nombre}}</a>
@@ -348,11 +374,12 @@
 					
 		    			<div class="row">
 		    			<div class="scrollmenu">
-						  <a href="" ng-click="ctrl.setJornadaActual(e)" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada'" >Jornada {{e.numeroJornada}}</a>
+						  <a href="" ng-click="ctrl.setJornadaActual(e)" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada'" >
+						  {{e.tipoJornada == 0 ? ("Jornada "+ e.numeroJornada) : e.nombreJornada }} </a>
 						</div>
 							<div class="col"  ng-repeat="e in ctrl.jornadaSelect | orderBy : 'numeroJornada'" >
 							<blockquote class="blockquote text-center">
-								  <p class="mb-0">Jornada {{e.numeroJornada}} <a ng-show="e.cerrada==1">Cerrada</a></p>
+								  <p class="mb-0">{{e.tipoJornada == 0 ? ("Jornada "+ e.numeroJornada) : e.nombreJornada }} <a ng-show="e.cerrada==1">Cerrada</a></p>
 								  
 							</blockquote>
 							<table class="table table-sm table-hover table-dark table-responsive ">

@@ -8,6 +8,8 @@ public class Jornadas {
 	private int activa;
 	private int cerrada;
 	private int numeroJornada;
+	private int tipoJornada;
+	private String nombreJornada;
 	
 	private List<Jornada> jornada;
 
@@ -49,6 +51,22 @@ public class Jornadas {
 
 	public void setCerrada(int cerrada) {
 		this.cerrada = cerrada;
+	}
+
+	public int getTipoJornada() {
+		return tipoJornada;
+	}
+
+	public void setTipoJornada(int tipoJornada) {
+		this.tipoJornada = tipoJornada;
+	}
+
+	public String getNombreJornada() {
+		return nombreJornada;
+	}
+
+	public void setNombreJornada(String nombreJornada) {
+		this.nombreJornada = nombreJornada;
 	}
 	
 	
