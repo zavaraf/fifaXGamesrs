@@ -64,7 +64,110 @@
    <body class="ng-cloak">
       <div class="container  container-fluid" ng-controller="AdminTorneoLMController as ctrl">
       
-      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      
+      <!--       Modal Liguilla -->
+      <div class="modal fade bd-example-modal-lg" id="ModalLiguilla" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle">Fase Finales</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        Mi modal Para Fases finales
+<!-- 		        ng-repeat="tor in ctrl.getTorneos()" -->
+		        
+		        <select ng-model="selectedTorneoModal" 
+                    ng-options="pla as pla.nombre for pla in ctrl.getTorneos()  track by pla.id"
+                    class="custom-select input-sm">
+                    <option value="">--Torneo--</option>
+                 </select>
+                 <select ng-model="selectedFaseModal" 
+                    ng-options="pla as pla.nombre for pla in ctrl.CatLiguilla  track by pla.id"
+                    class="custom-select input-sm">
+                    <option value="">--Fase--</option>
+                 </select>
+                <div class="form-check form-check-inline">
+				  <input class="form-check-input" type="radio" ng-model="ctrl.confLiguilla" name="inlineRadioOptionsLiguilla" id="inlineRadioLiguilla1" ng-value=1>
+				  <label class="form-check-label" for="inlineRadioJ1">Solo Ida</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" type="radio" ng-model="ctrl.confLiguilla" name="inlineRadioOptionsLiguilla" id="inlineRadioLiguilla2" ng-value=2>
+				  <label class="form-check-label" for="inlineRadioJ2">Ida y Vuelta</label>
+				</div>
+				<div ng-dropdown-multiselect="" options="example9data" selected-model="equiposLiguilla" extra-settings="example9settings"></div>
+				<button type="button"  class="btn btn-primary" ng-click="ctrl.generarPartidosFinales(equiposLiguilla,selectedFaseModal.nombre,selectedFaseModal.id)" >Generar Partidos</button>
+				<div  class="list-group" >
+				  <span   class="list-group-item list-group-item-action">
+				  	<div class="container" >
+					  <div  class="row text-center">
+					    <div ng-repeat="e in equiposLiguilla " class="col-sm-2 ">
+					    
+					    <img src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
+					      {{e.nombre}}
+					    </div>
+					  </div>
+					</div>
+				  </span>
+			     </div>
+			     
+			        
+			     <div class="row" >
+                	
+		    		<div class="col" >
+					
+		    			<div class="row"   >
+		    			
+							<div class="col-lg-6" ng-repeat="e in ctrl.jornadasLiguilla ">
+							<div class="row"   >
+								<div class="col" >
+									<blockquote class="blockquote text-center">
+										  <p class="mb-0">{{e.nombreJornada}}</p>
+										  
+									</blockquote>
+								</div>
+							</div>
+							
+							<table class="table table-sm table-hover table-dark">
+		                	
+		                      <tbody>
+		                          <tr  ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
+							  	data-toggle="modal" data-target="#exampleModalScrollable">
+		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
+		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
+		                              <td><img src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td>{{jor.golesLocal}}</td>
+		                              <td>-</td>
+		                              <td>{{jor.golesVisita}}</td>
+		                              <td><img src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+		                             
+		                          </tr>
+		                      </tbody>
+		    			</table>
+							</div>
+						</div>
+					
+						
+		    		</div> 
+	    		</div> 
+			     
+			     
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		        <button type="button"  class="btn btn-primary"ng-click="ctrl.addJuegosLiguilla(ctrl.jornadasLiguilla,selectedTorneoModal)" data-dismiss="modal">Guardar</button>
+		      </div>
+		    </div>
+		  </div>
+		  
+		</div>
+      
+<!--       Modal Admin torneo -->
+      <div class="modal fade bd-example-modal-lg" id="ModalTorneo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -199,8 +302,11 @@
 			    <li class="nav-item dropdown">
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Agregar torneo</a>
 				    <div class="dropdown-menu">
-				      <a class="dropdown-item" ng-click="ctrl.buscarTodos()" data-toggle="modal" data-target=".bd-example-modal-lg" href="">AgregarTorneo</a>
+				      <a class="dropdown-item" ng-click="ctrl.buscarTodos()" data-toggle="modal" data-target="#ModalTorneo" href="">AgregarTorneo</a>
+				      <a class="dropdown-item" ng-click="ctrl.buscarTodos()"  data-toggle="modal" data-target="#ModalLiguilla" href="">Liguilla</a>
 				    </div>
+				    
+				    
 				  </li>   
 			 </ul>
 	        <div class="formcontainer"	>
@@ -245,7 +351,7 @@
 							<div class="row"   >
 								<div class="col" >
 									<blockquote class="blockquote text-center">
-										  <p class="mb-0">Jornada {{e.numeroJornada}}</p>
+										  <p class="mb-0">{{e.tipoJornada == 0 ? ("Jornada "+ e.numeroJornada) : e.nombreJornada }} </a></p>
 										  
 									</blockquote>
 								</div>

@@ -93,6 +93,41 @@ public class TemporadaServiceImpl implements TemporadaService{
 			
 			return grupos;
 		}
+	
+	public ResponseData addJuegosLiguilla(int idTemporada,int idTorneo, List<Jornadas> jornadas){
+		
+		
+		//Torneo torneoCompleto = getTorneoGeneral(idTemporada, idTorneo);
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		ResponseData response = new ResponseData();
+		
+		Gson gson = new Gson();
+		
+		String json = gson.toJson(jornadas);
+		
+		
+
+		map = temporadaDao.addJuegosLiguilla(idTemporada, idTorneo,json);
+		
+		
+
+		if (map == null || map.isEmpty()) {
+			response.setStatus(CodigoResponse.ERROR.getCodigo());
+			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+		} else {
+			List<Jornadas> jornadasList = temporadaDao.getJornadas(idTemporada,idTorneo,0);
+			String status = map.get("status");
+
+			response.setStatus(Integer.parseInt(status));
+			response.setMensaje(map.get("mensaje"));
+			response.setData(jornadasList);
+		
+		}
+		return response;
+		
+		
+	}
 	public List<GolesJornadas> getGolesJornadas(String idJornada,String id,
 		String idEquipoLocal,
 		String idEquipoVisita){

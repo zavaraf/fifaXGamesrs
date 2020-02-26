@@ -23,6 +23,8 @@ public interface TemporadaDao {
 	
 	List<Jornadas> getArmarJornadasInicial(int idTemporada, int idDivision);
 	
+	HashMap<String, String> addJuegosLiguilla(int idTemporada, int idTorneo, String jornadas);
+	
 	HashMap<String, String> addGol(int idJugador,int idEquipo,int id,int idJornada);
 	HashMap<String, String> addResultJornada(int id,int idJornada,String jornada);
 	

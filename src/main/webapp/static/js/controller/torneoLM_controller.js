@@ -157,7 +157,8 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	 
 	 function findPlayersJornada(idEquipo,idEquipoVisita){
 		 UserService.findPlayersByIdEquipoJornada(idEquipo,idEquipoVisita).then(function(d) {
-				console.log("[TorneoLMService] - Players]:",JSON.stringify(d));
+//				console.log("[TorneoLMService] - Players]:",JSON.stringify(d));
+			 console.log("[TorneoLMService] - Players]:",d);
 				self.players = d;
 				$scope.example9data = d;
 			}, function(errResponse) {
@@ -475,7 +476,7 @@ function addGoles(jugador,idEquipo,jornadaVar) {
 		    }
 	 
 	 function getTablaGrupo(grupo){
-		 console.log("Gurpo----",grupo)
+		 //console.log("Gurpo----",grupo)
 		 
 		 var tablaGeneralGrupo = [];
 		 

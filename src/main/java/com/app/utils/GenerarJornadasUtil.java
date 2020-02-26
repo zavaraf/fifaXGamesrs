@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import com.app.enums.TipoTorneoEnum;
 import com.app.modelo.Equipo;
 import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
+import com.app.modelo.Torneo;
 
 public class GenerarJornadasUtil {
 	
@@ -456,5 +458,10 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 	    }
 
 	}
+	
+	
+	
+	
+	
 
 }

@@ -243,6 +243,30 @@ public class TemporadaController {
 			}
 			return new ResponseEntity<List<Grupos>>(listTemporada, HttpStatus.OK);
 		}
+	 
+	 @RequestMapping(value="/lm/addJuegosLiguilla/{idTemporada}/{idTorneo}",method = RequestMethod.POST,
+				headers="Accept=application/json")
+		@ResponseBody
+		public ResponseEntity<ResponseData> getArmarJornadasFinales(
+				@PathVariable("idTemporada") int idTemporada,
+				@PathVariable("idTorneo") int idTorneo,
+				@RequestBody List<Jornadas> jornadas
+				){
+			
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+			 System.out.println( "idTemporada:"+idTemporada+" idTorneo]:"+idTorneo);
+			 response = temporadaService.addJuegosLiguilla(idTemporada,idTorneo,jornadas);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
 
 	 
 	 @RequestMapping(value="/lm/addJornadas/{idTemporada}/{idDivision}",
