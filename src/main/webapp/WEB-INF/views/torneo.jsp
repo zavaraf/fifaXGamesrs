@@ -109,10 +109,10 @@
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 					    +Gol
 					  </button>
-					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
-					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample">
-					    +Img
-					  </button>
+<%-- 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"  --%>
+<!-- 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample"> -->
+<!-- 					    +Img -->
+<!-- 					  </button> -->
 					 </sec:authorize>
 					</p>
 					<div class="collapse" id="collapseExample">
@@ -143,22 +143,22 @@
 			          </div>
 					  </div>
 					</div>
-					<div class="collapse" id="collapseImg">
+<!-- 					<div class="collapse" id="collapseImg"> -->
 					
-					  <div class="card card-body">
-					    <div class="form-group">
-			            <label for="recipient-name" class="col-form-label">Add Img:</label>
-			            <input ng-model="selectedImg" type="text" class="form-control" id="recipient-name">
-			            <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
-			            	<button type="button" class="btn btn-primary btn-sm" 
-			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
-			            	ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit,selectedImg)" >Agregar</button>
-			            </sec:authorize>
-				   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
-			          </div>
-					  </div>
+<!-- 					  <div class="card card-body"> -->
+<!-- 					    <div class="form-group"> -->
+<!-- 			            <label for="recipient-name" class="col-form-label">Add Img:</label> -->
+<!-- 			            <input ng-model="selectedImg" type="text" class="form-control" id="recipient-name"> -->
+<%-- 			            <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')"> --%>
+<!-- 			            	<button type="button" class="btn btn-primary btn-sm"  -->
+<%-- 			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"  --%>
+<!-- 			            	ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit,selectedImg);selectedImg=''" >Agregar</button> -->
+<%-- 			            </sec:authorize> --%>
+<!-- 				   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample">Cancelar</button> -->
+<!-- 			          </div> -->
+<!-- 					  </div> -->
 					
-					</div>
+<!-- 					</div> -->
 				    
 				    <footer class="bg-light text-right  ">
 					  
@@ -190,10 +190,10 @@
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
 					    +Gol
 					  </button>
-					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
-					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg1" aria-expanded="false" aria-controls="collapseExample1">
-					    +Img
-					  </button>
+<%-- 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"  --%>
+<!-- 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg1" aria-expanded="false" aria-controls="collapseExample1"> -->
+<!-- 					    +Img -->
+<!-- 					  </button> -->
 					  </sec:authorize>
 					</p>
 					<div class="collapse" id="collapseExample1">
@@ -218,20 +218,20 @@
 			          </div>
 					  </div>
 					</div>
-					<div class="collapse" id="collapseImg1">
-					  <div class="card card-body">
-					    <div class="form-group">
-			            <label for="recipient-name" class="col-form-label">Add Img:</label>
-			            <input ng-model="selectedImg1"type="text" class="form-control" id="recipient-name">
-			            <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
-			            	<button type="button" class="btn btn-primary btn-sm"
-			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
-			            	ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit,selectedImg1)"  >Agregar</button>
-			            </sec:authorize>
-				   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg1" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
-			          </div>
-					  </div>
-					</div>
+<!-- 					<div class="collapse" id="collapseImg1"> -->
+<!-- 					  <div class="card card-body"> -->
+<!-- 					    <div class="form-group"> -->
+<!-- 			            <label for="recipient-name" class="col-form-label">Add Img:</label> -->
+<!-- 			            <input ng-model="selectedImg1"type="text" class="form-control" id="recipient-name"> -->
+<%-- 			            <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')"> --%>
+<!-- 			            	<button type="button" class="btn btn-primary btn-sm" -->
+<%-- 			            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"  --%>
+<!-- 			            	ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit,selectedImg1);selectedImg1=''"  >Agregar</button> -->
+<%-- 			            </sec:authorize> --%>
+<!-- 				   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg1" aria-expanded="false" aria-controls="collapseExample">Cancelar</button> -->
+<!-- 			          </div> -->
+<!-- 					  </div> -->
+<!-- 					</div> -->
 					
 					<footer class="bg-light text-left  ">
 					  
@@ -246,7 +246,39 @@
 					</blockquote>
 				    </td>
 				  </tr>
+				 
+<!-- 				 <tr > -->
+<!-- 				   <td> -->
+<!-- 				   </td> -->
+<!-- 				   <td> -->
+					 
+<!-- 				   </td> -->
+<!-- 				   <td> -->
+<!-- 				   </td> -->
+<!-- 				 </tr>  -->
+
 				</table>
+				
+			     <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample1">
+				 	   +Img
+				 </button>
+				 
+				 <div class="collapse" id="collapseImg" style="margin: 0 auto; width:70%;">
+				  <div class="card card-body">
+				    <div class="form-group">
+		            <label for="recipient-name" class="col-form-label">Add Img:</label>
+		            <input ng-model="selectedImg1"type="text" class="form-control" id="recipient-name">
+		            <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+		            	<button type="button" class="btn btn-primary btn-sm"
+		            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+		            	ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit,selectedImg1);selectedImg1=''"  >Agregar</button>
+		            </sec:authorize>
+			   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
+		          </div>
+				  </div>
+				</div>
+				
 				</div>
 <!-- 		        <img src="https://i.imgur.com/qHTsbGs.png" class="img-fluid" alt="Responsive image"> -->
 <!-- 		        <img src="https://i.imgur.com/Pwac2HN.png" class="img-fluid" alt="Responsive image"> -->
@@ -254,7 +286,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary"  data-dismiss="modal" 
+		        <button type="button" class="btn btn-primary"  data-dismiss="modal"  
 		        ng-model="status" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 		         ng-click="status = ctrl.guardarJornada(ctrl.jornadaEdit)">Guardar</button>
 		      </div>
