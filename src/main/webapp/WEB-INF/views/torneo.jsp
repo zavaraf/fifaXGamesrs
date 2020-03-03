@@ -100,7 +100,7 @@
 				    <td >
 				      
 				    <blockquote class="blockquote ">
-				    <img ng-src="{{ctrl.jornadaEdit.imgLocal}}" style="width: 30%;"class="card-img-center" alt="...">
+				    <img src="{{ctrl.jornadaEdit.imgLocal}}" style="width: 30%;"class="card-img-center" alt="...">
 					  <p class="mb-0">{{ctrl.jornadaEdit.nombreEquipoLocal}} </p>
 				    
 			       	<p>
@@ -182,7 +182,7 @@
 				    <td >
 				      
 				      <blockquote class="blockquote ">
-				      <img ng-src="{{ctrl.jornadaEdit.imgVisita}}" style="width: 30%;"class="card-img-center" alt="...">
+				      <img src="{{ctrl.jornadaEdit.imgVisita}}" style="width: 30%;"class="card-img-center" alt="...">
 					  <p class="mb-0">{{ctrl.jornadaEdit.nombreEquipoVisita}}</p>
 				      <p>
 				      <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
@@ -246,6 +246,17 @@
 					</blockquote>
 				    </td>
 				  </tr>
+				 
+<!-- 				 <tr > -->
+<!-- 				   <td> -->
+<!-- 				   </td> -->
+<!-- 				   <td> -->
+					 
+<!-- 				   </td> -->
+<!-- 				   <td> -->
+<!-- 				   </td> -->
+<!-- 				 </tr>  -->
+
 				</table>
 				
 			     <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
@@ -271,11 +282,11 @@
 				</div>
 <!-- 		        <img src="https://i.imgur.com/qHTsbGs.png" class="img-fluid" alt="Responsive image"> -->
 <!-- 		        <img src="https://i.imgur.com/Pwac2HN.png" class="img-fluid" alt="Responsive image"> -->
-		        <img  ng-repeat="img in ctrl.jornadaEdit.imagenes"   ng-src="{{img.img}}" class="img-fluid" alt="Responsive image">
+		        <img ng-repeat="img in ctrl.jornadaEdit.imagenes" src="{{img.img}}" class="img-fluid" alt="Responsive image">
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary"  data-dismiss="modal" 
+		        <button type="button" class="btn btn-primary"  data-dismiss="modal"  
 		        ng-model="status" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 		         ng-click="status = ctrl.guardarJornada(ctrl.jornadaEdit)">Guardar</button>
 		      </div>
@@ -295,7 +306,7 @@
 	        
             	<div class="panel panel-default">
                     <div class="panel-heading">
-                        <img ng-src="<c:url value='/imagenes/LigaMundialXGamers.png'/>" class="rounded mx-auto d-block" style="width: 200px; height: 200px;" alt="Cinque Terre">
+                        <img src="<c:url value='/imagenes/LigaMundialXGamers.png'/>" class="rounded mx-auto d-block" style="width: 200px; height: 200px;" alt="Cinque Terre">
                         
 <!--                         https://i.imgur.com/iOfwGBr.png -->
 <!--                        <span class="lead">Tabla General</span> -->
@@ -322,7 +333,7 @@
 		                      </thead>
 		                      <tbody>
 		                          <tr ng-repeat="e in ctrl.tablaGeneral.tablaGeneral">
-		                          	  <td><img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
+		                          	  <td><img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
 		                              <td><a>{{e.nombreEquipo}}</a></td>
 		                              <td><span ng-bind="e.pj"></span></td>
 		                              <td><span ng-bind="e.pg"></span></td>
@@ -355,7 +366,7 @@
 		                      </thead>
 		                      <tbody>
 		                          <tr ng-repeat="e in ctrl.getTablaGrupo(grupo)">
-		                          	  <td><img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
+		                          	  <td><img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
 		                              <td><a>{{e.nombreEquipo}}</a></td>
 		                              <td><span ng-bind="e.pj"></span></td>
 		                              <td><span ng-bind="e.pg"></span></td>
@@ -380,7 +391,7 @@
 		                      </thead>
 		                       <tbody>
 		                          <tr ng-repeat="e in ctrl.tablaGeneral.golesTorneo">
-		                          	  <td><img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
+		                          	  <td><img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
 		                              <td><a>{{e.goles}}</a></td>
 		                              <td><a>{{e.sobrenombre}}</a></td>
 		                              
@@ -406,21 +417,52 @@
 							<table class="table table-sm table-hover table-dark table-responsive ">
 		                	
 		                      <tbody>
-		                          <tr ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+		                          <tr  ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
 							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
 							  	data-toggle="modal" data-target="#exampleModalScrollable">
 		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
 		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
-		                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td><img src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
 		                              <td>{{jor.golesLocal}}</td>
 		                              <td>-</td>
 		                              <td>{{jor.golesVisita}}</td>
-		                              <td ><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+		                              <td><img src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
 		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
 		                             
 		                          </tr>
 		                      </tbody>
 		    			</table>
+<!-- 							<div  class="list-group"> -->
+<!-- 							  <span  ng-repeat="jor in e.jornada" class="list-group-item list-group-item-action"> -->
+<!-- 							  	<div class="container"  -->
+<!-- 							  	ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita); -->
+<!-- 							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  "  -->
+<!-- 							  	data-toggle="modal" data-target="#exampleModalScrollable"> -->
+<!-- 								  <div class="row text-center"> -->
+<!-- 								    <div class="col " > -->
+<!-- 								      {{jor.nombreEquipoLocal}}  -->
+<!-- 								    </div> -->
+<!-- 								    <div class="col-dm" > -->
+<!-- 								    <img src="https://cdn.sofifa.org/teams/2/dark/241@2x.png" style="max-width:50%;width:auto;height:auto; class="rounded float-left" alt="...">  -->
+<!-- 								    </div> -->
+<!-- 								    <div class="col-sm"> -->
+<!-- 								      {{jor.golesLocal}}-{{jor.golesVisita}} -->
+<!-- 								    </div> -->
+<!-- 								    <div class="col-dm" > -->
+<!-- 								    <img src="https://cdn.sofifa.org/teams/2/dark/241@2x.png" style="max-width:50%;width:auto;height:auto; class="rounded float-left" alt="...">  -->
+<!-- 								    </div> -->
+<!-- 								    <div class="col"> -->
+								    
+<!-- 								      {{jor.nombreEquipoVisita}} -->
+<!-- 								    </div> -->
+<!-- 								  </div> -->
+<!-- 								</div> -->
+<!-- 							  </span> -->
+							 
+						
+							
+							
+<!-- 							</div> -->
 							</div>
 						</div>
 					
