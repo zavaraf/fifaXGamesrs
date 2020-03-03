@@ -52,18 +52,23 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
         );
     }
     function fetchAllPlayers(){
-        UserService.fetchAllPlayers()
-            .then(
-            function(d) {
-                self.players = d;
-                console.log("[user_controller] AllPlayers]:",self.players)
-               // $scope.tableParams = new NgTableParams({}, { dataset: self.players});  
-//                $scope.configPages = configPages()
-            },
-            function(errResponse){
-                console.error('[user_controller] Error while fetching fetchAllPlayers');
-            }
-        );
+//    	if (CONFIG.JUGADORES == null){
+	        UserService.fetchAllPlayers()
+	            .then(
+	            function(d) {
+	                self.players = d;
+//	                CONFIG.JUGADORES = d;
+	                console.log("[user_controller] AllPlayers]:",self.players)
+	               // $scope.tableParams = new NgTableParams({}, { dataset: self.players});  
+	//                $scope.configPages = configPages()
+	            },
+	            function(errResponse){
+	                console.error('[user_controller] Error while fetching fetchAllPlayers');
+	            }
+	        );
+//    	}else{
+//    		self.players = CONFIG.JUGADORES;
+//    	}
     }
  
     function createUser(user){
@@ -78,7 +83,18 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
     function createPlayer(player){
         UserService.createPlayer(player)
             .then(
-            fetchAllPlayers,
+            		 function(d) { 
+       		          
+       		          console.log("UserControler-createPlayer]:",d)
+       		          if(d.status == 0){
+       			          self.players = d.data;
+//       			          CONFIG.JUGADORES = d;
+       			          
+       		          }
+       		          
+       		          
+       		          return d;
+       		      },
             function(errResponse){
                 console.error('[user_controller] Error while creating User');
             }
@@ -97,7 +113,18 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
     function updatePlayer(player, id){
         UserService.updatePlayer(player, id)
             .then(
-            fetchAllPlayers,
+             function(d) { 
+        		          
+        		          console.log("UserControler-updaePlayer]:",d)
+        		          if(d.status == 0){
+        			          self.players  = d.data;
+//        			          CONFIG.JUGADORES = d;
+        			          
+        		          }
+        		          
+        		          
+        		          return d;
+        		      },
             function(errResponse){
                 console.error('[user_controller] Error while updating User');
             }
@@ -131,7 +158,7 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
         self.player.equipo = equipo
         console.log("[user_controller] Equipo:",equipo+ " Jugador]:",self.player)
         if(self.player.id===null){
-            console.log('[user_controller] Saving New User', self.player);
+            console.log('[user_controller] Saving New Player', self.player);
             createPlayer(self.player);
         }
         else{

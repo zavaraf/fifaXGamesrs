@@ -98,7 +98,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
     function updatePlayer(player, id) {
         var deferred = $q.defer();
         console.log("------> Player Update]",player)
-        $http.put(REST_SERVICE_URI+"player/"+id+"/"+CONFIG.VARTEMPORADA.id, player)
+        $http.post(REST_SERVICE_URI+"playerUpdate/"+id+"/"+CONFIG.VARTEMPORADA.id, player)
             .then(
             function (response) {
                 deferred.resolve(response.data);

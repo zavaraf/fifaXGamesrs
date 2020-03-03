@@ -7,28 +7,7 @@
 <html>
   <head>  
     <title>FIFA XGAMERS</title>  
-    <style>
-      .username.ng-valid {
-          background-color: lightgreen;
-      }
-      .username.ng-dirty.ng-invalid-required {
-          background-color: red;
-      }
-      .username.ng-dirty.ng-invalid-minlength {
-          background-color: yellow;
-      }
- 
-      .email.ng-valid {
-          background-color: lightgreen;
-      }
-      .email.ng-dirty.ng-invalid-required {
-          background-color: red;
-      }
-      .email.ng-dirty.ng-invalid-email {
-          background-color: yellow;
-      }
- 
-    </style>
+   
       
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -83,7 +62,7 @@
 								     <div class="input-group-prepend">
 								       <span class="input-group-text">Monto</span>					       
 								    </div>
-								    <input type="text" ng-model="ctrl.montoOferta" id="montoOfer" class="form-control input-sm" placeholder="Monto" required ng-minlength="3"/>
+								    <input type="text" ng-model="ctrl.montoOferta" id="montoOfer" class="form-control input-sm" placeholder="Monto" />
 								    <label id="montoSeparado" class="form-control input-sm">0</label>
 								 </div>
 								<fieldset disabled> 
@@ -180,7 +159,7 @@
 								     <div class="input-group-prepend">
 								       <span class="input-group-text">Monto</span>					       
 								    </div>
-								    <input type="text" ng-model="ctrl.montoOferta" id="montoOfer" class="form-control input-sm" placeholder="Monto" required ng-minlength="3"/>
+								    <input type="text" ng-model="ctrl.montoOferta" id="montoOfer1" class="form-control input-sm" placeholder="Monto"/>
 								    <label id="montoSeparado" class="form-control input-sm">0</label>
 								 </div>
 								<div class="input-group mb-3 input-group-sm">
@@ -240,7 +219,7 @@
 				</div>
 <!-- 		        <img src="https://i.imgur.com/qHTsbGs.png" class="img-fluid" alt="Responsive image"> -->
 <!-- 		        <img src="https://i.imgur.com/Pwac2HN.png" class="img-fluid" alt="Responsive image"> -->
-		        <img ng-repeat="img in ctrl.jornadaEdit.imagenes" src="{{img.img}}" class="img-fluid" alt="Responsive image">
+<!-- 		        <img ng-repeat="img in ctrl.jornadaEdit.imagenes" src="{{img.img}}" class="img-fluid" alt="Responsive image"> -->
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

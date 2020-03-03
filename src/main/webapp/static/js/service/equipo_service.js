@@ -22,7 +22,7 @@ angular.module('myApp').factory('EquipoService', ['$http', '$q','CONFIG', functi
         $http.get(REST_SERVICE_URI+'buscarTodos/'+idTemporada)
             .then(
             function (response) {
-            	console.log(response.data)
+            	console.log("EquipoService - buscarTodos]",response.data)
                 deferred.resolve(response.data);
             },
             function(errResponse){

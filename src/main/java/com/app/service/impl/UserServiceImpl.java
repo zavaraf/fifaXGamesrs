@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.UserDao;
+import com.app.enums.CodigoResponse;
+import com.app.modelo.ResponseData;
 import com.app.modelo.User;
 import com.app.service.UserService;
 
@@ -88,13 +90,29 @@ public class UserServiceImpl implements UserService {
 			return userDao.findAllPlayers();
 		}
 
-		public void savePlayer(User user,int idTemporada) {
-			userDao.savePlayer(user,idTemporada);			
+		public ResponseData savePlayer(User user,int idTemporada) {
+			userDao.savePlayer(user,idTemporada);
+			
+			ResponseData response = new ResponseData();
+			response.setStatus(CodigoResponse.OK.getCodigo());
+			response.setMensaje(CodigoResponse.OK.getMensaje());
+			response.setData(userDao.findAllPlayers());
+			
+			return response;
 		}
 
-		public void updatePlayer(User currentUser,int idTemporada) {
+		public ResponseData updatePlayer(User currentUser,int idTemporada) {
 			userDao.updatePlayer(currentUser,idTemporada);
 			
+			ResponseData response = new ResponseData();
+			
+			response.setStatus(CodigoResponse.OK.getCodigo());
+			response.setMensaje(CodigoResponse.OK.getMensaje());
+			response.setData(userDao.findAllPlayers());
+			
+			return response;
+					
+					
 		}
 
 		public List<User> findAllPlayersByIdEquipo(long id) {

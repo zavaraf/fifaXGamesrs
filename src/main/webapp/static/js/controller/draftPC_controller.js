@@ -64,6 +64,7 @@ angular.module('myApp')
     	DraftPCService.buscarJugadoresdraft(CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("Jugadores Draft]:",d);
 			self.jugadoresDraft = d;
+			console.log("Jugadores Draft............]:",d);
 		}, function(errResponse) {
 			console.error('Error while fetching Users');
 		});
@@ -109,7 +110,8 @@ angular.module('myApp')
 					self.isError = true;
 					self.Error = d.mensaje;					
 				}else{
-					actualizar();
+					self.jugadoresDraft = d.data;
+					//actualizar();
 				}
 				
 			}, function(errResponse) {
@@ -126,7 +128,8 @@ angular.module('myApp')
 					self.isError = true;
 					self.Error = d.mensaje;					
 				}else{
-					actualizar();
+					self.jugadoresDraft = d.data;
+					//actualizar();
 				}
 				
 			}, function(errResponse) {
@@ -149,7 +152,8 @@ angular.module('myApp')
 				self.isError = true;
 				self.Error = d.mensaje;					
 			}else{
-				actualizar();
+				self.jugadoresDraft = d.data;
+				//actualizar();
 			}
 			
 		}, function(errResponse) {
@@ -160,21 +164,23 @@ angular.module('myApp')
     }
     function buscarEquipos() {
     	console.log("[draftPC]  idTemporada]:",CONFIG.VARTEMPORADA.id);
+    	if(self.equipos == null ){
 		EquipoService.buscarTodos(CONFIG.VARTEMPORADA.id).then(function(d) {
 			console.log("Equipos]:",d);
 			self.equipos = d;
 		}, function(errResponse) {
 			console.error('[draftPC] Error while fetching buscarEquipos()');
 		});
+    	}
 	}
     
     function actualizar(){
     	findTeam();
-        buscarJugadoresdraft()
+        buscarJugadoresdraft();
     }
     
     function selectColor(jug){
-    	console.log("--------------Entrando a seleccionar color tabla Drat---------")
+    	// console.log("--------------Entrando a seleccionar color tabla Drat---------")
     	if(jug.idEquipoOferta == jug.equipo.id){
     		return 'table-success'
     	}else{

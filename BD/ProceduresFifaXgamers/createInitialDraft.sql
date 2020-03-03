@@ -16,11 +16,12 @@ DECLARE montoBD int;
 DECLARE idTemporadaVar int;
 DECLARE sumaDraftPC int;
 DECLARE ofertaInicial int;
-
+declare horaInicio int;
+declare horaFin int;
 
 select draftpc.Persona_idPersona into  idJugadorVal
 from draftpc
-where draftpc.Persona_idPersona = idJugador and draftpc.Temporadas_idTemporada = idTemporada;
+where draftpc.Persona_idPersona = idJugador and draftpc.tempodada_idTemporada = idTemporada;
 
 select persona.idPersona into idJugadorExist
 from persona
@@ -32,11 +33,22 @@ set idTemporadaVar = idTemporada;
 select dat.presupuestoFinal into montoBD
 from datosfinancieros dat
 where dat.Equipos_idEquipo = idEquipoOferta
-and dat.Temporadas_idTemporada = idTemporadaVar;
+and dat.tempodada_idTemporada = idTemporadaVar;
 
 select monto into ofertaInicial
 from configuraciondraft
 where codigo='ofertaInicial'
+limit 1;
+
+select monto into horaInicio
+from configuraciondraft
+where codigo='horaInicio'
+limit 1;
+
+
+select monto into horaFin
+from configuraciondraft
+where codigo='horaFin'
 limit 1;
 
 select idJugadorVal;
@@ -44,6 +56,12 @@ select idJugadorVal;
 if idJugadorExist is null then 
 	set isError = 1 ;
   set message = 'El jugador no Existe';
+elseif ( hour(now()) < horaInicio )
+       or ( hour(now()) >= horaFin )
+   
+then 
+	set isError = 1 ;
+    set message = 'DRAFT EN CERRADO';
 elseif  montoBD is null or montoBD < montoOferta then 
   set isError = 1 ;
   set message = 'Revisa tus finanzas fondos insuficientes1' ;
@@ -66,7 +84,7 @@ elseif idJugador is not null then
 	`Persona_idPersona`,
 	`fechaCompra`,
 	`usuarioOferta`,
-	`Temporadas_idTemporada`,
+	`tempodada_idTemporada`,
 	`comentarios`,
 	`abierto`,
     `ofertaFinal`,
@@ -90,7 +108,7 @@ elseif idJugador is not null then
 		`usuarioOferta`,
 		`DraftPC_idDraftPC`,
 		`DraftPC_Persona_idPersona`,
-		`Temporadas_idTemporada`,
+		`tempodada_idTemporada`,
 		`comentarios`,
 		`ofertaFinal`,
         `idEquipo`)
@@ -100,13 +118,13 @@ elseif idJugador is not null then
 			draftpc.usuarioOferta,
 			draftpc.idDraftPC,
 			draftpc.Persona_idPersona,
-			draftpc.Temporadas_idTemporada,
+			draftpc.tempodada_idTemporada,
 			draftpc.comentarios,
 			draftpc.ofertaFinal,
             draftpc.idEquipo
 			from draftpc
 		where draftpc.Persona_idPersona = idJugador
-        and draftpc.Temporadas_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
+        and draftpc.tempodada_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
         and draftpc.idDraftPC = 1
         limit 1);
         
@@ -125,7 +143,6 @@ elseif idJugador is not null then
     
     
 end if;
-
 
 END $$
 DELIMITER ;

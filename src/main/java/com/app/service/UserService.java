@@ -2,6 +2,7 @@ package com.app.service;
 
 import java.util.List;
 
+import com.app.modelo.ResponseData;
 import com.app.modelo.User;
 
 public interface UserService {
@@ -24,9 +25,9 @@ public interface UserService {
 
 		List<User> findAllPlayers();
 
-		void savePlayer(User user,int idTemporada);
+		ResponseData savePlayer(User user,int idTemporada);
 
-		void updatePlayer(User currentUser,int idTemporada);
+		ResponseData updatePlayer(User currentUser,int idTemporada);
 
 		List<User> findAllPlayersByIdEquipo(long id);
 		List<User> findAllPlayersByIdEquipo(long id,long idVisita);

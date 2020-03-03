@@ -38,11 +38,16 @@ angular.module('myApp').controller('EquipoController',['$scope','$routeParams','
 					function buscarTodos() {
 						var idTemporada = CONFIG.VARTEMPORADA.id
 						console.log("[equipo_controller]  idTemporada]:",CONFIG.VARTEMPORADA.id);
-						EquipoService.buscarTodos(idTemporada).then(function(d) {
-							self.equipos = d;
-						}, function(errResponse) {
-							console.error('[equipo_controller] Error while fetching buscarTodos()');
-						});
+						if(CONFIG.CAT_EQUIPOS == null ){
+							EquipoService.buscarTodos(idTemporada).then(function(d) {
+								self.equipos = d;
+								CONFIG.CAT_EQUIPOS = d;
+							}, function(errResponse) {
+								console.error('[equipo_controller] Error while fetching buscarTodos()');
+							});
+						}else{
+							self.equipos = CONFIG.CAT_EQUIPOS ;
+						}
 					}
 					
 					function buscarTemporada() {
@@ -54,12 +59,17 @@ angular.module('myApp').controller('EquipoController',['$scope','$routeParams','
 						});
 					}
 					function buscarDivisiones() {
-						EquipoService.buscarDivisiones().then(function(d) {
-							console.log("Entre Buscar Divisiones-->",d)
-							self.divisiones = d;
-						}, function(errResponse) {
-							console.error('Error while fetching Divisiones');
-						});
+						if( CONFIG.CAT_DIV == null ){
+							EquipoService.buscarDivisiones().then(function(d) {
+								console.log("Entre Buscar Divisiones-->",d)
+								self.divisiones = d;
+								CONFIG.CAT_DIV = d;
+							}, function(errResponse) {
+								console.error('Error while fetching Divisiones');
+							});
+						}else{
+							self.divisiones = CONFIG.CAT_DIV;
+						}
 					}
 
 					function crearEquipo(user) {

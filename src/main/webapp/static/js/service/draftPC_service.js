@@ -36,19 +36,21 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     }
     
     function buscarJugadoresdraft(idTemporada) {
+    	console.log("buscarJugadoresdraft: INICIO");
+               
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI+'findAllPC/'+idTemporada)
-            .then(
-            function (response) {
-            	console.log(response.data)
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.error('Error while fetching Users');
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
+		.then(
+				function (response) {
+					console.log("buscarJugadoresdraft: ",response.data);
+					deferred.resolve(response.data);
+				},
+				function(errResponse){
+					console.error('Error while fetching Users');
+					deferred.reject(errResponse);
+				}
+		);
+		return deferred.promise;
     }
     
     function buscarJugadoresdraftByID(idEquipo, idTemporada) {

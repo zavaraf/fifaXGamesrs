@@ -105,7 +105,7 @@
 					  <div  class="row text-center">
 					    <div ng-repeat="e in equiposLiguilla " class="col-sm-2 ">
 					    
-					    <img src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
+					    <img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
 					      {{e.nombre}}
 					    </div>
 					  </div>
@@ -138,11 +138,11 @@
 							  	data-toggle="modal" data-target="#exampleModalScrollable">
 		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
 		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
-		                              <td><img src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
 		                              <td>{{jor.golesLocal}}</td>
 		                              <td>-</td>
 		                              <td>{{jor.golesVisita}}</td>
-		                              <td><img src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+		                              <td><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
 		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
 		                             
 		                          </tr>
@@ -249,7 +249,7 @@
 						  <div  class="row text-center">
 						    <div ng-repeat="e in example9model " class="col-sm-2 ">
 						    
-						    <img src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
+						    <img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  
 						      {{e.nombre}}
 						    </div>
 						  </div>
@@ -268,7 +268,7 @@
 								  	<div class="container" >
 									  <div class="row text-center">
 									    <div class="col " >
-									      <img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."> 
+									      <img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."> 
 									       {{e.nombre}}
 									    </div>
 									  </div>
@@ -331,7 +331,7 @@
 							  	<div class="container" >
 								  <div class="row text-center">
 								    <div class="col " >
-								      <img src="{{e.img}}" height="25"  class="rounded float-left" alt="..."> 
+								      <img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."> 
 								       {{e.nombre}}
 								    </div>
 								  </div>
@@ -381,11 +381,11 @@
 							  	data-toggle="modal" data-target="#exampleModalScrollable">
 		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
 		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
-		                              <td><img src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
 		                              <td>{{jor.golesLocal}}</td>
 		                              <td>-</td>
 		                              <td>{{jor.golesVisita}}</td>
-		                              <td><img src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+		                              <td><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
 		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
 		                             
 		                          </tr>

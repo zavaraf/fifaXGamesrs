@@ -34,7 +34,7 @@ declare minDia_ceroVar int;
 
 select draftpc.Persona_idPersona,draftpc.ofertaFinal into  idJugadorVal,montoFinalVal
 from draftpc
-where draftpc.Persona_idPersona = idJugador and draftpc.Temporadas_idTemporada = idTemporada;
+where draftpc.Persona_idPersona = idJugador and draftpc.tempodada_idTemporada = idTemporada;
 
 select persona.idPersona into idJugadorExist
 from persona
@@ -45,7 +45,7 @@ set idTemporadaVar = idTemporada ;
 select dat.presupuestoFinal into montoBD
 from datosfinancieros dat
 where dat.Equipos_idEquipo = idEquipoOferta
-and dat.Temporadas_idTemporada = idTemporadaVar;
+and dat.tempodada_idTemporada = idTemporadaVar;
 
 select monto into contraoferta
 from configuraciondraft
@@ -91,15 +91,28 @@ timestampdiff(day,DATE(draftpc.fechaCompra),Date(NOW())) as diasSe,
 timestampdiff(MINUTE, draftpc.fechaCompra, now()) MINUTOSDIA_CERO,
 timestampdiff(MINUTE, draftpc.fechaCompra, DATE_ADD(DATE(draftpc.fechaCompra),INTERVAL 24 HOUR)) MINUTOSDIA,
 timestampdiff(MINUTE, DATE_ADD(DATE(now()),INTERVAL 9 HOUR), now()) Minutos_dia_Actual
-from draftpc where draftpc.Persona_idPersona =  42 and draftpc.Temporadas_idTemporada = 2) ta
+from draftpc where draftpc.Persona_idPersona =  idJugadorVal and draftpc.tempodada_idTemporada = idTemporada) ta
 ;
 
 select idJugadorVal;
+
+select diasVar ,
+minDia_ceroVar,
+minDiaVar ,
+minDiaActualVar ,
+sumaVar,
+sumaminutosdia_cero_Var,horaInicio,horaFin ;
 
 if idJugadorExist is null then 
 	set isError = 1 ;
   set message = 'El jugador no Existe';
 
+elseif ( hour(now()) < horaInicio )
+       or ( hour(now()) >= horaFin )
+   
+then 
+	set isError = 1 ;
+    set message = 'DRAFT EN CERRADO';
   
 elseif (diasVar = 1 and sumaVar >= minConfirm ) 
    or (diasVar = 0 and minDia_ceroVar >= minConfirm )
@@ -137,7 +150,7 @@ elseif idJugador is not null then
      from draftpc
      WHERE `idDraftPC` = 1
      AND `Persona_idPersona` = idJugador
-     AND `Temporadas_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
+     AND `tempodada_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
 	
     UPDATE `fifaxgamersbd`.`draftpc`
 	SET
@@ -149,7 +162,7 @@ elseif idJugador is not null then
     `idEquipo` = idEquipoOferta
 	WHERE `idDraftPC` = 1
     AND `Persona_idPersona` = idJugador
-    AND `Temporadas_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
+    AND `tempodada_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
 
 	INSERT INTO `fifaxgamersbd`.`historicodraft`
 		(`idHistoricoDraft`,
@@ -158,7 +171,7 @@ elseif idJugador is not null then
 		`usuarioOferta`,
 		`DraftPC_idDraftPC`,
 		`DraftPC_Persona_idPersona`,
-		`Temporadas_idTemporada`,
+		`tempodada_idTemporada`,
 		`comentarios`,
 		`ofertaFinal`,
         `idEquipo`)
@@ -168,13 +181,13 @@ elseif idJugador is not null then
 			draftpc.usuarioOferta,
 			draftpc.idDraftPC,
 			draftpc.Persona_idPersona,
-			draftpc.Temporadas_idTemporada,
+			draftpc.tempodada_idTemporada,
 			draftpc.comentarios,
 			montoOferta,
             draftpc.idEquipo
 			from draftpc
 		where draftpc.Persona_idPersona = idJugador
-        and draftpc.Temporadas_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
+        and draftpc.tempodada_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
         and draftpc.idDraftPC = 1
         limit 1);
         
@@ -208,6 +221,7 @@ elseif idJugador is not null then
     
 end if;
 
+select isError,message;
 
 END $$
 DELIMITER ;

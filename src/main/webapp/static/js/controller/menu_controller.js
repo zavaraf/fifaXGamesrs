@@ -42,6 +42,11 @@ var app = angular.module("myApp", ["ngRoute","ngPagination",'angularjs-dropdown-
         	templateUrl : "adminTorneo"
         	
         })
+         
         ;
+        $routeProvider.otherwise({
+          // no hago nada
+        	//console.error('no hago nada');
+        });  
  
 });

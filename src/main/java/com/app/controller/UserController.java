@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.app.modelo.ResponseData;
 import com.app.modelo.User;
 import com.app.service.UserService;
 
@@ -123,19 +124,22 @@ public class UserController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
     @RequestMapping(value = "/user/player/{idTemporada}", method = RequestMethod.POST)
-    public ResponseEntity<Void> createPlayer(@PathVariable int idTemporada,@RequestBody User user,    UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<ResponseData> createPlayer(@PathVariable int idTemporada,@RequestBody User user,    UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getNombre());
   
         if (userService.isUserExist(user)) {
             System.out.println("A User with name " + user.getNombre() + " already exist");
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+            return new ResponseEntity<ResponseData>(HttpStatus.CONFLICT);
         }
   
-        userService.savePlayer(user,idTemporada);
-  
+        ResponseData response = new ResponseData();
+        
+        
+        response = userService.savePlayer(user,idTemporada); 
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<ResponseData>(response, HttpStatus.CREATED);
     }
   
      
@@ -161,15 +165,15 @@ public class UserController {
         userService.updateUser(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
-    @RequestMapping(value = "/user/player/{id}/{idTemporada}", method = RequestMethod.PUT)
-    public ResponseEntity<User> updatePlayer(@PathVariable("id") long id,@PathVariable("idTemporada") int idTemporada, @RequestBody User user) {
+    @RequestMapping(value = "/user/playerUpdate/{id}/{idTemporada}", method = RequestMethod.POST)
+    public ResponseEntity<ResponseData> updatePlayer(@PathVariable("id") long id,@PathVariable("idTemporada") int idTemporada, @RequestBody User user) {
         System.out.println("Updating User " + id);
           
         User currentUser = userService.findById(id);
           
         if (currentUser==null) {
             System.out.println("User with id " + id + " not found");
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<ResponseData>(HttpStatus.NOT_FOUND);
         }
   
         currentUser.setNombreCompleto(user.getNombreCompleto());
@@ -177,9 +181,10 @@ public class UserController {
         currentUser.setRaiting(user.getRaiting());
         currentUser.setEquipo(user.getEquipo());
         currentUser.setLink(user.getLink());
-          
-        userService.updatePlayer(currentUser,idTemporada);
-        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
+        
+        ResponseData response = userService.updatePlayer(currentUser,idTemporada);
+        
+        return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
     }
   
      

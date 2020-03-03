@@ -74,6 +74,8 @@ public class DraftServiceImpl implements DraftService {
 					
 					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTemporada);
 				}
+				
+				response.setData(draftDao.findJugadoresDraft(idTemporada));
 			}
 		}
 
@@ -106,6 +108,7 @@ public class DraftServiceImpl implements DraftService {
 					
 					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTemporada);
 				}
+				response.setData(draftDao.findJugadoresDraft(idTemporada));
 			}
 		}
 
@@ -137,6 +140,7 @@ public class DraftServiceImpl implements DraftService {
 					
 					sponsorService.createPresupuesto(equipoBD, equipoBD.getDatosFinancieros().getPresupuestoInicial(),idTemporada);
 				}
+				response.setData(draftDao.findJugadoresDraft(idTemporada));
 			}
 		}
 
