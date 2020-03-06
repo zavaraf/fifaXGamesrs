@@ -158,10 +158,10 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         return deferred.promise;
     }
     
-    function addJornadas(idDivision,jornadas) {
+    function addJornadas(torneo,jornadas) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        $http.post(REST_SERVICE_URI_E+'addJornadas'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision,jornadas)
+        $http.post(REST_SERVICE_URI_E+'addJornadas'+"/"+CONFIG.VARTEMPORADA.id+'/'+torneo.id+'/'+torneo.tipoTorneo,jornadas)
             .then(
             function (response) {
             	console.log(response.data)

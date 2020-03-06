@@ -126,6 +126,7 @@ public class EquiposController {
         currentEquipo.setNombre(equipo.getNombre());
         currentEquipo.setDescripcion(equipo.getDescripcion());
         currentEquipo.setDivision(equipo.getDivision());
+        currentEquipo.setLinksofifa(equipo.getLinksofifa());
         
         
           

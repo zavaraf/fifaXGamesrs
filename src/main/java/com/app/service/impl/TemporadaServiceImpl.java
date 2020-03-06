@@ -249,7 +249,7 @@ public class TemporadaServiceImpl implements TemporadaService{
 	}
 
 	@Override
-	public ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas) {
+	public ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas, int tipoTorneo) {
 		
 		
 		ResponseData response = new ResponseData();
@@ -260,6 +260,12 @@ public class TemporadaServiceImpl implements TemporadaService{
 				if(juegos.getIdEquipoLocal() != -1 && juegos.getIdEquipoVisita() !=-1){
 					map = temporadaDao.addJornada( idTemporada,idDivision,juegos,jornada.getActiva(),jornada.getCerrada());
 				}
+				if(tipoTorneo == 2){
+					break;
+				}
+			}
+			if(tipoTorneo == 2){
+				break;
 			}
 		}
 		

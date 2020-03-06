@@ -193,8 +193,7 @@ app
 									jor = self.jornadasEdit;
 								}
 								TorneoLMService
-										.addJornadas(self.divisionSelect.id,
-												jor)
+										.addJornadas(self.divisionSelect,jor)
 										.then(
 												function(d) {
 

@@ -150,8 +150,11 @@
 <!--                               <th width="20%"></th> -->
                           </tr>
                       </thead>
-                      <tbody>
-                          <tr ng-repeat="e in ctrl.equipos | orderBy : 'e.division' | filter : test">
+                      <tbody ng-repeat="e in ctrl.equipos | orderBy : 'e.division' | filter : test">
+                       
+                     
+                          <tr >
+                          
 <!--                               <td><span ng-bind="e.id"></span></td> -->
                               <td><img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
 <!--                               <td><span ng-bind="e.manager"></span></td> -->
@@ -169,10 +172,21 @@
                              
 		     				  <span style="display:none;" class="input-group-text" ng-model="ctrl.userAct" ng-init="ctrl.userAct = '<%=request.getUserPrincipal().getName()%>'" >{{ctrl.userAct}}</span>
                               <button type="button" data-toggle="modal" data-target="#myModal" ng-click="ctrl.edit(e.id)" ng-disabled="ctrl.showEdit( '${user.authorities}',e.id,'${user.idEquipo}') == false" class="btn btn-success btn-sm">Edit</button>
+                              
                               </sec:authorize>  
 <!--                               <button type="button" ng-click="ctrl.remove(e.id)" class="btn btn-danger custom-width">Remove</button> -->
                               </td>
+                              <td>
+                              	<button type="button" ng-show="e.linksofifa != null" ng-click="e.showSofifa = (!e.showSofifa);e.url = ctrl.setUrl(e)" ng-disabled="ctrl.showEdit( '${user.authorities}',e.id,'${user.idEquipo}') == false" class="btn btn-success btn-sm">sofifa</button>
+                              </td>
                           </tr>
+                          <tr ng-if="e.showSofifa == true">
+	                      	<td colspan="10">
+		                      	<div class="embed-responsive embed-responsive-16by9">
+		                      		<iframe class="embed-responsive-item" ng-src="{{e.url}}" allowfullscreen></iframe>
+		                      	</div>
+							 </td>
+						   </tr>
                       </tbody>
                   </table>
               </div>

@@ -127,7 +127,21 @@ public class GenerarJornadasUtil {
 		
 		return jornadas;
 	}
-	
+	public Jornada getJuegoAnterior(List<Jornadas> jornadasList, Equipo local, Equipo visita, List<Equipo> equipos){
+		
+		List<Jornada> juegosList = jornadasList.get(jornadasList.size()-1).getJornada();
+		
+		for(Jornada juego : juegosList){
+			if((juego.getIdEquipoLocal() == local.getId() || juego.getIdEquipoVisita() == local.getId()) || 
+				((juego.getIdEquipoLocal() == visita.getId() || juego.getIdEquipoVisita() == visita.getId())) ){
+				
+				return juego;
+			}
+		}
+		
+		return null;
+		
+	}
 	public List<Jornadas> getJornadasIdaYVuelta(List<Equipo> equiposL, int vuelta){
 		
 		List<Equipo> equipos = equiposL;
@@ -148,8 +162,26 @@ public class GenerarJornadasUtil {
 				int local = Integer.parseInt(match[0]);
 				int visita = Integer.parseInt(match[1]);
 				
+				
+				
 				Equipo equipoLcoal = equipos.get(local-1);
 				Equipo equipoVisita = equipos.get(visita-1);
+				
+				if(jornada > 0 ){
+					
+					Jornada juegoAnterior = getJuegoAnterior(jornadasList, equipoLcoal, equipoLcoal, equipos);
+					Jornada juegoAnteriorVisita = getJuegoAnterior(jornadasList, equipoVisita, equipoVisita, equipos);
+					
+					if(juegoAnterior!= null && juegoAnterior.getIdEquipoLocal() == equipoLcoal.getId()){
+						equipoLcoal = equipos.get(visita-1);
+						equipoVisita = equipos.get(local-1);						
+					}else
+					if(juegoAnteriorVisita != null && juegoAnteriorVisita.getIdEquipoVisita() == equipoVisita.getId()){
+						equipoLcoal = equipos.get(visita-1);
+						equipoVisita = equipos.get(local-1);						
+					}
+									
+				}
 				
 				Jornada jo = new Jornada();
 				
@@ -209,6 +241,23 @@ public class GenerarJornadasUtil {
 				
 				Equipo equipoLcoal = equipos.get(local-1);
 				Equipo equipoVisita = equipos.get(visita-1);
+				
+								
+				if(jornada > 0 ){
+					
+					Jornada juegoAnterior = getJuegoAnterior(jornadasList, equipoLcoal, equipoLcoal, equipos);
+					Jornada juegoAnteriorVisita = getJuegoAnterior(jornadasList, equipoVisita, equipoVisita, equipos);
+					
+					if(juegoAnterior!= null && juegoAnterior.getIdEquipoLocal() == equipoLcoal.getId()){
+						equipoLcoal = equipos.get(visita-1);
+						equipoVisita = equipos.get(local-1);						
+					}else
+					if(juegoAnteriorVisita != null && juegoAnteriorVisita.getIdEquipoVisita() == equipoVisita.getId()){
+						equipoLcoal = equipos.get(visita-1);
+						equipoVisita = equipos.get(local-1);						
+					}
+									
+				}
 				
 				Jornada jo = new Jornada();
 				

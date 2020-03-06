@@ -44,6 +44,7 @@
       <script src="<c:url value='/static/js/service/user_service.js' />"></script>
       <script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
       <script src="<c:url value='/static/js/controller/equipo_controller.js' />"></script>
+<%--       <script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script> --%>
 <div ng-controller="TeamController as ctrl">
 <div ng-controller="UserController as ctrlJuga">
 
@@ -147,20 +148,31 @@
                                  </div>
                                  <div ng-controller="EquipoController as ctrlEquipo">
                                     <div class="row">
+                                    
                                        <div class="form-group col-md-12">
                                           <label class="col-md-2 control-lable" for="address">Equipo</label>
                                           <div class="col-md-7">
-                                             <select ng-model="selectedTeam"
-                                                ng-options="equipo as equipo.nombre for equipo in ctrlEquipo.equipos track by equipo.id"
-                                                class="lastname form-control input-sm">
-                                                <option value="">--Elige opcion--</option>
-                                             </select>
+<!--                                           <div  ng-dropdown-multiselect="" options="ctrlEquipo.buscarTodos();ctrlEquipo.equipos" selected-model="equipoModel" extra-settings="example9settings" translation-texts="example5customTexts"></div> -->
+                                          <div custom-select="t as t.nombre for t in ctrlEquipo.equipos | filter: { nombre: $searchTerm }" ng-model="ctrlJuga.player.equipo">
+									                <div class="pull-left" >
+									                    <img ng-src="{{ t.img }}" style="width: 30px" />
+									                    <strong>{{ t.nombre }}</strong>
+									                </div>
+									               
+									            </div>
+<!--                                              <select ng-model="selectedTeam" -->
+<!--                                                 ng-options="equipo as equipo.nombre for equipo in ctrlEquipo.equipos track by equipo.id" -->
+<!--                                                 class="lastname form-control input-sm"> -->
+<!--                                                 <option value="">--Elige opcion--</option> -->
+<!--                                              </select> -->
+
                                           </div>
                                        </div>
+                                       
                                     </div>
                                     <div class="row">
                                        <div class="form-actions floatRight">
-                                          <input  ng-click="ctrl.submitPlayer(selectedTeam,ctrlJuga.player)" 
+                                          <input  ng-click="ctrl.submitPlayer(ctrlJuga.player.equipo,ctrlJuga.player)" 
                                              type="submit" value="{{!ctrlJuga.player.id ? 'Add' : 'Update'}}"
                                              class="btn btn-primary btn-sm" ng-disabled="myFormJuga.$invalid" data-dismiss="modal">
                                        </div>
@@ -444,6 +456,9 @@
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" ng-click="ctrl.showPublicacion()" >Publicacion de Plantilla</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" ng-click="ctrl.showPantilla()" >Plantilla Sofifa</a>
+    </li>
   </ul>
 
   <!-- Tab panes -->
@@ -487,7 +502,7 @@
 								<td>
                                 <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
                                      <button  ng-disabled=" !ctrl.showEditPlayer(ctrl.equipo,'${user.idEquipo}','${user.roles}') "                                       
-                                     type="button" data-toggle="modal" data-target="#myModal"  ng-click="ctrlJuga.edit(u.id)"
+                                     type="button" data-toggle="modal" data-target="#myModal"  ng-click="ctrlJuga.edit(u)"
                                         class="btn btn-success btn-sm">Edit</button>
                                 </sec:authorize>
                                 </td>
@@ -500,7 +515,36 @@
 		
     </div>
     </div>
-    <div id="home" class="container tab-pane active" >
+    <div id="sofifaP" class="container tab-pane active" ng-if="ctrl.vistaPantilla" >
+      <div class="container-fluid bg-3 text-center"> 
+	<button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseLinkSofifa" aria-expanded="false" aria-controls="collapseLinkSofifa">
+		Add Sofifa
+    </button>
+    <div ng-if="ctrl.equipo.linksofifa!=null"><h3><a href="{{ctrl.equipo.linksofifa}}" target="_blank" >{{ctrl.equipo.linksofifa}}</a></h3></div>
+    
+      <div class="collapse" id="collapseLinkSofifa">
+					  <div class="card card-body">
+					     <div class="form-group">
+		            <label for="recipient-name" class="col-form-label">ALink Sofifa:</label>
+		            <input ng-model="ctrl.equipo.linksofifa"type="text" class="form-control" id="recipient-name">
+		            <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+		            	<button type="button" class="btn btn-primary btn-sm"
+		            	 data-toggle="collapse" data-target="#collapseLinkSofifa"
+		            	ng-click= "ctrl.modificarEquipo()"  >Agregar</button>
+		            </sec:authorize>
+			   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseLinkSofifa" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
+		          </div>
+					  </div>
+					</div>
+					
+	  <div class="embed-responsive embed-responsive-16by9" ng-if="ctrl.vistaPantilla && urlSofifa!=null" >
+	  	
+		  <iframe class="embed-responsive-item" ng-src="{{urlSofifa}}" allowfullscreen></iframe>
+		</div>
+		
+    </div>
+    </div>
+    <div id="publicacionIS" class="container tab-pane active" >
       <div class="container-fluid bg-3 text-center"> 
 
       <div class="formcontainer" ng-show="ctrl.vistaPublicacion">
@@ -582,11 +626,20 @@
 							<td><h6>[highlight=yellow][shadow=black]PRESUPUESTO INICIAL : {{ctrl.equipo.datosFinancieros.presupuestoInicial | currency}}[/shadow][/highlight][/b]</h6></td>
 						</tr>
 						<tr>
-							<td><h6>[shadow=blue]Altas[/shadow] : Ingrese la cantidad total de dinero perdida en "Altas"</h6></td>
+							<td><h6>[shadow=blue]Ingresos[/shadow] :
+							
+							</h6></td>
+						</tr>
+						<tr ng-if = "f.tipoconcepto.codigo == 'ingreso'" ng-repeat="f in ctrl.equipo.finanzas">
+						        <td> {{f.descripcion}} ==> {{f.monto | currency}}</td> 
 						</tr>
 						<tr>
-							<td><h6>[shadow=red]Bajas[/shadow] : Ingrese la cantidad total de dinero ganada en "Bajas"</h6></td>
+							<td><h6>[shadow=red]Egresos[/shadow] : </h6></td>
 						</tr>
+						<tr ng-if = "f.tipoconcepto.codigo != 'ingreso'" ng-repeat="f in ctrl.equipo.finanzas">
+						    <td>     {{f.descripcion}} ==> {{f.monto | currency}} </td> 
+						<tr>
+							
 						<tr>
 							<td><h6>[b][highlight=yellow][shadow=black]PRESUPUESTO FINAL : {{ctrl.equipo.datosFinancieros.presupuestoFinal | currency}}</h6></td>
 						</tr>

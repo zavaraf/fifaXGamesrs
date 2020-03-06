@@ -5,8 +5,8 @@ var app = angular.module('myApp');
 
 
 
-app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService','EquipoService',
-			function($scope,$routeParams,CONFIG,UserService, EquipoService) {
+app.controller('UserController', ['$scope','$routeParams','CONFIG','$timeout','UserService','EquipoService',
+			function($scope,$routeParams,CONFIG,$timeout,UserService, EquipoService) {
 	
     var self = this;
     self.user={id:null,nombre : '',apellidoPaterno : '',apellidoMaterno : '',nombreCompleto : '',sobrenombre : '',fehaNacimiento : null,raiting : 0 ,potencial : 0  ,activo : 0 ,userManager : '',prestamo : 0};
@@ -30,10 +30,44 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
     $scope.pageSize = 10;
     $scope.pages = [];
     $scope.configPages = null;
- 
+    
+    $scope.people = [
+        { name: 'John Doe', phone: '555-123-456', picture: 'http://www.saintsfc.co.uk/images/common/bg_player_profile_default_big.png' },
+        { name: 'Axel Zarate', phone: '888-777-6666', picture: 'https://avatars0.githubusercontent.com/u/4431445?s=60' },
+        { name: 'Walter White', phone: '303-111-2222', picture: 'http://upstreamideas.org/wp-content/uploads/2013/10/ww.jpg' }
+    ];
+    
+    
+    $scope.equiposData = [];
+	$scope.equipoModel = [];
+	$scope.example9settings = {enableSearch: true,displayProp : "nombre",scrollable: true,selectedToTop: true,selectionLimit: 1,
+			
+			smartButtonMaxItems: 1,
+			   smartButtonTextConverter: 
+				   function(itemText, originalItem) { 
+				     return itemText;  }  
+			  };
+	$scope.example5customTexts = {buttonDefaultText: 'Seleccione Equipo'};
  
 //    fetchAllUsers();
     fetchAllPlayers();
+    
+    $scope.searchAsync = function (term) {
+        // No search term: return initial items
+	    if (!term) {
+	        return  ['Item 1', 'Item 2', 'Item 3'];
+	    }
+	    var deferred = $q.defer();
+	    $timeout(function () {
+	        var result = [];
+	        for (var i = 1; i <= 3; i++)
+	        {
+	            result.push(term + ' ' + i);
+	        }
+	        deferred.resolve(result);
+	    }, 300);
+	    return deferred.promise;
+	};
     
     function showDraft(op){
         $scope.showDraftV = op
@@ -169,17 +203,23 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
     }
     
  
-    function edit(id){
-        console.log('[user_controller] id to be edited', id);
-        for(var i = 0; i < self.players.length; i++){
-            if(self.players[i].id === id) {
-                self.player = angular.copy(self.players[i]);
-                obtenerEquipo(self.player.equipo.id)
-                self.player.equipo = $scope.selectedTeam
-                console.log('[user_controller] jugador',self.pyaler)
-                break;
-            }
-        }
+    function edit(user){
+        console.log('[user_controller] id to be edited', user.id);
+//        for(var i = 0; i < self.players.length; i++){
+//            if(self.players[i].id === id) {
+//                self.player = angular.copy(self.players[i]);
+                self.player = user;
+                $scope.selectedTeam = user.equipo;
+                
+//                obtenerEquipo(self.player.equipo.id)
+//                self.player.equipo = $scope.selectedTeam
+//                self.player.equipo = ($scope.equipoModel != null && $scope.equipoModel.length>0) ? $scope.equipoModel[0] : null;
+                
+                console.log('[user_controller] jugador',self.player)
+//                console.log('[user_controller] user',user)
+//                break;
+//            }
+//        }
     }
     function obtenerEquipo(equipo) {
         var allTeams = null  
@@ -191,6 +231,7 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
                 if(allTeams[i].id == equipo){
                     console.log("[user_controller] -->Encontre equipos]:"+allTeams[i].nombre)
                   $scope.selectedTeam =  allTeams[i];
+
                 console.log("[user_controller] -->Encontre division1]:"+$scope.selectedTeam.nombre)
                 break;
                 }
@@ -214,6 +255,7 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','UserService'
     function reset(){
         console.log("[user_controller] ------>Entre reset")
         self.player={id:null,NombreCompleto:'',sobrenombre:'',Raiting:'',equipo:null};
+        $scope.equipoModel = [];
         $scope.myForm.$setPristine(); //reset Form
     }
     

@@ -29,7 +29,7 @@ public interface TemporadaService {
 	ResponseData addResultJornada(int idTorneo,int idTemporada,Jornada jornada);
 	
 	ResponseData addImagen(int idEquipo,int id,int idJornada,String img);
-	ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas);
+	ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas, int tipoTorneo);
 	ResponseData addJornadasGrupos(int idTemporada, String nombre, String grupos,int confTor);
 	List<Grupos> getGruposTorneo(int idTemporada, int idTorneo);
 	

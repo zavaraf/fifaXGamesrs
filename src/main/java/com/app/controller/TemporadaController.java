@@ -269,20 +269,21 @@ public class TemporadaController {
 	 }
 
 	 
-	 @RequestMapping(value="/lm/addJornadas/{idTemporada}/{idDivision}",
+	 @RequestMapping(value="/lm/addJornadas/{idTemporada}/{idDivision}/{tipoTorneo}",
 			 method = RequestMethod.POST,
 			 headers="Accept=application/json")
 	 @ResponseBody
 	 public ResponseEntity<ResponseData> addJornadas(
 			 @PathVariable("idTemporada") int idTemporada,
 			 @PathVariable("idDivision") int idDivision,
+			 @PathVariable("tipoTorneo") int tipoTorneo,
 			 @RequestBody List<Jornadas> jornadas
 			 ){
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idDivision);
-			 response = temporadaService.addJornadas(idTemporada,idDivision,jornadas);
+			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idDivision+" TipoTorneo:"+tipoTorneo);
+			 response = temporadaService.addJornadas(idTemporada,idDivision,jornadas,tipoTorneo);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());

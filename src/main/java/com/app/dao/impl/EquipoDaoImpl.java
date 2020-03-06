@@ -67,7 +67,7 @@ public class EquipoDaoImpl implements EquipoDao{
 		System.out.println("buscarTodos");
 		List<Equipo> equiposList = new ArrayList<Equipo>();
 		String query = " SELECT  "
-				+ " equipos.idEquipo,  "
+				+ " equipos.idEquipo, equipos.linksofifa, "
 				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo) img,"
 				+ " equipos.nombreEquipo,  "
 				+ " equipos.descripcionEquipo,  "
@@ -106,11 +106,14 @@ public class EquipoDaoImpl implements EquipoDao{
                         equipo.setPresupuestoInicial(rs.getInt("presupuestoInicial"));
                         equipo.setPresupuestoFinal(rs.getInt("presupuestoFinal"));
                         equipo.setImg(rs.getString("img"));
+                        equipo.setLinksofifa(rs.getString("linksofifa"));
+                        
                         Division division= new Division();
                         division.setId(rs.getString("Division_idDivision"));
                         division.setNombre(rs.getString("nombreDivision"));
                         division.setDescripcion(rs.getString("descripcionDivision"));
                         equipo.setDivision(division);
+                        
                         
                         
                         equipo.setSalarios(obtenerSalario(division.getId(), equipo.getTotalRaiting()));
@@ -140,12 +143,14 @@ public class EquipoDaoImpl implements EquipoDao{
 		String updateQuery = "update fifaxgamersbd.equipos "
 				+ "set NombreEquipo = ?, "
 				+ "DescripcionEquipo = ?, "
-				+ "Division_idDivision = ? "
+				+ "Division_idDivision = ?, "
+				+ "linksofifa = ? "
 				+ " where idEquipo = ? ";
 		jdbcTemplate.update(updateQuery,
 				currentEquipo.getNombre(),
 				currentEquipo.getDescripcion(), 
 				Integer.parseInt(currentEquipo.getDivision().getId()),
+				currentEquipo.getLinksofifa(),
 				currentEquipo.getId());
 		
 	}
@@ -175,7 +180,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	public Equipo findByIdAll(long id, int idTemporada) {
 		System.out.println("findByIdAll");
 		String query = " SELECT  "
-				+" equipos.idEquipo,  "
+				+" equipos.idEquipo, equipos.linksofifa, "
 				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo) img,"
 				+" equipos.NombreEquipo,  "
 				+" equipos.DescripcionEquipo,  "
@@ -213,6 +218,7 @@ public class EquipoDaoImpl implements EquipoDao{
                          equipo.setTotalJugadores(rs.getInt("totalJugadores"));
                          equipo.setTotalRaiting(rs.getInt("totalRaiting"));
                          equipo.setImg(rs.getString("img"));
+                         equipo.setLinksofifa(rs.getString("linksofifa"));
                          
                          Division division= new Division();
                          division.setId(rs.getString("Division_idDivision"));

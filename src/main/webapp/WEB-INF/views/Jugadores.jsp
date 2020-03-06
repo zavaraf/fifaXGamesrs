@@ -67,6 +67,7 @@
       <script src="<c:url value='/static/js/service/user_service.js' />"></script>
       <script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
       <script src="<c:url value='/static/js/controller/equipo_controller.js' />"></script>
+      <script src="<c:url value='/static/js/app/customSelect.js' />"></script>
       <div class="container text-center container-fluid" ng-controller="UserController as ctrl">
       	<div >
       		<div id="jugadores"  >
@@ -82,61 +83,55 @@
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                            </div>
                            <div class="modal-body">
-                              <form  name="myForm" class="form-horizontal">
+                              <form  name="myForm" >
                                  <input type="hidden" ng-model="ctrl.player.id" />
                                  <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="sobreNom">Nombre
-                                       Corto</label>
-                                       <div class="col-md-7">
+                                    <div class=" col-md">
+                                       <label class="col-md control-lable" for="sobreNom">Nombre Corto</label>
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrl.player.sobrenombre"
                                              id="sobreNom" class="lastname form-control input-sm"
                                              placeholder="Nombre corto" required ng-minlength="3" />
                                           <div class="has-error" ng-show="myForm.$dirty">
-                                             <span ng-show="myForm.sobreNom.$error.required">Es
-                                             requerido</span> <span ng-show="myForm.sobreNom.$error.minlength">La
-                                             longitud minima es 3</span> <span
-                                                ng-show="myForm.sobreNom.$invalid">Este campo es
-                                             Invalido</span>
+                                             <span ng-show="myForm.sobreNom.$error.required">Es requerido</span> 
+                                             <span ng-show="myForm.sobreNom.$error.minlength">La longitud minima es 3</span> 
+                                             <span ng-show="myForm.sobreNom.$invalid">Este campo es Invalido</span>
                                           </div>
                                        </div>
                                     </div>
                                  </div>
-                                                                  <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="nomcom">Nombre
-                                       Completo</label>
-                                       <div class="col-md-7">
+                                   <div class="row">
+                                    <div class="col-md">
+                                       <label class="col-md control-lable" for="nomcom">Nombre Completo</label>
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrl.player.nombreCompleto"
                                              id="nomcom" class="lastname form-control input-sm"
                                              placeholder="Nombre completo" required ng-minlength="3" />
                                           <div class="has-error" ng-show="myForm.$dirty">
-                                             <span ng-show="myForm.nomcom.$error.required">Es
-                                             requerido</span> <span ng-show="myForm.nomcom.$error.minlength">La
-                                             longitud minima es 3</span> <span ng-show="myForm.nomcom.$invalid">Este
-                                             campo es Invalido</span>
+                                             <span ng-show="myForm.nomcom.$error.required">Es requerido</span> 
+                                             <span ng-show="myForm.nomcom.$error.minlength">La longitud minima es 3</span> 
+                                             <span ng-show="myForm.nomcom.$invalid">Este campo es Invalido</span>
                                           </div>
                                        </div>
                                     </div>
                                  </div>
                                  <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="raiti">Rating</label>
-                                       <div class="col-md-7">
+                                    <div class="col-md">
+                                       <label class="col-md control-lable" for="raiti">Rating</label>
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrl.player.raiting" id="raiti"
                                              class="lastname form-control input-sm"
                                              placeholder="Raiting" required ng-minlength="2" />
                                           <div class="has-error" ng-show="myForm.$dirty">
-                                             <span ng-show="myForm.sobreNom.$error.required">Es
-                                             requerido</span>
+                                             <span ng-show="myForm.sobreNom.$error.required">Es requerido</span>
                                           </div>
                                        </div>
                                     </div>
                                  </div>
                                  <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="raiti">Link Sofifa</label>
-                                       <div class="col-md-7">
+                                    <div class="col-md">
+                                       <label class="col-md control-lable" for="raiti">Link Sofifa</label>
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrl.player.link" id="link"
                                              class="lastname form-control input-sm"
                                              placeholder="Link Sofifa" required ng-minlength="2" />
@@ -146,20 +141,33 @@
                                  </div>
                                  <div ng-controller="EquipoController as ctrlEquipo">
                                     <div class="row">
-                                       <div class="form-group col-md-12">
-                                          <label class="col-md-2 control-lable" for="address">Equipo</label>
-                                          <div class="col-md-7">
-                                             <select ng-model="selectedTeam"
-                                                ng-options="equipo as equipo.nombre for equipo in ctrlEquipo.equipos track by equipo.id"
-                                                class="lastname form-control input-sm">
-                                                <option value="">--Elige opcion--</option>
-                                             </select>
+                                       <div class="col-md">
+                                          <label class="col-md control-lable" for="address">Equipo  {{ctrl.player.equipo.nombre}}</label>
+                                          <div class="col-md">
+<!--                                           <div  ng-dropdown-multiselect="" options="ctrlEquipo.buscarTodos();ctrlEquipo.equipos"  -->
+<!--                                            selected-model="equipoModel" extra-settings="example9settings" translation-texts="example5customTexts"></div> -->
+<!--                                              <select ng-model="selectedTeam" -->
+<!--                                                 ng-options="equipo as equipo.nombre for equipo in ctrlEquipo.equipos track by equipo.id" -->
+<!--                                                 class="lastname form-control input-sm"> -->
+<!--                                                 <option value="">--Elige opcion--</option> -->
+<!--                                              </select> -->
+								
+									            <div custom-select="t as t.nombre for t in ctrlEquipo.equipos | filter: { nombre: $searchTerm }" ng-model="ctrl.player.equipo">
+									                <div class="pull-left" >
+									                    <img ng-src="{{ t.img }}" style="width: 30px" />
+									                    <strong>{{ t.nombre }}</strong>
+									                </div>
+									               
+									            </div>
+		
                                           </div>
+                                          
                                        </div>
                                     </div>
                                     <div class="row">
                                        <div class="form-actions floatRight">
-                                          <input  ng-click="ctrl.submitPlayer(selectedTeam)" 
+                                          <input  ng-click="ctrl.submitPlayer(ctrl.player.equipo)" 
+                                          class="btn btn-default" data-dismiss="modal"
                                              type="submit" value="{{!ctrl.player.id ? 'Add' : 'Update'}}"
                                              class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
                                           <button type="button" ng-click="ctrl.reset()"
@@ -231,7 +239,7 @@
 	                                           <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 <%-- 	                                           <button  ng-disabled=" '${user.idEquipo} == {{u.equipo.id}}' or '${user.roles}'.include('Admin')"   --%>
 	                                                <button  ng-disabled=" !ctrl.showEditPlayer(u,'${user.idEquipo}','${user.roles}') " 
-	                                                type="button" data-toggle="modal" data-target="#myModal"  ng-click="ctrl.edit(u.id)"
+	                                                type="button" data-toggle="modal" data-target="#myModal"  ng-click="ctrl.edit(u)"
 	                                                   class="btn btn-success btn-sm">Edit</button>
 	                                           </sec:authorize>
                                                 <sec:authorize access="hasAnyRole('ROLE_Admin')">   

@@ -7,7 +7,7 @@ angular.module('myApp')
     'VARTEMPORADA' : '',
     'PROD': false,
     'IP_PROD': 'http://fifaapp-env-1.kvdjpbscsv.us-east-2.elasticbeanstalk.com',
-    'IP_DES':'http://localhost:8081/fifaApp',
+    'IP_DES':'http://localhost:8080/fifaApp',
     'JUGADORES': null,
     'EQUIPOS': null,
     'CAT_EQUIPOS': null,

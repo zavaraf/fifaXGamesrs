@@ -1,7 +1,7 @@
 'use strict';
  
 //var app = angular.module("myApp", ["ngRoute","ngPagination",'btorfs.multiselect','dropdown-multiselect']);
-var app = angular.module("myApp", ["ngRoute","ngPagination",'angularjs-dropdown-multiselect']);
+var app = angular.module("myApp", ["ngRoute","ngPagination",'angularjs-dropdown-multiselect','AxelSoft']);
     app.config(function($routeProvider) {
         $routeProvider
         .when("/", {

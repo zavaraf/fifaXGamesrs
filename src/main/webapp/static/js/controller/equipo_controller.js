@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp').controller('EquipoController',['$scope','$routeParams','CONFIG','EquipoService',function($scope, $routeParams,CONFIG,EquipoService) {
+angular.module('myApp').controller('EquipoController',['$scope','$routeParams','CONFIG','$sce','EquipoService',function($scope, $routeParams,CONFIG,$sce,EquipoService) {
 					
 					var self = this;
 					self.equipo = {
@@ -29,12 +29,20 @@ angular.module('myApp').controller('EquipoController',['$scope','$routeParams','
 					self.remove = remove;
 					self.reset = reset;
 					self.showEdit = showEdit;
+					self.setUrl = setUrl;
 
 					buscarTodos();
 					buscarDivisiones();
 //					buscarTemporada();
 					$scope.selectedDiv = self.divisiones[0]
+					$scope.url ;
 
+					function setUrl(equipo){
+						$scope.url =  $sce.trustAsResourceUrl(equipo.linksofifa);
+						equipo.url =  $sce.trustAsResourceUrl(equipo.linksofifa);
+						
+						return equipo.url;
+					}
 					function buscarTodos() {
 						var idTemporada = CONFIG.VARTEMPORADA.id
 						console.log("[equipo_controller]  idTemporada]:",CONFIG.VARTEMPORADA.id);

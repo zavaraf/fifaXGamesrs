@@ -55,7 +55,7 @@
       <script src="<c:url value='/static/js/controller/torneoLM_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
       
-<%--       <script src="<c:url value='/static/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js' />"></script> --%>
+
       <%--      <script src="<c:url value='/static/js/service/draft_service.js' />"></script> --%>
       <%--      <script src="<c:url value='/static/js/controller/draft_controller.js' />"></script> --%>
            <script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script>
@@ -279,7 +279,31 @@
 								
 								
 								</div>
+						<div ng-repeat="jor in grupo.jornadas">
+						jornada : {{jor.numeroJornada}}
+						<table class="table table-sm table-hover table-dark">
+		                	
+		                      <tbody>
+		                          <tr  ng-repeat="jor in jor.jornada " 
+							  	data-toggle="modal" data-target="#exampleModalScrollable">
+		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
+		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
+		                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td>{{jor.golesLocal}}</td>
+		                              <td>-</td>
+		                              <td>{{jor.golesVisita}}</td>
+		                              <td><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+		                             
+		                          </tr>
+		                      </tbody>
+		    			</table>
+						
+						</div>		
+						
 					</div>
+					
+					
 					     
 				</div>
 		      </div>
@@ -319,7 +343,7 @@
                 <button type="button" class="btn btn-primary"  ng-show="ctrl.isJornadaInsert==false"  ng-click="ctrl.getGenerarJornadas()">Generar Jornadas</button>
                 <button type="button" class="btn btn-primary" ng-show="ctrl.jornadas!=null && ctrl.jornadas != '' " ng-click="ctrl.addJornadas()">Guardar</button>
                 
-                <div class="row">
+                <div ng-if="ctrl.gruposTorneo.length>1" class="row">
                 <div class="col"  ng-repeat="grupo in ctrl.gruposTorneo| orderBy : 'numero'" >
 							<blockquote class="blockquote text-center">
 								  <p class="mb-0">Grupo {{grupo.numero}} </p>
