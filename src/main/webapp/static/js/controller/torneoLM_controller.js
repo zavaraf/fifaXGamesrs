@@ -64,6 +64,7 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	buscarDivisiones()
 	
 	function getTorneos(){
+		
 		return CONFIG.VARTEMPORADA.torneos;
 	}
 	
@@ -116,15 +117,18 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	}
 	
     function getTablaGeneral(){
-    	console.log("---------->",self.divisionSelect)
+    	console.log("-----getTablaGeneral()----->",self.divisionSelect)
+    	
 		TorneoLMService.getTablaGeneral(self.divisionSelect.id)
                 .then(
                 function(d) {
                     self.tablaGeneral = d;
                     
                     console.log("TorneoLMService getTablaGeneral]:",self.tablaGeneral)
-                    
                     getJornadas();
+                    if(self.divisionSelect.tipoTorneo == 2){
+                		getGruposTorneo(self.divisionSelect)
+                	}
                     return d;
                 },
                 function(errResponse){

@@ -19,6 +19,7 @@ DECLARE jornadaVal int;
 DECLARE idjornadaVal int;
 DECLARE idjornadaValInsert int;
 declare idJ int;
+declare tipoTorneo int;
 
 
 set isError = 1 ;
@@ -34,10 +35,26 @@ where jornadas.numeroJornada = numJornada
 and jornadas.torneo_idtorneo = torneo
 and jornadas.division_idDivision = division;
 
+select torneo.tipoTorneo_idtipoTorneo into tipoTorneo
+from torneo
+where torneo.idtorneo = torneo;
+
+if tipoTorneo = 2 then 
+
+select jornadas.idJornada into idjornadaVal
+from jornadas
+where jornadas.numeroJornada = numJornada
+and jornadas.torneo_idtorneo = torneo;
+
+UPDATE `fifaxgamersbd`.`jornadas`
+SET
+`activa` = activa,
+`cerrada` = cerrada
+
+WHERE `idJornada` = idjornadaVal AND `torneo_idtorneo` = torneo;
 
 
-
-if idjornadaVal is null then
+else if idjornadaVal is null then
 
 INSERT INTO `fifaxgamersbd`.`jornadas`
 (`idJornada`,
@@ -101,9 +118,9 @@ equipoVisita);
 
 end if;
 
+end if;
 set isError = 0 ;
 set message = 'OK';
-
 
 
 END $$

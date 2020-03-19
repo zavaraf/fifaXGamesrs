@@ -264,9 +264,9 @@ public class TemporadaServiceImpl implements TemporadaService{
 					break;
 				}
 			}
-			if(tipoTorneo == 2){
-				break;
-			}
+//			if(tipoTorneo == 2){
+//				break;
+//			}
 		}
 		
 		if (map == null || map.isEmpty()) {

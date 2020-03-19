@@ -123,7 +123,7 @@ app
 													if (self.divisiones != null&& self.divisiones.length > 0) {
 														
 														self.divisionSelect = (CONFIG.VARTEMPORADA.torneos != null && CONFIG.VARTEMPORADA.torneos.length > 0) ? CONFIG.VARTEMPORADA.torneos[0]
-																: null
+																: self.divisiones[0]
 														console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",self.divisionSelect)
 														getJornadas();
 													}
