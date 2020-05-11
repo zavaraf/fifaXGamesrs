@@ -27,6 +27,7 @@ BEGIN
   declare cum int(10);
   
   declare idTorneo int;
+  declare idEquipoTorneoVar int;
   
   declare idEquipoJson int;
   declare numeroGrupoJson int;
@@ -41,7 +42,7 @@ set message = 'Error al crear grupos';
 
 select torneo.idtorneo into idTorneo
 from torneo
-where torneo.nombreTorneo = nombreTorneo;
+where torneo.nombreTorneo = nombreTorneo and torneo.tempodada_idTemporada = idTemporada ;
 
 if idTorneo is null then 
   call crearTorneo(nombreTorneo,idTemporada,2,@iserr,@ip);
@@ -79,8 +80,15 @@ end if;
         select JSON_EXTRACT(`jsonEquipos`, CONCAT('$[', `_index_Equipos`, '].id')) into idEquipoJson;
         
       
+        set idEquipoTorneoVar = null;
+        
+        select grupos_torneo.equipos_idEquipo into idEquipoTorneoVar
+        from grupos_torneo
+        where grupos_torneo.equipos_idEquipo = idEquipoJson 
+        and torneo_idtorneo = idTorneo ;
         
         
+        if idEquipoTorneoVar  is null and idEquipoTorneoVar != -1 then 
                 INSERT INTO `fifaxgamersbd`.`grupos_torneo`
 				(`torneo_idtorneo`,
 				`equipos_idEquipo`,
@@ -89,12 +97,12 @@ end if;
 				(idTorneo,
 				idEquipoJson,
 				var);
-
+		end if;
         
         SET `_index_Equipos` := `_index_Equipos` + 1;
         
         END WHILE;
-        
+          select 'saliendo grupos';
         
         
         SELECT JSON_EXTRACT(`json`, CONCAT('$[', `_index`, '].jornadas')) into jsonJornadas ;
@@ -153,8 +161,8 @@ end if;
 				where jornadas.numeroJornada = (SELECT JSON_EXTRACT(`jsonJornadas`, CONCAT('$[', `_index_Jornadas`, '].numeroJornada')))
 				and jornadas.torneo_idtorneo = idTorneo;
 					
-                select (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoLocal') ) ) idEquipoLocal,
-                (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoVisita') ) ) idEquipoVisita;
+           --     select (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoLocal') ) ) idEquipoLocal,
+           --     (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoVisita') ) ) idEquipoVisita;
                 
 					select hje.id into idJ
 					from jornadas_has_equipos hje
@@ -163,7 +171,8 @@ end if;
 					and hje.equipos_idEquipoVisita = (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoVisita') ))
 					and hje.jornadas_idJornada = idjornadaVal;
 
-				-- if idJ is null then 
+				if  (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoLocal') ) ) != -1
+				&&  (SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoVisita') )) != -1 then  
 
 						INSERT INTO `fifaxgamersbd`.`jornadas_has_equipos`
 						(`id`,
@@ -177,7 +186,7 @@ end if;
 						(SELECT JSON_EXTRACT(`jsonJuego`, CONCAT('$[', `_index_Juegos`, '].idEquipoVisita') ))
 						);
 
-				-- 	end if;
+				 	end if;
 				
 				
 				

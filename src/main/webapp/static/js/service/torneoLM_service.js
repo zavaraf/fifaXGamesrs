@@ -33,7 +33,12 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         var deferred = $q.defer();
         var idTorneo = 1;
 //        $http.get(REST_SERVICE_URI_E+'getTablaGeneral'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision)
-        $http.get(REST_SERVICE_URI_E+'getTorneoGeneral'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision)
+        var idEquipo = CONFIG.ID_EQUIPO == null ? 0 : CONFIG.ID_EQUIPO;
+        
+        var url = REST_SERVICE_URI_E+'getTorneoGeneral'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision+'/'+idEquipo
+        console.log(url,CONFIG)
+        		
+        $http.get(url)
             .then(
             function (response) {
             	console.log(response.data)
@@ -234,7 +239,7 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     function guardarJornada(jornada,idTorneo) {
         var deferred = $q.defer();
         
-        var url = REST_SERVICE_URI_E+'addResultJornada/'+idTorneo+'/'+CONFIG.VARTEMPORADA.id;
+        var url = REST_SERVICE_URI_E+'addResultJornada/'+idTorneo+'/'+CONFIG.VARTEMPORADA.id+'/'+CONFIG.ID_EQUIPO;
         console.log("------Jornada Service];----",url)
         $http.post(url,jornada)
             .then(
@@ -255,6 +260,7 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         
         var url = REST_SERVICE_URI_E+'addJuegosLiguilla/'+CONFIG.VARTEMPORADA.id+'/'+idTorneo;
         console.log("------addJuegosLiguilla Service];----",url)
+        console.log("------addJuegosLiguilla Service];----",jornadasLiguillaVar)
         $http.post(url,jornadasLiguillaVar)
             .then(
             function (response) {

@@ -77,13 +77,15 @@ public class TemporadaController {
 		}
 		return new ResponseEntity<List<TablaGeneral>>(listTemporada, HttpStatus.OK);
 	}
-	@RequestMapping(value="/lm/getTorneoGeneral/{idTemporada}/{idDivision}",method = RequestMethod.GET,
+	@RequestMapping(value="/lm/getTorneoGeneral/{idTemporada}/{idDivision}/{idEquipo}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<Torneo> getTorneoGeneral(@PathVariable("idTemporada") int idTemporada,
-			@PathVariable("idDivision") int idDivision){
+			@PathVariable("idDivision") int idDivision,
+			@PathVariable("idEquipo") int idEquipo){
 		
-		Torneo listTorneo = temporadaService.getTorneoGeneral(idTemporada,idDivision);
+		System.out.println("/lm/getTorneoGeneral/{idTemporada}"+idTemporada+"/{idDivision}"+idDivision+"/{idEquipo"+idEquipo);
+		Torneo listTorneo = temporadaService.getTorneoGeneral(idTemporada,idDivision, idEquipo);
 		
 		if(listTorneo == null){
 			return new ResponseEntity<Torneo>(HttpStatus.NO_CONTENT);
@@ -161,13 +163,14 @@ public class TemporadaController {
 		 
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
-	 @RequestMapping(value="/lm/addResultJornada/{idTorneo}/{idTempodrada}",
+	 @RequestMapping(value="/lm/addResultJornada/{idTorneo}/{idTempodrada}/{idEquipo}",
 			 method = RequestMethod.POST,
 			 headers="Accept=application/json")
 	 @ResponseBody
 	 public ResponseEntity<ResponseData> addResultJornada(
 			 @PathVariable("idTorneo") int idTorneo,
 			 @PathVariable("idTempodrada") int idTempodrada,
+			 @PathVariable("idEquipo") int idEquipo,
 			 @RequestBody Jornada jornadaEdit
 			 ){
 		 
@@ -175,7 +178,7 @@ public class TemporadaController {
 		 ResponseData response = new ResponseData();	
 		 try{
 			 System.out.println( "jugador:"+idTorneo+" Equipo]:"+idTempodrada);
-			 response = temporadaService.addResultJornada(idTorneo,idTempodrada,jornadaEdit);
+			 response = temporadaService.addResultJornada(idTorneo,idTempodrada,jornadaEdit,idEquipo);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
@@ -332,6 +335,32 @@ public class TemporadaController {
 		 try{
 			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
 			 response = temporadaService.getGruposTorneo(idTemporada, idTorneo);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 
+		 }
+		 if(response.isEmpty()){
+				return new ResponseEntity<List<Grupos>>(HttpStatus.NO_CONTENT);
+			}
+		 
+		 return new ResponseEntity<List<Grupos>>(response, HttpStatus.OK);
+	 }
+	 
+	 @RequestMapping(value="/lm/generarJornadasUpGrupo/{idTemporada}/{idTorneo}/{vuelta}/{nombre}",
+			 method = RequestMethod.GET,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<List<Grupos>> generarJornadasGruposTorneos(
+			 @PathVariable("idTemporada") int idTemporada,
+			 @PathVariable("idTorneo") int idTorneo,
+			 @PathVariable("vuelta") int vuelta,
+			 @PathVariable("nombre") String nombre
+			 ){
+		 
+		 List<Grupos> response = new ArrayList<Grupos>();	
+		 try{
+			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+			 response = temporadaService.generarJornadasGruposTorneos(idTemporada, idTorneo,vuelta,nombre);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 

@@ -15,7 +15,7 @@ public interface TemporadaDao {
 
 	List<Temporada> buscarTodos();
 	List<TablaGeneral> getTablaGeneral(int idTemporada, int idDivision);
-	Torneo getTorneoGeneral(int idTemporada, int idDivision);
+	Torneo getTorneoGeneral(int idTemporada, int idDivision, int idEquipo);
 	List<Jornadas> getJornadas(int idTemporada, int idDivision,int activa);
 	List<GolesJornadas> getGolesJornadas(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
 	Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);

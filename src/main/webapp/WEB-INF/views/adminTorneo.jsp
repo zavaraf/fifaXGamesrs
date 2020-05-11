@@ -279,12 +279,29 @@
 								
 								
 								</div>
+						<div class="row">
+                          <div class="form-group col-md-12">
+                              <div class="col-md-7">
+                                  <p><input class="form-control input-sm"  type="text" ng-model="test" placeholder="Filtrar"></p>
+                              </div>
+                          </div>
+              		</div>
 						<div ng-repeat="jor in grupo.jornadas">
 						jornada : {{jor.numeroJornada}}
+<!-- 						 <span  ng-repeat="e in ctrl.getEquiposDes(grupo.equipos,jor.jornada)" class="list-group-item list-group-item-action"> -->
+<!-- 								  	<div class="container" > -->
+<!-- 									  <div class="row text-center"> -->
+<!-- 									    <div class="col " > -->
+<!-- 									      <img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="...">  -->
+<!-- 									       {{e.nombre}} -->
+<!-- 									    </div> -->
+<!-- 									  </div> -->
+<!-- 									</div> -->
+<!-- 								  </span> -->
 						<table class="table table-sm table-hover table-dark">
 		                	
 		                      <tbody>
-		                          <tr  ng-repeat="jor in jor.jornada " 
+		                          <tr  ng-repeat="jor in jor.jornada | filter : test " 
 							  	data-toggle="modal" data-target="#exampleModalScrollable">
 		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
 		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
@@ -340,6 +357,13 @@
                        <span class="lead">Generar Jornadas</span>
                     </div>
                 </div>
+                <div class="row">
+                          <div class="form-group col-md-12">
+                              <div class="col-md-7">
+                                  <p><input class="form-control input-sm"  type="text" ng-model="test1" placeholder="Filtrar"></p>
+                              </div>
+                          </div>
+              		</div>
                 <button type="button" class="btn btn-primary"  ng-show="ctrl.isJornadaInsert==false"  ng-click="ctrl.getGenerarJornadas()">Generar Jornadas</button>
                 <button type="button" class="btn btn-primary" ng-show="ctrl.jornadas!=null && ctrl.jornadas != '' " ng-click="ctrl.addJornadas()">Guardar</button>
                 
@@ -371,7 +395,7 @@
 					
 		    			<div class="row"   >
 		    			
-							<div class="col-lg-6" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada'">
+							<div class="col-lg-6" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada' ">
 							<div class="row"   >
 								<div class="col" >
 									<blockquote class="blockquote text-center">
@@ -400,7 +424,7 @@
 							<table class="table table-sm table-hover table-dark">
 		                	
 		                      <tbody>
-		                          <tr  ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+		                          <tr  ng-repeat="jor in e.jornada | filter : test1" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
 							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
 							  	data-toggle="modal" data-target="#exampleModalScrollable">
 		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>

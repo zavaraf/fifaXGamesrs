@@ -142,11 +142,23 @@ public class GenerarJornadasUtil {
 		return null;
 		
 	}
-	public List<Jornadas> getJornadasIdaYVuelta(List<Equipo> equiposL, int vuelta){
+	public List<Jornadas> getJornadasIdaYVuelta(List<Equipo> equiposL, int vuelta, List<Grupos> grupos){
 		
 		List<Equipo> equipos = equiposL;
 		
+		
+		
 		int numero = equipos.size();
+		
+		if((numero%2) !=0 ){
+			Equipo eq = new Equipo();
+			eq.setId(-1);
+			eq.setNombre("Descanso");
+			
+			equipos.add(eq);
+			
+			numero = equipos.size();
+		}
 	
 		
 		HashMap<Integer,List<String>> jornadas = generarJornadasIdaYVuelta(numero,vuelta);
@@ -167,8 +179,9 @@ public class GenerarJornadasUtil {
 				Equipo equipoLcoal = equipos.get(local-1);
 				Equipo equipoVisita = equipos.get(visita-1);
 				
-				if(jornada > 0 ){
-					
+//				System.out.println("->Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
+				if(jornada > 0 && grupos.size()== 1){
+//					System.out.println("grupos enttro ]:"+grupos.size());
 					Jornada juegoAnterior = getJuegoAnterior(jornadasList, equipoLcoal, equipoLcoal, equipos);
 					Jornada juegoAnteriorVisita = getJuegoAnterior(jornadasList, equipoVisita, equipoVisita, equipos);
 					
@@ -183,6 +196,8 @@ public class GenerarJornadasUtil {
 									
 				}
 				
+				System.out.println("Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
+				
 				Jornada jo = new Jornada();
 				
 				jo.setIdJornada(jornada+1);
@@ -194,6 +209,8 @@ public class GenerarJornadasUtil {
 				jo.setNombreEquipoVisita(equipoVisita.getNombre());
 				jo.setImgLocal(equipoLcoal.getImg());
 				jo.setImgVisita(equipoVisita.getImg());
+				
+				
 				
 				juegosList.add(jo);				
 				

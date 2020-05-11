@@ -16,7 +16,7 @@ public interface TemporadaService {
 
 	List<Temporada> buscarTodos();
 	List<TablaGeneral> getTablaGeneral(int idTemporada, int idDivision);
-	Torneo getTorneoGeneral(int idTemporada, int idDivision);
+	Torneo getTorneoGeneral(int idTemporada, int idDivision, int idEquipo);
 	List<Jornadas> getJornadas(int idTemporada, int idDivision,int activa);
 	List<GolesJornadas> getGolesJornadas(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
 	Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
@@ -26,12 +26,13 @@ public interface TemporadaService {
 	ResponseData addJuegosLiguilla(int idTemporada, int idTorneo, List<Jornadas> jornadas);
 	
 	ResponseData addGol(int idJugador,int idEquipo,int id,int idJornada);
-	ResponseData addResultJornada(int idTorneo,int idTemporada,Jornada jornada);
+	ResponseData addResultJornada(int idTorneo,int idTemporada,Jornada jornada, int idEquipo);
 	
 	ResponseData addImagen(int idEquipo,int id,int idJornada,String img);
 	ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas, int tipoTorneo);
 	ResponseData addJornadasGrupos(int idTemporada, String nombre, String grupos,int confTor);
 	List<Grupos> getGruposTorneo(int idTemporada, int idTorneo);
+	List<Grupos> generarJornadasGruposTorneos(int idTemporada, int idTorneo,int vuelta,String nombre);
 	
 	
 

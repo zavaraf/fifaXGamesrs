@@ -308,6 +308,7 @@
 		                	<thead class="thead-dark">
 		                          <tr>
 		                          	  <th>*</th>
+		                          	  <th>*</th>
 		                              <th>Equipo</th>
 		                              <th>PJ</th>
 		                              <th>PG</th>
@@ -322,6 +323,7 @@
 		                      </thead>
 		                      <tbody>
 		                          <tr ng-repeat="e in ctrl.tablaGeneral.tablaGeneral">
+		                          	  <td><a>{{$index+1}}</a></td>
 		                          	  <td><img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
 		                              <td><a>{{e.nombreEquipo}}</a></td>
 		                              <td><span ng-bind="e.pj"></span></td>
@@ -340,6 +342,7 @@
 		    			<table ng-show = "ctrl.divisionSelect.tipoTorneo ==2" ng-repeat="grupo in ctrl.gruposTorneo" class="table table-sm table-hover table-striped">
 		                	<thead class="thead-dark">
 		                          <tr>
+		                              <th>*</th>
 		                          	  <th>*</th>
 		                              <th>Equipo</th>
 		                              <th>PJ</th>
@@ -355,6 +358,7 @@
 		                      </thead>
 		                      <tbody>
 		                          <tr ng-repeat="e in ctrl.getTablaGrupo(grupo)">
+		                          	  <td><a>{{$index+1}}</a></td>
 		                          	  <td><img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
 		                              <td><a>{{e.nombreEquipo}}</a></td>
 		                              <td><span ng-bind="e.pj"></span></td>
@@ -369,6 +373,9 @@
 		                          </tr>
 		                      </tbody>
 		    			</table>
+		    			
+		    	<div  class="row">
+                	<div class="col-xs-12 col-md-7">
 		    			<table class="table table-sm table-hover table-striped">
 		    				<thead class="thead-dark">
 		                          <tr>
@@ -389,6 +396,30 @@
 		                      </tbody>
 		    			
 		    			</table>
+		    		</div>
+		    		<div class="col-xs-6 col-md-5 ">
+		    			<table class="table table-sm table-hover table-striped">
+		    				<thead class="thead-dark">
+		                          <tr>
+		                          	  <th>*</th>
+		                              <th>Goles</th>
+		                              <th>Nombr</th>	
+		                              	                              
+		                          </tr>
+		                      </thead>
+		                       <tbody>
+		                          <tr ng-repeat="e in ctrl.tablaGeneral.golesTorneoEquipo">
+		                          	  <td><img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td><a>{{e.goles}}</a></td>
+		                              <td><a>{{e.sobrenombre}}</a></td>
+		                              
+		                              
+		                          </tr>
+		                      </tbody>
+		    			
+		    			</table>
+		    		</div>
+		    		</div>
 		    		</div>
 		    		<div class="col-xs-6 col-md-5 " >
 		    		

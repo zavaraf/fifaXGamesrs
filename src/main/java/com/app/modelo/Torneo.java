@@ -10,6 +10,7 @@ public class Torneo {
 	private List<GolesJornadas> golesTorneo;
 	private List<TablaGeneral> tablaGeneral;
 	private List<Jornadas>  jornadas;
+	private List<GolesJornadas> golesTorneoEquipo;
 	public int getId() {
 		return id;
 	}
@@ -45,6 +46,12 @@ public class Torneo {
 	}
 	public void setJornadas(List<Jornadas> jornadas) {
 		this.jornadas = jornadas;
+	}
+	public List<GolesJornadas> getGolesTorneoEquipo() {
+		return golesTorneoEquipo;
+	}
+	public void setGolesTorneoEquipo(List<GolesJornadas> golesTorneoEquipo) {
+		this.golesTorneoEquipo = golesTorneoEquipo;
 	}
 	
 	

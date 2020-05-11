@@ -30,6 +30,7 @@ app
 							self.equiposTorneo = [];
 							self.equiposSelect;
 							self.gruposSe = [];
+							
 							self.gruposTorneo = [];
 							self.confJor = 2;
 							self.confTor = 2;
@@ -50,6 +51,7 @@ app
 							self.getGruposTorneo = getGruposTorneo;
 							self.generarPartidosFinales = generarPartidosFinales;
 							self.addJuegosLiguilla = addJuegosLiguilla;
+							//self.getEquiposDes = getEquiposDes;
 
 							$scope.example9model = [];
 							$scope.equiposLiguilla = [];
@@ -66,6 +68,39 @@ app
 							};
 
 							buscarDivisiones();
+							
+							
+//							function getEquiposDes(equipos, jornada){
+//								
+//								var equiposL = [];
+//								//console.log("Equipo......>",equipos)
+//								//console.log("Jornadas---->",jornada)
+//								
+//								for (var j = 0; j < equipos.length; j++) {
+//									var valor = equipos[j];
+//								   
+//								    var ban = false;
+//								 
+//								    for (var i = 0; i < jornada.length; i++) {
+//								    	if((jornada[i].idEquipoLocal == valor.id || jornada[i].idEquipoVisita == valor.id ) && valor.id !=1){
+//								    		ban = true;
+//								    	
+//								    		
+//								    	}
+//								    	
+//								    }
+//								    
+//								    if(ban == false){
+//								    	equiposL.push(valor);
+//								    	//console.log(eq)
+//								    }
+//								    	
+//								    
+//								};
+//								if(equiposL.length>0)
+//									console.log("Equipos Sin ]:",equiposL)
+//								return equiposL;
+//							}
 
 							function getTorneos(e) {
 								return CONFIG.VARTEMPORADA.torneos;

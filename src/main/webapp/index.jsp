@@ -113,7 +113,8 @@
 			</div>
 		</div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#!torneo">Torneo</a>
+	<sec:authentication var="user" property="principal" />
+		<a class="navbar-brand" ng-show="ctrl.mostrar ('${user.idEquipo}')" href="#!torneo">Torneo</a>
 		<a class="navbar-brand" href="#!jugadores">Jugadores</a> 
 		<a class="navbar-brand" href="#!equipos">Equipos</a>
 		
@@ -131,7 +132,8 @@
 				</li>
 				<li class="nav-item"><a class="nav-link" href="#!zonaDraftPC">Draft	PC</a></li>
 				<sec:authorize access="hasAnyRole('ROLE_Admin')">
-				<li class="nav-item"><a class="nav-link" href="#!adminDT">Admin DTS</a></li>
+				
+				<li class="nav-item" ><a class="nav-link" href="#!adminDT">Admin DTS</a></li>
 				<li class="nav-item"><a class="nav-link" href="#!adminTorneo">Admin Torneo</a></li>
 				<li class="nav-item dropdown">
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Catalogos</a>
@@ -148,6 +150,7 @@
 			<p>
 				Bienvenido
 				<%=request.getUserPrincipal().getName()%>
+			
 				
 				<a href="<c:url value='/logout'/>">desconectar</a>
 				
