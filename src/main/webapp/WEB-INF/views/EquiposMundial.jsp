@@ -113,6 +113,32 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Modal Sofifa-->
+		<div class="modal fade" id="myModalSofifa" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Sofifa Equipos</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					
+					<div ng-repeat="e in ctrl.equipos | orderBy : 'e.division'">
+						<h6 >{{e.nombre}} : <spam><a href="{{e.linksofifa}}" target="_blank" > {{e.linksofifa}} </a> </spam> </h6>
+					</div>
+					 	
+					  					
+					
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
   		<div  class="panel-heading">
   			<span class="lead">FIFA XGAMERS </span>
   		</div>
@@ -120,6 +146,9 @@
   		<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
 			data-target="#myModal">Añadir Equipo</button>
 		</sec:authorize>
+		<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+			data-target="#myModalSofifa">Ver Sofifa</button>
+		
   		<div class="formcontainer">
   			
                   <div class="panel panel-default">

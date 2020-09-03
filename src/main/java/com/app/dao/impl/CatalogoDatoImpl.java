@@ -2,18 +2,24 @@ package com.app.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
 import com.app.dao.CatalogoDao;
 import com.app.modelo.CatalogoFinanciero;
 import com.app.modelo.TipoConcepto;
+import com.app.utils.MyStoredProcedure;
 
 @Component
 public class CatalogoDatoImpl implements CatalogoDao{
@@ -62,6 +68,42 @@ public class CatalogoDatoImpl implements CatalogoDao{
 			
 			return listCatalogo;
 	
+	}
+	
+	@Override
+	public HashMap<String, String> updateCatalogos(String nombre, String desctipcion, int tipo) {
+		
+		System.out.println("----->createOrUpdateConceptos]:" + nombre);
+		String query = "createOrUpdateConceptos";
+
+		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
+
+		// Sql parameter mapping
+		SqlParameter nombreVal         = new SqlParameter("codigo", Types.VARCHAR);
+		SqlParameter desctipcionVal    = new SqlParameter("descripcion", Types.VARCHAR);
+		SqlParameter tipoVal         = new SqlParameter("tipo", Types.INTEGER);
+		
+		SqlOutParameter isError        = new SqlOutParameter("isError", Types.INTEGER);
+		SqlOutParameter message        = new SqlOutParameter("message", Types.VARCHAR);
+
+		SqlParameter[] paramArray = { nombreVal, desctipcionVal,tipoVal,
+				isError, message };
+
+		myStoredProcedure.setParameters(paramArray);
+		myStoredProcedure.compile();
+
+		// Call stored procedure
+		Map storedProcResult = myStoredProcedure.execute(nombre, desctipcion,tipo);
+
+		System.out.println(storedProcResult);
+
+		HashMap<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("status", storedProcResult.get("isError").toString());
+		mapa.put("mensaje", storedProcResult.get("message").toString());
+		System.out.println(mapa);
+
+		return mapa;
 	}
 
 }

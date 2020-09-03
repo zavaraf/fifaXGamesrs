@@ -11,6 +11,7 @@ angular.module('myApp')
 	self.catalogoSubmit;
 	
 	self.findAllCatalogs         = findAllCatalogs;
+	self.updateConceptos         = updateConceptos;
 	
 	findAllCatalogs();
 	
@@ -26,5 +27,30 @@ angular.module('myApp')
             }
         );
     }
+	
+	function updateConceptos(nombre, descripcion,tipo) {
+		console.log("------------------->addTorneoGrupo]:",tipo)
+		if(tipo.codigo == 'egreso'){
+			tipo = 2;
+		}else{
+			tipo = 1;
+		}
+		CatalogoService
+				.updateConceptos(nombre, descripcion,tipo)
+				.then(
+						function(d) {
+
+							console.log("ConceptosController-updateConceptos]:",
+											d)
+
+						   findAllCatalogs();
+							return d;
+						},
+						function(errResponse) {
+							console
+									.error('[ConceptosController] Error while fetching updateConceptos()');
+						});
+		return null;
+	}
 	
 }]);

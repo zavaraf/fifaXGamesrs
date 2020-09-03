@@ -54,7 +54,7 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body">
-					<form ng-submit="ctrl.submitFinanzas(catSelected)" name="myFormCon" class="form-horizontal">
+					<form ng-submit="ctrl.updateConceptos(ctrl.catalogoSubmit.codigo,ctrl.catalogoSubmit.descripcion,ctrl.catalogoSubmit.tipoconcepto)" name="myFormCon" class="form-horizontal">
 <%-- 					<form name="myForm" class="form-horizontal""> --%>
                       <input type="hidden" ng-model="ctrl.equipo.id" />
                      
@@ -85,15 +85,16 @@
 									       <span class="input-group-text">Tipo Concepto</span>					       
 									    </div>
 									    <select  ng-model="ctrl.catalogoSubmit.tipoconcepto" ng-options="catFinanzas as catFinanzas.codigo for catFinanzas in ctrl.catalogoFinanzas track by catFinanzas.codigo" class="lastname form-control input-sm">
-										        <option value="" >--Elige Opcion--</option>
-										      </select>
-										</select>
+										    <option value="" >--Elige Opcion--</option>
+										 </select>
+										
 									 </div>
 	                          </div>
 	                      </div>     
 					<div class="modal-footer">
 						<div class="form-actions floatRight">
-                           <input type="submit" value="Guardar" class="btn btn-primary btn-sm" ng-disabled="(ctrl.catalogoSubmit.descripcion==null || ctrl.catalogoSubmit.codigo==null || ctrl.catalogoSubmit.tipoconcepto==null) " >
+                           <input type="submit" value="Guardar" class="btn btn-primary btn-sm"
+                            ng-disabled="(ctrl.catalogoSubmit.descripcion==null || ctrl.catalogoSubmit.codigo==null || ctrl.catalogoSubmit.tipoconcepto==null) " >
                         </div>
 						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
 					</div>

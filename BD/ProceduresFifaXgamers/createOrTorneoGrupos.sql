@@ -87,8 +87,8 @@ end if;
         where grupos_torneo.equipos_idEquipo = idEquipoJson 
         and torneo_idtorneo = idTorneo ;
         
-        
-        if idEquipoTorneoVar  is null and idEquipoTorneoVar != -1 then 
+        -- select idEquipoTorneoVar,idTorneo,var,idEquipoJson;
+        if idEquipoTorneoVar  is null and idEquipoJson > -1 then 
                 INSERT INTO `fifaxgamersbd`.`grupos_torneo`
 				(`torneo_idtorneo`,
 				`equipos_idEquipo`,
@@ -97,12 +97,13 @@ end if;
 				(idTorneo,
 				idEquipoJson,
 				var);
+          --       select idEquipoTorneoVar,idTorneo,var,idEquipoJson;
 		end if;
         
         SET `_index_Equipos` := `_index_Equipos` + 1;
         
         END WHILE;
-          select 'saliendo grupos';
+         -- select 'saliendo grupos';
         
         
         SELECT JSON_EXTRACT(`json`, CONCAT('$[', `_index`, '].jornadas')) into jsonJornadas ;

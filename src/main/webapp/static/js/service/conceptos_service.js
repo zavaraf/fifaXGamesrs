@@ -6,7 +6,8 @@ angular.module('myApp').factory('CatalogoService', ['$http', '$q','CONFIG', func
 	var REST_SERVICE_URI = IP+'/rest/catalogs/';
 		 
     var factory = {
-    		findAllCatalogs: findAllCatalogs
+    		findAllCatalogs: findAllCatalogs,
+    		updateConceptos: updateConceptos
     	
     };
 		
@@ -22,6 +23,26 @@ angular.module('myApp').factory('CatalogoService', ['$http', '$q','CONFIG', func
             },
             function(errResponse){
                 console.error('[CatalogoService] Error while fetching Users');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+    
+    function updateConceptos(nombre,descripcion,tipo) {
+        var deferred = $q.defer();
+        
+        var request = REST_SERVICE_URI+'updateCatalogos/'+nombre+'/'+descripcion+'/'+tipo;
+      
+        console.log(request)
+        $http.post(request)
+            .then(
+            function (response) {
+               console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while updateConceptos',errResponse);
                 deferred.reject(errResponse);
             }
         );

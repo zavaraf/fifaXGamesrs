@@ -422,36 +422,91 @@
 		    		</div>
 		    		</div>
 		    		<div class="col-xs-6 col-md-5 " >
-		    		
+			    		
+			    		<!-- Nav tabs -->
+						  <ul class="nav nav-tabs" role="tablist">
+						    <li class="nav-item">
+						      <a class="nav-link active" data-toggle="tab" ng-click="ctrl.showPen = false; ctrl.showJor = true">Jornadas</a>
+						      
+						    </li>
+						    <li class="nav-item">
+						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getPendientes(); ctrl.showPen = true; ctrl.showJor = false" >Pendientes</a>
+						    </li>
+						 
+						  </ul>
+						  
+						 <div ng-show="ctrl.showPen" class="row">
+							
+						
+							<div class="col"   >
+								
+							  <div class="form-group col-md-12">
+	                              <div class="col-md-7">
+	                                  <p><input class="form-control input-sm"  type="text" ng-model="test1" placeholder="Filtrar"></p>
+	                              </div>
+	                          </div>
+								<table class="table table-sm table-hover table-dark table-responsive ">
+			                	  <thead class="thead-dark">
+			                          <tr>
+			                          	  <th>#</th>
+			                              <th>Local</th>
+			                              <th></th>	
+			                              <th></th>
+			                              <th></th>
+			                              <th></th>
+			                              <th></th>
+			                              <th>Visita</th>
+			                              	                              
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="jor in ctrl.jorPendientes  | orderBy : 'numeroJornada' | filter : test1 " ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+								  	ctrl.getJornada(jor.idJornada,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
+								  	data-toggle="modal" data-target="#exampleModalScrollable">
+								  		  <td><span ng-bind="jor.numeroJornada"></span></td>
+			                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
+			                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+			                              <td>{{jor.golesLocal}}</td>
+			                              <td>-</td>
+			                              <td>{{jor.golesVisita}}</td>
+			                              <td ><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+			                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+			                             
+			                          </tr>
+			                      </tbody>
+			    				</table>
+							</div>
+						
+						</div> 
 					
-		    			<div class="row">
+		    			<div ng-show="ctrl.showJor" class="row">
 		    			<div class="scrollmenu">
 						  <a href="" ng-click="ctrl.setJornadaActual(e)" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada'" >
 						  {{e.tipoJornada == 0 ? ("Jornada "+ e.numeroJornada) : e.nombreJornada }} </a>
 						</div>
 							<div class="col"  ng-repeat="e in ctrl.jornadaSelect | orderBy : 'numeroJornada'" >
-							<blockquote class="blockquote text-center">
-								  <p class="mb-0">{{e.tipoJornada == 0 ? ("Jornada "+ e.numeroJornada) : e.nombreJornada }} <a ng-show="e.cerrada==1">Cerrada</a></p>
-								  
-							</blockquote>
-							<table class="table table-sm table-hover table-dark table-responsive ">
-		                	
-		                      <tbody>
-		                          <tr ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
-							  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
-							  	data-toggle="modal" data-target="#exampleModalScrollable">
-		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
-		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
-		                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
-		                              <td>{{jor.golesLocal}}</td>
-		                              <td>-</td>
-		                              <td>{{jor.golesVisita}}</td>
-		                              <td ><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
-		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
-		                             
-		                          </tr>
-		                      </tbody>
-		    			</table>
+								<blockquote class="blockquote text-center">
+									  <p class="mb-0">{{e.tipoJornada == 0 ? ("Jornada "+ e.numeroJornada) : e.nombreJornada }} <a ng-show="e.cerrada==1">Cerrada</a></p>
+									  
+								</blockquote>
+								<table class="table table-sm table-hover table-dark table-responsive ">
+			                	
+			                      <tbody>
+			                          <tr ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+								  	ctrl.getJornada(e.idJornda,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
+								  	data-toggle="modal" data-target="#exampleModalScrollable">
+			                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
+			                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
+			                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+			                              <td>{{jor.golesLocal}}</td>
+			                              <td>-</td>
+			                              <td>{{jor.golesVisita}}</td>
+			                              <td ><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+			                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+			                             
+			                          </tr>
+			                      </tbody>
+			    				</table>
 							</div>
 						</div>
 					
