@@ -812,7 +812,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	public Jornada getJornada(String idJornada,String id,	String idEquipoLocal,	String idEquipoVisita){
 		
 	Jornada jornada = new Jornada();
-	String query = "  select tabla.idJornada, tabla.id, tabla.numeroJornada, tabla.cerrada,"
+	String query ="  select tabla.idJornada, tabla.id, tabla.numeroJornada, tabla.cerrada,"
 				+"  tabla.equipos_idEquipoLocal, "
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, "
 				+"  tabla.golesLocal, "
@@ -823,7 +823,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+"   "
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoVisita) equipoVisita, "
 				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita) imgVisita, "
-				+"  tabla.equipos_idEquipoVisita " 
+				+"  tabla.equipos_idEquipoVisita, "
+				+"  tabla.username "
 				+"   "
 				+"  from ( "
 				+"   "
@@ -831,7 +832,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+"  je.equipos_idEquipoLocal, "
 				+"  je.golesLocal, "
 				+"  je.golesVisita, "
-				+"  je.equipos_idEquipoVisita "
+				+"  je.equipos_idEquipoVisita, "
+				+"  je.username "
 				+"  from jornadas "
 				+"  join jornadas_has_equipos je on je.jornadas_idJornada = jornadas.idJornada "
 				+"  ) tabla "
@@ -857,6 +859,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
                 	jornada.setCerrada(rs.getInt("cerrada"));
                 	jornada.setImgLocal(rs.getString("imgLocal"));
                 	jornada.setImgVisita(rs.getString("imgVisita"));
+                	jornada.setUsername(rs.getString("username"));
                 	
                 	try{
                 	jornada.setGolesLocal(Integer.parseInt(rs.getString("golesLocal")));
@@ -944,9 +947,9 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		return mapa;
 	}
 	
-	public HashMap<String, String> addResultJornada(int idTorneo,int idTemporada,String jornada) {
+	public HashMap<String, String> addResultJornada(int idTorneo,int idTemporada,String jornada, String username) {
 
-		System.out.println("----->registrarJornada]:" + idTorneo+",idEqupo]:"+idTemporada+",id]:"+idTemporada+",idJonada]:");
+		System.out.println("----->registrarJornada]:" + idTorneo+",idEqupo]:"+idTemporada+",id]:"+idTemporada+",user]:"+ username);
 		String query = "registrarJornada";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -955,18 +958,19 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		SqlParameter jsonVar = new SqlParameter("json", Types.VARCHAR);
 		SqlParameter nombreTorneoID = new SqlParameter("nombreTorneo", Types.VARCHAR);
 		SqlParameter idTemporadaVar = new SqlParameter("idTemporada", Types.INTEGER);
+		SqlParameter usernameVar = new SqlParameter("username", Types.VARCHAR);
 		
 		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
 		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
 
-		SqlParameter[] paramArray = { jsonVar, nombreTorneoID,idTemporadaVar,
+		SqlParameter[] paramArray = { jsonVar, nombreTorneoID,idTemporadaVar,usernameVar,
 				isError, message };
 
 		myStoredProcedure.setParameters(paramArray);
 		myStoredProcedure.compile();
 
 		// Call stored procedure
-		Map storedProcResult = myStoredProcedure.execute(jornada, "nombre", 1);
+		Map storedProcResult = myStoredProcedure.execute(jornada, "nombre", 1,username);
 
 		System.out.println(storedProcResult);
 

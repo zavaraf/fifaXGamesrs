@@ -189,7 +189,7 @@ public class TemporadaServiceImpl implements TemporadaService{
 		return response;
 	}
 	
-	public ResponseData addResultJornada(int idTorneo,int idTemporada,Jornada jornada, int idEquipo){
+	public ResponseData addResultJornada(int idTorneo,int idTemporada,Jornada jornada, int idEquipo, String username){
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		ResponseData response = new ResponseData();
@@ -200,7 +200,7 @@ public class TemporadaServiceImpl implements TemporadaService{
 		
 		System.out.println(json);
 
-		map = temporadaDao.addResultJornada(idTorneo, idTemporada, json);
+		map = temporadaDao.addResultJornada(idTorneo, idTemporada, json, username);
 		
 		
 		

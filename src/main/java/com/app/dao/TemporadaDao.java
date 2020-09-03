@@ -26,7 +26,7 @@ public interface TemporadaDao {
 	HashMap<String, String> addJuegosLiguilla(int idTemporada, int idTorneo, String jornadas);
 	
 	HashMap<String, String> addGol(int idJugador,int idEquipo,int id,int idJornada);
-	HashMap<String, String> addResultJornada(int id,int idJornada,String jornada);
+	HashMap<String, String> addResultJornada(int id,int idJornada,String jornada, String username);
 	
 	HashMap<String, String> addImagen(int idEquipo,int id,int idJornada,String img);
 	HashMap<String, String> addJornada(int idTemporada, int idDivision, Jornada juegos,int activa,int cerrada);

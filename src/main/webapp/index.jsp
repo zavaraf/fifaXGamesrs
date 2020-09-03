@@ -114,7 +114,7 @@
 		</div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<sec:authentication var="user" property="principal" />
-		<a class="navbar-brand" ng-show="ctrl.mostrar ('${user.idEquipo}')" href="#!torneo">Torneo</a>
+		<a class="navbar-brand" ng-show="ctrl.mostrar ('${user.idEquipo}','${user.username}')" href="#!torneo">Torneo</a>
 		<a class="navbar-brand" href="#!jugadores">Jugadores</a> 
 		<a class="navbar-brand" href="#!equipos">Equipos</a>
 		

@@ -79,7 +79,7 @@
 		  <div class="modal-dialog  modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        
+		        <span ng-show="ctrl.jornadaEdit.username != null && ctrl.jornadaEdit.username != '' " type="button" class="btn btn-outline-primary" aria-disabled="true">{{ctrl.jornadaEdit.username}}</span>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -87,9 +87,6 @@
 
 		      <div class="modal-body">
 		      <sec:authentication var="user" property="principal" />
-		      <div class="alert alert-warning text-center" role="alert">
-				  No seas CULO da click "Guardar" para salvar el resultado ;)
-				</div>
 		        <blockquote class="blockquote text-center">
 					  <p class="mb-0">RESUMEN</p>
 				</blockquote>
@@ -253,6 +250,11 @@
 				 	   +Img
 				 </button>
 				 
+				 <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapsePub" aria-expanded="false" aria-controls="collapseExample1">
+				 	   Publicación
+				 </button>
+				 
 				 <div class="collapse" id="collapseImg" style="margin: 0 auto; width:70%;">
 				  <div class="card card-body">
 				    <div class="form-group">
@@ -263,6 +265,27 @@
 		            	ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 		            	ng-click= "ctrl.addImagen(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit,selectedImg1);selectedImg1=''"  >Agregar</button>
 		            </sec:authorize>
+			   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
+		          </div>
+				  </div>
+				</div>
+				 
+				 <div class="collapse" id="collapsePub" style="margin: 0 auto; width:70%;">
+				  <div class="card card-body">
+				    <div class="form-group">
+				    <div>
+				    	{{'[size=150]'+ ctrl.jornadaEdit.nombreEquipoLocal +'  '+ ctrl.jornadaEdit.golesLocal}} - {{ctrl.jornadaEdit.golesVisita +'  '+ ctrl.jornadaEdit.nombreEquipoVisita +'[/size]'}}
+				    	
+				    	<p >Goles {{ctrl.jornadaEdit.nombreEquipoLocal}} :</p>
+				    	<span ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}, </span>
+				    	<p>Goles {{ctrl.jornadaEdit.nombreEquipoVisita}} :</p>
+				    	<span ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}, </span>
+				    	<br>
+				    	<p span ng-repeat="x in ctrl.jornadaEdit.imagenes">[img] {{x.img}} [/img]</p>
+				    	
+				    	
+		            </div>
+		            
 			   		<button type="button" class="btn btn-primary btn-sm"  data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample">Cancelar</button>
 		          </div>
 				  </div>

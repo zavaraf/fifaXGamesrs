@@ -163,7 +163,7 @@ public class TemporadaController {
 		 
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
-	 @RequestMapping(value="/lm/addResultJornada/{idTorneo}/{idTempodrada}/{idEquipo}",
+	 @RequestMapping(value="/lm/addResultJornada/{idTorneo}/{idTempodrada}/{idEquipo}/{username}",
 			 method = RequestMethod.POST,
 			 headers="Accept=application/json")
 	 @ResponseBody
@@ -171,14 +171,15 @@ public class TemporadaController {
 			 @PathVariable("idTorneo") int idTorneo,
 			 @PathVariable("idTempodrada") int idTempodrada,
 			 @PathVariable("idEquipo") int idEquipo,
+			 @PathVariable("username") String username,
 			 @RequestBody Jornada jornadaEdit
 			 ){
 		 
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "jugador:"+idTorneo+" Equipo]:"+idTempodrada);
-			 response = temporadaService.addResultJornada(idTorneo,idTempodrada,jornadaEdit,idEquipo);
+			 System.out.println( "jugador:"+idTorneo+" Equipo]:"+idEquipo +" User]:" +username );
+			 response = temporadaService.addResultJornada(idTorneo,idTempodrada,jornadaEdit,idEquipo,username);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
