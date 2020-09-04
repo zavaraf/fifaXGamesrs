@@ -80,6 +80,7 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <span ng-show="ctrl.jornadaEdit.username != null && ctrl.jornadaEdit.username != '' " type="button" class="btn btn-outline-primary" aria-disabled="true">{{ctrl.jornadaEdit.username}}</span>
+		        <span ng-show="ctrl.jornadaEdit.date != null && ctrl.jornadaEdit.date != '' && ctrl.jornadaEdit.username != null" type="button" class="btn btn-outline-primary" aria-disabled="true">{{ctrl.jornadaEdit.date}}</span>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>

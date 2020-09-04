@@ -23,6 +23,7 @@ public class Jornada {
 	private String imgLocal;
 	private String imgVisita;
 	private String username;
+	private String date;
 	
 	public int getId() {
 		return id;
@@ -132,6 +133,14 @@ public class Jornada {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	
 	
 	
 	

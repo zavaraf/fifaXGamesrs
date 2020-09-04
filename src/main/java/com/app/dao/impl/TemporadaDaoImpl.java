@@ -824,7 +824,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoVisita) equipoVisita, "
 				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita) imgVisita, "
 				+"  tabla.equipos_idEquipoVisita, "
-				+"  tabla.username "
+				+"  tabla.username, "
+				+"  tabla.updateDate "
 				+"   "
 				+"  from ( "
 				+"   "
@@ -833,7 +834,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+"  je.golesLocal, "
 				+"  je.golesVisita, "
 				+"  je.equipos_idEquipoVisita, "
-				+"  je.username "
+				+"  je.username, "
+				+"  je.updateDate "
 				+"  from jornadas "
 				+"  join jornadas_has_equipos je on je.jornadas_idJornada = jornadas.idJornada "
 				+"  ) tabla "
@@ -860,6 +862,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
                 	jornada.setImgLocal(rs.getString("imgLocal"));
                 	jornada.setImgVisita(rs.getString("imgVisita"));
                 	jornada.setUsername(rs.getString("username"));
+                	jornada.setDate(rs.getString("updateDate"));
+                	System.out.println(rs.getString("updateDate"));
                 	
                 	try{
                 	jornada.setGolesLocal(Integer.parseInt(rs.getString("golesLocal")));
