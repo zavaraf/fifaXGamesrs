@@ -3,6 +3,7 @@ DROP PROCEDURE IF EXISTS registrarJornada$$
 CREATE PROCEDURE registrarJornada(IN `json` JSON,
 								  IN nombreTorneo varchar(200),
 								  IN idTemporada INT,
+                                  IN username varchar(30),
                                out isError int, 
                                out message varchar(200))
 BEGIN
@@ -179,6 +180,7 @@ from golesjornadas
 join persona on persona.idPersona = golesjornadas.persona_idPersona
 join equipos on equipos.idEquipo = golesjornadas.equipos_idEquipo
 where golesjornadas.jornadas_has_equipos_jornadas_idJornada = (SELECT JSON_EXTRACT(`json`, "$.idJornada"))
+and golesjornadas.jornadas_has_equipos_id = (SELECT JSON_EXTRACT(`json`, "$.id"))
 and equipos.idEquipo in ((SELECT JSON_EXTRACT(`json`, "$.idEquipoLocal")));
 
 
@@ -187,9 +189,23 @@ from golesjornadas
 join persona on persona.idPersona = golesjornadas.persona_idPersona
 join equipos on equipos.idEquipo = golesjornadas.equipos_idEquipo
 where golesjornadas.jornadas_has_equipos_jornadas_idJornada = (SELECT JSON_EXTRACT(`json`, "$.idJornada"))
+and golesjornadas.jornadas_has_equipos_id = (SELECT JSON_EXTRACT(`json`, "$.id"))
 and equipos.idEquipo in ((SELECT JSON_EXTRACT(`json`, "$.idEquipoVisita")));
 
-call updateResultadoJornada((SELECT JSON_EXTRACT(`json`, "$.idJornada")),(SELECT JSON_EXTRACT(`json`, "$.idEquipoLocal")),(SELECT JSON_EXTRACT(`json`, "$.idEquipoVisita")),golesLocal,golesVisita);
+ call updateResultadoJornada((SELECT JSON_EXTRACT(`json`, "$.idJornada"))
+ 							,(SELECT JSON_EXTRACT(`json`, "$.idEquipoLocal")),
+                             (SELECT JSON_EXTRACT(`json`, "$.idEquipoVisita")),
+                           golesLocal,golesVisita);
+
+                      
+UPDATE `fifaxgamersbd`.`jornadas_has_equipos`
+SET
+`golesLocal` = golesLocal,
+`golesVisita` = golesVisita,
+`username` = username
+
+WHERE jornadas_has_equipos.id = id
+;
   
 set isError = 0 ;
 set message = 'OK';

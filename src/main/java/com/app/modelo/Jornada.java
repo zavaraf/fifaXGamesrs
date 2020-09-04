@@ -22,6 +22,7 @@ public class Jornada {
 	private List<HashMap<String,String>> imagenes;
 	private String imgLocal;
 	private String imgVisita;
+	private String username;
 	
 	public int getId() {
 		return id;
@@ -124,6 +125,12 @@ public class Jornada {
 	}
 	public void setTipoJornada(int tipoJornada) {
 		this.tipoJornada = tipoJornada;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	

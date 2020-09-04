@@ -1,0 +1,3 @@
+ALTER TABLE `fifaxgamersbd`.`jornadas_has_equipos` 
+ADD COLUMN `username` VARCHAR(45) NULL AFTER `golesVisita`,
+ADD COLUMN `updateDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `username`;

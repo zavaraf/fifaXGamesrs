@@ -239,7 +239,7 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     function guardarJornada(jornada,idTorneo) {
         var deferred = $q.defer();
         
-        var url = REST_SERVICE_URI_E+'addResultJornada/'+idTorneo+'/'+CONFIG.VARTEMPORADA.id+'/'+CONFIG.ID_EQUIPO;
+        var url = REST_SERVICE_URI_E+'addResultJornada/'+idTorneo+'/'+CONFIG.VARTEMPORADA.id+'/'+CONFIG.ID_EQUIPO+'/'+CONFIG.USERID;
         console.log("------Jornada Service];----",url)
         $http.post(url,jornada)
             .then(

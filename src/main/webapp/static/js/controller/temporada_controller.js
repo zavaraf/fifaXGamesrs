@@ -15,7 +15,8 @@ angular
 					'EQUIPOS' : null,
 					'CAT_EQUIPOS' : null,
 					'CAT_DIV' : null,
-					'ID_EQUIPO' : 0
+					'ID_EQUIPO' : 0,
+					'USERID' : null
 
 				})
 		.controller(
@@ -37,8 +38,9 @@ angular
 
 							buscarTemporada();
 							
-							function mostrar(idEquipo){
+							function mostrar(idEquipo,user){
 								CONFIG.ID_EQUIPO = idEquipo
+								CONFIG.USERID = user
 								return true;
 							}
 
