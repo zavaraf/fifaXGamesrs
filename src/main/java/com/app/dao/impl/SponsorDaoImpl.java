@@ -191,7 +191,7 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 	public void crearDatosFinancieros(long idEquipo,long idSponsor, boolean opcional) {
 		// TODO call createOrUpdateDatosSponsor(2,8,0);
 		
-		String query = "call fifaxgamersbd.createOrUpdateDatosSponsor(?,?,?)";
+		String query = "call  createOrUpdateDatosSponsor(?,?,?)";
 				
 		
 		jdbcTemplate.update(query,
@@ -290,7 +290,7 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 
 	public void crearFinanzas(Equipo equipo, long idCatalogo, long monto) {
 		
-				String query = "call fifaxgamersbd.createOrUpdateDatosFinancieros(?,?,?)";
+				String query = "call  createOrUpdateDatosFinancieros(?,?,?)";
 						
 				System.out.println(query+"-"+idCatalogo+"-"+monto+"-"+equipo.getId());
 				jdbcTemplate.update(query,
@@ -304,7 +304,7 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 		
 		
 		// idEquipo,idSponsor,montoInicial,montoFinal,
-		String query = "call fifaxgamersbd.createOrUpdatePresupuesto(?,?,?,?,?)";
+		String query = "call  createOrUpdatePresupuesto(?,?,?,?,?)";
 		
 		System.out.println("createOrUpdatePresupuesto("+equipo.getId()+",0"
 				+","+monto +","+montoFinal+ ")");
@@ -321,7 +321,7 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 
 	public void updateObjetivosByIdEquipo(Equipo equipo, String objetivos) {
 		// createOrUpdateObjetivos(IN `json` JSON,IN idEquipo INT, IN idSponsor INT,IN idTemporada INT)
-				String query = "call fifaxgamersbd.createOrUpdateObjetivos(?,?,?,?)";
+				String query = "call  createOrUpdateObjetivos(?,?,?,?)";
 				
 				System.out.println("createOrUpdatePresupuesto("+objetivos+","+equipo.getId()+""
 						+","+equipo.getDatosFinancieros().getSponsor().getId() +","+equipo.getTemporada().getId()+ ")");

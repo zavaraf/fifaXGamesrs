@@ -37,7 +37,7 @@ public class ApplicationConfig {
 		String pass = env.getRequiredProperty("jdbc.pass");
 		
 		if(!env.getRequiredProperty("isProd").equals("false")){
-			System.out.println("isProduccioon------------>]:"+env.getRequiredProperty("jdbc.url"));
+			System.out.println("isProduccioon------------>]:"+env.getRequiredProperty("prod.jdbc.url"));
 			 url = env.getRequiredProperty("prod.jdbc.url");
 			 userName = env.getRequiredProperty("prod.jdbc.userName");
 			 pass = env.getRequiredProperty("prod.jdbc.pass");

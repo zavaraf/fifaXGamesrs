@@ -85,7 +85,7 @@ public class DraftDaoImpl implements DraftDao {
 		System.out.println("Crear prestamo call createPrestamo(" + jugador.getId() + "," + id + ",);"+idTemporada);
 		//ULtimo parametro opcion para eliminar(2) o crear(1)
 
-		String query = "call fifaxgamersbd.createPrestamo(?,?,?,1)";
+		String query = "call  createPrestamo(?,?,?,1)";
 
 		jdbcTemplate.update(query, jugador.getId(), id,idTemporada);
 
@@ -94,7 +94,7 @@ public class DraftDaoImpl implements DraftDao {
 	public void deletePresById(long id, long idEquipo,int idTemporada) {
 		System.out.println("Crear prestamo call createPrestamo(" + id + "," + idEquipo + ",2);");
 
-		String query = "call fifaxgamersbd.createPrestamo(?,?,?,2)";
+		String query = "call  createPrestamo(?,?,?,2)";
 
 		jdbcTemplate.update(query, id, idEquipo,idTemporada);
 

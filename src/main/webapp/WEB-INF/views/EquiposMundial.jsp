@@ -206,7 +206,7 @@
 <!--                               <button type="button" ng-click="ctrl.remove(e.id)" class="btn btn-danger custom-width">Remove</button> -->
                               </td>
                               <td>
-                              	<button type="button" ng-show="e.linksofifa != null" ng-click="e.showSofifa = (!e.showSofifa);e.url = ctrl.setUrl(e)" ng-disabled="ctrl.showEdit( '${user.authorities}',e.id,'${user.idEquipo}') == false" class="btn btn-success btn-sm">sofifa</button>
+                              	<button type="button" ng-show="e.linksofifa != null" ng-click="e.showSofifa = (!e.showSofifa);e.url = ctrl.setUrl(e)" class="btn btn-success btn-sm">sofifa</button>
                               </td>
                           </tr>
                           <tr ng-if="e.showSofifa == true">

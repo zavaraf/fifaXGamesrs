@@ -38,7 +38,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		String query = "  SELECT idTemporada, " +
 					   " NombreTemporada, " +
 					   " Descripcion " +
-					" FROM fifaxgamersbd.temporada";
+					" FROM  temporada";
 		Collection temporada = jdbcTemplate.query(
                 query
                 , new RowMapper() {

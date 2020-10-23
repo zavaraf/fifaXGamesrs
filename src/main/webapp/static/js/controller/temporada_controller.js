@@ -1,15 +1,15 @@
 'use strict';
 
-// http://fifaapp-env-1.kvdjpbscsv.us-east-2.elasticbeanstalk.com/
-// 'IP_PROD': 'http://env-2654648.jl.serv.net.mx/fifaApp',
+//'IP_PROD' : 'http://fifaapp-env-1.kvdjpbscsv.us-east-2.elasticbeanstalk.com',
+//'IP_DES' : 'http://localhost:8081/fifaApp',
 angular
 		.module('myApp')
 		.constant(
 				'CONFIG',
 				{
 					'VARTEMPORADA' : '',
-					'PROD' : false,
-					'IP_PROD' : 'http://fifaapp-env-1.kvdjpbscsv.us-east-2.elasticbeanstalk.com',
+					'PROD' : true,
+					'IP_PROD' : 'http://fifaxgamers.jvmhost.net/fifaApp',
 					'IP_DES' : 'http://localhost:8081/fifaApp',
 					'JUGADORES' : null,
 					'EQUIPOS' : null,

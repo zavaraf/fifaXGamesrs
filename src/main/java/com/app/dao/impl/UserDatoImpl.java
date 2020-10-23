@@ -39,8 +39,8 @@ public class UserDatoImpl implements UserDao{
 					+"     persona.prestamo,"
 					+"     persona.link,"
 					+ "    equipos.NombreEquipo as nombreEquipo "
-					+" FROM fifaxgamersbd.persona "
-					+" JOIN fifaxgamersbd.equipos on equipos.idEquipo = persona.Equipos_idEquipo  ";
+					+" FROM  persona "
+					+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  ";
 			Collection players = jdbcTemplate.query(query, new RowMapper() {
 	                    public Object mapRow(ResultSet rs, int arg1)
 	                            throws SQLException {
@@ -85,9 +85,9 @@ public class UserDatoImpl implements UserDao{
 				+"     persona.prestamo,"
 				+ "    persona.link, "
 				+ "    equipos.NombreEquipo as nombreEquipo "
-				+" FROM fifaxgamersbd.persona "
-				+" JOIN fifaxgamersbd.equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+ "WHERE  fifaxgamersbd.equipos.idEquipo = "+ idEquipo;
+				+" FROM  persona "
+				+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
+				+ "WHERE   equipos.idEquipo = "+ idEquipo;
 		Collection players = jdbcTemplate.query(query, new RowMapper() {
                     public Object mapRow(ResultSet rs, int arg1)
                             throws SQLException {
@@ -133,9 +133,9 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 				+"     persona.prestamo,"
 				+ "    persona.link, "
 				+ "    equipos.NombreEquipo as nombreEquipo "
-				+" FROM fifaxgamersbd.persona "
-				+" JOIN fifaxgamersbd.equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+ "WHERE  fifaxgamersbd.equipos.idEquipo in( "+ idEquipo+","+idEquipoVisita+")";
+				+" FROM  persona "
+				+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
+				+ "WHERE   equipos.idEquipo in( "+ idEquipo+","+idEquipoVisita+")";
 		Collection players = jdbcTemplate.query(query, new RowMapper() {
                     public Object mapRow(ResultSet rs, int arg1)
                             throws SQLException {
@@ -170,7 +170,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 		//Sobrenombre
 		//Raiting
 		//Equipo
-		String insert = "call fifaxgamersbd.crearJugador(?,?, ?,?,?,?)";
+		String insert = "call  crearJugador(?,?, ?,?,?,?)";
 				
 		
 		jdbcTemplate.update(insert,
@@ -193,7 +193,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 		//Sobrenombre
 		//Raiting
 		//Equipo
-		String insert = "call fifaxgamersbd.modificarJugador(?,?, ?,?,?,?,?)";
+		String insert = "call  modificarJugador(?,?, ?,?,?,?,?)";
 				
 		
 		jdbcTemplate.update(insert,
@@ -224,8 +224,8 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 				+"     persona.prestamo,"
 				+"     persona.link,"
 				+ "    equipos.NombreEquipo as nombreEquipo "
-				+" FROM fifaxgamersbd.persona "
-				+" JOIN fifaxgamersbd.equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
+				+" FROM  persona "
+				+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
 				+" WHERE persona.idPersona =  "+ id;
 		
 	

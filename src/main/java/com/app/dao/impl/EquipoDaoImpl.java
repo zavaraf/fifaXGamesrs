@@ -42,7 +42,7 @@ public class EquipoDaoImpl implements EquipoDao{
                 + "equipos.descripcionEquipo, "
                 + "equipos.activo, "
                 + "equipos.Division_idDivision " 
-                +"FROM fifaxgamersbd.equipos where equipos.idEquipo = "+id, new RowMapper() {
+                +"FROM  equipos where equipos.idEquipo = "+id, new RowMapper() {
 
                     public Object mapRow(ResultSet rs, int arg1)
                             throws SQLException {
@@ -79,15 +79,15 @@ public class EquipoDaoImpl implements EquipoDao{
 				+ " tot.totalRaiting,  "
 				+ " tot.presupuestoInicial,  "
 				+ " tot.presupuestoFinal  "
-				+ " FROM fifaxgamersbd.equipos  "
-				+ " join fifaxgamersbd.division on equipos.Division_idDivision = division.idDivision  "
+				+ " FROM  equipos  "
+				+ " join  division on equipos.Division_idDivision = division.idDivision  "
 				+ " left join (select count(persona.idPersona) as totalJugadores, sum(persona.Raiting) totalRaiting, equipos.idEquipo,dat.presupuestoInicial, dat.presupuestoFinal "
-				+ "        from fifaxgamersbd.persona   "
-				+ "        join fifaxgamersbd.persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
-				+ "        join fifaxgamersbd.roles on roles.idRoles = pero.Roles_idRoles  "
-				+ "        join fifaxgamersbd.equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+ "        join fifaxgamersbd.equipos_has_temporada et on et.Equipos_idEquipo = equipos.idEquipo  "
-				+ "        join fifaxgamersbd.temporada on temporada.idTemporada = et.tempodada_idTemporada "
+				+ "        from  persona   "
+				+ "        join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
+				+ "        join  roles on roles.idRoles = pero.Roles_idRoles  "
+				+ "        join  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
+				+ "        join  equipos_has_temporada et on et.Equipos_idEquipo = equipos.idEquipo  "
+				+ "        join  temporada on temporada.idTemporada = et.tempodada_idTemporada "
 				+ "        left join datosfinancieros dat on dat.Equipos_idEquipo = equipos.idEquipo and dat.tempodada_idTemporada = temporada.idTemporada "
 				+ "        where roles.nombreRol = 'Jugador' and temporada.idTemporada = " + idTemporada
 				+ "        group by  equipos.idEquipo ,dat.presupuestoInicial ,equipos.idEquipo,dat.presupuestoFinal  ) tot on tot.idEquipo = equipos.idEquipo " ;
@@ -132,7 +132,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	public void createEquipo(Equipo equipo){
 		System.out.println("Division]:"+equipo.getDivision().getId());
 		jdbcTemplate.update(
-			    "INSERT INTO fifaxgamersbd.equipos (idEquipo,NombreEquipo,DescripcionEquipo,activo,Division_idDivision)"
+			    "INSERT INTO  equipos (idEquipo,NombreEquipo,DescripcionEquipo,activo,Division_idDivision)"
 				+"VALUES(?,?,?,?,?)",
 			    null, equipo.getNombre(),equipo.getDescripcion(),1,equipo.getDivision().getId()
 			  );
@@ -140,7 +140,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	public void updateEquipo(Equipo currentEquipo) {
 		System.out.println("-->Equipo Modificar]:"+currentEquipo.toString());
 		System.out.println("-->Division Modificar]:"+currentEquipo.getDivision().toString());
-		String updateQuery = "update fifaxgamersbd.equipos "
+		String updateQuery = "update  equipos "
 				+ "set NombreEquipo = ?, "
 				+ "DescripcionEquipo = ?, "
 				+ "Division_idDivision = ?, "
@@ -157,7 +157,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	public List<Division> buscarDivision() {
 		List<Division> divisionesList = new ArrayList<Division>();
 		Collection divisiones = jdbcTemplate.query(
-                "select divi.idDivision, divi.nombre, divi.descripcion, divi.activo from fifaxgamersbd.division divi where divi.activo =1;" 
+                "select divi.idDivision, divi.nombre, divi.descripcion, divi.activo from  division divi where divi.activo =1;" 
                 , new RowMapper() {
 
                     public Object mapRow(ResultSet rs, int arg1)
@@ -192,16 +192,16 @@ public class EquipoDaoImpl implements EquipoDao{
 				+" tot.totalRaiting , "
 				+" temporada.idTemporada,  "
 				+" temporada.NombreTemporada "
-				+" FROM fifaxgamersbd.equipos 			 "
-				+"  join fifaxgamersbd.division on equipos.Division_idDivision = division.idDivision  "
+				+" FROM  equipos 			 "
+				+"  join  division on equipos.Division_idDivision = division.idDivision  "
 				+"  join equipos_has_temporada equitor on equitor.Equipos_idEquipo = equipos.idEquipo  "
 				+" 					and equitor.tempodada_idTemporada = " + idTemporada + " "
 				+"  join temporada on temporada.idTemporada = equitor.tempodada_idTemporada  "
 				+"  left join (select count(persona.idPersona) as totalJugadores, sum(persona.Raiting) totalRaiting, equipos.idEquipo "
-				+"              from fifaxgamersbd.persona   "
-				+"              join fifaxgamersbd.persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
-				+"              join fifaxgamersbd.roles on roles.idRoles = pero.Roles_idRoles  "
-				+"              join fifaxgamersbd.equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
+				+"              from  persona   "
+				+"              join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
+				+"              join  roles on roles.idRoles = pero.Roles_idRoles  "
+				+"              join  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
 				+"              where roles.nombreRol = 'Jugador'   "
 				+"              group by equipos.idEquipo) tot on tot.idEquipo = equipos.idEquipo  "
 				
@@ -263,13 +263,13 @@ public class EquipoDaoImpl implements EquipoDao{
 				+" division.descripcion as descripcionDivision , "
 				+" tot.totalJugadores, "
 				+" tot.totalRaiting  "
-				+" FROM fifaxgamersbd.equipos 			 "
-				+"  join fifaxgamersbd.division on equipos.Division_idDivision = division.idDivision  "
+				+" FROM  equipos 			 "
+				+"  join  division on equipos.Division_idDivision = division.idDivision  "
 				+"  left join (select count(persona.idPersona) as totalJugadores, sum(persona.Raiting) totalRaiting, equipos.idEquipo "
-				+"              from fifaxgamersbd.persona   "
-				+"              join fifaxgamersbd.persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
-				+"              join fifaxgamersbd.roles on roles.idRoles = pero.Roles_idRoles  "
-				+"              join fifaxgamersbd.equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
+				+"              from  persona   "
+				+"              join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
+				+"              join  roles on roles.idRoles = pero.Roles_idRoles  "
+				+"              join  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
 				+"              where roles.nombreRol = 'Jugador'   "
 				+"              group by equipos.idEquipo) tot on tot.idEquipo = equipos.idEquipo  "
 				+" Where equipos.idEquipo = " + id;
@@ -346,8 +346,8 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"   equipos.Division_idDivision, "
 				+"   division.nombre as nombreDivision, "
 				+"   division.descripcion as descripcionDivision "
-				+"   FROM fifaxgamersbd.equipos  "
-				+"   join fifaxgamersbd.division on equipos.Division_idDivision = division.idDivision  "
+				+"   FROM  equipos  "
+				+"   join  division on equipos.Division_idDivision = division.idDivision  "
 				+"   join equipos_has_temporada eht on eht.Equipos_idEquipo = equipos.idEquipo"
 				+"   where division.idDivision =  "+idDivision
 				+"   and eht.tempodada_idTemporada= "+idTemporada
@@ -392,8 +392,8 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"   equipos.Division_idDivision, "
 				+"   division.nombre as nombreDivision, "
 				+"   division.descripcion as descripcionDivision "
-				+"   FROM fifaxgamersbd.equipos  "
-				+"   join fifaxgamersbd.division on equipos.Division_idDivision = division.idDivision  "
+				+"   FROM  equipos  "
+				+"   join  division on equipos.Division_idDivision = division.idDivision  "
 				+"   join equipos_has_temporada eht on eht.Equipos_idEquipo = equipos.idEquipo" 
 				+"   join grupos_torneo on grupos_torneo.equipos_idEquipo = equipos.idEquipo "
 				+" where grupos_torneo.torneo_idtorneo = " + idTorneo			
