@@ -45,9 +45,12 @@ ORDER by persona.idPersona DESC limit 1),
 1);
 
 
+
+
+
 select Equipos_idEquipo into idEquipoVar 
  from equipos_has_temporada eht 
- where eht.Equipos_idEquipo = idEquipo and eht.Temporadas_idTemporada = idTemporada;
+ where eht.Equipos_idEquipo = idEquipo and eht.tempodada_idTemporada = idTemporada;
  
  if idEquipoVar is null and idEquipo != 1 then
  
@@ -60,6 +63,19 @@ idTemporada);
 
  
  end if ;
+ 
+ INSERT INTO `fifaxgamersbd`.`persona_has_temporada`
+(`persona_idPersona`,
+`temporada_idTemporada`,
+`rating`,
+`equipos_idEquipo`)
+VALUES
+((SELECT persona.idPersona
+FROM persona
+ORDER by persona.idPersona DESC limit 1),
+idTemporada,
+raiting,
+idEquipo);
 
 
         

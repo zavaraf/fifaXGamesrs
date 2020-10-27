@@ -20,6 +20,7 @@ public class Equipo {
 	private int presupuestoInicial;
 	private int presupuestoFinal;
 	private String img;
+	private String img2;
 	private String linksofifa;
 	
 	@Override
@@ -160,6 +161,14 @@ public class Equipo {
 
 	public void setLinksofifa(String linksofifa) {
 		this.linksofifa = linksofifa;
+	}
+
+	public String getImg2() {
+		return img2;
+	}
+
+	public void setImg2(String img2) {
+		this.img2 = img2;
 	}
 	
 	

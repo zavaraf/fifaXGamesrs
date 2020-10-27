@@ -86,8 +86,8 @@ public class UserServiceImpl implements UserService {
 	        return users;
 	    }
 
-		public List<User> findAllPlayers() {
-			return userDao.findAllPlayers();
+		public List<User> findAllPlayers(int idTemporada) {
+			return userDao.findAllPlayers(idTemporada);
 		}
 
 		public ResponseData savePlayer(User user,int idTemporada) {
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
 			ResponseData response = new ResponseData();
 			response.setStatus(CodigoResponse.OK.getCodigo());
 			response.setMensaje(CodigoResponse.OK.getMensaje());
-			response.setData(userDao.findAllPlayers());
+			response.setData(userDao.findAllPlayers(idTemporada));
 			
 			return response;
 		}
@@ -108,19 +108,19 @@ public class UserServiceImpl implements UserService {
 			
 			response.setStatus(CodigoResponse.OK.getCodigo());
 			response.setMensaje(CodigoResponse.OK.getMensaje());
-			response.setData(userDao.findAllPlayers());
+			response.setData(userDao.findAllPlayers(idTemporada));
 			
 			return response;
 					
 					
 		}
 
-		public List<User> findAllPlayersByIdEquipo(long id) {
-			return userDao.findAllPlayersByIdEquipo(id);
+		public List<User> findAllPlayersByIdEquipo(long id,int idTemporada) {
+			return userDao.findAllPlayersByIdEquipo(id,idTemporada);
 		}
 		
-		public List<User> findAllPlayersByIdEquipo(long id, long idVisita) {
-			return userDao.findAllPlayersByIdEquipo(id, idVisita);
+		public List<User> findAllPlayersByIdEquipo(long id, long idVisita, int idTemporada) {
+			return userDao.findAllPlayersByIdEquipo(id, idVisita,idTemporada);
 		}
 
 		@Override

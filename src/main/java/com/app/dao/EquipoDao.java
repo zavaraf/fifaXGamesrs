@@ -10,7 +10,7 @@ public interface EquipoDao {
 	Equipo findById(long id);
 	List<Equipo> buscarTodos(long idTemporada);
 	void createEquipo(Equipo equipo);
-	void updateEquipo(Equipo currentEquipo);
+	void updateEquipo(Equipo currentEquipo,int idTemporada);
 	List<Division> buscarDivision();
 	Equipo findByIdAll(long id, int idTemporada);
 	Equipo findEquipoByIdAll(long id, int idTemporada);

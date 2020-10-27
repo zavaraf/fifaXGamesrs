@@ -13,7 +13,7 @@ public interface EquipoService {
 	
 	void crearEquipo(Equipo equipo);
 
-	void updateUser(Equipo currentEquipo);
+	void updateUser(Equipo currentEquipo,int idTemporada);
 
 	List<Division> buscarDivision();
 

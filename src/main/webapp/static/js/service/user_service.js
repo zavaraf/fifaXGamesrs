@@ -36,7 +36,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
  
     function fetchAllPlayers() {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+'findAllPlayers')
+        $http.get(REST_SERVICE_URI+'findAllPlayers/'+CONFIG.VARTEMPORADA.id)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -128,7 +128,8 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
     
     function findPlayersByIdEquipo(idEquipo){
     	var deferred = $q.defer();
-    	var request = REST_SERVICE_URI+"player/"+idEquipo;
+    	console.log("findPlayersByIdEquipo]:",CONFIG)
+    	var request = REST_SERVICE_URI+"player/"+idEquipo+"/"+CONFIG.VARTEMPORADA.id;
     	$http.get(request)
     	.then(
     			function (response) {
@@ -145,7 +146,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
     
     function findPlayersByIdEquipoJornada(idEquipo,idEquipoVisita){
     	var deferred = $q.defer();
-    	var request = REST_SERVICE_URI+"player/"+idEquipo+"/"+idEquipoVisita;
+    	var request = REST_SERVICE_URI+"player/"+idEquipo+"/"+idEquipoVisita+"/"+CONFIG.VARTEMPORADA.id;
     	$http.get(request)
     	.then(
     			function (response) {

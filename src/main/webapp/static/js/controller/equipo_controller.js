@@ -46,16 +46,16 @@ angular.module('myApp').controller('EquipoController',['$scope','$routeParams','
 					function buscarTodos() {
 						var idTemporada = CONFIG.VARTEMPORADA.id
 						console.log("[equipo_controller]  idTemporada]:",CONFIG.VARTEMPORADA.id);
-						if(CONFIG.CAT_EQUIPOS == null ){
+//						if(CONFIG.CAT_EQUIPOS == null ){
 							EquipoService.buscarTodos(idTemporada).then(function(d) {
 								self.equipos = d;
 								CONFIG.CAT_EQUIPOS = d;
 							}, function(errResponse) {
 								console.error('[equipo_controller] Error while fetching buscarTodos()');
 							});
-						}else{
-							self.equipos = CONFIG.CAT_EQUIPOS ;
-						}
+//						}else{
+//							self.equipos = CONFIG.CAT_EQUIPOS ;
+//						}
 					}
 					
 					function buscarTemporada() {

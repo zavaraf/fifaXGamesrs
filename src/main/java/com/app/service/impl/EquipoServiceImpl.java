@@ -38,8 +38,8 @@ public class EquipoServiceImpl implements EquipoService{
 		equipoDao.createEquipo(equipo);		
 	}
 
-	public void updateUser(Equipo currentEquipo) {
-		equipoDao.updateEquipo(currentEquipo);	
+	public void updateUser(Equipo currentEquipo,int idTemporada) {
+		equipoDao.updateEquipo(currentEquipo,idTemporada);	
 		
 	}
 

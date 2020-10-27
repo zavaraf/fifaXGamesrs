@@ -20,27 +20,29 @@ public class UserDatoImpl implements UserDao{
 	@Autowired
     JdbcTemplate jdbcTemplate;
 
-	public List<User> findAllPlayers() {
+	public List<User> findAllPlayers(int idTemporada) {
 
 		
 			List<User> playersList = new ArrayList<User>();
-			String query = " SELECT persona.idPersona, "
-					+"     persona.nombre, "
-					+"     persona.apellidoPaterno, "
-					+"     persona.apellidoMaterno, "
-					+"     persona.nombreCompleto, "
-					+"     persona.sobrenombre, "
-					+"     persona.fehaNacimiento, "
-					+"     persona.raiting, "
-					+"     persona.potencial, "
-					+"     persona.Equipos_idEquipo, "
-					+"     persona.activo, "
-					+"     persona.userManager, "
-					+"     persona.prestamo,"
-					+"     persona.link,"
-					+ "    equipos.NombreEquipo as nombreEquipo "
-					+" FROM  persona "
-					+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  ";
+			String query = " SELECT persona.idPersona,  "
+					+" persona.nombre,  "
+					+" persona.apellidoPaterno,  "
+					+" persona.apellidoMaterno,  "
+					+" persona.nombreCompleto,  "
+					+" persona.sobrenombre,  "
+					+" persona.fehaNacimiento,  "
+					+" persona_has_temporada.rating,  "
+					+" persona.potencial,  "
+					+" persona_has_temporada.equipos_idEquipo,  "
+					+" persona.activo,  "
+					+" persona.userManager,  "
+					+" persona.prestamo, "
+					+" persona.link, "
+					+" equipos.NombreEquipo as nombreEquipo  "
+					+" FROM  persona_has_temporada "
+					+" JOIN persona on persona.idPersona = persona_has_temporada.persona_idPersona "
+					+" JOIN equipos on equipos.idEquipo = persona_has_temporada.equipos_idEquipo "
+					+" where persona_has_temporada.temporada_idTemporada =  " + idTemporada;
 			Collection players = jdbcTemplate.query(query, new RowMapper() {
 	                    public Object mapRow(ResultSet rs, int arg1)
 	                            throws SQLException {
@@ -48,7 +50,7 @@ public class UserDatoImpl implements UserDao{
 	                        player.setId(rs.getLong("idPersona"));
 	                        player.setNombreCompleto(rs.getString("nombreCompleto"));
 	                        player.setSobrenombre(rs.getString("sobrenombre"));
-	                        player.setRaiting(rs.getInt("raiting"));
+	                        player.setRaiting(rs.getInt("rating"));
 	                        player.setLink(rs.getString("link"));
 	                        Equipo equipo = new Equipo();
 	                        equipo.setId(rs.getLong("Equipos_idEquipo"));
@@ -66,7 +68,7 @@ public class UserDatoImpl implements UserDao{
 		
 	}
 	
-	public List<User> findAllPlayersByIdEquipo(long idEquipo) {
+	public List<User> findAllPlayersByIdEquipo(long idEquipo, int idTemporada) {
 
 		
 		List<User> playersList = new ArrayList<User>();
@@ -77,17 +79,22 @@ public class UserDatoImpl implements UserDao{
 				+"     persona.nombreCompleto, "
 				+"     persona.sobrenombre, "
 				+"     persona.fehaNacimiento, "
-				+"     persona.raiting, "
+				+"     persona_has_temporada.rating, "
 				+"     persona.potencial, "
-				+"     persona.Equipos_idEquipo, "
+				+"     persona_has_temporada.equipos_idEquipo, "
 				+"     persona.activo, "
 				+"     persona.userManager, "
 				+"     persona.prestamo,"
-				+ "    persona.link, "
-				+ "    equipos.NombreEquipo as nombreEquipo "
-				+" FROM  persona "
-				+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+ "WHERE   equipos.idEquipo = "+ idEquipo;
+				+"     persona.link, "
+				+"     equipos.NombreEquipo as nombreEquipo "
+				+"     from  persona_has_temporada   "
+				+"     join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
+				+" JOIN  equipos on equipos.idEquipo = persona_has_temporada.equipos_idEquipo  "
+				+" WHERE   equipos.idEquipo = "+ idEquipo
+				+" and persona_has_temporada.temporada_idTemporada = " + idTemporada 
+				;
+		
+		System.out.println(query);
 		Collection players = jdbcTemplate.query(query, new RowMapper() {
                     public Object mapRow(ResultSet rs, int arg1)
                             throws SQLException {
@@ -95,11 +102,11 @@ public class UserDatoImpl implements UserDao{
                         player.setId(rs.getLong("idPersona"));
                         player.setNombreCompleto(rs.getString("nombreCompleto"));
                         player.setSobrenombre(rs.getString("sobrenombre"));
-                        player.setRaiting(rs.getInt("raiting"));
+                        player.setRaiting(rs.getInt("rating"));
                         player.setPrestamo(rs.getInt("prestamo"));
                         player.setLink(rs.getString("link"));
                         Equipo equipo = new Equipo();
-                        equipo.setId(rs.getLong("Equipos_idEquipo"));
+                        equipo.setId(rs.getLong("equipos_idEquipo"));
                         equipo.setNombre(rs.getString("nombreEquipo"));
                         player.setEquipo(equipo);
                         return player;
@@ -114,7 +121,7 @@ public class UserDatoImpl implements UserDao{
 	
 }
 	
-public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
+public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, int idTemporada) {
 
 		
 		List<User> playersList = new ArrayList<User>();
@@ -125,17 +132,22 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
 				+"     persona.nombreCompleto, "
 				+"     persona.sobrenombre, "
 				+"     persona.fehaNacimiento, "
-				+"     persona.raiting, "
+				+"     persona_has_temporada.rating, "
 				+"     persona.potencial, "
-				+"     persona.Equipos_idEquipo, "
+				+"     persona_has_temporada.equipos_idEquipo, "
 				+"     persona.activo, "
 				+"     persona.userManager, "
 				+"     persona.prestamo,"
 				+ "    persona.link, "
 				+ "    equipos.NombreEquipo as nombreEquipo "
-				+" FROM  persona "
-				+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+ "WHERE   equipos.idEquipo in( "+ idEquipo+","+idEquipoVisita+")";
+				+"     from  persona_has_temporada   "
+				+"     join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
+				+" JOIN  equipos on equipos.idEquipo = persona_has_temporada.equipos_idEquipo  "
+				+ " WHERE   equipos.idEquipo in( "+ idEquipo+","+idEquipoVisita+")"
+				+" and persona_has_temporada.temporada_idTemporada = " + idTemporada
+				;
+		
+		System.out.println(query);
 		Collection players = jdbcTemplate.query(query, new RowMapper() {
                     public Object mapRow(ResultSet rs, int arg1)
                             throws SQLException {
@@ -143,10 +155,10 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita) {
                         player.setId(rs.getLong("idPersona"));
                         player.setNombreCompleto(rs.getString("nombreCompleto"));
                         player.setSobrenombre(rs.getString("sobrenombre"));
-                        player.setRaiting(rs.getInt("raiting"));
+                        player.setRaiting(rs.getInt("rating"));
                         player.setPrestamo(rs.getInt("prestamo"));
                         player.setLink(rs.getString("link"));
-                        player.setEquipos_idEquipo(rs.getInt("Equipos_idEquipo"));
+                        player.setEquipos_idEquipo(rs.getInt("equipos_idEquipo"));
                         Equipo equipo = new Equipo();
                         equipo.setId(rs.getLong("Equipos_idEquipo"));
                         equipo.setNombre(rs.getString("nombreEquipo"));

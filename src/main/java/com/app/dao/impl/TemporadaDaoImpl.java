@@ -94,8 +94,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		Torneo torneo = new Torneo();
 		
 		torneo.setTablaGeneral(getTablaGeneral(idTemporada, idTorneo));
-		torneo.setGolesTorneo(getGolesTorneo(idTorneo, 0));
-		torneo.setGolesTorneoEquipo(getGolesTorneo(idTorneo, idEquipo));
+		torneo.setGolesTorneo(getGolesTorneo(idTorneo, 0,idTemporada));
+		torneo.setGolesTorneoEquipo(getGolesTorneo(idTorneo, idEquipo,idTemporada));
 		torneo.setJornadas(getJornadas(idTemporada, idTorneo, 1));
 		
 		return torneo;
@@ -577,9 +577,9 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		return tablaGeneralList;
 	}
 	
-	public List<GolesJornadas> getGolesTorneo(int idTorneo, int idEquipo) {
+	public List<GolesJornadas> getGolesTorneo(int idTorneo, int idEquipo,int idTemporada) {
 		List<GolesJornadas> golesList = new ArrayList<GolesJornadas>();
-		String aux = " and equipos.idEquipo = " + idEquipo;
+		String aux = " and persona_has_temporada.Equipos_idEquipo = " + idEquipo;
 		String query =" select count(persona.idPersona) goles, "
 				+" persona.idPersona,"
 				+" persona.NombreCompleto, "
@@ -590,12 +590,14 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" ehi.imagen"
 				+" from golesjornadas"
 				+" join jornadas on jornadas.idJornada = golesjornadas.jornadas_has_equipos_jornadas_idJornada"
-				+" join persona on persona.idPersona = golesjornadas.persona_idPersona"
-				+" join equipos on equipos.idEquipo = persona.Equipos_idEquipo"
+				+" join persona_has_temporada on persona_has_temporada.persona_idPersona = golesjornadas.persona_idPersona "
+				+" join persona on persona.idPersona = persona_has_temporada.persona_idPersona "
+				+" join equipos on equipos.idEquipo = persona_has_temporada.Equipos_idEquipo "
 				+" join equipos_has_imagen ehi on equipos.idEquipo = ehi.equipos_idEquipo"
 				+" where jornadas.torneo_idtorneo = " + idTorneo
 				+" and golesjornadas.isautogol = 0 " + ( idEquipo != 0 ? aux : "")
 				+" and ehi.tipoImagen_idTipoImagen = 1"
+				+" and persona_has_temporada.temporada_idTemporada =  "+ idTemporada
 				+" group by persona.idPersona,jornadas.torneo_idtorneo"
 				+" order by jornadas.torneo_idtorneo, goles  desc"
 				+" limit 10";

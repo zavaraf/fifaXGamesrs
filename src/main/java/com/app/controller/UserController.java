@@ -42,12 +42,12 @@ public class UserController {
 		}
 		return new ResponseEntity<List<User>>(listUser, HttpStatus.OK);
 	}
-	@RequestMapping(value="/user/findAllPlayers",method = RequestMethod.GET,
+	@RequestMapping(value="/user/findAllPlayers/{idTemporada}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<List<User>> listAllPlayers(){
+	public ResponseEntity<List<User>> listAllPlayers(@PathVariable("idTemporada") int idTemporada){
 		
-		List<User> listPlayes = userService.findAllPlayers();
+		List<User> listPlayes = userService.findAllPlayers(idTemporada);
 		
 		if(listPlayes.isEmpty()){
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
@@ -81,10 +81,11 @@ public class UserController {
     }
   
 
-	@RequestMapping(value = "/user/player/{idEquipo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<User>> getPlayersByIdEquipo(@PathVariable("idEquipo") long id) {
-		System.out.println("Fetching Players by idEquipo " + id);
-		List<User> players = userService.findAllPlayersByIdEquipo(id);
+	@RequestMapping(value = "/user/player/{idEquipo}/{idTemporada}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<User>> getPlayersByIdEquipo(@PathVariable("idEquipo") long id,
+			@PathVariable("idTemporada") int idTemporada) {
+		System.out.println("Fetching Players by idEquipo " + id+" idtemporada]:"+idTemporada);
+		List<User> players = userService.findAllPlayersByIdEquipo(id,idTemporada);
 		if (players.isEmpty()) {
 			System.out.println("Equipo with id " + id + " not found Players");
 			return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
@@ -92,11 +93,12 @@ public class UserController {
 		return new ResponseEntity<List<User>>(players, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/user/player/{idEquipo}/{idEquipoVisita}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/user/player/{idEquipo}/{idEquipoVisita}/{idTemporada}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<User>> getPlayersByIdEquipo(@PathVariable("idEquipo") long id,
-			@PathVariable("idEquipoVisita") long idVisita) {
-		System.out.println("Fetching Players by idEquipo " + id);
-		List<User> players = userService.findAllPlayersByIdEquipo(id,idVisita);
+			@PathVariable("idEquipoVisita") long idVisita,
+			@PathVariable("idTemporada") int idTemporada) {
+		System.out.println("Fetching Players by idEquipo " + id + " Visita]:"+idVisita+" temporada]:"+idTemporada);
+		List<User> players = userService.findAllPlayersByIdEquipo(id,idVisita, idTemporada);
 		if (players.isEmpty()) {
 			System.out.println("Equipo with id " + id + " not found Players");
 			return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);

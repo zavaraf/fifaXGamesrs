@@ -112,8 +112,11 @@ public class EquiposController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Equipo> updateEquipo(@PathVariable("id") long id, @RequestBody Equipo equipo) {
+    @RequestMapping(value = "/{id}/{idTemporada}", method = RequestMethod.PUT)
+    public ResponseEntity<Equipo> updateEquipo(
+    		@PathVariable("id") long id,
+    		@PathVariable("idTemporada") int idTemporada,
+    		@RequestBody Equipo equipo) {
         System.out.println("Updating User " + id);
           
         Equipo currentEquipo = equipoService.findById(id);
@@ -127,10 +130,12 @@ public class EquiposController {
         currentEquipo.setDescripcion(equipo.getDescripcion());
         currentEquipo.setDivision(equipo.getDivision());
         currentEquipo.setLinksofifa(equipo.getLinksofifa());
+        currentEquipo.setImg(equipo.getImg());
+        currentEquipo.setImg2(equipo.getImg2());
         
         
           
-        equipoService.updateUser(currentEquipo);
+        equipoService.updateUser(currentEquipo,idTemporada);
         return new ResponseEntity<Equipo>(currentEquipo, HttpStatus.OK);
     }
   

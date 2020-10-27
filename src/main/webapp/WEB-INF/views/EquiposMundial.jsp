@@ -61,9 +61,9 @@
 					<form ng-submit="ctrl.submit(selectedDiv)" name="myForm" class="form-horizontal">
                       <input type="hidden" ng-model="ctrl.equipo.id" />
                       <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" >Nombre</label>
-                              <div class="col-md-7">
+                          <div class="form-group col">
+                              <label class="col control-lable" >Nombre</label>
+                              <div class="col">
                                   <input type="text" ng-model="ctrl.equipo.nombre" id="nombre" class="username form-control input-sm" placeholder="Escribe tu Nombre" required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.nombre.$error.required">Es requerido</span>
@@ -75,17 +75,17 @@
                       </div>                       
                        
                       <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" >Descripción</label>
-                              <div class="col-md-7">
+                          <div class="form-group col">
+                              <label class="col control-lable" >Descripción</label>
+                              <div class="col">
                                   <input type="text" ng-model="ctrl.equipo.descripcion" id="descripcion" class="form-control input-sm" placeholder="Descripción"/>
                               </div>
                           </div>
                       </div>
                       <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" >Divsión</label>
-                               <div class="col-md-7">
+                          <div class="form-group col">
+                              <label class="col control-lable" >Divsión</label>
+                               <div class="col">
 <!-- 	                                  <select ng-model="selectedDiv" class="lastname form-control input-sm" > -->
 <!-- 										<option   ng-repeat="x in ctrl.divisiones" value="{{x.id}}">{{x.nombre}}</option> -->
 									<select  ng-model="selectedDiv" ng-options="division as division.nombre for division in ctrl.divisiones track by division.id" class="lastname form-control input-sm">
@@ -94,6 +94,24 @@
 									
 									
 	                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="form-group col">
+                              <label class="col control-lable" >Img</label>
+                              <div class="col">
+                                  <input type="text" ng-model="ctrl.equipo.img" id="img" class="form-control input-sm" placeholder="img"/>
+                                  <img ng-src="{{ctrl.equipo.img}}" height="25"  class="rounded float-left" alt="...">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="form-group col">
+                              <label class="col control-lable" >Img</label>
+                              <div class="col">
+                                  <input type="text" ng-model="ctrl.equipo.img2" id="img2" class="form-control input-sm" placeholder="img"/>
+                                  <img ng-src="{{ctrl.equipo.img2}}" height="75"  class="rounded float-left" alt="...">
+                              </div>
                           </div>
                       </div>
   

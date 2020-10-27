@@ -23,13 +23,13 @@ public interface UserService {
 	     
 	    public boolean isUserExist(User user);
 
-		List<User> findAllPlayers();
+		List<User> findAllPlayers(int idTemporada);
 
 		ResponseData savePlayer(User user,int idTemporada);
 
 		ResponseData updatePlayer(User currentUser,int idTemporada);
 
-		List<User> findAllPlayersByIdEquipo(long id);
-		List<User> findAllPlayersByIdEquipo(long id,long idVisita);
+		List<User> findAllPlayersByIdEquipo(long id,int idTemporada);
+		List<User> findAllPlayersByIdEquipo(long id,long idVisita, int idTemporada);
 
 }

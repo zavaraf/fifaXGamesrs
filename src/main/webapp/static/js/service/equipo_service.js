@@ -84,7 +84,7 @@ angular.module('myApp').factory('EquipoService', ['$http', '$q','CONFIG', functi
         var deferred = $q.defer();
         console.log("Equipo_Service Mod:"+equipo.division.id)
         console.log("Equipo_Service Mod:"+equipo.division.nombre)
-        $http.put(REST_SERVICE_URI+id, equipo)
+        $http.put(REST_SERVICE_URI+id+"/"+CONFIG.VARTEMPORADA.id, equipo)
             .then(
             function (response) {
                 deferred.resolve(response.data);
