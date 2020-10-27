@@ -74,7 +74,7 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     function getJornada(idJornada,id,idEquipoLocal,idEquipoVisita) {
         var deferred = $q.defer();
         var idTorneo = 1;
-        var url = REST_SERVICE_URI_E+'getJornada/'+idJornada+'/'+id+'/'+idEquipoLocal+'/'+idEquipoVisita
+        var url = REST_SERVICE_URI_E+'getJornada/'+idJornada+'/'+id+'/'+idEquipoLocal+'/'+idEquipoVisita+"/"+CONFIG.VARTEMPORADA.id
         console.log(url);
         $http.get(url)
             .then(

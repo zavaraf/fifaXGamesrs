@@ -472,7 +472,7 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"   equipos.idEquipo,  "
 				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img,"
 				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2,"
-				+"   equipos.nombreEquipo,  "
+				+"   equipos_has_temporada.nombreEquipo,  "
 				+"   equipos.descripcionEquipo,  "
 				+"   equipos.activo ,  "
 				+"   equipos.Division_idDivision, "

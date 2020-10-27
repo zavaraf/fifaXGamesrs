@@ -814,20 +814,21 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		return golesList;
 	}
 	
-	public Jornada getJornada(String idJornada,String id,	String idEquipoLocal,	String idEquipoVisita){
+	public Jornada getJornada(String idJornada,String id,	String idEquipoLocal,	String idEquipoVisita, int idTemporada){
 		
+		System.out.println("idTemporada]:"+idTemporada);
 	Jornada jornada = new Jornada();
 	String query ="  select tabla.idJornada, tabla.id, tabla.numeroJornada, tabla.cerrada,"
 				+"  tabla.equipos_idEquipoLocal, "
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, "
 				+"  tabla.golesLocal, "
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, " 
-				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoLocal) imgLocal, "
+				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoLocal and equipos_has_imagen.idTemporada = "+ idTemporada +" ) imgLocal, "
 				+"  tabla.golesLocal, "
 				+"  tabla.golesVisita, "
 				+"   "
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoVisita) equipoVisita, "
-				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita) imgVisita, "
+				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita and equipos_has_imagen.idTemporada = "+ idTemporada +" ) imgVisita, "
 				+"  tabla.equipos_idEquipoVisita, "
 				+"  tabla.username, "
 				+"  tabla.updateDate "
@@ -848,6 +849,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+ " order by tabla.idJornada asc "
 
 ;
+	
+	System.out.println(query);
 	Collection jornadas = jdbcTemplate.query(
             query
             , new RowMapper() {

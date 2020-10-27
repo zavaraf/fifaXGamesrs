@@ -123,15 +123,16 @@ public class TemporadaController {
 		}
 		return new ResponseEntity<List<GolesJornadas>>(listTemporada, HttpStatus.OK);
 	}
-	@RequestMapping(value="/lm/getJornada/{idJornada}/{id}/{idEquipoLocal}/{idEquipoVisita}",method = RequestMethod.GET,
+	@RequestMapping(value="/lm/getJornada/{idJornada}/{id}/{idEquipoLocal}/{idEquipoVisita}/{idTemporada}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<Jornada> getJornada(@PathVariable("idJornada") String idJornada,
 			@PathVariable("id") String id,
 			@PathVariable("idEquipoLocal") String idEquipoLocal,
-			@PathVariable("idEquipoVisita") String idEquipoVisita){
+			@PathVariable("idEquipoVisita") String idEquipoVisita,
+			@PathVariable("idTemporada") int idTemporada){
 		
-		Jornada jornada = temporadaService.getJornada(idJornada, id, idEquipoLocal, idEquipoVisita);
+		Jornada jornada = temporadaService.getJornada(idJornada, id, idEquipoLocal, idEquipoVisita,idTemporada);
 		
 		if(jornada == null){
 			return new ResponseEntity<Jornada>(HttpStatus.NO_CONTENT);

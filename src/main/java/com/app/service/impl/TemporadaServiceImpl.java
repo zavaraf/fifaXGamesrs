@@ -136,11 +136,11 @@ public class TemporadaServiceImpl implements TemporadaService{
 		return temporadaDao.getGolesJornadas( idJornada, id, idEquipoLocal, idEquipoVisita);
 	}
 	
-	public Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita){
+	public Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita, int idTemporada){
 		
 		Jornada jornada = new Jornada();
 		
-		jornada = temporadaDao.getJornada( idJornada, id, idEquipoLocal, idEquipoVisita);
+		jornada = temporadaDao.getJornada( idJornada, id, idEquipoLocal, idEquipoVisita,idTemporada);
 		
 		List<GolesJornadas> goles = temporadaDao.getGolesJornadas( idJornada, id, idEquipoLocal, idEquipoVisita);
 		List<String> imagenes = temporadaDao.getImagenes(idJornada, id);
