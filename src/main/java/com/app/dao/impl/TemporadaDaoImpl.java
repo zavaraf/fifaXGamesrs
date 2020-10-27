@@ -324,7 +324,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" tablaGeneral.tempodada_idTemporada,  "
 				+" tablaGeneral.idTorneo, "
 				+" tablaGeneral.idEquipo,   "
-				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tablaGeneral.idEquipo)img,  "
+				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tablaGeneral.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" )img,  "
 				+" tablaGeneral.nombreEquipo,  "
 				+" tablaGeneral.pj,  "
 				+" tablaGeneral.pg,   "
@@ -640,12 +640,15 @@ public class TemporadaDaoImpl implements TemporadaDao {
 					+" tabla.nombreJornada,"
 					+" tabla.tipoJornada,"
 					+" (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, "
-					+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoLocal) imgLocal, "
+					+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 "
+					+ " and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoLocal "
+					+ " and equipos_has_imagen.idTemporada = "+ idTemporada +" "
+					+ " ) imgLocal, "
 					+" tabla.golesLocal, "
 					+" tabla.golesVisita, "
 					+" "
 					+" (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoVisita) equipoVisita, "
-					+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita) imgVisita, "
+					+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita and equipos_has_imagen.idTemporada = "+ idTemporada +"  ) imgVisita, "
 					+" tabla.equipos_idEquipoVisita "
 					+" "
 					+" from ( "
@@ -1149,7 +1152,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" from grupos_torneo "
 				+" join torneo on torneo.idtorneo = grupos_torneo.torneo_idtorneo "
 				+" where grupos_torneo.torneo_idtorneo = " + idTorneo
-				+" and torneo.tempodada_idTemporada =  " + idTemporada
+				+" and torneo.tempodada_idTemporada =  " + idTemporada 
 				+" order by nombreGrupo ";
 		
 		
@@ -1174,7 +1177,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		  
 		  grup = (Grupos)gru;
 		  
-		  grup.setEquipos(getEquiposByGrupo(grup.getNumero(),idTorneo));
+		  grup.setEquipos(getEquiposByGrupo(grup.getNumero(),idTorneo,idTemporada));
 		  
 		  gruposList.add(grup);
 		  
@@ -1184,7 +1187,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 			 
 	}
 	
-	public List<Equipo> getEquiposByGrupo( int idGrupo, int idTorneo){
+	public List<Equipo> getEquiposByGrupo( int idGrupo, int idTorneo, int idTemporada){
 		
 		List<Equipo> equiposList = new ArrayList<Equipo>();		
 		
@@ -1197,6 +1200,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 					+ " join equipos_has_imagen on equipos.idEquipo = equipos_has_imagen.equipos_idEquipo  "
 					+ " where grupos_torneo.nombreGrupo =  "+ idGrupo
 					+ " and grupos_torneo.torneo_idtorneo =  "+ idTorneo
+					+ " and equipos_has_imagen.idTemporada = "+ idTemporada 
 					+ " and equipos_has_imagen.tipoImagen_idTipoImagen = 1 ";
 							
 		
