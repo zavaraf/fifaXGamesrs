@@ -101,7 +101,7 @@
                               <label class="col control-lable" >Img</label>
                               <div class="col">
                                   <input type="text" ng-model="ctrl.equipo.img" id="img" class="form-control input-sm" placeholder="img"/>
-                                  <img ng-src="{{ctrl.equipo.img}}" height="25"  class="rounded float-left" alt="...">
+                                  <img ng-src="{{ctrl.equipo.img}}"  class="rounded float-left" alt="...">
                               </div>
                           </div>
                       </div>
@@ -110,7 +110,7 @@
                               <label class="col control-lable" >Img</label>
                               <div class="col">
                                   <input type="text" ng-model="ctrl.equipo.img2" id="img2" class="form-control input-sm" placeholder="img"/>
-                                  <img ng-src="{{ctrl.equipo.img2}}" height="75"  class="rounded float-left" alt="...">
+                                  <img ng-src="{{ctrl.equipo.img2}}"   class="rounded float-left" alt="...">
                               </div>
                           </div>
                       </div>

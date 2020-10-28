@@ -593,7 +593,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" join persona_has_temporada on persona_has_temporada.persona_idPersona = golesjornadas.persona_idPersona "
 				+" join persona on persona.idPersona = persona_has_temporada.persona_idPersona "
 				+" join equipos on equipos.idEquipo = persona_has_temporada.Equipos_idEquipo "
-				+" join equipos_has_imagen ehi on equipos.idEquipo = ehi.equipos_idEquipo"
+				+" left join equipos_has_imagen ehi on equipos.idEquipo = ehi.equipos_idEquipo "
+				+ "      and persona_has_temporada.temporada_idTemporada = ehi.idTemporada"
 				+" where jornadas.torneo_idtorneo = " + idTorneo
 				+" and golesjornadas.isautogol = 0 " + ( idEquipo != 0 ? aux : "")
 				+" and ehi.tipoImagen_idTipoImagen = 1"
