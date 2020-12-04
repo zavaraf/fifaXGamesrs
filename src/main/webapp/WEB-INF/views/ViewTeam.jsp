@@ -78,7 +78,7 @@
                   <div class="modal fade" id="myModal" role="dialog">
                      <div class="modal-dialog">
                         <!-- Modal content-->
-                        <div class="modal-content">
+                        <div class="modal-content bg-dark text-white">
                            <div class="modal-header">
                               <h4 class="modal-title">Datos Jugador</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -254,7 +254,7 @@
                           <div class="form-group col-md-12">
                               <div class="col">
                                   <div class="table-responsive-sm">
-							       <table class="table table-hover">
+							       <table class="table table-lg table-hover table-center table-dark table-responsive">
 									    <thead>
 									      <tr>
 									        <th>Objetivo</th>
@@ -301,7 +301,7 @@
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
-				<div class="modal-content">
+				<div class="modal-content bg-dark text-white">
 					<div class="modal-header">
 						<h4 class="modal-title">Datos Financieros</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -353,7 +353,7 @@
 		<div class="modal fade" id="myModalDraf" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
-				<div class="modal-content">
+				<div class="modal-content bg-dark text-white">
 				<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
 <!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
 				  <strong>¡Error!</strong> {{ctrl.Error}}
@@ -408,7 +408,7 @@
 		<div class="modal fade" id="myModalConfirm" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
-				<div class="modal-content">
+				<div class="modal-content bg-dark text-white">
 				<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
 <!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
 				  <strong>¡Error!</strong> {{ctrl.Error}}
@@ -479,7 +479,7 @@
                              <p><input class="form-control"  type="text" ng-model="test" placeholder="Buscar"></p>
 						   </div>                            
               		</div>
-					<table class="table table-hover">
+					<table class="table table-lg table-hover table-center table-dark table-responsive">
 						<thead>
 							<tr>
 								<th>ID.</th>
@@ -707,7 +707,7 @@
 					ng-show="ctrl.equipo.datosFinancieros!=null">Agregar Conceptos</button>
 				  </sec:authorize>	
 				  <div class="table-responsive-sm">
-				       <table class="table table-hover">
+				       <table class="table table-lg table-hover table-center table-dark table-responsive">
 						    <thead>
 						      <tr>
 						        <th>Concepto</th>
@@ -789,7 +789,7 @@
 					</div>
 				</div>
 				<div class="table-responsive-sm">
-					<table class="table table-hover">
+					<table class="table table-lg table-hover table-center table-dark table-responsive">
                       <thead>
                           <tr>
                               <th>ID.</th>
@@ -837,7 +837,7 @@
                              <p><input class="form-control"  type="text" ng-model="test" placeholder="Buscar"></p>
 						   </div>                            
               		</div>
-					<table class="table table-hover">
+					<table class="table table-lg table-hover table-center table-dark table-responsive">
                       <thead>
                           <tr>
                               <th>ID.</th>

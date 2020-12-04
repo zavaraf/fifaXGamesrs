@@ -72,13 +72,13 @@
 
   
   	
-	<div class="container container-fluid" ng-controller="TorneoLMController as ctrl">
+	<div class="container container-fluid bg-dark text-white" ng-controller="TorneoLMController as ctrl">
 	
 	<!-- Modal -->
 		<div class="modal fade " id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		  <div class="modal-dialog  modal-lg" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
+		  <div class="modal-dialog  modal-lg " role="document">
+		    <div class="modal-content bg-dark text-white">
+		      <div class="modal-header ">
 		        <span ng-show="ctrl.jornadaEdit.username != null && ctrl.jornadaEdit.username != '' " type="button" class="btn btn-outline-primary" aria-disabled="true">{{ctrl.jornadaEdit.username}}</span>
 		        <span ng-show="ctrl.jornadaEdit.date != null && ctrl.jornadaEdit.date != '' && ctrl.jornadaEdit.username != null" type="button" class="btn btn-outline-primary" aria-disabled="true">{{ctrl.jornadaEdit.date}}</span>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -86,7 +86,7 @@
 		        </button>
 		      </div>
 
-		      <div class="modal-body">
+		      <div class="modal-body ">
 		      <sec:authentication var="user" property="principal" />
 		        <blockquote class="blockquote text-center">
 					  <p class="mb-0">RESUMEN</p>
@@ -97,7 +97,7 @@
 				  <tr >
 				    <td >
 				      
-				    <blockquote class="blockquote ">
+				    <blockquote class="blockquote bg-dark text-white ">
 				    <img ng-src="{{ctrl.jornadaEdit.imgLocal}}" style="width: 30%;"class="card-img-center" alt="...">
 					  <p class="mb-0">{{ctrl.jornadaEdit.nombreEquipoLocal}} </p>
 				    
@@ -114,7 +114,7 @@
 					 </sec:authorize>
 					</p>
 					<div class="collapse" id="collapseExample">
-					  <div class="card card-body">
+					  <div class="card card-body bg-secondary text-white">
 					    <div class="form-group">
 					   
 			            <label for="recipient-name" class="col-form-label">Add Gol:</label>
@@ -158,7 +158,7 @@
 					
 <!-- 					</div> -->
 				    
-				    <footer class="bg-light text-right  ">
+				    <footer class="text-right bg-dark text-white ">
 					  
 					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
 					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}} 
@@ -172,14 +172,14 @@
 					</blockquote>
 				    </td>
 				    <td >				      
-				      <blockquote class="blockquote ">
+				      <blockquote class="blockquote  bg-dark text-white">
 					  <p class="mb-0">{{ctrl.jornadaEdit.golesLocal}}-{{ctrl.jornadaEdit.golesVisita}}</p>
 					  </blockquote>
 				    </td>
 				   
 				    <td >
 				      
-				      <blockquote class="blockquote ">
+				      <blockquote class="blockquote bg-dark text-white ">
 				      <img ng-src="{{ctrl.jornadaEdit.imgVisita}}" style="width: 30%;"class="card-img-center" alt="...">
 					  <p class="mb-0">{{ctrl.jornadaEdit.nombreEquipoVisita}}</p>
 				      <p>
@@ -195,7 +195,7 @@
 					  </sec:authorize>
 					</p>
 					<div class="collapse" id="collapseExample1">
-					  <div class="card card-body">
+					  <div class="card card-body bg-secondary text-white">
 					    <div class="form-group">
 			            <label for="recipient-name" class="col-form-label">Add Gol:</label>
 			            
@@ -231,7 +231,7 @@
 <!-- 					  </div> -->
 <!-- 					</div> -->
 					
-					<footer class="bg-light text-left  ">
+					<footer class="text-left bg-dark text-white ">
 					  
 					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
 					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}
@@ -257,7 +257,7 @@
 				 </button>
 				 
 				 <div class="collapse" id="collapseImg" style="margin: 0 auto; width:70%;">
-				  <div class="card card-body">
+				  <div class="card card-body bg-secondary text-white">
 				    <div class="form-group">
 		            <label for="recipient-name" class="col-form-label">Add Img:</label>
 		            <input ng-model="selectedImg1"type="text" class="form-control" id="recipient-name">
@@ -272,7 +272,7 @@
 				</div>
 				 
 				 <div class="collapse" id="collapsePub" style="margin: 0 auto; width:70%;">
-				  <div class="card card-body">
+				  <div class="card card-body bg-secondary text-white">
 				    <div class="form-group">
 				    <div>
 				    	{{'[size=150]'+ ctrl.jornadaEdit.nombreEquipoLocal +'  '+ ctrl.jornadaEdit.golesLocal}} - {{ctrl.jornadaEdit.golesVisita +'  '+ ctrl.jornadaEdit.nombreEquipoVisita +'[/size]'}}
@@ -327,7 +327,7 @@
                 </div>
                 <div  class="row">
                 	<div class="col-xs-12 col-md-7">
-		                <table  ng-show = "ctrl.divisionSelect.tipoTorneo ==1" class="table  table-sm table-hover table-striped">
+		                <table  ng-show = "ctrl.divisionSelect.tipoTorneo ==1" class="table table-lg table-hover table-center table-dark ">
 <%-- 		               style="background: url(<c:url value='/imagenes/LigaMundialXGamers.png'/>) " > --%>
 		                	<thead class="thead-dark">
 		                          <tr>
@@ -363,7 +363,7 @@
 		                      </tbody>
 		    			</table>
 		    			
-		    			<table ng-show = "ctrl.divisionSelect.tipoTorneo ==2" ng-repeat="grupo in ctrl.gruposTorneo" class="table table-sm table-hover table-striped">
+		    			<table ng-show = "ctrl.divisionSelect.tipoTorneo ==2" ng-repeat="grupo in ctrl.gruposTorneo" class="table table-sm table-hover table-center table-dark ">
 		                	<thead class="thead-dark">
 		                          <tr>
 		                              <th>*</th>
@@ -400,12 +400,12 @@
 		    			
 		    	<div  class="row">
                 	<div class="col-xs-12 col-md-7">
-		    			<table class="table table-sm table-hover table-striped">
+		    			<table class="table table-sm table-hover table-dark table-responsive">
 		    				<thead class="thead-dark">
 		                          <tr>
 		                          	  <th>*</th>
 		                              <th>Goles</th>
-		                              <th>Nombr</th>	
+		                              <th>Nombre</th>	
 		                              	                              
 		                          </tr>
 		                      </thead>
@@ -422,12 +422,12 @@
 		    			</table>
 		    		</div>
 		    		<div class="col-xs-6 col-md-5 ">
-		    			<table class="table table-sm table-hover table-striped">
+		    			<table class="table table-sm table-hover table-dark table-responsive">
 		    				<thead class="thead-dark">
 		                          <tr>
 		                          	  <th>*</th>
 		                              <th>Goles</th>
-		                              <th>Nombr</th>	
+		                              <th>Nombre</th>	
 		                              	                              
 		                          </tr>
 		                      </thead>

@@ -182,9 +182,9 @@ angular.module('myApp')
     function selectColor(jug){
     	// console.log("--------------Entrando a seleccionar color tabla Drat---------")
     	if(jug.idEquipoOferta == jug.equipo.id){
-    		return 'table-success'
+    		return ''
     	}else{
-    		return 'table-warning'
+    		return 'table-dark'
     	}
     }
 	

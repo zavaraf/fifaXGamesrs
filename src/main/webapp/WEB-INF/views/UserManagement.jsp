@@ -181,7 +181,7 @@
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">List of Users </span></div>
               <div class="table-responsive-sm">
-                  <table class="table table-hover">
+                  <table class="table table-sm table-hover table-dark table-responsive">
                       <thead>
                           <tr>
                               <th>ID.</th>

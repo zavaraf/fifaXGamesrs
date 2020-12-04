@@ -114,7 +114,7 @@
 						    <div class="table-responsive-sm">
               	
               
-			                  <table class="table table-hover">
+			                  <table class="table table-sm table-hover table-dark table-responsive">
 			                      <thead>
 			                          <tr>
 			                              <th>Sel</th>
@@ -164,7 +164,7 @@
                           </div>
               		</div>
               
-                  <table class="table table-hover">
+                  <table class="table table-sm table-hover table-dark table-responsive">
                       <thead>
                           <tr>
                               <th>username</th>

@@ -128,7 +128,7 @@
                              <p><input class="form-control"  type="text" ng-model="text" placeholder="Buscar"></p>
 						   </div>                            
               		</div>
-					<table class="table table-hover">
+					<table class="table table-sm table-hover table-dark table-responsive">
 						<thead>
 							<tr>
 								<th>codigo</th>

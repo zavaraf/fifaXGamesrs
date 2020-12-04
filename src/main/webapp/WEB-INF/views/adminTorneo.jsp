@@ -130,7 +130,7 @@
 								</div>
 							</div>
 							
-							<table class="table table-sm table-hover table-dark">
+							<table class="table table-sm table-hover table-dark table-responsive">
 		                	
 		                      <tbody>
 		                          <tr  ng-repeat="jor in e.jornada" ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);

@@ -150,7 +150,7 @@
                           </div>
               		</div>
               
-                  <table class="table table-hover">
+                  <table class="table table-lg table-hover table-dark table-responsive">
                       <thead>
                           <tr>
                               <th>ID.</th>

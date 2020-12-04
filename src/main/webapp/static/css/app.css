@@ -1,6 +1,13 @@
 body, #mainWrapper {
 	height: 90%;
-	background-color:rgb(245, 245, 245);
+	background-color:rgb(010,010,010);
+	color: #FFFFFF;
+/*	background-color:rgb(245, 245, 245); */
+}
+.dark1{
+	height: 90%;
+	color:rgb(010,010,030);
+	
 }
 
 body, .form-control{
@@ -17,7 +24,7 @@ body, .form-control{
 }
 
 .formcontainer{
-	background-color: #DAE8E8;
+	background-color: #2F353B;
 	 padding: 20px;
 }
 .formcontainer2{

@@ -186,7 +186,7 @@
 					</div>
 				</blockquote>
 		        <div class="container text-center" >
-				   <table class="table table-hover">
+				   <table class="table table-lg table-hover table-dark table-center ">
                       <thead>
                           <tr>
                               <th>ID.</th>
@@ -261,7 +261,8 @@
                           </div>
               		</div>
               		
-              	  <table ng-show = "ctrl.visibleJugadores == true" class="table table-hover">
+              		
+              	  <table ng-show = "ctrl.visibleJugadores == true" class="table table-lg table-hover table-dark table-center">
                       <thead>
                           <tr>
                               <th>ID.</th>
@@ -286,7 +287,7 @@
                       </tbody>
                   </table>
               
-                  <table ng-show = "ctrl.visibleOfertas == true"class="table table-hover">
+                  <table ng-show = "ctrl.visibleOfertas == true" class="table table-lg table-hover table-dark table-center">
                       <thead>
                           <tr>
                               <th>ID.</th>

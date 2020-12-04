@@ -68,7 +68,7 @@
       <script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
       <script src="<c:url value='/static/js/controller/equipo_controller.js' />"></script>
       <script src="<c:url value='/static/js/app/customSelect.js' />"></script>
-      <div class="container text-center container-fluid" ng-controller="UserController as ctrl">
+      <div class="container  container-fluid" ng-controller="UserController as ctrl">
       	<div >
       		<div id="jugadores"  >
 <!--       		<div id="jugadores" class="container tab-pane active" > -->
@@ -77,7 +77,7 @@
                   <div class="modal fade" id="myModal" role="dialog">
                      <div class="modal-dialog">
                         <!-- Modal content-->
-                        <div class="modal-content">
+                        <div class="modal-content bg-dark text-white">
                            <div class="modal-header">
                               <h4 class="modal-title">Datos Jugador</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -88,9 +88,9 @@
                                  <div class="row">
                                     <div class=" col-md">
                                        <label class="col-md control-lable" for="sobreNom">Nombre Corto</label>
-                                       <div class="col-md">
+                                       <div class="col-md ">
                                           <input type="text" ng-model="ctrl.player.sobrenombre"
-                                             id="sobreNom" class="lastname form-control input-sm"
+                                             id="sobreNom" class="lastname form-control input-sm "
                                              placeholder="Nombre corto" required ng-minlength="3" />
                                           <div class="has-error" ng-show="myForm.$dirty">
                                              <span ng-show="myForm.sobreNom.$error.required">Es requerido</span> 
@@ -167,7 +167,7 @@
                                     <div class="row">
                                        <div class="form-actions floatRight">
                                           <input  ng-click="ctrl.submitPlayer(ctrl.player.equipo)" 
-                                          class="btn btn-default" data-dismiss="modal"
+                                          class="btn btn-default text-white" data-dismiss="modal"
                                              type="submit" value="{{!ctrl.player.id ? 'Add' : 'Update'}}"
                                              class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
                                           <button type="button" ng-click="ctrl.reset()"
@@ -214,7 +214,7 @@
                                     </div>
                                  </div>
                                  <!--          <table  ng-init='configPages()'  class="table table-striped table-hover"> -->
-                                 <table  class="table table-hover" >
+                                 <table class="table table-lg table-hover table-dark table-center ">
                                     <thead>
                                        <tr>
                                           <th>ID.</th>
