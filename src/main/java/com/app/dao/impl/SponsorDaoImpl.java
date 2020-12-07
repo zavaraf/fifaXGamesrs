@@ -283,20 +283,18 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 		return listCatalogo;
 	}
 	
-	public void crearFinanzas(Equipo equipo,int idCatalogo, int monto) {
-		
-		
-	}
+	
 
-	public void crearFinanzas(Equipo equipo, long idCatalogo, long monto) {
+	public void crearFinanzas(Equipo equipo, long idCatalogo, long monto,  int idTemporada) {
 		
-				String query = "call  createOrUpdateDatosFinancieros(?,?,?)";
+				String query = "call  createOrUpdateDatosFinancieros(?,?,?,?)";
 						
 				System.out.println(query+"-"+idCatalogo+"-"+monto+"-"+equipo.getId());
 				jdbcTemplate.update(query,
 					    idCatalogo,
 					    monto,
-					    equipo.getId()
+					    equipo.getId(),
+					    idTemporada
 					  );
 	}
 

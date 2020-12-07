@@ -123,7 +123,7 @@ then
 
 elseif montoBD is null or  montoOferta > montoBD then 
 	set isError = 1 ;
-  set message = 'Monto insuficiente';
+  set message = 'Monto insuficiente revisa tus finanzas';
 elseif idJugadorVal is null then
   set isError = 1 ;
   set message = 'El jugador no Existe para ofertar';
@@ -150,7 +150,7 @@ elseif idJugador is not null then
      from draftpc
      WHERE `idDraftPC` = 1
      AND `Persona_idPersona` = idJugador
-     AND `tempodada_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
+     AND `tempodada_idTemporada` = idTemporada;
 	
     UPDATE `fifaxgamersbd`.`draftpc`
 	SET
@@ -162,7 +162,7 @@ elseif idJugador is not null then
     `idEquipo` = idEquipoOferta
 	WHERE `idDraftPC` = 1
     AND `Persona_idPersona` = idJugador
-    AND `tempodada_idTemporada` = (select idTemporada from temporada order by temporada.idTemporada desc limit 1);
+    AND `tempodada_idTemporada` = idTemporada;
 
 	INSERT INTO `fifaxgamersbd`.`historicodraft`
 		(`idHistoricoDraft`,
@@ -187,18 +187,20 @@ elseif idJugador is not null then
             draftpc.idEquipo
 			from draftpc
 		where draftpc.Persona_idPersona = idJugador
-        and draftpc.tempodada_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
+        and draftpc.tempodada_idTemporada = idTemporada
         and draftpc.idDraftPC = 1
         limit 1);
         
         select sum(draftpc.ofertaFinal) into sumaDraftPC
 		from draftpc
-		where draftpc.idEquipo = idEquipoOferta;
+		where draftpc.idEquipo = idEquipoOferta
+        and draftpc.tempodada_idTemporada = idTemporada;
         
         call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
 											where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
-                                            idEquipoOferta);
+                                            idEquipoOferta,
+                                            idTemporada);
                                             
 		
         
@@ -211,7 +213,8 @@ elseif idJugador is not null then
             call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
 											where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
-                                            idEquipoAnterior);
+                                            idEquipoAnterior,
+                                            idTemporada);
 		end if;
 	
     

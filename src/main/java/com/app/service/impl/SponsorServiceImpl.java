@@ -45,7 +45,7 @@ public class SponsorServiceImpl implements SponsorService {
 	}
 
 	public void crearfinanzas(Equipo equipo, long id, long monto, int idTemporada) {
-		sponsorDao.crearFinanzas(equipo,id,monto);
+		sponsorDao.crearFinanzas(equipo,id,monto,idTemporada);
 		
 		Equipo equipoBD = new Equipo();
 		

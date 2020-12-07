@@ -82,12 +82,14 @@ set isError = 1 ;
         
         select sum(draftpc.ofertaFinal) into sumaDraftPC
 		from draftpc
-		where draftpc.idEquipo = idEquipoOferta;
+		where draftpc.idEquipo = idEquipoOferta
+        and draftpc.tempodada_idTemporada = idTemporada;
         
         call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
 											where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
-                                            idEquipoOferta);
+                                            idEquipoOferta,
+                                            idTemporada);
                                             
 		
         
@@ -95,12 +97,14 @@ set isError = 1 ;
         
 			select sum(draftpc.ofertaFinal) into sumaDraftPC
 			from draftpc
-			where draftpc.idEquipo = idEquipoAnterior;
+			where draftpc.idEquipo = idEquipoAnterior
+            and draftpc.tempodada_idTemporada = idTemporada;
 			
             call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
 											where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
-                                            idEquipoAnterior);
+                                            idEquipoAnterior,
+                                            idTemporada);
 		end if;
 	
     

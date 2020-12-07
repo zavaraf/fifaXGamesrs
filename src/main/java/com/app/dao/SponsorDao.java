@@ -18,7 +18,7 @@ public interface SponsorDao {
 
 	List<CatalogoFinanciero> getCatalogoFinanzas();
 
-	void crearFinanzas(Equipo equipo, long id, long monto);
+	void crearFinanzas(Equipo equipo, long id, long monto, int idTemporada);
 	
 	public List<CatalogoFinanciero> getCatalogoFinanzasByID(Equipo equipo);
 

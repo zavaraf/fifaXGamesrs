@@ -1,23 +1,23 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS createOrUpdateDatosFinancieros$$
-CREATE PROCEDURE createOrUpdateDatosFinancieros(IN idDatos INT, IN monto INT,IN idEquipo INT)
+CREATE PROCEDURE createOrUpdateDatosFinancieros(IN idDatos INT, 
+											    IN monto INT, 
+                                                IN idEquipo INT,
+                                                IN idTemporada INT)
 BEGIN
 
 DECLARE idTemporadaVar int;
 DECLARE idDatosVar  int;
 DECLARE isUpdate  int;
 
-select idTemporada into idTemporadaVar
-from temporada
-order by temporada.idTemporada desc
-limit 1;
+SET idTemporadaVar = idTemporada;
 
 
-select datos.idDatosFinancieros INTO idDatosVar
-from datosfinancieros datos
-where datos.Equipos_idEquipo = idEquipo 
+select idDatosFinancieros INTO idDatosVar
+from datosfinancieros 
+where datosfinancieros.Equipos_idEquipo = idEquipo 
 
-and datos.Temporadas_idTemporada = idTemporadaVar
+and datosfinancieros.tempodada_idTemporada = idTemporadaVar
 limit 1
 ;
 
@@ -29,7 +29,7 @@ where con.CatalogoConceptos_idCatalogoConceptos = idDatos
 and con.DatosFinancieros_idDatosFinancieros = idDatosVar
 and con.DatosFinancieros_Equipos_idEquipo = idEquipo
 
-and con.DatosFinancieros_Temporadas_idTemporada = idTemporadaVar;
+and con.datosfinancieros_tempodada_idTemporada = idTemporadaVar;
 
 	IF isUpdate is null or isUpdate = 0  then
 
@@ -41,7 +41,7 @@ and con.DatosFinancieros_Temporadas_idTemporada = idTemporadaVar;
 		`CatalogoConceptos_idCatalogoConceptos`,
         `DatosFinancieros_Equipos_idEquipo`,
         
-        `DatosFinancieros_Temporadas_idTemporada`)
+        `datosfinancieros_tempodada_idTemporada`)
 		VALUES
 		(null,
         idDatosVar,
@@ -60,7 +60,7 @@ and con.DatosFinancieros_Temporadas_idTemporada = idTemporadaVar;
 		AND `CatalogoConceptos_idCatalogoConceptos` = idDatos
         and `DatosFinancieros_Equipos_idEquipo` = idEquipo
 		
-		and `DatosFinancieros_Temporadas_idTemporada` = idTemporadaVar;
+		and `datosfinancieros_tempodada_idTemporada` = idTemporadaVar;
 
 	
 	END IF;

@@ -95,7 +95,7 @@ elseif idJugador is not null then
 	idJugador,
 	SYSDATE(),
 	manager,
-	(select idTemporada from temporada order by temporada.idTemporada desc limit 1),
+	idTemporada,
 	observaciones,
 	1,
     montoOferta,
@@ -124,13 +124,14 @@ elseif idJugador is not null then
             draftpc.idEquipo
 			from draftpc
 		where draftpc.Persona_idPersona = idJugador
-        and draftpc.tempodada_idTemporada = (select idTemporada from temporada order by temporada.idTemporada desc limit 1)
+        and draftpc.tempodada_idTemporada = idTemporada
         and draftpc.idDraftPC = 1
         limit 1);
         
         select sum(draftpc.ofertaFinal) into sumaDraftPC
 		from draftpc
-		where draftpc.idEquipo = idEquipoOferta;
+		where draftpc.idEquipo = idEquipoOferta and
+		      draftpc.tempodada_idTemporada = idTemporada;
         
         call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
 											where nombre = 'altasPC' limit 1), 

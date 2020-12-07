@@ -71,7 +71,7 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     function createInitialDraft(id,monto,manager,observaciones,idEquipo,idTemporada) {
     	var deferred = $q.defer();
     	var request = REST_SERVICE_URI+'initialDraft/'+id+"/"+monto+"/"+manager
-    								+"/"+observaciones+"/"+idEquipo+"/"+idTemporada;
+    								+"/"+observaciones+"/"+idEquipo+"/"+CONFIG.VARTEMPORADA.id;
     	
     	
     	console.log(request);
@@ -91,7 +91,7 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     function updateDraft(id,monto,manager,observaciones,ofertaInicial,idEquipo,idTemporada) {
     	var deferred = $q.defer();
     	var request = REST_SERVICE_URI+'updateDraft/'+id+"/"+monto+"/"+manager
-    							+"/"+observaciones+"/"+ofertaInicial+"/"+idEquipo+"/"+idTemporada;
+    							+"/"+observaciones+"/"+ofertaInicial+"/"+idEquipo+"/"+CONFIG.VARTEMPORADA.id;
     	console.log(request);
     	$http.post(request)
     	.then(
@@ -109,7 +109,7 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     function updateDraftAdmin(id,monto,manager,observaciones,ofertaInicial,idEquipo,idTemporada) {
     	var deferred = $q.defer();
     	var request = REST_SERVICE_URI+'updateDraftAdmin/'+id+"/"+monto+"/"+manager
-    							+"/"+observaciones+"/"+ofertaInicial+"/"+idEquipo+"/"+idTemporada;
+    							+"/"+observaciones+"/"+ofertaInicial+"/"+idEquipo+"/"+CONFIG.VARTEMPORADA.id;
     	console.log(request);
     	$http.post(request)
     	.then(
@@ -126,7 +126,7 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     }
     function confirmPlayer(id,idEquipo,idTemporada) {
     	var deferred = $q.defer();
-    	var request = REST_SERVICE_URI+'confirmPlayer/'+id+"/"+idEquipo+"/"+idTemporada;
+    	var request = REST_SERVICE_URI+'confirmPlayer/'+id+"/"+idEquipo+"/"+CONFIG.VARTEMPORADA.id;
     	console.log(request);
     	$http.post(request)
     	.then(
