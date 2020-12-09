@@ -715,7 +715,7 @@
 						      </tr>
 						    </thead>
 						    <tbody>
-						      <tr class = "{{f.tipoconcepto.codigo == 'ingreso' ? 'table-success' : 'table-danger'}}" ng-repeat="f in ctrl.equipo.finanzas">
+						      <tr class = "{{f.tipoconcepto.codigo == 'ingreso' ? 'bg-success' : 'bg-danger'}}" ng-repeat="f in ctrl.equipo.finanzas">
 						        <td>{{f.descripcion}}</td>
 						        <td>{{f.monto | currency}}</td>
 						      </tr>
@@ -867,12 +867,6 @@
   </div>
 </div> 
 
-
-
-
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
 </div>
 </div>
 </body>

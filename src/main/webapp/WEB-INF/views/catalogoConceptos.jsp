@@ -137,7 +137,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr  class = "{{u.tipoconcepto.codigo == 'ingreso' ? 'table-success' : 'table-danger'}}" ng-repeat="u in ctrl.catalogo |orderBy : 'tipoconcepto.codigo'| filter : text" ">
+							<tr  class = "{{u.tipoconcepto.codigo == 'ingreso' ? 'bg-success' : 'bg-danger'}}" ng-repeat="u in ctrl.catalogo |orderBy : 'tipoconcepto.codigo'| filter : text" ">
 								<td><span ng-bind="u.codigo"></span></td>
 								<td><span ng-bind="u.descripcion"></span></td>
 								<td><span ng-bind="u.tipoconcepto.codigo"></span></td>

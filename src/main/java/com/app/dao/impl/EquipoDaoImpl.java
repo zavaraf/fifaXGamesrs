@@ -72,36 +72,35 @@ public class EquipoDaoImpl implements EquipoDao{
 	public List<Equipo> buscarTodos(long idTemporada) {
 		System.out.println("buscarTodos");
 		List<Equipo> equiposList = new ArrayList<Equipo>();
-		String query = " SELECT  "
-				+ " equipos.idEquipo, equipos.linksofifa, "
-				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img,"
-				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2,"
-				+ " (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo"
-				+ "      ELSE equipos_has_temporada.nombreEquipo "
-				+ " END) AS nombreEquipo ,  "
-				+ " equipos.descripcionEquipo,  "
-				+ " equipos.activo ,  "
-				+ " equipos.Division_idDivision, "
-				+ " division.nombre as nombreDivision, "
-				+ " division.descripcion as descripcionDivision , "
-				+ " tot.totalJugadores, "
-				+ " tot.totalRaiting,  "
-				+ " tot.presupuestoInicial,  "
-				+ " tot.presupuestoFinal  "
-				+ " FROM  equipos  "
-				+ " join  equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo  "
-				+ " join  division on equipos.Division_idDivision = division.idDivision  "
-				+ " join (select count(persona.idPersona) as totalJugadores, sum(persona.Raiting) totalRaiting, equipos.idEquipo,dat.presupuestoInicial, dat.presupuestoFinal "
-				+ "        from  persona   "
-				+ "        join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
-				+ "        join  roles on roles.idRoles = pero.Roles_idRoles  "
-				+ "        join  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+ "        join  equipos_has_temporada et on et.Equipos_idEquipo = equipos.idEquipo  "
-				+ "        join  temporada on temporada.idTemporada = et.tempodada_idTemporada "
-				+ "        left join datosfinancieros dat on dat.Equipos_idEquipo = equipos.idEquipo and dat.tempodada_idTemporada = temporada.idTemporada "
-				+ "        where roles.nombreRol = 'Jugador' and temporada.idTemporada = " + idTemporada
-				+ "        group by  equipos.idEquipo ,dat.presupuestoInicial ,equipos.idEquipo,dat.presupuestoFinal  ) tot on tot.idEquipo = equipos.idEquipo "
-				+" and equipos_has_temporada.tempodada_idTemporada =  "+ idTemporada
+		String query = "   SELECT  equipos.idEquipo, equipos.linksofifa,  "
+				+"   (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img, "
+				+"   (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2, "
+				+"    (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo "
+				+"         ELSE equipos_has_temporada.nombreEquipo  "
+				+"    END) AS nombreEquipo ,   "
+				+"    equipos.descripcionEquipo,   "
+				+"    equipos.activo ,   "
+				+"    equipos.Division_idDivision,  "
+				+"    division.nombre as nombreDivision,  "
+				+"    division.descripcion as descripcionDivision ,  "
+				+"    tot.totalJugadores,  "
+				+"    tot.totalRaiting,   "
+				+"    tot.presupuestoInicial,   "
+				+"    tot.presupuestoFinal   "
+				+"    FROM  equipos   "
+				+"    join  equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo   "
+				+"    join  division on equipos.Division_idDivision = division.idDivision   "
+				+"    join (select count(persona_has_temporada.persona_idPersona) as totalJugadores, sum(persona_has_temporada.rating) totalRaiting, equipos.idEquipo,dat.presupuestoInicial, dat.presupuestoFinal  "
+				+"           from  persona_has_temporada    "
+				+"           join  persona_has_roles pero on pero.Persona_idPersona = persona_has_temporada.persona_idPersona "
+				+"           join  roles on roles.idRoles = pero.Roles_idRoles   "
+				+"           join  equipos on equipos.idEquipo = persona_has_temporada.equipos_idEquipo "
+				+"           join  equipos_has_temporada et on et.Equipos_idEquipo = equipos.idEquipo   "
+				+"           join  temporada on temporada.idTemporada = et.tempodada_idTemporada and persona_has_temporada.temporada_idTemporada = temporada.idTemporada "
+				+"           left join datosfinancieros dat on dat.Equipos_idEquipo = equipos.idEquipo and dat.tempodada_idTemporada = temporada.idTemporada  "
+				+"           where roles.nombreRol = 'Jugador' and temporada.idTemporada =  " + idTemporada
+				+"           group by  equipos.idEquipo ,dat.presupuestoInicial ,equipos.idEquipo,dat.presupuestoFinal  ) tot on tot.idEquipo = equipos.idEquipo  "
+				+"   and equipos_has_temporada.tempodada_idTemporada =   " + idTemporada
 				;
 		Collection equipos = jdbcTemplate.query(
                 query
@@ -266,7 +265,9 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"  join equipos_has_temporada  on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo  "
 				+" 					and equipos_has_temporada.tempodada_idTemporada = " + idTemporada + " "
 				+"  join temporada on temporada.idTemporada = equipos_has_temporada.tempodada_idTemporada  "
-				+"  left join (select count(persona.idPersona) as totalJugadores, sum(persona_has_temporada.rating) totalRaiting, equipos.idEquipo "
+				+"  left join (select count(persona.idPersona) as totalJugadores, "
+				+ " sum(persona_has_temporada.rating) totalRaiting, "
+				+ " persona_has_temporada.equipos_idEquipo as idEquipo "
 				+"              from  persona_has_temporada   "
 				+"              join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
 				+"              join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
@@ -274,9 +275,9 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"              join  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
 				+"              where roles.nombreRol = 'Jugador'   "
 				+"              and persona_has_temporada.temporada_idTemporada = " + idTemporada
-				+"              group by equipos.idEquipo) tot on tot.idEquipo = equipos.idEquipo  "
+				+"              group by persona_has_temporada.equipos_idEquipo) tot on tot.idEquipo = equipos_has_temporada.Equipos_idEquipo "
 				
-				+" Where equipos.idEquipo = " + id
+				+" Where tot.idEquipo = " + id
 				+" and equipos_has_temporada.tempodada_idTemporada =  "+ idTemporada;
 		
 		Collection equipos = jdbcTemplate.query(query, new RowMapper() {
@@ -342,7 +343,9 @@ public class EquipoDaoImpl implements EquipoDao{
 				+" FROM  equipos 			 "
 				+"  join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo  "
 				+"  join  division on equipos.Division_idDivision = division.idDivision  "
-				+"  left join (select count(persona.idPersona) as totalJugadores, sum(persona_has_temporada.rating) totalRaiting, equipos.idEquipo "
+				+"  left join (select count(persona.idPersona) as totalJugadores, "
+				+ " sum(persona_has_temporada.rating) totalRaiting, "
+				+ " persona_has_temporada.equipos_idEquipo as idEquipo "
 				+"              from  persona_has_temporada   "
 				+"              join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
 				+"              join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
@@ -350,8 +353,8 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"              join  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
 				+"              where roles.nombreRol = 'Jugador'   "
 				+"              and persona_has_temporada.temporada_idTemporada = " + idTemporada
-				+"              group by equipos.idEquipo) tot on tot.idEquipo = equipos.idEquipo  "
-				+" Where equipos.idEquipo = " + id
+				+"              group by persona_has_temporada.equipos_idEquipo) tot on tot.idEquipo = equipos_has_temporada.Equipos_idEquipo  "
+				+" Where tot.idEquipo = " + id
 				+" and equipos_has_temporada.tempodada_idTemporada =  "+ idTemporada;
 		
 		Collection equipos = jdbcTemplate.query(query, new RowMapper() {

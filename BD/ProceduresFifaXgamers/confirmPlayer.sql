@@ -19,7 +19,7 @@ declare horasConfir int;
 
 select draftpc.Persona_idPersona,draftpc.idEquipo into  idJugadorVal,idEquipoVar
 from draftpc
-where draftpc.Persona_idPersona = idJugador and draftpc.Temporadas_idTemporada = idTemporada;
+where draftpc.Persona_idPersona = idJugador and draftpc.tempodada_idTemporada = idTemporada;
 
 select persona.idPersona , persona.Equipos_idEquipo into  idJugadorExist, idEquipoExist
 from persona
@@ -37,7 +37,7 @@ limit 1;
 SELECT timestampdiff(Minute, fechaCompra, now()) >= horasConfir as activo INTO activoVar
 FROM draftpc
 where draftpc.Persona_idPersona =  idJugadorVal
-and Temporadas_idTemporada = idTemporadaVar
+and tempodada_idTemporada = idTemporadaVar
 ;
 
 select idJugadorVal;
@@ -65,6 +65,14 @@ elseif idJugador is not null then
 	  `Equipos_idEquipo` = idEquipoVar
 
 	WHERE `idPersona` = idJugador;
+    
+    UPDATE `fifaxgamersbd`.`persona_has_temporada`
+    SET
+   `equipos_idEquipo` = idEquipoVar
+   WHERE `persona_idPersona` = idJugador
+   AND `temporada_idTemporada` = idTemporadaVar 
+;
+
 	
     
     set isError = 0 ;
