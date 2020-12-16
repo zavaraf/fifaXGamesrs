@@ -72,7 +72,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	public List<Equipo> buscarTodos(long idTemporada) {
 		System.out.println("buscarTodos");
 		List<Equipo> equiposList = new ArrayList<Equipo>();
-		String query = "   SELECT  equipos.idEquipo, equipos.linksofifa,  "
+		String query = "   SELECT  equipos.idEquipo, equipos_has_temporada.linksofifa,  "
 				+"   (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img, "
 				+"   (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2, "
 				+"    (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo "
@@ -245,7 +245,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	public Equipo findByIdAll(long id, int idTemporada) {
 		System.out.println("findByIdAll");
 		String query = " SELECT  "
-				+" equipos.idEquipo, equipos.linksofifa, "
+				+" equipos.idEquipo, equipos_has_temporada.linksofifa, "
 				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img,"
 				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2,"
 				+ " (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo"

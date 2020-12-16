@@ -54,7 +54,7 @@ angular.module('myApp').factory('DraftService', ['$http', '$q','CONFIG', functio
     function findPlayersByIdEquipo(idEquipo){
       var deferred = $q.defer();
       
-      var request = REST_SERVICE_URIP+"player/"+idEquipo;
+      var request = REST_SERVICE_URIP+"player/"+idEquipo+"/"+CONFIG.VARTEMPORADA.id;
       $http.get(request)
       .then(
             function (response) {
