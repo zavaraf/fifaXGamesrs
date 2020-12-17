@@ -31,21 +31,23 @@ public class DraftDaoImpl implements DraftDao {
 	public List<User> buscarTodos(int idTemporada) {
 
 		List<User> listJuadores = new ArrayList<User>();
-		String query = " select  " 
-				+ " persona.idPersona, " 
-				+ " persona.NombreCompleto, " 
-				+ " persona.sobrenombre, "
-				+ " persona.raiting, " 
-				+ " persona.prestamo, " 
-				+ " equipos.idEquipo, " 
-				+ " equipos.nombreEquipo, "
-				+ " equipopres.idEquipo as idEquipoPres, " 
-				+ " equipopres.nombreEquipo as nombreEquipoPres "
-				+ " from prestamos " 
-				+ " join persona on prestamos.Persona_idPersona = persona.idPersona "
-				+ " join equipos on equipos.idEquipo = prestamos.Equipos_idEquipo "
-				+ " join equipos equipopres on equipopres.idEquipo = persona.Equipos_idEquipo "
-				+ " where prestamos.activo = 1 and prestamos.tempodada_idTemporada="+idTemporada;
+		String query = "  select "
+				+"  persona.idPersona, "
+				+"  persona.NombreCompleto, "
+				+"  persona.sobrenombre, "
+				+"  persona.raiting, "
+				+"  persona.prestamo, "
+				+"  equipos_has_temporada.Equipos_idEquipo as idEquipo, "
+				+"  equipos_has_temporada.nombreEquipo, "
+				+"  equipopres.Equipos_idEquipo as idEquipoPres, "
+				+"  equipopres.nombreEquipo as nombreEquipoPres "
+				+"  from prestamos "
+				+"  join persona on prestamos.Persona_idPersona = persona.idPersona "
+				+"  join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = prestamos.Equipos_idEquipo  "
+				+"       and equipos_has_temporada.tempodada_idTemporada = prestamos.tempodada_idTemporada "
+				+"  join equipos_has_temporada equipopres on equipopres.Equipos_idEquipo = persona.Equipos_idEquipo "
+				+"       and equipopres.tempodada_idTemporada = prestamos.tempodada_idTemporada "
+				+"  where prestamos.activo = 1 and prestamos.tempodada_idTemporada = "+idTemporada;
 
 		Collection jugadores = jdbcTemplate.query(query, new RowMapper() {
 

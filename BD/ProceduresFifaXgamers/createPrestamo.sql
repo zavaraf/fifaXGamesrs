@@ -9,7 +9,7 @@ DECLARE idJugadorVal int;
 select prestamos.Persona_idPersona into idJugadorVal
 from prestamos
 where prestamos.Persona_idPersona = idJugador
-and prestamos.Temporadas_idTemporada = idTemporada;
+and prestamos.tempodada_idTemporada = idTemporada;
 
 IF opcion is null or opcion = 1 then 
 
@@ -26,12 +26,19 @@ IF opcion is null or opcion = 1 then
 		`Equipos_idEquipo` = idEquipo,
 		`prestamo` = 1
 		WHERE `idPersona` = idJugador;
+        
+        UPDATE persona_has_temporada
+		SET
+		persona_has_temporada.equipos_idEquipo = idEquipo
+		
+		WHERE persona_has_temporada.persona_idPersona = idJugador 
+        and persona_has_temporada.temporada_idTemporada = idTemporada;  
 
 
 		INSERT INTO `fifaxgamersbd`.`prestamos`
 		(`Persona_idPersona`,
 		`Equipos_idEquipo`,
-        `Temporadas_idTemporada`,
+        `tempodada_idTemporada`,
 		`activo`)
 		VALUES
 		(idJugador,
@@ -47,16 +54,19 @@ elseif opcion = 2 then
 	from prestamos
 	where prestamos.Persona_idPersona  = idJugador;
     
-    UPDATE `fifaxgamersbd`.`persona`
+    UPDATE persona
 		SET
-		`Equipos_idEquipo` = idEquipoAnterior,
-		`prestamo` = 0
-		WHERE `idPersona` = idJugadorVal and `Temporadas_idTemporada` = idTemporada;
+		persona.Equipos_idEquipo = idEquipoAnterior,
+		persona.prestamo = 0
+		WHERE persona.idPersona = idJugadorVal 
+        ;
+        
+      
 
 	delete from prestamos 
     where prestamos.Persona_idPersona = idJugadorVal
     and prestamos.Equipos_idEquipo = idEquipoAnterior
-    and prestamos.Temporadas_idTemporada = idTemporada;
+    and prestamos.tempodada_idTemporada = idTemporada;
 
 end if;
 
