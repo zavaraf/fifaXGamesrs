@@ -483,7 +483,7 @@
 						<thead>
 							<tr>
 								<th>ID.</th>
-								<th>N. Largo</th>
+<!-- 								<th>N. Largo</th> -->
 								<th>N. Corto</th>
 								<th>Equipo</th>
 								<th>Rating</th>
@@ -494,9 +494,9 @@
 							<tr ng-repeat="u in ctrl.equipo.jugadores | orderBy : '-raiting' | filter : test" ">
 								<td><span ng-bind="u.id"></span></td>
 <!-- 								<td><span ng-bind="u.nombreCompleto"></span></td> -->
-								<td ng-show="u.link!=null"><a href="{{u.link}}" target="_blank" >{{u.nombreCompleto}}</td>
-                                <td ng-show="u.link==null">{{u.nombreCompleto}}</td>
-								<td><span ng-bind="u.sobrenombre"></span></td>
+								<td ng-show="u.link!=null"><a href="{{u.link}}" target="_blank" >{{u.sobrenombre}}</td>
+                                <td ng-show="u.link==null">{{u.sobrenombre}}</td>
+<!-- 								<td><span ng-bind="u.sobrenombre"></span></td> -->
 								<td><span ng-bind="u.equipo.nombre"></span></td>
 								<td><span ng-bind="u.raiting"></span></td>
 								<td>

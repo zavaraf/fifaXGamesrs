@@ -72,26 +72,30 @@ public class UserDatoImpl implements UserDao{
 
 		
 		List<User> playersList = new ArrayList<User>();
-		String query = " SELECT persona.idPersona, "
-				+"     persona.nombre, "
-				+"     persona.apellidoPaterno, "
-				+"     persona.apellidoMaterno, "
-				+"     persona.nombreCompleto, "
-				+"     persona.sobrenombre, "
-				+"     persona.fehaNacimiento, "
-				+"     persona_has_temporada.rating, "
-				+"     persona.potencial, "
-				+"     persona_has_temporada.equipos_idEquipo, "
-				+"     persona.activo, "
-				+"     persona.userManager, "
-				+"     persona.prestamo,"
-				+"     persona.link, "
-				+"     equipos.NombreEquipo as nombreEquipo "
-				+"     from  persona_has_temporada   "
-				+"     join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
-				+" JOIN  equipos on equipos.idEquipo = persona_has_temporada.equipos_idEquipo  "
-				+" WHERE   equipos.idEquipo = "+ idEquipo
-				+" and persona_has_temporada.temporada_idTemporada = " + idTemporada 
+		String query = " SELECT persona.idPersona,  "
+				+"      persona.nombre,  "
+				+"      persona.apellidoPaterno,  "
+				+"      persona.apellidoMaterno,  "
+				+"      persona.nombreCompleto,  "
+				+"      persona.sobrenombre,  "
+				+"      persona.fehaNacimiento,  "
+				+"      persona_has_temporada.rating,  "
+				+"      persona.potencial,  "
+				+"      persona_has_temporada.equipos_idEquipo,  "
+				+"      persona.activo,  "
+				+"      persona.userManager,  "
+				+"      persona.prestamo, "
+				+"      persona.link,  "
+				+"      (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo "
+				+"                                       ELSE equipos_has_temporada.nombreEquipo  "
+				+"                                 END )as nombreEquipo  "
+				+"      from  persona_has_temporada    "
+				+"      join  persona on persona.idPersona = persona_has_temporada.persona_idPersona    "
+				+"  JOIN  equipos on equipos.idEquipo = persona_has_temporada.equipos_idEquipo   "
+				+"  join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo   "
+				+"       and persona_has_temporada.temporada_idTemporada = equipos_has_temporada.tempodada_idTemporada  "
+				+"  WHERE   equipos.idEquipo =  " + idEquipo
+				+"  and persona_has_temporada.temporada_idTemporada = " + idTemporada 
 				;
 		
 		System.out.println(query);
