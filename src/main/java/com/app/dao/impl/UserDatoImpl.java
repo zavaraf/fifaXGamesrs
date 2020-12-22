@@ -38,10 +38,14 @@ public class UserDatoImpl implements UserDao{
 					+" persona.userManager,  "
 					+" persona.prestamo, "
 					+" persona.link, "
-					+" equipos.NombreEquipo as nombreEquipo  "
+					+" (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo "
+					+"                                       ELSE equipos_has_temporada.nombreEquipo  "
+					+"                                 END )as nombreEquipo  "
 					+" FROM  persona_has_temporada "
 					+" JOIN persona on persona.idPersona = persona_has_temporada.persona_idPersona "
 					+" JOIN equipos on equipos.idEquipo = persona_has_temporada.equipos_idEquipo "
+					+" JOIN equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo   "
+					+"       and persona_has_temporada.temporada_idTemporada = equipos_has_temporada.tempodada_idTemporada  "
 					+" where persona_has_temporada.temporada_idTemporada =  " + idTemporada;
 			Collection players = jdbcTemplate.query(query, new RowMapper() {
 	                    public Object mapRow(ResultSet rs, int arg1)

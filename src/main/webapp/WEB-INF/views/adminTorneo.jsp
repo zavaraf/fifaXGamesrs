@@ -66,9 +66,9 @@
       
       
       <!--       Modal Liguilla -->
-      <div class="modal fade bd-example-modal-lg" id="ModalLiguilla" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal fade bd-example-modal-sm" id="ModalLiguilla" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
-		    <div class="modal-content">
+		    <div class="modal-content bg-dark text-white">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLongTitle">Fase Finales</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -89,6 +89,7 @@
                     class="custom-select input-sm">
                     <option value="">--Fase--</option>
                  </select>
+                <div class="form-row align-items-center">
                 <div class="form-check form-check-inline">
 				  <input class="form-check-input" type="radio" ng-model="ctrl.confLiguilla" name="inlineRadioOptionsLiguilla" id="inlineRadioLiguilla1" ng-value=1>
 				  <label class="form-check-label" for="inlineRadioJ1">Solo Ida</label>
@@ -97,7 +98,12 @@
 				  <input class="form-check-input" type="radio" ng-model="ctrl.confLiguilla" name="inlineRadioOptionsLiguilla" id="inlineRadioLiguilla2" ng-value=2>
 				  <label class="form-check-label" for="inlineRadioJ2">Ida y Vuelta</label>
 				</div>
-				<div ng-dropdown-multiselect="" options="example9data" selected-model="equiposLiguilla" extra-settings="example9settings"></div>
+				</div>
+				<div class="form-row align-items-center">
+				<div class="col-auto my-1">
+				<div ng-dropdown-multiselect="" class="bg-white" options="example9data" selected-model="equiposLiguilla" extra-settings="example9settings"></div>
+				</div>
+				</div>
 				<button type="button"  class="btn btn-primary" ng-click="ctrl.generarPartidosFinales(equiposLiguilla,selectedFaseModal.nombre,selectedFaseModal.id)" >Generar Partidos</button>
 				<div  class="list-group" >
 				  <span   class="list-group-item list-group-item-action">
@@ -169,7 +175,7 @@
 <!--       Modal Admin torneo -->
       <div class="modal fade bd-example-modal-lg" id="ModalTorneo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
-		    <div class="modal-content">
+		    <div class="modal-content bg-dark text-white">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLongTitle">Crear Torneo</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -230,7 +236,7 @@
 					      
 <!-- 					      <multiselect ng-model="selection" options="options" id-prop="id" display-prop="nombre" show-search="true"> -->
 <!-- 	 					  </multiselect> -->
-						 <div ng-dropdown-multiselect="" options="example9data" selected-model="example9model" extra-settings="example9settings"></div>
+						 <div ng-dropdown-multiselect="" class="bg-white" options="example9data" selected-model="example9model" extra-settings="example9settings"></div>
 	 					
 					      <br>
 <!-- 					       <pre> Selected Items = {{example9model | json}} </pre> -->

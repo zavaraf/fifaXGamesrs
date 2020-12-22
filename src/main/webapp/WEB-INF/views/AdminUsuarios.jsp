@@ -52,7 +52,7 @@
 		<div class="modal fade" id="myModalDraf" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
-				<div class="modal-content">
+				<div class="modal-content bg-dark text-white">
 					<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
 	<!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
 					  <strong>¡Error!</strong> {{ctrl.Error}}
@@ -136,7 +136,7 @@
 						<div class="form-actions floatRight">
                            <input type="submit" value="Guardar" class="btn btn-primary btn-sm"  >
                         </div>
-						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default btn-sm text-white" data-dismiss="modal">Close</button>
 					</div>
                   </form>
 					
