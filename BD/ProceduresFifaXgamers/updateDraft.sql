@@ -1,7 +1,7 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS updateDraft$$
 CREATE PROCEDURE updateDraft(IN idJugador INT,
-							IN montoInicial INT,
+              IN montoInicial INT,
                             IN montoOferta INT,
                             IN manager varchar(100),
                             IN observaciones varchar(100), 
@@ -90,7 +90,7 @@ draftpc.fechaCompra,
 timestampdiff(day,DATE(draftpc.fechaCompra),Date(NOW())) as diasSe,
 timestampdiff(MINUTE, draftpc.fechaCompra, now()) MINUTOSDIA_CERO,
 timestampdiff(MINUTE, draftpc.fechaCompra, DATE_ADD(DATE(draftpc.fechaCompra),INTERVAL 24 HOUR)) MINUTOSDIA,
-timestampdiff(MINUTE, DATE_ADD(DATE(now()),INTERVAL 9 HOUR), now()) Minutos_dia_Actual
+timestampdiff(MINUTE, DATE_ADD(DATE(now()),INTERVAL horaInicio HOUR), now()) Minutos_dia_Actual
 from draftpc where draftpc.Persona_idPersona =  idJugadorVal and draftpc.tempodada_idTemporada = idTemporada) ta
 ;
 
@@ -104,26 +104,26 @@ sumaVar,
 sumaminutosdia_cero_Var,horaInicio,horaFin ;
 
 if idJugadorExist is null then 
-	set isError = 1 ;
+  set isError = 1 ;
   set message = 'El jugador no Existe';
 
 elseif ( hour(now()) < horaInicio )
        or ( hour(now()) >= horaFin )
    
 then 
-	set isError = 1 ;
+  set isError = 1 ;
     set message = 'DRAFT EN CERRADO';
   
 elseif (diasVar = 1 and sumaVar >= minConfirm ) 
    or (diasVar = 0 and minDia_ceroVar >= minConfirm )
    
 then 
-	set isError = 1 ;
+  set isError = 1 ;
     set message = 'Ya no se puede ofertar este Jugador paso el tiempo para ofertar';
 
 elseif montoBD is null or  montoOferta > montoBD then 
-	set isError = 1 ;
-  set message = 'Monto insuficiente revisa tus finanzas';
+  set isError = 1 ;
+  set message = concat('Monto insuficiente revisa tus finanzas dinero restante: ' , montoBD);
 elseif idJugadorVal is null then
   set isError = 1 ;
   set message = 'El jugador no Existe para ofertar';
@@ -145,81 +145,81 @@ elseif manager is null  then
   set message = 'El manager es incorrecto';
 
 elseif idJugador is not null then 
-	 
+   
      select draftpc.idEquipo into idEquipoAnterior
      from draftpc
      WHERE `idDraftPC` = 1
      AND `Persona_idPersona` = idJugador
      AND `tempodada_idTemporada` = idTemporada;
-	
-    UPDATE `fifaxgamersbd`.`draftpc`
-	SET
+  
+    UPDATE `fifaxgam_fifaxgamersbd`.`draftpc`
+  SET
     `oferta`      = montoInicial,
-	`ofertaFinal` = montoOferta,
-	`fechaCompra` = sysdate(),
-	`usuarioOferta` = manager,
-	`comentarios` = observaciones,
+  `ofertaFinal` = montoOferta,
+  `fechaCompra` = sysdate(),
+  `usuarioOferta` = manager,
+  `comentarios` = observaciones,
     `idEquipo` = idEquipoOferta
-	WHERE `idDraftPC` = 1
+  WHERE `idDraftPC` = 1
     AND `Persona_idPersona` = idJugador
     AND `tempodada_idTemporada` = idTemporada;
 
-	INSERT INTO `fifaxgamersbd`.`historicodraft`
-		(`idHistoricoDraft`,
-		`oferta`,
-		`fechaOferta`,
-		`usuarioOferta`,
-		`DraftPC_idDraftPC`,
-		`DraftPC_Persona_idPersona`,
-		`tempodada_idTemporada`,
-		`comentarios`,
-		`ofertaFinal`,
+  INSERT INTO `fifaxgam_fifaxgamersbd`.`historicodraft`
+    (`idHistoricoDraft`,
+    `oferta`,
+    `fechaOferta`,
+    `usuarioOferta`,
+    `DraftPC_idDraftPC`,
+    `DraftPC_Persona_idPersona`,
+    `tempodada_idTemporada`,
+    `comentarios`,
+    `ofertaFinal`,
         `idEquipo`)
-		(select null,
-			montoFinalVal,
-			draftpc.fechaCompra,
-			draftpc.usuarioOferta,
-			draftpc.idDraftPC,
-			draftpc.Persona_idPersona,
-			draftpc.tempodada_idTemporada,
-			draftpc.comentarios,
-			montoOferta,
+    (select null,
+      montoFinalVal,
+      draftpc.fechaCompra,
+      draftpc.usuarioOferta,
+      draftpc.idDraftPC,
+      draftpc.Persona_idPersona,
+      draftpc.tempodada_idTemporada,
+      draftpc.comentarios,
+      montoOferta,
             draftpc.idEquipo
-			from draftpc
-		where draftpc.Persona_idPersona = idJugador
+      from draftpc
+    where draftpc.Persona_idPersona = idJugador
         and draftpc.tempodada_idTemporada = idTemporada
         and draftpc.idDraftPC = 1
         limit 1);
         
         select sum(draftpc.ofertaFinal) into sumaDraftPC
-		from draftpc
-		where draftpc.idEquipo = idEquipoOferta
+    from draftpc
+    where draftpc.idEquipo = idEquipoOferta
         and draftpc.tempodada_idTemporada = idTemporada;
         
         call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
-											where nombre = 'altasPC' limit 1), 
+                      where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
                                             idEquipoOferta,
                                             idTemporada);
                                             
-		
+    
         
         if idEquipoAnterior != idEquipoOferta then 
         
-			select sum(draftpc.ofertaFinal) into sumaDraftPC
-			from draftpc
-			where draftpc.idEquipo = idEquipoAnterior;
-			
+      select sum(draftpc.ofertaFinal) into sumaDraftPC
+      from draftpc
+      where draftpc.idEquipo = idEquipoAnterior;
+      
             call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
-											where nombre = 'altasPC' limit 1), 
+                      where nombre = 'altasPC' limit 1), 
                                             sumaDraftPC,
                                             idEquipoAnterior,
                                             idTemporada);
-		end if;
-	
+    end if;
+  
     
     set isError = 0 ;
-	set message = 'OK';
+  set message = 'OK';
     
     
 end if;
