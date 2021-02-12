@@ -21,7 +21,7 @@ IF opcion is null or opcion = 1 then
 
 		select idEquipoAnterior;
 
-		UPDATE `fifaxgamersbd`.`persona`
+		UPDATE persona
 		SET
 		`Equipos_idEquipo` = idEquipo,
 		`prestamo` = 1
@@ -35,7 +35,7 @@ IF opcion is null or opcion = 1 then
         and persona_has_temporada.temporada_idTemporada = idTemporada;  
 
 
-		INSERT INTO `fifaxgamersbd`.`prestamos`
+		INSERT INTO prestamos
 		(`Persona_idPersona`,
 		`Equipos_idEquipo`,
         `tempodada_idTemporada`,
@@ -52,7 +52,8 @@ elseif opcion = 2 then
 
 	select prestamos.Equipos_idEquipo  into  idEquipoAnterior
 	from prestamos
-	where prestamos.Persona_idPersona  = idJugador;
+	where prestamos.Persona_idPersona  = idJugador
+    and prestamos.tempodada_idTemporada = idTemporada;
     
     UPDATE persona
 		SET
@@ -60,6 +61,14 @@ elseif opcion = 2 then
 		persona.prestamo = 0
 		WHERE persona.idPersona = idJugadorVal 
         ;
+        
+    UPDATE persona_has_temporada
+		SET	
+        persona_has_temporada.Equipos_idEquipo = idEquipoAnterior
+        where persona_has_temporada.persona_idPersona = idJugadorVal
+        and persona_has_temporada.temporada_idTemporada = idTemporada;
+        
+        
         
       
 

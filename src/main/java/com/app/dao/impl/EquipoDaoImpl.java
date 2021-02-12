@@ -246,8 +246,8 @@ public class EquipoDaoImpl implements EquipoDao{
 		System.out.println("findByIdAll");
 		String query = " SELECT  "
 				+" equipos.idEquipo, equipos_has_temporada.linksofifa, "
-				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img,"
-				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2,"
+				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img,"
+				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2,"
 				+ " (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo"
 				+ "      ELSE equipos_has_temporada.nombreEquipo "
 				+ " END) AS NombreEquipo ,  "
@@ -328,8 +328,8 @@ public class EquipoDaoImpl implements EquipoDao{
 		
 		String query = " SELECT  "
 				+" equipos.idEquipo,  "
-				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img,"
-				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2,"
+				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img,"
+				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img2,"
 				+ " (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo"
 				+ "      ELSE equipos_has_temporada.nombreEquipo "
 				+ " END) AS NombreEquipo ,  "

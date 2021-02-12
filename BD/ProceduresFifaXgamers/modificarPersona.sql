@@ -16,11 +16,11 @@ declare  idEquipoVar int;
 update persona set persona.NombreCompleto = nombreCompleto,
                    persona.sobrenombre = sobrenonbre,
                  --  persona.Raiting = raiting,
-                 --  persona.Equipos_idEquipo = idEquipo,
+                   persona.Equipos_idEquipo = idEquipo,
                    persona.link = link
 where persona.idPersona = idJugador;
 
-UPDATE `fifaxgamersbd`.`persona_has_temporada`
+UPDATE persona_has_temporada
 SET
 `rating` = raiting,
 `equipos_idEquipo` = idEquipo
@@ -36,7 +36,7 @@ select Equipos_idEquipo into idEquipoVar
  
  if idEquipoVar is null and idEquipo != 1 then
  
- INSERT INTO `fifaxgamersbd`.`equipos_has_temporada`
+ INSERT INTO equipos_has_temporada
 (`Equipos_idEquipo`,
 `Temporada_idTemporada`)
 VALUES
