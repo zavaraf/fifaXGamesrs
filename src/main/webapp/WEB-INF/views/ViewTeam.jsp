@@ -53,7 +53,7 @@
   
   <div class="container text-center container-fluid">
   
-    <img src="{{ctrl.equipo.img}}" style="width: 15%;"class="card-img-center" alt="..."> 
+    <img src="{{ctrl.equipo.img2}}" style="width: 15%;"class="card-img-center" alt="..."> 
     <h4>{{ctrl.equipo.nombre}}</h4>      
 <!--     <p>{{ctrl.equipo.descripcion}}</p> -->
 <!--       <div class="row  justify-content-center"> -->
