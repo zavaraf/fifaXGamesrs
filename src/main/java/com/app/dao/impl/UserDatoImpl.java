@@ -24,7 +24,7 @@ public class UserDatoImpl implements UserDao{
 
 		
 			List<User> playersList = new ArrayList<User>();
-			String query = " SELECT equipos_has_temporada.persona_idPersona as idPersona,  "
+			String query = " SELECT persona_has_temporada.persona_idPersona as idPersona,  "
 					+" persona.nombre,  "
 					+" persona.apellidoPaterno,  "
 					+" persona.apellidoMaterno,  "
