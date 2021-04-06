@@ -2,9 +2,6 @@ package com.app.service;
 
 import java.util.List;
 
-import org.omg.CORBA.IDLTypeOperations;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.app.modelo.JugadorDraft;
 import com.app.modelo.ResponseData;
 import com.app.modelo.User;

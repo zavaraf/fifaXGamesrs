@@ -208,7 +208,8 @@ elseif idJugador is not null then
         
       select sum(draftpc.ofertaFinal) into sumaDraftPC
       from draftpc
-      where draftpc.idEquipo = idEquipoAnterior;
+      where draftpc.idEquipo = idEquipoAnterior
+      and draftpc.tempodada_idTemporada = idTemporada;
       
             call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
                       where nombre = 'altasPC' limit 1), 
