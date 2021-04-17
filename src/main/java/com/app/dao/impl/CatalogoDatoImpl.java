@@ -146,7 +146,7 @@ public class CatalogoDatoImpl implements CatalogoDao{
 	                       castigo.setNumero(rs.getInt("valor"));
 	                       castigo.setObservaciones(rs.getString("observaciones")) ;
 	                       
-	                       castigo.setEquipo(equipoDao.findByIdAll(castigo.getIdEquipo(),idTemporada))  ;
+//	                       castigo.setEquipo(equipoDao.findByIdAll(castigo.getIdEquipo(),idTemporada))  ;
 	                       
 	                       Torneo torneo = new Torneo();
 	                       
@@ -159,7 +159,9 @@ public class CatalogoDatoImpl implements CatalogoDao{
 	                    }
 	                });
 			 for (Object castigo : castigos) {
-				 list.add((Castigo)castigo);
+				 Castigo cas = (Castigo)castigo;
+				 cas.setEquipo(equipoDao.findByIdAll(cas.getIdEquipo(),idTemporada))  ;
+				 list.add((Castigo)cas);
 		        }
 			
 			return list;
