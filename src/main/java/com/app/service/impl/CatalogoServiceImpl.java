@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.dao.CatalogoDao;
 import com.app.enums.CodigoResponse;
+import com.app.modelo.Castigo;
 import com.app.modelo.CatalogoFinanciero;
 import com.app.modelo.ResponseData;
 import com.app.service.CatalogoService;
@@ -29,6 +30,36 @@ public class CatalogoServiceImpl implements CatalogoService{
 		ResponseData response = new ResponseData();
 		
 		map= catalogoDao.updateCatalogos(nombre, description, tipo);
+		if (map == null || map.isEmpty()) {
+			response.setStatus(CodigoResponse.ERROR.getCodigo());
+			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+		} else {
+			String status = map.get("status");
+			response.setStatus(Integer.parseInt(status));
+			response.setMensaje(map.get("mensaje"));
+		}
+		return response;
+	}
+	
+	
+	@Override
+	public List<Castigo> listAllCastigos(int idTemporada) {
+		return catalogoDao.listAllCastigos(idTemporada);
+	}
+	
+	@Override
+	public ResponseData updateCastigo(Castigo castigo, int idTemporada) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		ResponseData response = new ResponseData();
+		
+		map= catalogoDao.updateCastigos(castigo.getCastigoId(), 
+				castigo.getIdEquipo(), 
+				idTemporada, 
+				castigo.getNumero(), 
+				castigo.getObservaciones(), 
+				castigo.getCastigo(),
+				castigo.getIdTorneo());
+		
 		if (map == null || map.isEmpty()) {
 			response.setStatus(CodigoResponse.ERROR.getCodigo());
 			response.setMensaje(CodigoResponse.ERROR.getMensaje());

@@ -78,6 +78,9 @@
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
       
       <script src="<c:url value='/static/js/controller/adminTorneoLM_controller.js' />"></script>
+      
+      <script src="<c:url value='/static/js/controller/castigos_controller.js' />"></script>
+      <script src="<c:url value='/static/js/service/castigos_service.js' />"></script>
 
 	<script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script>
 	<script src="<c:url value='/static/js/app/customSelect.js' />"></script>
@@ -139,8 +142,11 @@
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Catalogos</a>
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="#!conceptos">Conceptos Financieros</a>
+				      <a class="dropdown-item" href="#!castigos">Castigos</a>
 				    </div>
+				   
 				  </li>
+				  
 				</sec:authorize>
 				<!-- 	      <li class="nav-item"> -->
 				<!-- 	        <a class="nav-link disabled" href="#">Disabled</a> -->

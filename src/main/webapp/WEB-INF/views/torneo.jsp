@@ -93,6 +93,15 @@
 				</blockquote>
 		       <div class="table-responsive-sm  text-center">
 <!-- 		        <div class="container text-center" > -->
+
+				<p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
+					  ng-repeat="p in ctrl.jornadaEdit.datosActivosJornada">
+					  
+					  <img ng-src="{{p.img}}" height="20"  alt="...">
+					  {{p.sobrenombre}} 
+					  <img ng-show= " p.tipo == 2" src="https://img.icons8.com/office/20/000000/bandage.png"/>
+					  <img ng-show= " p.tipo == 1" src="https://img.icons8.com/officexs/16/000000/soccer-yellow-card.png"/>
+					  </p>
 		        <table class="table text-center ">
 				  <tr >
 				    <td >
@@ -105,7 +114,15 @@
 			       	<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-					    +Gol
+					    <img src="https://img.icons8.com/metro/26/000000/football2.png"/>
+					  </button>
+					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseLesiones" aria-expanded="false" aria-controls="collapseLesiones">
+					  <img src="https://img.icons8.com/office/26/000000/bandage.png"/>
+					  </button>
+					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseTarjetas" aria-expanded="false" aria-controls="collapseTarjetas">
+					  <img src="https://img.icons8.com/officexs/26/000000/soccer-yellow-card.png"/>
 					  </button>
 <%-- 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"  --%>
 <!-- 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample"> -->
@@ -141,6 +158,68 @@
 			          </div>
 					  </div>
 					</div>
+					
+                  <!-- 	Agregar Tarjetas      -->
+					<div class="collapse" id="collapseTarjetas">
+					  <div class="card card-body bg-secondary text-white">
+					    <div class="form-group">
+					   
+			            <label for="recipient-name" class="col-form-label">Add Tarjetas:</label>
+			           
+			           <div  ng-dropdown-multiselect="" options="example9data" selected-model="example9model" extra-settings="example9settings" translation-texts="example5customTexts"></div>
+			           
+			           
+<!-- 			            <select ng-model="selectedPlayer" -->
+<!--                             ng-options="pla as pla.nombreCompleto for pla in ctrl.players | orderBy : 'nombreCompleto' track by pla.id" -->
+<!--                             class="custom-select input-sm"> -->
+<!--                             <option value="">--Elige opcion--</option> -->
+<!--                          </select> -->
+			            
+<!-- 			            <select class="custom-select" id="inputGroupSelect01"> -->
+<!-- 						    <option ng-repeat="pla in ctrl.players | orderBy : 'nombreCompleto'" >{{pla.nombreCompleto}}</option>   -->
+<!-- 						  </select> -->
+						<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+				            <button type="button" class="btn btn-primary btn-sm" 
+				            ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+				            ng-click= "ctrl.addTarjetas(example9model[0],ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit)">Agregar</button>
+					   	</sec:authorize>
+					   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseTarjetas" aria-expanded="false" aria-controls="collapseTarjetas" >Cancelar</button>
+				   		
+			          </div>
+					  </div>
+					</div>
+					
+					
+					 <!-- 	Agregar Lesiones      -->
+					<div class="collapse" id="collapseLesiones">
+					  <div class="card card-body bg-secondary text-white">
+					    <div class="form-group">
+					   
+			            <label for="recipient-name" class="col-form-label">Add Lesiones:</label>
+			           
+			           <div  ng-dropdown-multiselect="" options="example9data" selected-model="example9model" extra-settings="example9settings" translation-texts="example5customTexts"></div>
+			           
+			           
+<!-- 			            <select ng-model="selectedPlayer" -->
+<!--                             ng-options="pla as pla.nombreCompleto for pla in ctrl.players | orderBy : 'nombreCompleto' track by pla.id" -->
+<!--                             class="custom-select input-sm"> -->
+<!--                             <option value="">--Elige opcion--</option> -->
+<!--                          </select> -->
+			            
+<!-- 			            <select class="custom-select" id="inputGroupSelect01"> -->
+<!-- 						    <option ng-repeat="pla in ctrl.players | orderBy : 'nombreCompleto'" >{{pla.nombreCompleto}}</option>   -->
+<!-- 						  </select> -->
+						<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+				            <button type="button" class="btn btn-primary btn-sm" 
+				            ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+				            ng-click= "ctrl.addLesiones(example9model[0],ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit)">Agregar</button>
+					   	</sec:authorize>
+					   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseLesiones" aria-expanded="false" aria-controls="collapseLesiones" >Cancelar</button>
+				   		
+			          </div>
+					  </div>
+					</div>
+					
 <!-- 					<div class="collapse" id="collapseImg"> -->
 					
 <!-- 					  <div class="card card-body"> -->
@@ -161,9 +240,24 @@
 				    <footer class="text-right bg-dark text-white ">
 					  
 					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
-					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}} 
+					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.golesJornada)">
+					  <img src="https://img.icons8.com/color/20/000000/football2--v1.png"/>{{p.sobrenombre}} 
 					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  ng-click= "ctrl.deletedGol(p,ctrl.jornadaEdit.idEquipoLocal)">(-)</a>
+					  </p>
+					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
+					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.lesionesJornada)">
+					  <img src="https://img.icons8.com/office/20/000000/bandage.png"/>{{p.sobrenombre}} 
+					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  ng-click= "ctrl.deletedLesiones(p,ctrl.jornadaEdit.idEquipoLocal)">(-)</a>
+					  </p>
+					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
+					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.tarjetasJornada)">
+					  <img src="https://img.icons8.com/officexs/26/000000/soccer-yellow-card.png"/>{{p.sobrenombre}} 
+					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  ng-click= "ctrl.deletedTarjetas(p,ctrl.jornadaEdit.idEquipoLocal)">(-)</a>
+					 
+					  
 					  </p>
 					</footer>
 					
@@ -186,7 +280,16 @@
 				      <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
-					    +Gol
+                      <img src="https://img.icons8.com/metro/26/000000/football2.png"/>
+<!-- 					    +Gol -->
+					  </button>
+					   <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseLesionesV" aria-expanded="false" aria-controls="collapseLesiones">
+					  <img src="https://img.icons8.com/office/26/000000/bandage.png"/>
+					  </button>
+					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseTarjetasV" aria-expanded="false" aria-controls="collapseTarjetas">
+					  <img src="https://img.icons8.com/officexs/26/000000/soccer-yellow-card.png"/>
 					  </button>
 <%-- 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"  --%>
 <!-- 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg1" aria-expanded="false" aria-controls="collapseExample1"> -->
@@ -216,6 +319,70 @@
 			          </div>
 					  </div>
 					</div>
+					
+					<!-- 	Agregar Tarjetas      -->
+					<div class="collapse" id="collapseTarjetasV">
+					  <div class="card card-body bg-secondary text-white">
+					    <div class="form-group">
+					   
+			            <label for="recipient-name" class="col-form-label">Add Tarjetas:</label>
+			           
+			           <div  ng-dropdown-multiselect="" options="example9data" selected-model="example9model" extra-settings="example9settings" translation-texts="example5customTexts"></div>
+			           
+			           
+<!-- 			            <select ng-model="selectedPlayer" -->
+<!--                             ng-options="pla as pla.nombreCompleto for pla in ctrl.players | orderBy : 'nombreCompleto' track by pla.id" -->
+<!--                             class="custom-select input-sm"> -->
+<!--                             <option value="">--Elige opcion--</option> -->
+<!--                          </select> -->
+			            
+<!-- 			            <select class="custom-select" id="inputGroupSelect01"> -->
+<!-- 						    <option ng-repeat="pla in ctrl.players | orderBy : 'nombreCompleto'" >{{pla.nombreCompleto}}</option>   -->
+<!-- 						  </select> -->
+						<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+				            <button type="button" class="btn btn-primary btn-sm" 
+				            ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+				            ng-click= "ctrl.addTarjetas(example9model[0],ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit)">Agregar</button>
+					   	</sec:authorize>
+					   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseTarjetasV" aria-expanded="false" aria-controls="collapseTarjetasV" >Cancelar</button>
+				   		
+			          </div>
+					  </div>
+					</div>
+					
+					
+					 <!-- 	Agregar Lesiones      -->
+					<div class="collapse" id="collapseLesionesV">
+					  <div class="card card-body bg-secondary text-white">
+					    <div class="form-group">
+					   
+			            <label for="recipient-name" class="col-form-label">Add Lesiones:</label>
+			           
+			           <div  ng-dropdown-multiselect="" options="example9data" selected-model="example9model" extra-settings="example9settings" translation-texts="example5customTexts"></div>
+			           
+			           
+<!-- 			            <select ng-model="selectedPlayer" -->
+<!--                             ng-options="pla as pla.nombreCompleto for pla in ctrl.players | orderBy : 'nombreCompleto' track by pla.id" -->
+<!--                             class="custom-select input-sm"> -->
+<!--                             <option value="">--Elige opcion--</option> -->
+<!--                          </select> -->
+			            
+<!-- 			            <select class="custom-select" id="inputGroupSelect01"> -->
+<!-- 						    <option ng-repeat="pla in ctrl.players | orderBy : 'nombreCompleto'" >{{pla.nombreCompleto}}</option>   -->
+<!-- 						  </select> -->
+						<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+				            <button type="button" class="btn btn-primary btn-sm" 
+				            ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+				            ng-click= "ctrl.addLesiones(example9model[0],ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit)">Agregar</button>
+					   	</sec:authorize>
+					   		<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseLesionesV" aria-expanded="false" aria-controls="collapseLesionesV" >Cancelar</button>
+				   		
+			          </div>
+					  </div>
+					</div>
+					
+					
+					
 <!-- 					<div class="collapse" id="collapseImg1"> -->
 <!-- 					  <div class="card card-body"> -->
 <!-- 					    <div class="form-group"> -->
@@ -234,9 +401,26 @@
 					<footer class="text-left bg-dark text-white ">
 					  
 					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
-					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}
+					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">
+					  <img src="https://img.icons8.com/color/20/000000/football2--v1.png"/>{{p.sobrenombre}}
 					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					   ng-click= "ctrl.deletedGol(p,ctrl.jornadaEdit.idEquipoVisita)">(-)</a>
+					   
+					   <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
+					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.lesionesJornada)">
+					  <img src="https://img.icons8.com/office/20/000000/bandage.png"/>{{p.sobrenombre}} 
+					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  ng-click= "ctrl.deletedLesiones(p,ctrl.jornadaEdit.idEquipoVisita)">(-)</a>
+					  </p>
+					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
+					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.tarjetasJornada)">
+					  <img src="https://img.icons8.com/officexs/26/000000/soccer-yellow-card.png"/>{{p.sobrenombre}} 
+					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					  ng-click= "ctrl.deletedTarjetas(p,ctrl.jornadaEdit.idEquipoVisita)">(-)</a>
+					 
+					  
+					  </p>
+<!-- 					  <p>{{ctrl.jornadaEdit}}</p> -->
 					</footer>
 <!-- 						<footer class="blockquote-footer text-left {{p.isAutogol == 1 ? 'alert alert-danger' : ''}} " ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.golesJornada)">{{p.sobrenombre}}</footer> -->
 					

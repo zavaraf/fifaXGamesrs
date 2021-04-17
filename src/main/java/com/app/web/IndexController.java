@@ -88,5 +88,11 @@ public class IndexController {
 		 ModelAndView m = new ModelAndView("adminTorneo");
 		 return m;
 	 }
+	 @RequestMapping(value="/castigos", method = RequestMethod.GET)
+	 public ModelAndView castigos(HttpServletRequest request,
+			 HttpServletResponse response, Model model) throws Exception {
+		 ModelAndView m = new ModelAndView("castigos");
+		 return m;
+	 }
 	
 }

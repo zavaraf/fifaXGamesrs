@@ -24,6 +24,9 @@ public class Jornada {
 	private String imgVisita;
 	private String username;
 	private String date;
+	private List<DatosJornadas> lesionesJornada;
+	private List<DatosJornadas> tarjetasJornada;
+	private List<DatosJornadas> datosActivosJornada;
 	
 	public int getId() {
 		return id;
@@ -138,6 +141,24 @@ public class Jornada {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public List<DatosJornadas> getLesionesJornada() {
+		return lesionesJornada;
+	}
+	public void setLesionesJornada(List<DatosJornadas> lesionesJornada) {
+		this.lesionesJornada = lesionesJornada;
+	}
+	public List<DatosJornadas> getTarjetasJornada() {
+		return tarjetasJornada;
+	}
+	public void setTarjetasJornada(List<DatosJornadas> tarjetasJornada) {
+		this.tarjetasJornada = tarjetasJornada;
+	}
+	public List<DatosJornadas> getDatosActivosJornada() {
+		return datosActivosJornada;
+	}
+	public void setDatosActivosJornada(List<DatosJornadas> datosActivosJornada) {
+		this.datosActivosJornada = datosActivosJornada;
 	}
 	
 	

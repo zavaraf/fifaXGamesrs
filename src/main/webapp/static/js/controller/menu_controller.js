@@ -42,6 +42,10 @@ var app = angular.module("myApp", ["ngRoute","ngPagination",'angularjs-dropdown-
         	templateUrl : "adminTorneo"
         	
         })
+        .when("/castigos", {
+        	templateUrl : "castigos"
+        	
+        })
          
         ;
         $routeProvider.otherwise({

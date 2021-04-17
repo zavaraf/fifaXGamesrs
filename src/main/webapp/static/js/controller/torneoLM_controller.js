@@ -65,6 +65,10 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.guardarJornada = guardarJornada;
 	self.deletedGol   = deletedGol;
 	self.getPendientes = getPendientes;
+	self.addLesiones = addLesiones;
+	self.addTarjetas = addTarjetas;
+	self.deletedLesiones = deletedLesiones;
+	self.deletedTarjetas = deletedTarjetas;
 	
 	buscarDivisiones()
 	
@@ -348,6 +352,59 @@ function addGoles(jugador,idEquipo,jornadaVar) {
 //        va queurn null;
 		 
 	 }
+function addLesiones(jugador,idEquipo,jornadaVar) {
+	 
+     console.log("Jugador Agregar Lesiones]-------",jugador)
+   	 var jugadorVal = new Object();
+   	 jugadorVal.idEquipo          = idEquipo;
+   	 jugadorVal.idPersona         = jugador.id;
+   	 jugadorVal.sobrenombre       = jugador.sobrenombre;
+   	 jugadorVal.nombreCompleto    = jugador.nombreCompleto;
+   	 jugadorVal.isAutogol         = (jugador.equipo.id == idEquipo) ? 0 : 1;
+   	 jugadorVal.deleted           = 0;
+   	 jugadorVal.id                = 0;
+   	 
+   	 
+   	 
+        if(self.jornadaEdit.lesionesJornada != null){
+       	 self.jornadaEdit.lesionesJornada.push(jugadorVal);
+        }else{
+       	 var lesionesJornadaVal = [];
+       	lesionesJornadaVal.push(jugadorVal);
+       	 self.jornadaEdit.lesionesJornada = lesionesJornadaVal;
+       	 
+        }
+        
+	 
+}
+
+function addTarjetas(jugador,idEquipo,jornadaVar) {
+	 
+    console.log("Jugador Agregar Tarjetas]-------",jugador)
+  	 var jugadorVal = new Object();
+  	 jugadorVal.idEquipo          = idEquipo;
+  	 jugadorVal.idPersona         = jugador.id;
+  	 jugadorVal.sobrenombre       = jugador.sobrenombre;
+  	 jugadorVal.nombreCompleto    = jugador.nombreCompleto;
+  	 jugadorVal.isAutogol         = (jugador.equipo.id == idEquipo) ? 0 : 1;
+  	 jugadorVal.deleted           = 0;
+  	 jugadorVal.id                = 0;
+  	 
+  	 
+  	 
+       if(self.jornadaEdit.tarjetasJornada != null){
+      	 self.jornadaEdit.tarjetasJornada.push(jugadorVal);
+       }else{
+      	 var tarjetasJornadaVal = [];
+      	tarjetasJornadaVal.push(jugadorVal);
+      	 self.jornadaEdit.tarjetasJornada = tarjetasJornadaVal;
+      	 
+       }
+       
+              
+
+	 
+}
 	function deletedGol(jugador,idEquipo) {
 		
 		var indexJ =  self.jornadaEdit.golesJornada.indexOf(jugador);
@@ -364,6 +421,24 @@ function addGoles(jugador,idEquipo,jornadaVar) {
 		
 		
 	}
+function deletedLesiones(jugador,idEquipo) {
+		
+		var indexJ =  self.jornadaEdit.lesionesJornada.indexOf(jugador);
+		
+		console.log(indexJ)
+		self.jornadaEdit.lesionesJornada[indexJ].deleted = 1;
+		
+		
+	}
+function deletedTarjetas(jugador,idEquipo) {
+	
+	var indexJ =  self.jornadaEdit.tarjetasJornada.indexOf(jugador);
+	
+	console.log(indexJ)
+	self.jornadaEdit.tarjetasJornada[indexJ].deleted = 1;
+	
+	
+}
 	 
 //	 function addImagen(idEquipo,jornadaVar,img) {
 //		 

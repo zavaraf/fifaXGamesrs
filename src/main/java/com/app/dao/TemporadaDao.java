@@ -3,6 +3,7 @@ package com.app.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import com.app.modelo.DatosJornadas;
 import com.app.modelo.GolesJornadas;
 import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
@@ -18,6 +19,17 @@ public interface TemporadaDao {
 	Torneo getTorneoGeneral(int idTemporada, int idDivision, int idEquipo);
 	List<Jornadas> getJornadas(int idTemporada, int idDivision,int activa);
 	List<GolesJornadas> getGolesJornadas(String idJornada,String id,String idEquipoLocal,String idEquipoVisita);
+	List<DatosJornadas> getDatosJornadas(String idJornada,String id,
+			String idEquipoLocal,
+			String idEquipoVisita,
+			int tipoDato);
+	
+	List<DatosJornadas> getDatosJornadaEquipos(String idJornada,String id,
+			String idEquipoLocal,
+			String idEquipoVisita,
+			int idTemporada
+			);
+	
 	Jornada getJornada(String idJornada,String id,String idEquipoLocal,String idEquipoVisita, int idTemporada);
 	List<String>getImagenes(String idJornada,String id);
 	

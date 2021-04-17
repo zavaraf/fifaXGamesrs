@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.enums.CodigoResponse;
+import com.app.modelo.Castigo;
 import com.app.modelo.CatalogoFinanciero;
 import com.app.modelo.ResponseData;
 import com.app.service.CatalogoService;
@@ -52,6 +52,41 @@ public class CatalogosController {
 		 try{
 			 System.out.println("---->User]:authentication.name");
 			 response = catalogService.updateCatalogos(nombre, description, tipo);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/findAllCastigos/{idTemporada}",method = RequestMethod.GET,
+			headers="Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<List<Castigo>> listAllCastigos(@PathVariable("idTemporada") int idTemporada){
+		
+		List<Castigo> listCatalogs = catalogService.listAllCastigos(idTemporada);
+		
+		if(listCatalogs.isEmpty()){
+			return new ResponseEntity<List<Castigo>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Castigo>>(listCatalogs, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/updateCastigo/{idTemporada}",method = {RequestMethod.POST,RequestMethod.GET},
+			headers="Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<ResponseData> updateCastigo(
+			@PathVariable("idTemporada") int idTemporada,
+			@RequestBody Castigo castigo){
+		
+		 ResponseData response = new ResponseData();	
+		 try{
+			 System.out.println("---->User]:authentication.name");
+			 response = catalogService.updateCastigo(castigo, idTemporada);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());

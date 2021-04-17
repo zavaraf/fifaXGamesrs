@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
 import com.app.dao.TemporadaDao;
+import com.app.modelo.DatosJornadas;
 import com.app.modelo.Equipo;
 import com.app.modelo.GolesJornadas;
 import com.app.modelo.Grupos;
@@ -317,235 +318,255 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+" order by tablaGeneral.pts desc, "
 				+" tablaGeneral.dif desc ";	*/	
 		
-		String query = "  SELECT  "
-				+"  grupos_torneo.nombreGrupo, "
-				+"  tablaGeneral.id,  "
-				+"  tablaGeneral.division_idDivision,  "
-				+"  tablaGeneral.tempodada_idTemporada,  "
-				+"  tablaGeneral.idTorneo, "
-				+"  tablaGeneral.idEquipo,   "
-				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tablaGeneral.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" )img,  "
-				+"  tablaGeneral.nombreEquipo,  "
-				+"  tablaGeneral.pj,  "
-				+"  tablaGeneral.pg,   "
-				+"  tablaGeneral.pe,  "
-				+"  tablaGeneral.pp,  "
-				+"  tablaGeneral.gf,  "
-				+"  tablaGeneral.ge,  "
-				+"  tablaGeneral.dif,  "
-				+"  tablaGeneral.pts  "
-				+"  "
-				+"  from (  "
-				+"  "
-				+"  SELECT  "
-				+"  tablaGeneral.id,  "
-				+"  tablaGeneral.division_idDivision,  "
-				+"  tablaGeneral.tempodada_idTemporada,  "
-				+"  tablaGeneral.idTorneo, "
-				+"  tablaGeneral.idEquipo,   "
-				+"  (CASE WHEN equipos_has_temporada.nombreEquipo is null then tablaGeneral.nombreEquipo"
-				+"  ELSE equipos_has_temporada.nombreEquipo"
-				+"  END) AS NombreEquipo ,"
-				+"  (sum(tablaGeneral.pg)+sum(tablaGeneral.pe)+sum(tablaGeneral.pp)) as pj,  "
-				+"  sum(tablaGeneral.pg) as pg,   "
-				+"  sum(tablaGeneral.pe) as pe,  "
-				+"  sum(tablaGeneral.pp) as pp,  "
-				+"  sum(tablaGeneral.gf) as gf,  "
-				+"  sum(tablaGeneral.ge) as ge,  "
-				+"  (sum(tablaGeneral.gf) - sum(tablaGeneral.ge)) as dif,  "
-				+"  ((sum(tablaGeneral.pg) * 3) + sum(tablaGeneral.pe)) as pts  "
-				+"  "
-				+"  from (  "
-				+"  "
-				+"  /* PARTIDOS JUGADOS */   "
-				+"  (  "
-				+"  select jhe.id,  "
-				+"  jornadas.division_idDivision,  "
-				+"  torneo.tempodada_idTemporada,  "
-				+"  torneo.idTorneo, "
-				+"  equipos.idEquipo as idEquipo,   "
-				+"  equipos.nombreEquipo,   "
-				+"  count(equipos.idEquipo) as pj,  "
-				+"  0 as pg,  "
-				+"  0 as pp,  "
-				+"  0 as pe,  "
-				+"  0 as gf,  "
-				+"  0 as ge  "
-				+"  from jornadas_has_equipos jhe  "
-				+"  join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
-				+"  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo,  "
-				+"  equipos   "
-				+"  where (jhe.equipos_idEquipoLocal = equipos.idEquipo  "
-				+"  or jhe.equipos_idEquipoVisita = equipos.idEquipo)  "
-				+"  and jornadas.activa = 1  "
-				+"  and jornadas.tipoJornada = 0  "
-				+"  "
-				+"  group by torneo.idtorneo,equipos.idEquipo  "
-				+"  order by equipos.idEquipo  "
-				+"  "
-				+"  )  "
-				+"  "
-				+"  UNION  "
-				+"  "
-				+"  /* PARTIDOS GANADOS LOCAL*/   "
-				+"  ( "
-				+"  select jhe.id,  "
-				+"  jornadas.division_idDivision,  "
-				+"  torneo.tempodada_idTemporada,  "
-				+"  torneo.idTorneo, "
-				+"  jhe.equipos_idEquipoVisita as idEquipo,   "
-				+"  equipos.nombreEquipo, "
-				+"  0 as pj,  "
-				+"  count(jhe.equipos_idEquipoVisita) as pg,  "
-				+"  0 as pp,  "
-				+"  0 as pe,  "
-				+"  sum(jhe.golesVisita) as gf,   "
-				+"  sum(jhe.golesLocal) as ge  "
-				+"  from jornadas_has_equipos jhe  "
-				+"  join jornadas on jornadas.idJornada = jhe.jornadas_idJornada  "
-				+"  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo  "
-				+"  join equipos on equipos.idEquipo = jhe.equipos_idEquipoVisita  "
-				+"  where  "
-				+"  jhe.golesVisita> jhe.golesLocal  "
-				+"  and jornadas.tipoJornada = 0 "
-				+"  "
-				+"  "
-				+"  group by jhe.equipos_idEquipoVisita, torneo.idtorneo   "
-				+"  order by equipos.idEquipo  "
-				+"  "
-				+"  ) "
-				+"  union "
-				+"  "
-				+"  /* PARTIDOS GANADOS VISITA */   "
-				+"  ( "
-				+"  select jhe.id,  "
-				+"  jornadas.division_idDivision,  "
-				+"  torneo.tempodada_idTemporada,  "
-				+"  torneo.idTorneo, "
-				+"  jhe.equipos_idEquipoLocal as idEquipo,   "
-				+"  equipos.nombreEquipo,  "
-				+"  0 as pj,  "
-				+"  count(jhe.equipos_idEquipoLocal) as pg,   "
-				+"  0 as pp,  "
-				+"  0 as pe,  "
-				+"  sum(jhe.golesLocal) as gf,  "
-				+"  sum(jhe.golesVisita) as ge  "
-				+"  "
-				+"  from jornadas_has_equipos jhe  "
-				+"  join equipos on equipos.idEquipo = jhe.equipos_idEquipoLocal  "
-				+"  join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
-				+"  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo  "
-				+"  where jhe.golesLocal > jhe.golesVisita  "
-				+"  and jornadas.tipoJornada = 0  "
-				+"  "
-				+"  group by jhe.equipos_idEquipoLocal , torneo.idtorneo   "
-				+"  order by equipos.idEquipo "
-				+"  ) "
-				+"  UNION  "
-				+"  /* PARTIDOS EMPATADOS */  "
-				+"  (  "
-				+"  select jhe.id,  "
-				+"  jornadas.division_idDivision,  "
-				+"  torneo.tempodada_idTemporada, "
-				+"  torneo.idTorneo, "
-				+"  equipos.idEquipo as idEquipo,  "
-				+"  equipos.nombreEquipo,  "
-				+"  0 as pj,  "
-				+"  0 as pg,  "
-				+"  0 as pp,  "
-				+"  count(equipos.idEquipo) as pe,  "
-				+"  sum(jhe.golesLocal) as gf,   "
-				+"  sum(jhe.golesVisita) as ge  "
-				+"  from jornadas_has_equipos jhe  "
-				+"  join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
-				+"  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo ,  "
-				+"  equipos  "
-				+"  "
-				+"  where (equipos.idEquipo = jhe.equipos_idEquipoVisita   "
-				+"  or equipos.idEquipo = jhe.equipos_idEquipoLocal)  "
-				+"  and  "
-				+"  jhe.golesVisita = jhe.golesLocal and jhe.golesLocal is not null  "
-				+"  and jornadas.tipoJornada = 0 "
-				+"  "
-				+"  group by equipos.idEquipo , torneo.idtorneo  "
-				+"  order by equipos.idEquipo "
-				+"  )  "
-				+"  "
-				+"  UNION  "
-				+"  "
-				+"  (  "
-				+"  /* PARTIDOS PERDIDOS LOCAL  */  "
-				+"  select jhe.id,  "
-				+"  jornadas.division_idDivision,  "
-				+"  torneo.tempodada_idTemporada,  "
-				+"  torneo.idTorneo, "
-				+"  jhe.equipos_idEquipoLocal as idEquipo,   "
-				+"  equipos.nombreEquipo,  "
-				+"  0 as pj,  "
-				+"  0 as pg,  "
-				+"  count(jhe.equipos_idEquipoLocal) as pp,   "
-				+"  0 as pe,  "
-				+"  sum(jhe.golesLocal) as gf,  "
-				+"  sum(jhe.golesVisita) as ge  "
-				+"  "
-				+"  from jornadas_has_equipos jhe  "
-				+"  join equipos on equipos.idEquipo = jhe.equipos_idEquipoLocal  "
-				+"  join jornadas on jornadas.idJornada = jhe.jornadas_idJornada  "
-				+"  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
-				+"  where jhe.golesLocal < jhe.golesVisita  "
-				+"  and jornadas.tipoJornada = 0 "
-				+"  group by jhe.equipos_idEquipoLocal, torneo.idtorneo   "
-				+"  order by equipos.idEquipo  "
-				+"  )  "
-				+"  "
-				+"  UNION  "
-				+"  (  "
-				+"  /* PARTIDOS PERDIDOS VISITA */  "
-				+"  "
-				+"  select jhe.id,  "
-				+"  jornadas.division_idDivision,  "
-				+"  torneo.tempodada_idTemporada,  "
-				+"  torneo.idTorneo, "
-				+"  jhe.equipos_idEquipoVisita as idEquipo,   "
-				+"  equipos.nombreEquipo,  "
-				+"  0 as pj,  "
-				+"  0 as pg,  "
-				+"  count(jhe.equipos_idEquipoVisita) as pp,  "
-				+"  0 as pe,  "
-				+"  sum(jhe.golesVisita) as gf  ,   "
-				+"  sum(jhe.golesLocal) as ge  "
-				+"  from jornadas_has_equipos jhe  "
-				+"  join jornadas on jornadas.idJornada = jhe.jornadas_idJornada  "
-				+"  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
-				+"  join equipos on equipos.idEquipo = jhe.equipos_idEquipoVisita  "
-				+"  where  "
-				+"  jhe.golesVisita < jhe.golesLocal  "
-				+"  and jornadas.tipoJornada = 0 "
-				+"  "
-				+"  group by jhe.equipos_idEquipoVisita, torneo.idtorneo   "
-				+"  order by equipos.idEquipo  "
-				+"  "
-				+"  "
-				+"  )  "
-				+"  ) "
-				+"  as tablaGeneral "
-				+"  join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = tablaGeneral.idEquipo"
-				+"  and tablaGeneral.tempodada_idTemporada = equipos_has_temporada.tempodada_idTemporada"
-				+"  "
-				+"  where tablaGeneral.idTorneo =  " + idTorneo
-				+"  and   tablaGeneral.tempodada_idTemporada = " + idTemporada
-				+"  group by tablaGeneral.idEquipo "
-				+"  "
-				+"  ) tablaGeneral  "
-				+"  join grupos_torneo on (grupos_torneo.equipos_idEquipo = tablaGeneral.idEquipo "
-				+"  and grupos_torneo.torneo_idtorneo = tablaGeneral.idTorneo) "
-				+"  "
-				+"  "
-				+"  "
-				+"  group by grupos_torneo.nombreGrupo, tablaGeneral.idEquipo "
-				+"  order by grupos_torneo.nombreGrupo, tablaGeneral.pts desc,       "
-				+"  "
-				+"  tablaGeneral.dif desc";
+		String query = "   SELECT  "
+				+"   grupos_torneo.nombreGrupo, "
+				+"   tablaGeneral.id,  "
+				+"   tablaGeneral.division_idDivision,  "
+				+"   tablaGeneral.tempodada_idTemporada,  "
+				+"   tablaGeneral.idTorneo, "
+				+"   tablaGeneral.idEquipo,   "
+				+"   (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tablaGeneral.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" )img, "
+				+"   tablaGeneral.nombreEquipo,  "
+				+"   tablaGeneral.pj,  "
+				+"   tablaGeneral.pg,   "
+				+"   tablaGeneral.pe,  "
+				+"   tablaGeneral.pp,  "
+				+"   tablaGeneral.gf,  "
+				+"   tablaGeneral.ge,  "
+				+"   tablaGeneral.dif  as dif ,  "
+				+"   tablaGeneral.pts as pts"
+				+"   "
+				+"   from (  "
+				+"   "
+				+"   SELECT  "
+				+"   tablaGeneral.id,  "
+				+"   tablaGeneral.division_idDivision,  "
+				+"   tablaGeneral.tempodada_idTemporada,  "
+				+"   tablaGeneral.idTorneo, "
+				+"   tablaGeneral.idEquipo,   "
+				+"   (CASE WHEN equipos_has_temporada.nombreEquipo is null then tablaGeneral.nombreEquipo"
+				+"   ELSE equipos_has_temporada.nombreEquipo"
+				+"   END) AS NombreEquipo ,"
+				+"   (sum(tablaGeneral.pg)+sum(tablaGeneral.pe)+sum(tablaGeneral.pp)) as pj,  "
+				+"   sum(tablaGeneral.pg) as pg,   "
+				+"   sum(tablaGeneral.pe) as pe,  "
+				+"   sum(tablaGeneral.pp) as pp,  "
+				+"   sum(tablaGeneral.gf) as gf,  "
+				+"   sum(tablaGeneral.ge) as ge,  "
+				+"   COALESCE((sum(tablaGeneral.gf) - sum(tablaGeneral.ge) + (select sum(valor) ptsMenos from castigos "
+				+"   where castigos.idEquipo = tablaGeneral.idEquipo "
+				+"   and castigos.idTemporada = tablaGeneral.tempodada_idTemporada "
+				+"   and castigos.torneo_idtorneo = tablaGeneral.idTorneo"
+				+"   and castigos.tipo = 'goles')),0) as dif,  "
+				+"   COALESCE(((sum(tablaGeneral.pg) * 3) + sum(tablaGeneral.pe) +(select sum(valor) ptsMenos from castigos "
+				+"   where castigos.idEquipo = tablaGeneral.idEquipo "
+				+"   and castigos.idTemporada = tablaGeneral.tempodada_idTemporada "
+				+"   and castigos.torneo_idtorneo = tablaGeneral.idTorneo"
+				+"   and castigos.tipo = 'puntos') ),0) as pts, "
+				+"   (select sum(valor) ptsMenos from castigos "
+				+"   where castigos.idEquipo = tablaGeneral.idEquipo "
+				+"   and castigos.idTemporada = tablaGeneral.tempodada_idTemporada "
+				+"   and castigos.torneo_idtorneo = tablaGeneral.idTorneo"
+				+"   and castigos.tipo = 'puntos') as ptsMenos,"
+				+"   (select sum(valor) ptsMenos from castigos "
+				+"   where castigos.idEquipo = tablaGeneral.idEquipo "
+				+"   and castigos.idTemporada = tablaGeneral.tempodada_idTemporada "
+				+"   and castigos.torneo_idtorneo = tablaGeneral.idTorneo"
+				+"   and castigos.tipo = 'goles') as golesMenos"
+				+"   "
+				+"   from (  "
+				+"   "
+				+"   /* PARTIDOS JUGADOS */   "
+				+"   (  "
+				+"   select jhe.id,  "
+				+"   jornadas.division_idDivision,  "
+				+"   torneo.tempodada_idTemporada,  "
+				+"   torneo.idTorneo, "
+				+"   equipos.idEquipo as idEquipo,   "
+				+"   equipos.nombreEquipo,   "
+				+"   count(equipos.idEquipo) as pj,  "
+				+"   0 as pg,  "
+				+"   0 as pp,  "
+				+"   0 as pe,  "
+				+"   0 as gf,  "
+				+"   0 as ge  "
+				+"   from jornadas_has_equipos jhe  "
+				+"   join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
+				+"   join torneo on torneo.idtorneo = jornadas.torneo_idtorneo,  "
+				+"   equipos   "
+				+"   where (jhe.equipos_idEquipoLocal = equipos.idEquipo  "
+				+"   or jhe.equipos_idEquipoVisita = equipos.idEquipo)  "
+				+"   and jornadas.activa = 1  "
+				+"   and jornadas.tipoJornada = 0  "
+				+"   "
+				+"   group by torneo.idtorneo,equipos.idEquipo  "
+				+"   order by equipos.idEquipo  "
+				+"   "
+				+"   )  "
+				+"   "
+				+"   UNION  "
+				+"   "
+				+"   /* PARTIDOS GANADOS LOCAL*/   "
+				+"   ( "
+				+"   select jhe.id,  "
+				+"   jornadas.division_idDivision,  "
+				+"   torneo.tempodada_idTemporada,  "
+				+"   torneo.idTorneo, "
+				+"   jhe.equipos_idEquipoVisita as idEquipo,   "
+				+"   equipos.nombreEquipo, "
+				+"   0 as pj,  "
+				+"   count(jhe.equipos_idEquipoVisita) as pg,  "
+				+"   0 as pp,  "
+				+"   0 as pe,  "
+				+"   sum(jhe.golesVisita) as gf,   "
+				+"   sum(jhe.golesLocal) as ge  "
+				+"   from jornadas_has_equipos jhe  "
+				+"   join jornadas on jornadas.idJornada = jhe.jornadas_idJornada  "
+				+"   join torneo on torneo.idtorneo = jornadas.torneo_idtorneo  "
+				+"   join equipos on equipos.idEquipo = jhe.equipos_idEquipoVisita  "
+				+"   where  "
+				+"   jhe.golesVisita> jhe.golesLocal  "
+				+"   and jornadas.tipoJornada = 0 "
+				+"   "
+				+"   "
+				+"   group by jhe.equipos_idEquipoVisita, torneo.idtorneo   "
+				+"   order by equipos.idEquipo  "
+				+"   "
+				+"   ) "
+				+"   union "
+				+"   "
+				+"   /* PARTIDOS GANADOS VISITA */   "
+				+"   ( "
+				+"   select jhe.id,  "
+				+"   jornadas.division_idDivision,  "
+				+"   torneo.tempodada_idTemporada,  "
+				+"   torneo.idTorneo, "
+				+"   jhe.equipos_idEquipoLocal as idEquipo,   "
+				+"   equipos.nombreEquipo,  "
+				+"   0 as pj,  "
+				+"   count(jhe.equipos_idEquipoLocal) as pg,   "
+				+"   0 as pp,  "
+				+"   0 as pe,  "
+				+"   sum(jhe.golesLocal) as gf,  "
+				+"   sum(jhe.golesVisita) as ge  "
+				+"   "
+				+"   from jornadas_has_equipos jhe  "
+				+"   join equipos on equipos.idEquipo = jhe.equipos_idEquipoLocal  "
+				+"   join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
+				+"   join torneo on torneo.idtorneo = jornadas.torneo_idtorneo  "
+				+"   where jhe.golesLocal > jhe.golesVisita  "
+				+"   and jornadas.tipoJornada = 0  "
+				+"   "
+				+"   group by jhe.equipos_idEquipoLocal , torneo.idtorneo   "
+				+"   order by equipos.idEquipo "
+				+"   ) "
+				+"   UNION  "
+				+"   /* PARTIDOS EMPATADOS */  "
+				+"   (  "
+				+"   select jhe.id,  "
+				+"   jornadas.division_idDivision,  "
+				+"   torneo.tempodada_idTemporada, "
+				+"   torneo.idTorneo, "
+				+"   equipos.idEquipo as idEquipo,  "
+				+"   equipos.nombreEquipo,  "
+				+"   0 as pj,  "
+				+"   0 as pg,  "
+				+"   0 as pp,  "
+				+"   count(equipos.idEquipo) as pe,  "
+				+"   sum(jhe.golesLocal) as gf,   "
+				+"   sum(jhe.golesVisita) as ge  "
+				+"   from jornadas_has_equipos jhe  "
+				+"   join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
+				+"   join torneo on torneo.idtorneo = jornadas.torneo_idtorneo ,  "
+				+"   equipos  "
+				+"   "
+				+"   where (equipos.idEquipo = jhe.equipos_idEquipoVisita   "
+				+"   or equipos.idEquipo = jhe.equipos_idEquipoLocal)  "
+				+"   and  "
+				+"   jhe.golesVisita = jhe.golesLocal and jhe.golesLocal is not null  "
+				+"   and jornadas.tipoJornada = 0 "
+				+"   "
+				+"   group by equipos.idEquipo , torneo.idtorneo  "
+				+"   order by equipos.idEquipo "
+				+"   )  "
+				+"   "
+				+"   UNION  "
+				+"   "
+				+"   (  "
+				+"   /* PARTIDOS PERDIDOS LOCAL  */  "
+				+"   select jhe.id,  "
+				+"   jornadas.division_idDivision,  "
+				+"   torneo.tempodada_idTemporada,  "
+				+"   torneo.idTorneo, "
+				+"   jhe.equipos_idEquipoLocal as idEquipo,   "
+				+"   equipos.nombreEquipo,  "
+				+"   0 as pj,  "
+				+"   0 as pg,  "
+				+"   count(jhe.equipos_idEquipoLocal) as pp,   "
+				+"   0 as pe,  "
+				+"   sum(jhe.golesLocal) as gf,  "
+				+"   sum(jhe.golesVisita) as ge  "
+				+"   "
+				+"   from jornadas_has_equipos jhe  "
+				+"   join equipos on equipos.idEquipo = jhe.equipos_idEquipoLocal  "
+				+"   join jornadas on jornadas.idJornada = jhe.jornadas_idJornada  "
+				+"   join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
+				+"   where jhe.golesLocal < jhe.golesVisita  "
+				+"   and jornadas.tipoJornada = 0 "
+				+"   group by jhe.equipos_idEquipoLocal, torneo.idtorneo   "
+				+"   order by equipos.idEquipo  "
+				+"   )  "
+				+"   "
+				+"   UNION  "
+				+"   (  "
+				+"   /* PARTIDOS PERDIDOS VISITA */  "
+				+"   "
+				+"   select jhe.id,  "
+				+"   jornadas.division_idDivision,  "
+				+"   torneo.tempodada_idTemporada,  "
+				+"   torneo.idTorneo, "
+				+"   jhe.equipos_idEquipoVisita as idEquipo,   "
+				+"   equipos.nombreEquipo,  "
+				+"   0 as pj,  "
+				+"   0 as pg,  "
+				+"   count(jhe.equipos_idEquipoVisita) as pp,  "
+				+"   0 as pe,  "
+				+"   sum(jhe.golesVisita) as gf  ,   "
+				+"   sum(jhe.golesLocal) as ge  "
+				+"   from jornadas_has_equipos jhe  "
+				+"   join jornadas on jornadas.idJornada = jhe.jornadas_idJornada  "
+				+"   join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
+				+"   join equipos on equipos.idEquipo = jhe.equipos_idEquipoVisita  "
+				+"   where  "
+				+"   jhe.golesVisita < jhe.golesLocal  "
+				+"   and jornadas.tipoJornada = 0 "
+				+"   "
+				+"   group by jhe.equipos_idEquipoVisita, torneo.idtorneo   "
+				+"   order by equipos.idEquipo  "
+				+"   "
+				+"   "
+				+"   )  "
+				+"   ) "
+				+"   as tablaGeneral "
+				+"   join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = tablaGeneral.idEquipo"
+				+"   and tablaGeneral.tempodada_idTemporada = equipos_has_temporada.tempodada_idTemporada"
+				+"   "
+				+"   where tablaGeneral.idTorneo =  "+idTorneo
+				+"   and   tablaGeneral.tempodada_idTemporada = "+idTemporada
+				+"   group by tablaGeneral.idEquipo "
+				+"   "
+				+"   ) tablaGeneral  "
+				+"   join grupos_torneo on (grupos_torneo.equipos_idEquipo = tablaGeneral.idEquipo "
+				+"   and grupos_torneo.torneo_idtorneo = tablaGeneral.idTorneo) "
+				+"   "
+				+"   "
+				+"   "
+				+"   group by grupos_torneo.nombreGrupo, tablaGeneral.idEquipo "
+				+"   order by grupos_torneo.nombreGrupo, tablaGeneral.pts desc,       "
+				+"   "
+				+"   tablaGeneral.dif desc";
+		
+		
 		Collection tablaGeneral = jdbcTemplate.query(
                 query
                 , new RowMapper() {
@@ -827,6 +848,111 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		return golesList;
 	}
 	
+	public List<DatosJornadas> getDatosJornadas(String idJornada,String id,
+			String idEquipoLocal,
+			String idEquipoVisita,
+			int tipoDato) {
+		List<DatosJornadas> golesList = new ArrayList<DatosJornadas>();
+		String query ="  select equipos.idEquipo,datosjornadas.id, " +
+				"  equipos.nombreEquipo, " +
+				"  persona.idPersona, " +
+				"  persona.sobrenombre, " +
+				"  persona.NombreCompleto, " +
+				"  datosjornadas.activa, " +
+				"  datosjornadas.tipoDatoJornada_id " +
+				"  from datosjornadas " +
+				"  join persona on persona.idPersona = datosjornadas.persona_idPersona " +
+				"  join equipos on equipos.idEquipo = datosjornadas.equipos_idEquipo " +
+				"  where datosjornadas.jornadas_has_equipos_jornadas_idJornada =  "+ idJornada +
+				"  and datosjornadas.jornadas_has_equipos_id = "+ id +
+				"  and equipos.idEquipo in ( "+ idEquipoLocal+","+idEquipoVisita+") "
+				+ " and datosjornadas.tipoDatoJornada_id =  " + tipoDato;
+		
+		
+		Collection goles = jdbcTemplate.query(
+                query
+                , new RowMapper() {
+
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        
+                    	DatosJornadas goles = new DatosJornadas();
+                    	goles.setId(rs.getInt("id"));
+                    	goles.setIdEquipo(rs.getInt("idEquipo"));
+                    	goles.setIdPersona(rs.getInt("idPersona"));
+                    	goles.setNombreCompleto(rs.getString("NombreCompleto"));
+                    	goles.setNombreEquipo(rs.getString("nombreEquipo"));
+                    	goles.setSobrenombre(rs.getString("sobrenombre"));
+                    	goles.setActivo(rs.getInt("activa"));
+                    	return goles;
+                    }
+                });
+		 for (Object gol : goles) {
+	           
+	            golesList.add( (DatosJornadas)gol);
+	        }
+	        
+		return golesList;
+	}
+	
+	public List<DatosJornadas> getDatosJornadaEquipos(String idJornada,String id,
+			String idEquipoLocal,
+			String idEquipoVisita,
+			int idTemporada
+			) {
+		List<DatosJornadas> golesList = new ArrayList<DatosJornadas>();
+		String query ="  select equipos.Equipos_idEquipo,datosjornadas.id, "
+				+"    equipos.nombreEquipo, "
+				+"    persona.idPersona, "
+				+"    persona.sobrenombre, "
+				+"    persona.NombreCompleto, "
+				+"    datosjornadas.activa, "
+				+"    datosjornadas.tipoDatoJornada_id, "
+				+ "   equipos_has_imagen.imagen, "
+				+ "   datosjornadas.tipoDatoJornada_id "
+				+"    from datosjornadas "
+				+"    join persona on persona.idPersona = datosjornadas.persona_idPersona "
+				+"    join equipos_has_temporada equipos on equipos.Equipos_idEquipo = datosjornadas.equipos_idEquipo"
+				+"    join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idJornada"
+				+"    join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
+				+ "   join equipos_has_imagen on equipos_has_imagen.equipos_idEquipo = equipos.Equipos_idEquipo "
+				+"    where "
+				+"     equipos.Equipos_idEquipo in ( "+ idEquipoLocal+","+idEquipoVisita+") "
+				+"    and datosjornadas.activa = 1"
+				+"    and torneo.tempodada_idTemporada = " +idTemporada
+				+"    and equipos.tempodada_idTemporada = " +idTemporada
+				+"  and equipos_has_imagen.idTemporada =  " +idTemporada
+				+"  and equipos_has_imagen.tipoImagen_idTipoImagen = 2 " ;
+		
+		
+		Collection goles = jdbcTemplate.query(
+                query
+                , new RowMapper() {
+
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        
+                    	DatosJornadas goles = new DatosJornadas();
+                    	goles.setId(rs.getInt("id"));
+                    	goles.setIdEquipo(rs.getInt("Equipos_idEquipo"));
+                    	goles.setIdPersona(rs.getInt("idPersona"));
+                    	goles.setNombreCompleto(rs.getString("NombreCompleto"));
+                    	goles.setNombreEquipo(rs.getString("nombreEquipo"));
+                    	goles.setSobrenombre(rs.getString("sobrenombre"));
+                    	goles.setActivo(rs.getInt("activa"));
+                    	goles.setImg(rs.getString("imagen"));
+                    	goles.setTipo(rs.getInt("tipoDatoJornada_id"));
+                    	return goles  ;
+                    }
+                });
+		 for (Object gol : goles) {
+	           
+	            golesList.add( (DatosJornadas)gol);
+	        }
+	        
+		return golesList;
+	}
+	
 	public Jornada getJornada(String idJornada,String id,	String idEquipoLocal,	String idEquipoVisita, int idTemporada){
 		
 		System.out.println("idTemporada]:"+idTemporada);
@@ -994,8 +1120,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		myStoredProcedure.setParameters(paramArray);
 		myStoredProcedure.compile();
 
-		// Call stored procedure
-		Map storedProcResult = myStoredProcedure.execute(jornada, "nombre", 1,username);
+		// Call stored procedure  
+		Map storedProcResult = myStoredProcedure.execute(jornada, "nombre", idTemporada,username);
 
 		System.out.println(storedProcResult);
 

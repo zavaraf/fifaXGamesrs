@@ -20,6 +20,15 @@ BEGIN
   DECLARE `json_items_Juegos` BIGINT ;
   DECLARE `_index_Juegos` BIGINT UNSIGNED DEFAULT 0;
   
+   DECLARE `json_items_lesiones` BIGINT ;
+  DECLARE `_index_lesiones` BIGINT UNSIGNED DEFAULT 0;
+  
+  
+  DECLARE `json_items_tarjetas` BIGINT ;
+  DECLARE `_index_tarjetas` BIGINT UNSIGNED DEFAULT 0;
+  
+  declare jsonTarjetas JSON;
+  declare jsonLesiones JSON;
   declare jsonGoles JSON;
   declare jsonImagenes JSON;
   declare jsonJuego    JSON;
@@ -206,6 +215,135 @@ SET
 
 WHERE jornadas_has_equipos.id = id
 ;
+
+
+
+SELECT JSON_EXTRACT(`json`, "$.lesionesJornada") into jsonLesiones ;
+
+
+
+set `json_items_lesiones` = JSON_LENGTH(jsonLesiones);
+
+
+  WHILE `_index_lesiones` < `json_items_lesiones` DO
+		set cumplido = '';
+        set _index_Imagenes = 0;
+        set _index_Jornadas = 0;
+        
+        SELECT JSON_EXTRACT(`jsonLesiones`, CONCAT('$[', `_index_lesiones`, '].id')) into idVal ;
+        
+        select JSON_EXTRACT(`jsonLesiones`, CONCAT('$[', `_index_lesiones`, '].deleted')) into deletedVal;
+        
+		if (idVal = 0 && deletedVal != 1) then
+           
+        select jsonLesiones;
+        
+
+          INSERT INTO `fifaxgamersbd`.`datosjornadas`
+				(`id`,
+				`persona_idPersona`,
+				`updatedate`,
+				`equipos_idEquipo`,
+				`jornadas_has_equipos_id`,
+				`jornadas_has_equipos_jornadas_idJornada`,
+				`activa`,
+				`tipoDatoJornada_id`)
+				VALUES
+				(null,
+				(select JSON_EXTRACT(`jsonLesiones`, CONCAT('$[', `_index_lesiones`, '].idPersona'))),
+				sysdate(),
+				(select JSON_EXTRACT(`jsonLesiones`, CONCAT('$[', `_index_lesiones`, '].idEquipo'))),
+				(SELECT JSON_EXTRACT(`json`, "$.id")),
+				(SELECT JSON_EXTRACT(`json`, "$.idJornada")),
+				1,
+				2);
+        
+        end if;
+        
+        if (idVal != 0 && deletedVal = 1) then
+          
+
+         
+         DELETE FROM `fifaxgamersbd`.`datosjornadas`
+			WHERE datosjornadas.id = idVal;
+
+           
+           
+            
+        
+        end if;
+        
+       -- SELECT JSON_EXTRACT(`jsonGoles`, CONCAT('$[', `_index`, '].equipos')) into jsonEquipos ;
+        
+        
+    SET `_index_lesiones` := `_index_lesiones` + 1;
+    
+    
+  END WHILE;
+  
+  
+  SELECT JSON_EXTRACT(`json`, "$.tarjetasJornada") into jsonTarjetas ;
+
+
+
+set `json_items_tarjetas` = JSON_LENGTH(jsonTarjetas);
+
+
+  WHILE `_index_tarjetas` < `json_items_tarjetas` DO
+		set cumplido = '';
+        set _index_Imagenes = 0;
+        set _index_Jornadas = 0;
+        
+        SELECT JSON_EXTRACT(`jsonTarjetas`, CONCAT('$[', `_index_tarjetas`, '].id')) into idVal ;
+        
+        select JSON_EXTRACT(`jsonTarjetas`, CONCAT('$[', `_index_tarjetas`, '].deleted')) into deletedVal;
+        
+		if (idVal = 0 && deletedVal != 1) then
+           
+        select jsonLesiones;
+        
+
+          INSERT INTO `fifaxgamersbd`.`datosjornadas`
+				(`id`,
+				`persona_idPersona`,
+				`updatedate`,
+				`equipos_idEquipo`,
+				`jornadas_has_equipos_id`,
+				`jornadas_has_equipos_jornadas_idJornada`,
+				`activa`,
+				`tipoDatoJornada_id`)
+				VALUES
+				(null,
+				(select JSON_EXTRACT(`jsonTarjetas`, CONCAT('$[', `_index_tarjetas`, '].idPersona'))),
+				sysdate(),
+				(select JSON_EXTRACT(`jsonTarjetas`, CONCAT('$[', `_index_tarjetas`, '].idEquipo'))),
+				(SELECT JSON_EXTRACT(`json`, "$.id")),
+				(SELECT JSON_EXTRACT(`json`, "$.idJornada")),
+				1,
+				1);
+        
+        end if;
+        
+        if (idVal != 0 && deletedVal = 1) then
+          
+
+         
+         DELETE FROM `fifaxgamersbd`.`datosjornadas`
+			WHERE datosjornadas.id = idVal;
+
+           
+           
+            
+        
+        end if;
+        
+       -- SELECT JSON_EXTRACT(`jsonGoles`, CONCAT('$[', `_index`, '].equipos')) into jsonEquipos ;
+        
+        
+    SET `_index_tarjetas` := `_index_tarjetas` + 1;
+    
+    
+  END WHILE;
   
 set isError = 0 ;
 set message = 'OK';

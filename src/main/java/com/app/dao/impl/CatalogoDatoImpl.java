@@ -17,8 +17,11 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
 import com.app.dao.CatalogoDao;
+import com.app.dao.EquipoDao;
+import com.app.modelo.Castigo;
 import com.app.modelo.CatalogoFinanciero;
 import com.app.modelo.TipoConcepto;
+import com.app.modelo.Torneo;
 import com.app.utils.MyStoredProcedure;
 
 @Component
@@ -26,6 +29,9 @@ public class CatalogoDatoImpl implements CatalogoDao{
 	
 	@Autowired
     JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	EquipoDao equipoDao;
 
 	@Override
 	public List<CatalogoFinanciero> listAllCatalogs() {
@@ -94,6 +100,113 @@ public class CatalogoDatoImpl implements CatalogoDao{
 
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(nombre, desctipcion,tipo);
+
+		System.out.println(storedProcResult);
+
+		HashMap<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("status", storedProcResult.get("isError").toString());
+		mapa.put("mensaje", storedProcResult.get("message").toString());
+		System.out.println(mapa);
+
+		return mapa;
+	}
+	
+	
+	@Override
+	public List<Castigo> listAllCastigos(int idTemporada) {
+		
+			List<Castigo> list = new ArrayList<Castigo>();
+			
+			String query = " SELECT idcastigos, "
+					+"     idEquipo, "
+					+"     idTemporada, "
+					+"     observaciones, "
+					+"     valor, "
+					+"     tipo, "
+					+ "    nombreTorneo, "
+					+ "    torneo_idtorneo "
+					+" FROM castigos "
+					+ " JOIN torneo  on torneo.idtorneo = castigos.torneo_idtorneo " 					   
+					+" where castigos.idTemporada =  " + idTemporada;
+							
+									
+			Collection castigos = jdbcTemplate.query(
+	                query
+	                , new RowMapper() {
+
+	                    public Object mapRow(ResultSet rs, int arg1)
+	                            throws SQLException {
+	                       Castigo castigo = new Castigo();
+	                       
+	                       castigo.setCastigoId(rs.getInt("idcastigos"));
+	                       castigo.setIdEquipo(rs.getInt("idEquipo"));
+	                       castigo.setIdTemporada(rs.getInt("idTemporada"));
+	                       castigo.setCastigo(rs.getString("tipo"));
+	                       castigo.setNumero(rs.getInt("valor"));
+	                       castigo.setObservaciones(rs.getString("observaciones")) ;
+	                       
+	                       castigo.setEquipo(equipoDao.findByIdAll(castigo.getIdEquipo(),idTemporada))  ;
+	                       
+	                       Torneo torneo = new Torneo();
+	                       
+	                       torneo.setId(rs.getInt("torneo_idtorneo"));
+	                       torneo.setNombre(rs.getString("nombreTorneo"));
+	                       
+	                       castigo.setTorneo(torneo);
+	                        
+	                        return castigo;
+	                    }
+	                });
+			 for (Object castigo : castigos) {
+				 list.add((Castigo)castigo);
+		        }
+			
+			return list;
+	
+	}
+	
+	@Override
+	public HashMap<String, String> updateCastigos(int id  , 
+			                        int idEquipo, 
+			                        int idTemporada,
+			                        int valor,
+			                        String observaciones,
+			                        String tipo,
+			                        int idTorneo) {
+		
+		System.out.println("----->call createOrUpdateCastigo("+id+","
+				
+				+idEquipo+","
+				+idTemporada+","
+				+valor+",'"
+				+observaciones+"', '"
+				+tipo+"',"
+				+idTorneo+" )");
+		String query = "createOrUpdateCastigo" ;
+
+		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
+
+		// Sql parameter mapping
+		SqlParameter idVal             = new SqlParameter("id", Types.INTEGER);
+		SqlParameter idEquipoVal    = new SqlParameter("idEquipo", Types.INTEGER);
+		SqlParameter idTemporadaVal         = new SqlParameter("idTemporada", Types.INTEGER);
+		SqlParameter valorVal         = new SqlParameter("valor", Types.INTEGER);
+		SqlParameter obserVal         = new SqlParameter("observaciones", Types.VARCHAR);
+		SqlParameter tipoVal         = new SqlParameter("tipo", Types.VARCHAR);
+		SqlParameter idTorneoVal         = new SqlParameter("idTorneo", Types.INTEGER);
+		
+		SqlOutParameter isError        = new SqlOutParameter("isError", Types.INTEGER);
+		SqlOutParameter message        = new SqlOutParameter("message", Types.VARCHAR);
+
+		SqlParameter[] paramArray = { idVal, idEquipoVal,idTemporadaVal,valorVal, obserVal,tipoVal,idTorneoVal,
+				isError, message };
+
+		myStoredProcedure.setParameters(paramArray);
+		myStoredProcedure.compile();
+
+		// Call stored procedure
+		Map storedProcResult = myStoredProcedure.execute(id, idEquipo,idTemporada,valor,observaciones,tipo,idTorneo);
 
 		System.out.println(storedProcResult);
 

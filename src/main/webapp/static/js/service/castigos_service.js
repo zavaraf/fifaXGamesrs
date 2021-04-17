@@ -1,22 +1,22 @@
 'use strict';
  
-angular.module('myApp').factory('CatalogoService', ['$http', '$q','CONFIG', function($http, $q,CONFIG){
+angular.module('myApp').factory('CastigosService', ['$http', '$q','CONFIG', function($http, $q,CONFIG){
 	
 	var IP = CONFIG.PROD == false ? CONFIG.IP_DES : CONFIG.IP_PROD
 	var REST_SERVICE_URI = IP+'/rest/catalogs/';
 		 
     var factory = {
-    		findAllCatalogs: findAllCatalogs,
-    		updateConceptos: updateConceptos
+    		findAllCastigos: findAllCastigos,
+    		updateCastigos: updateCastigos
     	
     };
 		
     return factory;
     
 
-    function findAllCatalogs() {
+    function findAllCastigos() {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+'findAllCatalogs')
+        $http.get(REST_SERVICE_URI+'findAllCastigos/'+CONFIG.VARTEMPORADA.id)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -29,13 +29,13 @@ angular.module('myApp').factory('CatalogoService', ['$http', '$q','CONFIG', func
         return deferred.promise;
     }
     
-    function updateConceptos(nombre,descripcion,tipo) {
+    function updateCastigos(castigo) {
         var deferred = $q.defer();
         
-        var request = REST_SERVICE_URI+'updateCatalogos/'+nombre+'/'+descripcion+'/'+tipo;
+        var request = REST_SERVICE_URI+'updateCastigo/'+CONFIG.VARTEMPORADA.id;
       
         console.log(request)
-        $http.post(request)
+        $http.post(request,castigo)
             .then(
             function (response) {
                console.log(response.data)

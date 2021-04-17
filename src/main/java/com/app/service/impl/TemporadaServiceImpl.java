@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.app.dao.EquipoDao;
 import com.app.dao.TemporadaDao;
 import com.app.enums.CodigoResponse;
+import com.app.modelo.DatosJornadas;
 import com.app.modelo.Equipo;
 import com.app.modelo.GolesJornadas;
 import com.app.modelo.Grupos;
@@ -145,6 +146,13 @@ public class TemporadaServiceImpl implements TemporadaService{
 		List<GolesJornadas> goles = temporadaDao.getGolesJornadas( idJornada, id, idEquipoLocal, idEquipoVisita);
 		List<String> imagenes = temporadaDao.getImagenes(idJornada, id);
 		
+		List<DatosJornadas> lesiones = temporadaDao.getDatosJornadas(idJornada, id, idEquipoLocal, idEquipoVisita, 2);
+		List<DatosJornadas> tarjetas = temporadaDao.getDatosJornadas(idJornada, id, idEquipoLocal, idEquipoVisita, 1);
+		
+		List<DatosJornadas> datosActivos = temporadaDao.getDatosJornadaEquipos(idJornada, id, idEquipoLocal, idEquipoVisita, idTemporada);
+		
+		
+		
 		List<HashMap<String,String>> mapaImg = new ArrayList<HashMap<String,String>>();
 		
 		for(Object img : imagenes){
@@ -158,6 +166,9 @@ public class TemporadaServiceImpl implements TemporadaService{
 		
 		jornada.setGolesJornada(goles);
 		jornada.setImagenes(mapaImg);
+		jornada.setLesionesJornada(lesiones);
+		jornada.setTarjetasJornada(tarjetas);
+		jornada.setDatosActivosJornada(datosActivos);
 		
 		return jornada;
 		
