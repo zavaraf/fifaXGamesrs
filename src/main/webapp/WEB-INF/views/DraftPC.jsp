@@ -123,7 +123,7 @@
 		      <sec:authentication var="user" property="principal" />
 		        <blockquote class="blockquote text-center">
 					  <p class="mb-0">RESUMEN</p>
-					  <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+					  <sec:authorize access="hasAnyRole('ROLE_Admin')">
 					  
 					  <button  
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
