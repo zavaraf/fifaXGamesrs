@@ -634,15 +634,69 @@
 			    		<!-- Nav tabs -->
 						  <ul class="nav nav-tabs" role="tablist">
 						    <li class="nav-item">
-						      <a class="nav-link active" data-toggle="tab" ng-click="ctrl.showPen = false; ctrl.showJor = true">Jornadas</a>
+						      <a class="nav-link active" data-toggle="tab" ng-click="ctrl.showPen = false; ctrl.showJor = true; ctrl.showLes = false">Jornadas</a>
 						      
 						    </li>
 						    <li class="nav-item">
-						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getPendientes(); ctrl.showPen = true; ctrl.showJor = false" >Pendientes</a>
+						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getPendientes(); ctrl.showPen = true; ctrl.showJor = false; ctrl.showLes = false" >Pendientes</a>
+						    </li>
+						    <li class="nav-item">
+						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getLesiones(); ctrl.showLes = true; ctrl.showPen = false; ctrl.showJor = false" >Lesiones/Tarjetas</a>
 						    </li>
 						 
 						  </ul>
 						  
+						  
+<!-- 						  LESIONES -->
+						  
+						  
+						  <div ng-show="ctrl.showles" class="row">
+							
+						
+							<div class="col"   >
+								
+							  <div class="form-group col-md-12">
+	                              <div class="col-md-7">
+	                                  <p><input class="form-control input-sm"  type="text" ng-model="test1" placeholder="Filtrar"></p>
+	                              </div>
+	                          </div>
+								<table class="table table-sm table-hover table-dark table-responsive ">
+			                	  <thead class="thead-dark">
+			                          <tr>
+			                          	  <th>#</th>
+			                              <th>Local</th>
+			                              <th></th>	
+			                              <th></th>
+			                              <th></th>
+			                              <th></th>
+			                              <th></th>
+			                              <th>Visita</th>
+			                              	                              
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="jor in ctrl.jorPendientes  | orderBy : 'numeroJornada' | filter : test1 " ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+								  	ctrl.getJornada(jor.idJornada,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
+								  	data-toggle="modal" data-target="#exampleModalScrollable">
+								  		  <td><span ng-bind="jor.numeroJornada"></span></td>
+			                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
+			                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+			                              <td>{{jor.golesLocal}}</td>
+			                              <td>-</td>
+			                              <td>{{jor.golesVisita}}</td>
+			                              <td ><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+			                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+			                             
+			                          </tr>
+			                      </tbody>
+			    				</table>
+							</div>
+						
+						</div> 
+						
+						
+<!-- 						PENDIENTES..... -->
+						
 						 <div ng-show="ctrl.showPen" class="row">
 							
 						
@@ -717,6 +771,52 @@
 			    				</table>
 							</div>
 						</div>
+						
+						<!-- 						EVENTOS   ..... -->
+						
+						 <div  ng-show="ctrl.showLes" class="row">
+					
+							<div class="col"   >
+								
+							  <div class="form-group col-md-12">
+	                              <div class="col-md-7">
+	                                  <p><input class="form-control input-sm"  type="text" ng-model="test1" placeholder="Filtrar"></p>
+	                              </div>
+	                          </div>
+								<table class="table table-sm table-hover table-dark table-responsive ">
+			                	  <thead class="thead-dark">
+			                          <tr>
+			                          	  <th>#</th>
+			                          	  <th></th>
+			                              <th>Nombre</th>
+			                              <th>Jornada</th>			                              
+			                              <th>Fecha</th>
+			                              <th>Torneo</th>
+			                              <th>Activa</th>
+			                              <th></th>
+			                              	                              
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="jor in ctrl.tablaGeneral.eventos  | orderBy : ['-activa','-fecha' ]| filter : test1 ">
+								  		  <td ><img ng-src="{{jor.equipo.img}}" height="25" class="rounded float-left" alt="..."></td>
+								  		  <td ng-show= " jor.tipo == 2" ><img src="https://img.icons8.com/office/20/000000/bandage.png"/></td>
+					 					  <td ng-show= " jor.tipo == 1"><img  src="https://img.icons8.com/officexs/16/000000/soccer-yellow-card.png"/></td>
+			                              <td><span ng-bind="jor.sobrenombre"></span></td>
+			                              <td><span ng-bind="jor.jornada"></span></td>
+			                              <td><span ng-bind="jor.fecha"></span></td>
+			                              <td><span ng-bind="jor.nombreTorneo"></span></td>
+			                              <td><span ng-bind="jor.activa"></span></td>
+			                              
+			                              
+			                             
+			                          </tr>
+			                      </tbody>
+			    				</table>
+							</div>
+							  
+					
+						</div> 
 					
 						
 		    		</div> 

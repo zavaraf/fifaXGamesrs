@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import com.app.dao.TemporadaDao;
 import com.app.modelo.DatosJornadas;
 import com.app.modelo.Equipo;
+import com.app.modelo.EventoPartido;
 import com.app.modelo.GolesJornadas;
 import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
@@ -98,6 +99,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		torneo.setGolesTorneo(getGolesTorneo(idTorneo, 0,idTemporada));
 		torneo.setGolesTorneoEquipo(getGolesTorneo(idTorneo, idEquipo,idTemporada));
 		torneo.setJornadas(getJornadas(idTemporada, idTorneo, 1));
+		torneo.setEventos(getEventosTemporada(idTemporada));
 		
 		return torneo;
 		
@@ -600,6 +602,67 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	        }
 	        
 		return tablaGeneralList;
+	}
+	
+	public List<EventoPartido> getEventosTemporada(int idTemporada) {
+		List<EventoPartido> eventosList = new ArrayList<EventoPartido>();
+		
+		String query =" select datosjornadas.id, "
+				+" datosjornadas.equipos_idequipo, "
+				+" equipos_has_temporada.nombreEquipo , "
+				+" equipos_has_imagen.imagen, "
+				+" datosjornadas.activa, "
+				+" datosjornadas.updatedate, "
+				+" datosjornadas.tipodatojornada_id, "
+				+" datosjornadas.persona_idpersona, "
+				+" persona.sobrenombre, "
+				+" jornadas.numeroJornada, "
+				+" torneo.nombreTorneo "
+				+" from datosjornadas "
+				+" join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idjornada "
+				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
+				+" join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = datosjornadas.equipos_idequipo and torneo.tempodada_idTemporada = equipos_has_temporada.tempodada_idTemporada "
+				+" join persona on persona.idPersona = datosjornadas.persona_idpersona "
+				+" join equipos_has_imagen on equipos_has_imagen.equipos_idEquipo = datosjornadas.equipos_idequipo and equipos_has_imagen.idTemporada = torneo.tempodada_idTemporada "
+				+" where  "
+				+" equipos_has_imagen.tipoImagen_idTipoImagen = 1 and "
+				+" torneo.tempodada_idTemporada =  " + idTemporada;
+		
+		
+		Collection eventos = jdbcTemplate.query(
+                query
+                , new RowMapper() {
+
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        
+                    	EventoPartido evento = new EventoPartido();
+                    	Equipo equipo = new Equipo();
+                    	
+                    	equipo.setId(rs.getInt("equipos_idequipo"));
+                    	equipo.setNombre(rs.getString("nombreEquipo"));
+                    	equipo.setImg(rs.getString("imagen"));
+                    	
+                    	evento.setEquipo(equipo);
+                    	
+                    	evento.setIdEvento(rs.getInt("id"));
+                    	evento.setFecha(rs.getString("updatedate"));
+                    	evento.setTipo(rs.getInt("tipodatojornada_id"));
+                    	evento.setActiva(rs.getInt("activa"));
+                    	evento.setJornada(rs.getInt("numeroJornada"));
+                    	evento.setNombreTorneo(rs.getString("nombreTorneo"));
+                    	evento.setSobrenombre(rs.getString("sobrenombre"));
+                    	
+                    	
+                    	return evento;
+                    }
+                });
+		 for (Object evento : eventos) {
+	           
+			 eventosList.add( (EventoPartido)evento);
+	        }
+	        
+		return eventosList;
 	}
 	
 	public List<GolesJornadas> getGolesTorneo(int idTorneo, int idEquipo,int idTemporada) {
