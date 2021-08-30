@@ -3,6 +3,7 @@ DROP PROCEDURE IF EXISTS createOrTorneoGrupos$$
 CREATE PROCEDURE createOrTorneoGrupos(IN `json` JSON,
 									  IN nombreTorneo varchar(200),
 									 IN idTemporada INT,
+                                     IN idCat INT,
                                out isError int, 
                                out message varchar(200))
 BEGIN
@@ -45,12 +46,11 @@ from torneo
 where torneo.nombreTorneo = nombreTorneo and torneo.tempodada_idTemporada = idTemporada ;
 
 if idTorneo is null then 
-  call crearTorneo(nombreTorneo,idTemporada,2,@iserr,@ip);
+  call crearTorneo(nombreTorneo,idTemporada,2,idCat,@iserr,@ip);
   
   select torneo.idtorneo into idTorneo
 	from torneo
-	where torneo.nombreTorneo = nombreTorneo;
-
+	where torneo.nombreTorneo = nombreTorneo and torneo.tempodada_idTemporada = idTemporada ;
 
 end if;
 

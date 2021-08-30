@@ -81,6 +81,9 @@
       
       <script src="<c:url value='/static/js/controller/castigos_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/castigos_service.js' />"></script>
+      
+      <script src="<c:url value='/static/js/controller/salonFama_controller.js' />"></script>
+      <script src="<c:url value='/static/js/service/salonFama_service.js' />"></script>
 
 	<script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script>
 	<script src="<c:url value='/static/js/app/customSelect.js' />"></script>
@@ -134,6 +137,7 @@
 					href="#!zonaDraft">Draft DT<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item"><a class="nav-link" href="#!zonaDraftPC">Draft	PC</a></li>
+				<li class="nav-item"><a class="nav-link" href="#!salonFama">Salon de la Fama</a></li>
 				<sec:authorize access="hasAnyRole('ROLE_Admin')">
 				
 				<li class="nav-item" ><a class="nav-link" href="#!adminDT">Admin DTS</a></li>

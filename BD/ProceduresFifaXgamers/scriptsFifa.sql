@@ -432,7 +432,7 @@ delete from temporada where temporada.idTemporada = 4;
 
 delete from equipos where equipos.idEquipo=29 and equipos.Division_idDivision=2;
 
-call createTemporada('81','81 Temporada');
+call createTemporada('94','Temporada 94',1);
 
 usuariosusuariosusuariosusuariosselect version();
 
@@ -1106,3 +1106,6 @@ and historicodraft.tempodada_idTemporada = 5
 
 select * from draftpc;
 
+select * from temporada;
+
+select * from equipos_has_temporada where tempodada_idTemporada = 14;

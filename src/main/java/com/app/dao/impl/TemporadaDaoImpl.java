@@ -24,6 +24,7 @@ import com.app.modelo.GolesJornadas;
 import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
+import com.app.modelo.SalonFama;
 import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
 import com.app.modelo.Torneo;
@@ -107,218 +108,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	
 	public List<TablaGeneral> getTablaGeneral(int idTemporada, int idTorneo) {
 		List<TablaGeneral> tablaGeneralList = new ArrayList<TablaGeneral>();
-		/*  String query = " SELECT "
-				+" tablaGeneral.id, "
-				+" tablaGeneral.division_idDivision, "
-				+" tablaGeneral.tempodada_idTemporada, "
-				+" tablaGeneral.idTorneo,"
-				+" tablaGeneral.idEquipo,  "
-				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = tablaGeneral.idEquipo) img, "
-				+" tablaGeneral.nombreEquipo, "
-				+" tablaGeneral.pj, "
-				+" tablaGeneral.pg,  "
-				+" tablaGeneral.pe, "
-				+" tablaGeneral.pp, "
-				+" tablaGeneral.gf, "
-				+" tablaGeneral.ge, "
-				+" tablaGeneral.dif, "
-				+" tablaGeneral.pts "
-				+"  "
-				+" from ( "
-				+"  "
-				+" SELECT "
-				+" tablaGeneral.id, "
-				+" tablaGeneral.division_idDivision, "
-				+" tablaGeneral.tempodada_idTemporada, "
-				+" tablaGeneral.idTorneo,"
-				+" tablaGeneral.idEquipo,  "
-				+" tablaGeneral.nombreEquipo, "
-				+" sum(tablaGeneral.pj) as pj, "
-				+" sum(tablaGeneral.pg) as pg,  "
-				+" sum(tablaGeneral.pe) as pe, "
-				+" sum(tablaGeneral.pp) as pp, "
-				+" sum(tablaGeneral.gf) as gf, "
-				+" sum(tablaGeneral.ge) as ge, "
-				+" (sum(tablaGeneral.gf) - sum(tablaGeneral.ge)) as dif, "
-				+" ((sum(tablaGeneral.pg) * 3) + sum(tablaGeneral.pe)) as pts "
-				+" from "
-				+" ( "
-				+"  "
-				+"  "
-				+" ( "
-				+" /* PARTIDOS GANADOS LOCAL  */ /*	"
-				+" select jhe.id, "
-				+" jornadas.division_idDivision, "
-				+" torneo.tempodada_idTemporada, "
-				+" torneo.idTorneo,"
-				+" jhe.equipos_idEquipoLocal as idEquipo,  "
-				+" equipos.nombreEquipo, "
-				+" 0 as pj, "
-				+" count(jhe.equipos_idEquipoLocal) as pg,  "
-				+" 0 as pp, "
-				+" 0 as pe, "
-				+" sum(jhe.golesLocal) as gf, "
-				+" sum(jhe.golesVisita) as ge "
-				+"  "
-				+" from jornadas_has_equipos jhe "
-				+" join equipos on equipos.idEquipo = jhe.equipos_idEquipoLocal "
-				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada"
-				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
-				+" where jhe.golesLocal > jhe.golesVisita "
-				+" group by jhe.equipos_idEquipoLocal "
-				+" order by equipos.idEquipo "
-				+" "
-				+" ) "
-				+"  "
-				+" UNION "
-				+"  "
-				+"  "
-				+" ( "
-				+" /* PARTIDOS GANADOS VISITA */ /*	"
-				+"      "
-				+" select jhe.id, "
-				+" jornadas.division_idDivision, "
-				+" torneo.tempodada_idTemporada, "
-				+" torneo.idTorneo,"
-				+" jhe.equipos_idEquipoVisita as idEquipo,  "
-				+" equipos.nombreEquipo, "
-				+" 0 as pj, "
-				+" count(jhe.equipos_idEquipoVisita) as pg, "
-				+" 0 as pp, "
-				+" 0 as pe, "
-				+" sum(jhe.golesVisita) as gf,  "
-				+" sum(jhe.golesLocal) as ge "
-				+" from jornadas_has_equipos jhe "
-				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
-				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
-				+" join equipos on equipos.idEquipo = jhe.equipos_idEquipoVisita "
-				+" where "
-				+" jhe.golesVisita> jhe.golesLocal "
-				+"  "
-				+" group by jhe.equipos_idEquipoLocal "
-				+" order by equipos.idEquipo "
-				+" ) "
-				+"  "
-				+" UNION "
-				+" /* PARTIDOS EMPATADOS */ /*	"
-				+" ( "
-				+" select jhe.id, "
-				+" jornadas.division_idDivision, "
-				+" torneo.tempodada_idTemporada,"
-				+" torneo.idTorneo,"
-				+" equipos.idEquipo as idEquipo, "
-				+" equipos.nombreEquipo, "
-				+" 0 as pj, "
-				+" 0 as pg, "
-				+" 0 as pp, "
-				+" count(equipos.idEquipo) as pe, "
-				+" sum(jhe.golesLocal) as gf,  "
-				+" sum(jhe.golesVisita) as ge "
-				+" from jornadas_has_equipos jhe "
-				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada"
-				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo , "
-				+" equipos "
-				+" 	  "
-				+" where (equipos.idEquipo = jhe.equipos_idEquipoVisita  "
-				+" or equipos.idEquipo = jhe.equipos_idEquipoLocal) "
-				+" and "
-				+" jhe.golesVisita = jhe.golesLocal and jhe.golesLocal is not null "
-				+"  "
-				+" group by equipos.idEquipo "
-				+" order by equipos.idEquipo"
-				+" ) "
-				+"  "
-				+" UNION "
-				+"  "
-				+" ( "
-				+" select jhe.id, "
-				+" jornadas.division_idDivision, "
-				+" torneo.tempodada_idTemporada, "
-				+" torneo.idTorneo,"
-				+" equipos.idEquipo as idEquipo,  "
-				+" equipos.nombreEquipo,  "
-				+" count(equipos.idEquipo) as pj, "
-				+" 0 as pg, "
-				+" 0 as pp, "
-				+" 0 as pe, "
-				+" 0 as gf, "
-				+" 0 as ge "
-				+" from jornadas_has_equipos jhe "
-				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada"
-				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo, "
-				+" equipos  "
-				+" where (jhe.equipos_idEquipoLocal = equipos.idEquipo "
-				+" or jhe.equipos_idEquipoVisita = equipos.idEquipo) "
-				+" and jornadas.activa = 1 "
-				+"  "
-				+" group by equipos.idEquipo "
-				+" order by equipos.idEquipo "
-				+"  "
-				+" ) "
-				+"      "
-				+" UNION  "
-				+" ( "
-				+" /* PARTIDOS PERDIDOS LOCAL  */ /*	"
-			+" select jhe.id, "
-				+" jornadas.division_idDivision, "
-				+" torneo.tempodada_idTemporada, "
-				+" torneo.idTorneo,"
-				+" jhe.equipos_idEquipoLocal as idEquipo,  "
-				+" equipos.nombreEquipo, "
-				+" 0 as pj, "
-				+" 0 as pg, "
-				+" count(jhe.equipos_idEquipoLocal) as pp,  "
-				+" 0 as pe, "
-				+" 0 as gf, "
-				+" sum(jhe.golesVisita) as ge "
-				+"  "
-				+" from jornadas_has_equipos jhe "
-				+" join equipos on equipos.idEquipo = jhe.equipos_idEquipoLocal "
-				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
-				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo"
-				+" where jhe.golesLocal < jhe.golesVisita "
-				+" group by jhe.equipos_idEquipoLocal "
-				+" order by equipos.idEquipo "
-				+" ) "
-				+"      "
-				+" UNION "
-				+" ( "
-				+" /* PARTIDOS PERDIDOS VISITA */ /*	"
-				+"      "
-				+" select jhe.id, "
-				+" jornadas.division_idDivision, "
-				+" torneo.tempodada_idTemporada, "
-				+" torneo.idTorneo,"
-				+" jhe.equipos_idEquipoVisita as idEquipo,  "
-				+" equipos.nombreEquipo, "
-				+" 0 as pj, "
-				+" 0 as pg, "
-				+" count(jhe.equipos_idEquipoVisita) as pp, "
-				+" 0 as pe, "
-				+" 0 gf,  "
-				+" sum(jhe.golesLocal) as ge "
-				+" from jornadas_has_equipos jhe "
-				+" join jornadas on jornadas.idJornada = jhe.jornadas_idJornada "
-				+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo"
-				+" join equipos on equipos.idEquipo = jhe.equipos_idEquipoVisita "
-				+" where "
-				+" jhe.golesVisita < jhe.golesLocal "
-				+"  "
-				+" group by jhe.equipos_idEquipoLocal "
-				+" order by equipos.idEquipo "
-				+"      "
-				+"      "
-				+" ) "
-				+"      "
-				+" )tablaGeneral "
-				+"  "
-				+" where tablaGeneral.idTorneo = " +idTorneo
-				+" and   tablaGeneral.tempodada_idTemporada = " + idTemporada
-				+"  "
-				+" group by tablaGeneral.idEquipo "
-				+" ) tablaGeneral "
-				+" order by tablaGeneral.pts desc, "
-				+" tablaGeneral.dif desc ";	*/	
+		
 		
 		String query = "   SELECT   "
 				+"   grupos_torneo.nombreGrupo,  "
@@ -1280,8 +1070,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	
 	
 	@Override
-	public HashMap<String, String> addJornadasGrupos(int idTemporada, String nombre , String grupos) {
-		System.out.println("----->createOrTorneoGrupos]:" + idTemporada+ " nombre]:"+ nombre +" grupos]:"+grupos);
+	public HashMap<String, String> addJornadasGrupos(int idTemporada, String nombre , String grupos, int idCat) {
+		System.out.println("----->createOrTorneoGrupos]:" + idTemporada+ " nombre]:"+ nombre +" grupos]:"+grupos+" idCat]:"+ idCat);
 		String query = "createOrTorneoGrupos";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1289,18 +1079,19 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Sql parameter mapping
 		SqlParameter json            = new SqlParameter("json", Types.CLOB);
 		SqlParameter nombreTorneo    = new SqlParameter("nombreTorneo", Types.VARCHAR);
-		SqlParameter idTemporadaV      = new SqlParameter("idTemporada", Types.INTEGER);
+		SqlParameter idTemporadaV     = new SqlParameter("idTemporada", Types.INTEGER);
+		SqlParameter idCatV           = new SqlParameter("idCat", Types.INTEGER);
 		
 		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
 		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
 
-		SqlParameter[] paramArray = { json,nombreTorneo,idTemporadaV,isError ,message};
+		SqlParameter[] paramArray = { json,nombreTorneo,idTemporadaV,idCatV,isError ,message};
 
 		myStoredProcedure.setParameters(paramArray);
 		myStoredProcedure.compile();
 
 		// Call stored procedure
-		Map storedProcResult = myStoredProcedure.execute(grupos,nombre,idTemporada);
+		Map storedProcResult = myStoredProcedure.execute(grupos,nombre,idTemporada,idCat);
 
 		System.out.println(storedProcResult);
 
@@ -1470,6 +1261,121 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		System.out.println(mapa);
 
 		return mapa;
+	}
+
+	@Override
+	public List<SalonFama> getSalonFama(boolean detalle) {
+	List<SalonFama> eventosList = new ArrayList<SalonFama>();
+		
+		String query ="  SELECT cat_salon_fama.id,"
+				+"      cat_salon_fama.username,"
+				+"      cat_salon_fama.nombreEquipo,"
+				+"      cat_salon_fama.img,"
+				+"      cat_salon_fama.idtorneo,"
+				+"      cat_salon_fama.idtemporada,"
+				+"      cat_salon_fama.campeon,"
+				+"      cat_salon_fama.idequipo,"
+				+"      cat_salon_fama.idcat_torneo,"
+				+"      cat_salon_fama.nombretorneo,"
+				+"      cat_salon_fama.nombretemporada,"
+				+"      cat_salon_fama.img_torneo,"
+				+"      count(cat_salon_fama.idcat_torneo) totalxTorneo,    "
+				+"      (select count(ca.username) from cat_salon_fama as ca where ca.username = cat_salon_fama.username ) total"
+				+"  FROM cat_salon_fama "
+				+ " where cat_salon_fama.campeon = 1"
+				+"  group by cat_salon_fama.idcat_torneo, cat_salon_fama.username"
+				+"  order by  total desc;";
+		
+		if(detalle == true){
+			query ="  SELECT cat_salon_fama.id,"
+					+"      cat_salon_fama.username,"
+					+"      cat_salon_fama.nombreEquipo,"
+					+"      cat_salon_fama.img,"
+					+"      cat_salon_fama.idtorneo,"
+					+"      cat_salon_fama.idtemporada,"
+					+"      cat_salon_fama.campeon,"
+					+"      cat_salon_fama.idequipo,"
+					+"      cat_salon_fama.idcat_torneo,"
+					+"      cat_salon_fama.nombretorneo,"
+					+"      cat_salon_fama.nombretemporada,"
+					+"      cat_salon_fama.img_torneo,"
+					+"      0 totalxTorneo,  "
+					+"      (select count(ca.username) from cat_salon_fama as ca where ca.username = cat_salon_fama.username ) total"
+					+"  FROM cat_salon_fama"					
+					+"  order by  total desc;";
+			
+		}
+		
+		
+		Collection eventos = jdbcTemplate.query(
+                query
+                , new RowMapper() {
+
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        
+                    	SalonFama salon = new SalonFama();
+                    	
+                    	salon.setUsuario(rs.getString("username"));
+                    	salon.setNombreEquipo(rs.getString("nombreEquipo"));
+                    	salon.setImg(rs.getString("img"));
+                    	salon.setIdTorneo(rs.getInt("idtorneo"));
+                    	salon.setIdTemporada(rs.getInt("idtemporada"));
+                    	salon.setIdEquipo(rs.getInt("idEquipo"));
+                    	salon.setIdTipoTorneo(rs.getInt("idcat_torneo"));
+                    	salon.setNombreTorneo(rs.getString("nombretorneo"));
+                    	salon.setNombreTemporada(rs.getString("nombretemporada"));
+                    	salon.setImgTorneo(rs.getString("img_torneo"));
+                    	salon.setTotalxTemporada(rs.getInt("totalxTorneo"));
+                    	salon.setTotal(rs.getInt("total"));
+                    	
+                    	
+                    	return salon;
+                    }
+                });
+		 for (Object salon : eventos) {
+	           
+			 eventosList.add( (SalonFama)salon);
+	        }
+	        
+		return eventosList;
+	}
+
+	@Override
+	public List<Torneo> getCatTorneo() {
+		List<Torneo> eventosList = new ArrayList<Torneo>();
+		
+		String query = " SELECT id, "
+						+"     nombre, "
+						+"    descripcion, "
+						+"    img "
+						+" FROM cat_torneo ";
+		
+		
+		
+		Collection eventos = jdbcTemplate.query(
+                query
+                , new RowMapper() {
+
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        
+                    	Torneo cat = new Torneo();
+                    	
+                    	cat.setId(rs.getInt("id"));
+                    	cat.setNombre(rs.getString("nombre"));
+                    	cat.setImg(rs.getString("img"));
+                    	
+                    	
+                    	return cat;
+                    }
+                });
+		 for (Object cat : eventos) {
+	           
+			 eventosList.add( (Torneo)cat);
+	        }
+	        
+		return eventosList;
 	}
 
 

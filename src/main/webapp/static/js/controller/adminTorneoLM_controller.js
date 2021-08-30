@@ -31,6 +31,9 @@ app
 							self.equiposSelect;
 							self.gruposSe = [];
 							
+							self.catTorneo;
+							self.selectedCatTorneo
+							
 							self.gruposTorneo = [];
 							self.confJor = 2;
 							self.confTor = 2;
@@ -51,6 +54,7 @@ app
 							self.getGruposTorneo = getGruposTorneo;
 							self.generarPartidosFinales = generarPartidosFinales;
 							self.addJuegosLiguilla = addJuegosLiguilla;
+							self.getCatTorneos = getCatTorneos;
 							//self.getEquiposDes = getEquiposDes;
 
 							$scope.example9model = [];
@@ -68,6 +72,7 @@ app
 							};
 
 							buscarDivisiones();
+							getCatTorneos();
 							
 							
 //							function getEquiposDes(equipos, jornada){
@@ -101,6 +106,28 @@ app
 //									console.log("Equipos Sin ]:",equiposL)
 //								return equiposL;
 //							}
+							
+							function getCatTorneos(){
+								console.log("------------------->getCatTorneos()")
+								TorneoLMService.getCatTorneos()
+										.then(
+												function(d) {
+
+													self.catTorneo = d;
+													
+
+													console.log("TorneoLMService-ggetCatTorneos]:",self.catTorneo)
+													console.log("TorneoLMService-getCatTorneos]: -----------FIN-----------")
+
+													return d;
+												},
+												function(errResponse) {
+													console
+															.error('[getCatTorneos] Error while fetching TorneoLMService()');
+												});
+								return null;
+								
+							}
 
 							function getTorneos(e) {
 								return CONFIG.VARTEMPORADA.torneos;
@@ -284,7 +311,7 @@ app
 								console.log("------------------->Torneo]:"
 										+ nombreTorneo)
 								TorneoLMService
-										.addTorneoGrupo(grupos, nombreTorneo,
+										.addTorneoGrupo(grupos, self.selectedCatTorneo,
 												self.confTor)
 										.then(
 												function(d) {

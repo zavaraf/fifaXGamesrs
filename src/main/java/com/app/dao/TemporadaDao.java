@@ -8,6 +8,7 @@ import com.app.modelo.GolesJornadas;
 import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
+import com.app.modelo.SalonFama;
 import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
 import com.app.modelo.Torneo;
@@ -42,8 +43,11 @@ public interface TemporadaDao {
 	
 	HashMap<String, String> addImagen(int idEquipo,int id,int idJornada,String img);
 	HashMap<String, String> addJornada(int idTemporada, int idDivision, Jornada juegos,int activa,int cerrada);
-	HashMap<String, String> addJornadasGrupos(int idTemporada, String nombre , String grupos);
+	HashMap<String, String> addJornadasGrupos(int idTemporada, String nombre , String grupos, int idCat);
 	HashMap<String, String> crearTorneo(int idTemporada, String nombre );
 	List<Grupos> getGruposTorneo(int idTemporada, int idTorneo);
+	List<SalonFama> getSalonFama(boolean detalle);
+	
+	List<Torneo> getCatTorneo();
 
 }

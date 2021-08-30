@@ -196,9 +196,16 @@
 				</div>
 				<div ng-show="ctrl.confTor == 2">
 					<div class="row">
-					    <div class="col">
-					      <input type="text" class="form-control" ng-model="torneoNombre"placeholder="Nombre del torneo">
-					    </div>
+					<div class="col">
+					<select ng-model="ctrl.selectedCatTorneo" 
+	                    ng-options="pla as pla.nombre for pla in ctrl.catTorneo.data.catTorneo  track by pla.id"
+	                    class="custom-select input-sm">
+	                    <option value="">--Torneo--</option>
+	                 </select>
+					</div>
+<!-- 					    <div class="col"> -->
+<!-- 					      <input type="text" class="form-control" ng-model="ctrl.selectedCatTorneo.nombre"placeholder="Nombre del torneo"> -->
+<!-- 					    </div> -->
 					    <div class="col">
 					      <input type="text" class="form-control" ng-model="equiposXGrupo" placeholder="Numero de equpos x Grupo">
 					    </div>

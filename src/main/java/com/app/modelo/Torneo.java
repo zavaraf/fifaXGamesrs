@@ -7,6 +7,7 @@ public class Torneo {
 	private int id;
 	private String nombre;
 	private int tipoTorneo;
+	private String img;
 	private List<GolesJornadas> golesTorneo;
 	private List<TablaGeneral> tablaGeneral;
 	private List<Jornadas>  jornadas;
@@ -62,6 +63,13 @@ public class Torneo {
 	public void setEventos(List<EventoPartido> eventos) {
 		this.eventos = eventos;
 	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	
 	
 	
 

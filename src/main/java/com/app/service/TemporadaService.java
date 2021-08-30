@@ -12,8 +12,9 @@ import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
 import com.app.modelo.Torneo;
 
-public interface TemporadaService {
 
+public interface TemporadaService {
+	
 	List<Temporada> buscarTodos();
 	List<TablaGeneral> getTablaGeneral(int idTemporada, int idDivision);
 	Torneo getTorneoGeneral(int idTemporada, int idDivision, int idEquipo);
@@ -30,10 +31,14 @@ public interface TemporadaService {
 	
 	ResponseData addImagen(int idEquipo,int id,int idJornada,String img);
 	ResponseData addJornadas(int idTemporada, int idDivision, List<Jornadas> jornadas, int tipoTorneo);
-	ResponseData addJornadasGrupos(int idTemporada, String nombre, String grupos,int confTor);
+	ResponseData addJornadasGrupos(int idTemporada, String nombre, String grupos,int confTor, int idCat);
 	List<Grupos> getGruposTorneo(int idTemporada, int idTorneo);
+	
 	List<Grupos> generarJornadasGruposTorneos(int idTemporada, int idTorneo,int vuelta,String nombre);
 	
+	ResponseData getSalonFama();
 	
-
+	ResponseData getCatTorneo();
+	
+	
 }

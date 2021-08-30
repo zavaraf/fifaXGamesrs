@@ -3,6 +3,7 @@ DROP PROCEDURE IF EXISTS crearTorneo$$
 CREATE PROCEDURE crearTorneo  (IN nombreTorneo varchar(45),
 							   in idTemporada int,
                                in tipoTorneo int,
+                               in idCat int,
                                out isError int, 
                                out message varchar(200))
 BEGIN
@@ -60,12 +61,14 @@ INSERT INTO `fifaxgamersbd`.`torneo`
 (`idtorneo`,
 `nombreTorneo`,
 `tempodada_idTemporada`,
-`tipoTorneo_idtipoTorneo`)
+`tipoTorneo_idtipoTorneo`,
+`cat_torneo`)
 VALUES
 (null,
 nombreTorneo,
 idTemporada,
-tipotorneo);
+tipotorneo,
+idCat);
 
 
 

@@ -21,12 +21,36 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     		addTorneoGrupo    : addTorneoGrupo,
     		getGruposTorneo   : getGruposTorneo,
     		guardarJornada    : guardarJornada,
-    		addJuegosLiguilla : addJuegosLiguilla
+    		addJuegosLiguilla : addJuegosLiguilla,
+    		getCatTorneos     : getCatTorneos     
     };
  
     return factory;
  
  
+    function getCatTorneos (){
+    	 var deferred = $q.defer();
+         
+//         $http.get(REST_SERVICE_URI_E+'getTablaGeneral'+"/"+CONFIG.VARTEMPORADA.id+'/'+idDivision)
+         var idEquipo = CONFIG.ID_EQUIPO == null ? 0 : CONFIG.ID_EQUIPO;
+         
+         var url = REST_SERVICE_URI_E+'getCatTorneo'
+         console.log(url,CONFIG)
+         		
+         $http.get(url)
+             .then(
+             function (response) {
+             	console.log(response.data)
+                 deferred.resolve(response.data);
+             },
+             function(errResponse){
+                 console.error('Error while fetching Users');
+                 deferred.reject(errResponse);
+             }
+         );
+         return deferred.promise;
+    	
+    }
     
     
     function getTablaGeneral(idDivision) {
@@ -201,8 +225,10 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     
     function addTorneoGrupo(grupos,nombre,confTor) {
         var deferred = $q.defer();
-      
-        var url = REST_SERVICE_URI_E+'addJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+nombre+'/'+confTor
+        
+        
+        console.log("catTorneo]:",nombre);
+        var url = REST_SERVICE_URI_E+'addJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+nombre.nombre+'/'+confTor+'/'+nombre.id
         console.log(url,grupos);
         $http.post(url,grupos)
             .then(

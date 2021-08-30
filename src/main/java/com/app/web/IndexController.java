@@ -94,5 +94,11 @@ public class IndexController {
 		 ModelAndView m = new ModelAndView("castigos");
 		 return m;
 	 }
+	 @RequestMapping(value="/salonFama", method = RequestMethod.GET)
+	 public ModelAndView salonFama(HttpServletRequest request,
+			 HttpServletResponse response, Model model) throws Exception {
+		 ModelAndView m = new ModelAndView("salonFama");
+		 return m;
+	 }
 	
 }

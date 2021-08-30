@@ -97,7 +97,7 @@ set `json_items` = JSON_LENGTH(jsonGoles);
         
 
            
-           INSERT INTO `fifaxgam_fifaxgamersbd`.`golesjornadas`
+           INSERT INTO `golesjornadas`
 			(`id`,
 			`persona_idPersona`,
 			`numgoles`,
@@ -127,7 +127,7 @@ set `json_items` = JSON_LENGTH(jsonGoles);
           
 
          
-         DELETE FROM `fifaxgam_fifaxgamersbd`.`golesjornadas`
+         DELETE FROM `golesjornadas`
 			WHERE golesjornadas.id = idVal;
 
            
@@ -166,7 +166,7 @@ set `json_items` = JSON_LENGTH(jsonGoles);
   
   
 
-  INSERT INTO `fifaxgam_fifaxgamersbd`.`imagenesjornadas`
+  INSERT INTO `imagenesjornadas`
 	(`id`,
 	`jornadas_has_equipos_id`,
 	`jornadas_has_equipos_jornadas_idJornada`,
@@ -211,7 +211,7 @@ and equipos.idEquipo in ((SELECT JSON_EXTRACT(`json`, "$.idEquipoVisita")));
                            golesLocal,golesVisita);
 
                       
-UPDATE `fifaxgam_fifaxgamersbd`.`jornadas_has_equipos`
+UPDATE `jornadas_has_equipos`
 SET
 `golesLocal` = golesLocal,
 `golesVisita` = golesVisita,
@@ -243,7 +243,7 @@ set `json_items_lesiones` = JSON_LENGTH(jsonLesiones);
         select jsonLesiones;
         
 
-          INSERT INTO `fifaxgam_fifaxgamersbd`.`datosjornadas`
+          INSERT INTO `datosjornadas`
 				(`id`,
 				`persona_idPersona`,
 				`updatedate`,
@@ -268,7 +268,7 @@ set `json_items_lesiones` = JSON_LENGTH(jsonLesiones);
           
 
          
-         DELETE FROM `fifaxgam_fifaxgamersbd`.`datosjornadas`
+         DELETE FROM `datosjornadas`
 			WHERE datosjornadas.id = idVal;
 
            
@@ -307,7 +307,7 @@ set `json_items_tarjetas` = JSON_LENGTH(jsonTarjetas);
         select jsonLesiones;
         
 
-          INSERT INTO `fifaxgam_fifaxgamersbd`.`datosjornadas`
+          INSERT INTO `datosjornadas`
 				(`id`,
 				`persona_idPersona`,
 				`updatedate`,
@@ -332,7 +332,7 @@ set `json_items_tarjetas` = JSON_LENGTH(jsonTarjetas);
           
 
          
-         DELETE FROM `fifaxgam_fifaxgamersbd`.`datosjornadas`
+         DELETE FROM `datosjornadas`
 			WHERE datosjornadas.id = idVal;
 
            
@@ -373,23 +373,27 @@ set _index_tarjetas = 0;
         select count(id) cuantos into cuantosVal
 		  from jornadas_has_equipos
 		  join jornadas on jornadas.idJornada = jornadas_has_equipos.jornadas_idJornada
-		  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo
+		  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo and torneo.cat_torneo != 7
 		  where jornadas_has_equipos.updateDate > (select jornadas_has_equipos.updateDate
-		  from datosjornadas
-		  join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idJornada
-		  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo
-		  join jornadas_has_equipos on jornadas_has_equipos.id = datosjornadas.jornadas_has_equipos_id
-		  where datosjornadas.persona_idPersona = idPersonaVal
-		  and datosjornadas.tipoDatoJornada_id = deletedVal
-		  and torneo.tempodada_idTemporada = idTemporada)
+			  from datosjornadas
+			  join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idJornada
+			  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo
+			  join jornadas_has_equipos on jornadas_has_equipos.id = datosjornadas.jornadas_has_equipos_id
+			  where datosjornadas.persona_idPersona = idPersonaVal
+			  and datosjornadas.tipoDatoJornada_id = deletedVal
+			  and torneo.tempodada_idTemporada = idTemporada
+              and torneo.cat_torneo != 7
+			  order by jornadas_has_equipos.updatedate desc limit 1)          
 		  and jornadas_has_equipos.id != (select  datosjornadas.jornadas_has_equipos_id
-		  from datosjornadas
-		  join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idJornada
-		  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo
-		  join jornadas_has_equipos on jornadas_has_equipos.id = datosjornadas.jornadas_has_equipos_id
-		  where datosjornadas.persona_idPersona = idPersonaVal
-		  and datosjornadas.tipoDatoJornada_id = deletedVal
-		  and torneo.tempodada_idTemporada = idTemporada) 
+			  from datosjornadas
+			  join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idJornada
+			  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo
+			  join jornadas_has_equipos on jornadas_has_equipos.id = datosjornadas.jornadas_has_equipos_id
+			  where datosjornadas.persona_idPersona = idPersonaVal
+			  and datosjornadas.tipoDatoJornada_id = deletedVal
+			  and torneo.tempodada_idTemporada = idTemporada
+              and torneo.cat_torneo != 7
+			   order by jornadas_has_equipos.updatedate desc limit 1) 
 		  and torneo.tempodada_idTemporada = idTemporada
           and jornadas_has_equipos.golesLocal is not null
           and (jornadas_has_equipos.equipos_idEquipoLocal = idEquipoVal or jornadas_has_equipos.equipos_idEquipoVisita = idEquipoVal)

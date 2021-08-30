@@ -136,11 +136,6 @@ select * from temporada;
 
 
 
-
-
-
-
-
 -- -----------------------------------------------------
 -- Table `fifaxgamersbd`.`tipoDatoJornada`
 -- -----------------------------------------------------
@@ -208,3 +203,119 @@ VALUES
 (2,
 'lesion',
 'Lesion');
+
+
+
+--------------------------------------------------------------------------
+
+
+-- -actualiza Campeonatos alters
+
+
+CREATE TABLE `fifaxgam_fifaxgamersbd`.`cat_torneo` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `descripcion` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
+
+ALTER TABLE `fifaxgam_fifaxgamersbd`.`torneo` 
+ADD COLUMN `cat_torneo` INT NULL DEFAULT NULL AFTER `tipoTorneo_idtipoTorneo`;
+
+
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_torneo`(`id`,`nombre`,`descripcion`)VALUES(null,'Primera','Primera');
+
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_torneo`(`id`,`nombre`,`descripcion`)VALUES(null,'Segunda','Segunda');
+
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_torneo`(`id`,`nombre`,`descripcion`)VALUES(null,'Superliga','Superliga');
+
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_torneo`(`id`,`nombre`,`descripcion`)VALUES(null,'Champions','Champions');
+
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_torneo`(`id`,`nombre`,`descripcion`)VALUES(null,'Superliga','Superliga');
+
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_torneo`(`id`,`nombre`,`descripcion`)VALUES(null,'Euro','Euro');
+
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_torneo`(`id`,`nombre`,`descripcion`)VALUES(null,'Juveniles','Juveniles');
+
+UPDATE `fifaxgam_fifaxgamersbd`.`cat_torneo` SET `img`='https://i.postimg.cc/NFc5P2gj/Primera.png' WHERE `id`='1';
+UPDATE `fifaxgam_fifaxgamersbd`.`cat_torneo` SET `img`='https://i.postimg.cc/fyc4ryzw/Europa-Leage.png' WHERE `id`='6';
+UPDATE `fifaxgam_fifaxgamersbd`.`cat_torneo` SET `img`='https://i.postimg.cc/xCrzjtmT/Champions.png' WHERE `id`='4';
+UPDATE `fifaxgam_fifaxgamersbd`.`cat_torneo` SET `img`='https://i.postimg.cc/rw0RskYc/Super-Liga1.png' WHERE `id`='5';
+UPDATE `fifaxgam_fifaxgamersbd`.`cat_torneo` SET `img`='https://i.postimg.cc/VNv8kzRR/Superliga.png' WHERE `id`='7';
+UPDATE `fifaxgam_fifaxgamersbd`.`cat_torneo` SET `img`='https://i.postimg.cc/rw0RskYc/Super-Liga1.png' WHERE `id`='3';
+
+
+
+
+
+CREATE TABLE `fifaxgam_fifaxgamersbd`.`cat_salon_fama` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(100) NULL,
+  `nombreEquipo` VARCHAR(45) NULL,
+  `img` VARCHAR(45) NULL,
+  `idtorneo` INT NOT NULL,
+  `idtemporada` INT NOT NULL,
+  `campeon` INT NOT NULL,
+  PRIMARY KEY (`id`, `idtorneo`, `idtemporada`, `campeon`),
+  INDEX `fk_torneo_n1_idx` (`idtorneo` ASC),
+  CONSTRAINT `fk_torneo_n1`
+    FOREIGN KEY (`idtorneo`)
+    REFERENCES `fifaxgam_fifaxgamersbd`.`torneo` (`idtorneo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+  ALTER TABLE `fifaxgam_fifaxgamersbd`.`cat_salon_fama` 
+ADD COLUMN `idequipo` INT NULL AFTER `campeon`;
+
+ALTER TABLE `fifaxgam_fifaxgamersbd`.`cat_salon_fama` 
+CHANGE COLUMN `img` `img` VARCHAR(450) NULL DEFAULT NULL ;
+
+
+
+ALTER TABLE `fifaxgam_fifaxgamersbd`.`cat_torneo` 
+ADD COLUMN `img` VARCHAR(450) NULL AFTER `descripcion`;
+
+
+ALTER TABLE `fifaxgam_fifaxgamersbd`.`cat_salon_fama` 
+ADD COLUMN `idcat_torneo` INT NULL AFTER `idequipo`,
+ADD COLUMN `nombretorneo` VARCHAR(450) NULL AFTER `idcat_torneo`,
+ADD COLUMN `nombretemporada` VARCHAR(450) NULL AFTER `nombretorneo`;
+
+
+ALTER TABLE `fifaxgam_fifaxgamersbd`.`cat_salon_fama` 
+ADD COLUMN `img_torneo` VARCHAR(450) NULL AFTER `nombretemporada`;
+
+
+update torneo set torneo.cat_torneo = 1 where torneo.idtorneo = 58; --	1ra división LM
+update torneo set torneo.cat_torneo = 2 where torneo.idtorneo = 59; --	2da division
+update torneo set torneo.cat_torneo = 7 where torneo.idtorneo = 61; --	Youth League
+update torneo set torneo.cat_torneo = 4 where torneo.idtorneo = 62; --	CHAMPIONS LEAGUE
+update torneo set torneo.cat_torneo = 6 where torneo.idtorneo = 63; --	EUROPA LEAGUE
+update torneo set torneo.cat_torneo = 5 where torneo.idtorneo = 64; --	SUPERLIGA
+update torneo set torneo.cat_torneo = 7 where torneo.idtorneo = 65; --	LM YOUTH LEAGUE
+update torneo set torneo.cat_torneo = 4 where torneo.idtorneo = 66; --	CHAMPIONS LM
+update torneo set torneo.cat_torneo = 5 where torneo.idtorneo = 70; --	SUPERLIGA
+update torneo set torneo.cat_torneo = 7 where torneo.idtorneo = 75; --	YOUTH LEAGUE
+update torneo set torneo.cat_torneo = 4 where torneo.idtorneo = 76; --	CHAMPIONS LEAGUE
+update torneo set torneo.cat_torneo = 5 where torneo.idtorneo = 80; --	Superliga
+update torneo set torneo.cat_torneo = 7 where torneo.idtorneo = 81; --	Youth League
+update torneo set torneo.cat_torneo = 4 where torneo.idtorneo = 82; --	Champions League
+update torneo set torneo.cat_torneo = 1 where torneo.idtorneo = 83; --	Primera
+update torneo set torneo.cat_torneo = 2 where torneo.idtorneo = 84; --	Segunda
+update torneo set torneo.cat_torneo = 7 where torneo.idtorneo = 85; --	Juveniles
+update torneo set torneo.cat_torneo = 4 where torneo.idtorneo = 86; --	LM CHAMPIONS LEAGUE
+update torneo set torneo.cat_torneo = 1 where torneo.idtorneo = 87; --	Liguilla Segunda
+update torneo set torneo.cat_torneo = 2 where torneo.idtorneo = 88; --	Liguilla Primera
+update torneo set torneo.cat_torneo = 1 where torneo.idtorneo = 89; --	Priimera
+update torneo set torneo.cat_torneo = 2 where torneo.idtorneo = 90; --	Segunda
+update torneo set torneo.cat_torneo = 7 where torneo.idtorneo = 91; --	Juveniles
+update torneo set torneo.cat_torneo = 4 where torneo.idtorneo = 92; --	LM CHAMPIONS LEAGUE
+update torneo set torneo.cat_torneo = 1 where torneo.idtorneo = 94; --	PRIMERA
+update torneo set torneo.cat_torneo = 2 where torneo.idtorneo = 95; --	SEGUNDA
+update torneo set torneo.cat_torneo = 7 where torneo.idtorneo = 96; --	Youth League
+update torneo set torneo.cat_torneo = 4 where torneo.idtorneo = 97; --	CHAMPIONS
+update torneo set torneo.cat_torneo = 1 where torneo.idtorneo = 98; --	Primera
+update torneo set torneo.cat_torneo = 2 where torneo.idtorneo = 99; --	Segunda
+update torneo set torneo.cat_torneo = 7 where torneo.idtorneo = 100; --	Juveniles
+update torneo set torneo.cat_torneo = 4 where torneo.idtorneo = 101; --	Champions

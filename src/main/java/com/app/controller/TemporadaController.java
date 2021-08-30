@@ -299,7 +299,7 @@ public class TemporadaController {
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
 	 
-	 @RequestMapping(value="/lm/addJornadasGrupos/{idTemporada}/{nombreTorneo}/{confTor}",
+	 @RequestMapping(value="/lm/addJornadasGrupos/{idTemporada}/{nombreTorneo}/{confTor}/{idCat}",
 			 method = RequestMethod.POST,
 			 headers="Accept=application/json")
 	 @ResponseBody
@@ -307,13 +307,14 @@ public class TemporadaController {
 			 @PathVariable("idTemporada") int idTemporada,
 			 @PathVariable("nombreTorneo") String nombreTorneo,
 			 @PathVariable("confTor") int confTor,
+			 @PathVariable("idCat") int idCat,
 			 @RequestBody String grupos
 			 ){
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
 			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
-			 response = temporadaService.addJornadasGrupos(idTemporada,nombreTorneo,grupos,confTor);
+			 response = temporadaService.addJornadasGrupos(idTemporada,nombreTorneo,grupos,confTor,idCat);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
@@ -372,6 +373,47 @@ public class TemporadaController {
 			}
 		 
 		 return new ResponseEntity<List<Grupos>>(response, HttpStatus.OK);
+	 }
+	 
+	 @RequestMapping(value="/lm/getSalonFama",
+			 method = RequestMethod.GET,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<ResponseData> getSalonFama(
+			 ){
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+//			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+			 response = temporadaService.getSalonFama();
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
+	 @RequestMapping(value="/lm/getCatTorneo",
+			 method = RequestMethod.GET,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<ResponseData> getCatTorneo(
+			 ){
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+//			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+			 response = temporadaService.getCatTorneo();
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
 	
 	 
