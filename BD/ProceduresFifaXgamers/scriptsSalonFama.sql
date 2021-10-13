@@ -445,3 +445,55 @@ INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEqu
 VALUES (-161,'EmmanueL19800','VELEZ SARFIELD','https://i.postimg.cc/7LcnfkPp/Velez.webp','-161','-161','1','-1','7','Juveniles','61','https://i.postimg.cc/VNv8kzRR/Superliga.png');
 INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
 VALUES (-160,'Frederick','SS LAZIO','https://i.postimg.cc/TYq0QFQD/Lazio.webp','-160','-160','1','-5','7','Juveniles','60','https://i.postimg.cc/VNv8kzRR/Superliga.png');
+
+
+
+
+
+
+
+
+
+
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-285,'delpiero_mx','JUVENTUS FC','https://i.postimg.cc/m2nFV8Yd/Juve-2-45-2x.png','-285','-285','1','-2','1','primera','21','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-286,'sheva_Mx','AC MILAN','https://i.postimg.cc/pdHr17pB/Milan-47-2x.png','-286','-286','1','9','1','primera','20','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-287,'sheva_Mx','AC MILAN','https://i.postimg.cc/pdHr17pB/Milan-47-2x.png','-287','-287','1','9','1','primera','19','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-288,'FxP|Franco','FC BAYERN MÜNCHEN','https://i.postimg.cc/xT1K6XWd/Bayer-Mu-21-2x.png','-288','-288','1','15','1','primera','18','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-289,'FxP|Franco','FC BAYERN MÜNCHEN','https://i.postimg.cc/xT1K6XWd/Bayer-Mu-21-2x.png','-289','-289','1','15','1','primera','17','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-290,'sheva_Mx','AC MILAN','https://i.postimg.cc/pdHr17pB/Milan-47-2x.png','-290','-290','1','9','1','primera','16','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-291,'sheva_Mx','AC MILAN','https://i.postimg.cc/pdHr17pB/Milan-47-2x.png','-291','-291','1','9','1','primera','15','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-292,'Aarón','VALENCIA CF','https://i.postimg.cc/KY0brsLj/Valencia_2_461_2x.png','-292','-292','1','14','1','primera','14','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-293,'Xx-Héctor-xX','FC BARCELONA','https://i.postimg.cc/QMTgcvvk/Barca-2-241-2x.png','-293','-293','1','16','1','primera','13','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-294,'Xx-Héctor-xX','FC BARCELONA','https://i.postimg.cc/QMTgcvvk/Barca-2-241-2x.png','-294','-294','1','16','1','primera','12','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-295,'Bothk','AC MILAN','https://i.postimg.cc/pdHr17pB/Milan-47-2x.png','-295','-295','1','9','1','primera','11','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-296,'Xx-Héctor-xX','FC BARCELONA','https://i.postimg.cc/QMTgcvvk/Barca-2-241-2x.png','-296','-296','1','16','1','primera','10','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-297,'FxP|Daniel','MANCHESTER CITY FC','https://i.postimg.cc/qvngw0MR/MCity-10-2x.png','-297','-297','1','25','1','primera','9','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-298,'delpiero_mx','JUVENTUS FC','https://i.postimg.cc/m2nFV8Yd/Juve-2-45-2x.png','-298','-298','1','-2','1','primera','8','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-299,'Cavegol','CA RIVER PLATE','https://i.postimg.cc/vTD7058t/RIVER-PLATE.webp','-299','-299','1','-43','1','primera','7','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-300,'HazardMx-','REAL MADRID CF','https://i.postimg.cc/Ghss6jbG/Real-Madrid2.webp','-300','-300','1','2','1','primera','6','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-301,'Aarón','FC BARCELONA','https://i.postimg.cc/QMTgcvvk/Barca-2-241-2x.png','-301','-301','1','16','1','primera','5','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-302,'Chuchito','CA RIVER PLATE','https://i.postimg.cc/vTD7058t/RIVER-PLATE.webp','-302','-302','1','-43','1','primera','4','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-303,'Aarón','REAL MADRID CF','https://i.postimg.cc/Ghss6jbG/Real-Madrid2.webp','-303','-303','1','2','1','primera','3','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-304,'Lethax','ARSENAL FC','https://i.postimg.cc/J4pQ8NbJ/Arsenal-1-2x.png','-304','-304','1','34','1','primera','2','https://i.postimg.cc/NFc5P2gj/Primera.png');
+INSERT INTO `fifaxgam_fifaxgamersbd`.`cat_salon_fama`(`id`,`username`,`nombreEquipo`,`img`,`idtorneo`,`idtemporada`,`campeon`,`idequipo`,`idcat_torneo`,`nombretorneo`,`nombretemporada`,`img_torneo`)
+VALUES(-305,'Gárgola','MANCHESTER UNITED FC','https://i.postimg.cc/rs3FGZBx/MUnited-11-2x.png','-305','-305','1','26','1','primera','1','https://i.postimg.cc/NFc5P2gj/Primera.png');

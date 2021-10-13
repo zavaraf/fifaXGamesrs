@@ -14,6 +14,7 @@ public class Equipo {
 	private int salarios;
 	private Division division;
 	private List<User> jugadores;
+	private List<User> bajas;
 	private DatosFinancieros datosFinancieros;
 	private Temporada temporada;
 	private List<CatalogoFinanciero> finanzas;
@@ -170,6 +171,15 @@ public class Equipo {
 	public void setImg2(String img2) {
 		this.img2 = img2;
 	}
+
+	public List<User> getBajas() {
+		return bajas;
+	}
+
+	public void setBajas(List<User> bajas) {
+		this.bajas = bajas;
+	}
+	
 	
 	
 	

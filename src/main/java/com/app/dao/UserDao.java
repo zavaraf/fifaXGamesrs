@@ -17,5 +17,7 @@ public interface UserDao {
 	List<User> findAllPlayersByIdEquipo(long idEquipo, int idTemporada);
 	
 	List<User> findAllPlayersByIdEquipo(long idEquipo, long idEquipoVisita, int idTemporada);
+	
+	List<User> findAllBajasByIdEquipo(long idEquipo, int idTemporada); 
 
 }

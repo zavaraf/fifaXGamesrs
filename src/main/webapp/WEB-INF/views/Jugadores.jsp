@@ -85,6 +85,17 @@
                            <div class="modal-body">
                               <form  name="myForm" >
                                  <input type="hidden" ng-model="ctrl.player.id" />
+                                  <div class="row">
+                                    <div class="col-md">
+                                       <label class="col-md control-lable" for="idsofifa">idSofifa</label>
+                                       <div class="col-md">
+                                          <input type="text" ng-model="ctrl.player.idsofifa" id="link"
+                                             class="lastname form-control input-sm"
+                                             placeholder="ID Sofifa" required ng-minlength="2" />
+                                          
+                                       </div>
+                                    </div>
+                                 </div>
                                  <div class="row">
                                     <div class=" col-md">
                                        <label class="col-md control-lable" for="sobreNom">Nombre Corto</label>
@@ -139,6 +150,7 @@
                                        </div>
                                     </div>
                                  </div>
+                                 
                                  <div ng-controller="EquipoController as ctrlEquipo">
                                     <div class="row">
                                        <div class="col-md">

@@ -13,6 +13,7 @@ public class User {
 	private int raiting;
 	private int potencial;
 	private String link;
+	private int idsofifa;
 	
 
 	private int Equipos_idEquipo;
@@ -170,6 +171,16 @@ public class User {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+	
+	
+
+	public int getIdsofifa() {
+		return idsofifa;
+	}
+
+	public void setIdsofifa(int idsofifa) {
+		this.idsofifa = idsofifa;
 	}
 
 	@Override

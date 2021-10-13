@@ -88,6 +88,21 @@
                                  <input type="hidden" ng-model="ctrlJuga.player.id" />
                                  <div class="row">
                                     <div class="form-group col-md-12">
+                                       <label class="col-md-2 control-lable" for="idsofifa">ID sofifa</label>
+                                       <div class="col-md-7">
+                                          <input type="text" ng-model="ctrlJuga.player.idsofifa"
+                                             id="idsofifa" class="lastname form-control input-sm"
+                                             placeholder="idSofifa" required ng-minlength="3" />
+                                          <div class="has-error" ng-show="myFormJuga.$dirty">
+                                             <span ng-show="myFormJuga.idsofifa.$error.required">idsofifa requerido</span> <span ng-show="myFormJuga.sobreNom.$error.minlength">La
+                                             longitud minima es 3</span> <span
+                                                ng-show="myFormJuga.idsofifa.$invalid">Este campo es Invalido</span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="form-group col-md-12">
                                        <label class="col-md-2 control-lable" for="sobreNom">Nombre
                                        Corto</label>
                                        <div class="col-md-7">
@@ -567,7 +582,7 @@
 							<td><h6>===[ LISTA DE JUGADORES ]===[/shadow][/size][/align]</h6></td>
 						</tr>
 					
-						<tr ng-repeat="u in ctrl.equipo.jugadores | orderBy : '-raiting' | filter : test">
+						<tr ng-repeat="u in ctrl.equipo.jugadores | orderBy : '-raiting' ">
 							<td>[align=center][font=Verdana][size=130][b]<span ng-bind="u.sobrenombre"></span>[/b]</td>
 							<td> - <span ng-bind="u.raiting"></span> [/size][/font][/align]</td>
 						</tr>
@@ -590,8 +605,8 @@
 						<tr>
 							<td><h6>[align=center][size=150]Indica en "Altas" todos los movimientos referentes a perdidas de dinero y entradas de jugadores.</h6></td>
 						</tr>
-						<tr ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' | filter : test">
-                              <td>[b]Compra a la CPU -[/b] <span ng-bind="e.sobrenombre"></span></td>
+						<tr ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' " ng-if="e.equipo.id == ctrl.equipo.id && e.idEquipoOferta == ctrl.equipo.id"> 
+                              <td>[b]Compra a la CPU -[/b] {{e.equipo.id}} <span ng-bind="e.sobrenombre"></span></td>
                               <td>- <span>{{e.ofertaFinal | currency}}</span></td>
                         </tr>
 						<tr>
@@ -600,9 +615,15 @@
 						<tr>
 								<td><h6>[align=center][size=270]----[ [shadow=#ff0000]Bajas[/shadow] ]----[/size][/align]</h6></td>
 						</tr>
+						
 						<tr>
 							<td><h6>[align=center][size=150]Indica en "Bajas" todos los movimientos referentes a ganancias de dinero y salidas de jugadores.</h6></td>
 						</tr>
+						
+						<tr ng-repeat="p in ctrl.equipo.bajas | orderBy : '-raiting' "">
+                              <td>[b]Bajas -[/b] <span ng-bind="p.sobrenombre"></span></td>
+                        </tr>
+						
 						<tr ng-repeat="e in ctrl.prestamos | orderBy : 'sobrenombre' | filter : test">
                               <td>[b]Prestamo -[/b] <span ng-bind="e.sobrenombre"></span></td>
                               <td>al <span ng-bind="e.equipoPres.nombre"></span> Temporadas: #</td>

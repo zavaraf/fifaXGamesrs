@@ -1,17 +1,18 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS crearJugador$$
-CREATE PROCEDURE crearJugador (IN nombreCompleto varchar(200) , 
+PROCEDURE `crearJugador`(IN nombreCompleto varchar(200) , 
 							   IN sobrenonbre varchar(200),
                                IN raiting INT,
                                IN idEquipo INT,
                                IN link varchar(200),
+                               IN idsofifa INT,
                                IN idTemporada INT
                                )
 BEGIN
 
 DECLARE idEquipoVar INT;
 
-INSERT INTO `fifaxgamersbd`.`persona`
+INSERT INTO persona
 (`idPersona`,
 `NombreCompleto`,
 `sobrenombre`,
@@ -20,7 +21,8 @@ INSERT INTO `fifaxgamersbd`.`persona`
 `potencial`,
 `Equipos_idEquipo`,
 `activo`,
-`link`)    
+`link`,
+`idsofifa`)    
 
 VALUES
 (null,
@@ -31,11 +33,12 @@ VALUES
         0,
         idEquipo,
         1,
-        link
+        link,
+        idsofifa
 	    );
     
         
-INSERT INTO `fifaxgamersbd`.`persona_has_roles`
+INSERT INTO persona_has_roles
 (`Persona_idPersona`,
 `Roles_idRoles`)
 VALUES
@@ -54,7 +57,7 @@ select Equipos_idEquipo into idEquipoVar
  
  if idEquipoVar is null and idEquipo != 1 then
  
- INSERT INTO `fifaxgamersbd`.`equipos_has_temporada`
+ INSERT INTO equipos_has_temporada
 (`Equipos_idEquipo`,
 `Temporadas_idTemporada`)
 VALUES
@@ -64,7 +67,7 @@ idTemporada);
  
  end if ;
  
- INSERT INTO `fifaxgamersbd`.`persona_has_temporada`
+ INSERT INTO persona_has_temporada
 (`persona_idPersona`,
 `temporada_idTemporada`,
 `rating`,

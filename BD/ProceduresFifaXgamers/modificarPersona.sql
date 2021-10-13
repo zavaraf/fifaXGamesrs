@@ -1,11 +1,12 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS modificarJugador$$
-CREATE PROCEDURE modificarJugador (IN nombreCompleto varchar(200) , 
+C PROCEDURE `modificarJugador`(IN nombreCompleto varchar(200) , 
 								   IN sobrenonbre varchar(200),
                                    IN raiting INT,
                                    IN idEquipo INT, 
                                    IN idJugador INT,
                                    IN link varchar(300),
+                                   IN idsofifa INT,
                                    IN idTemporada INT
                                    )
 BEGIN
@@ -17,7 +18,8 @@ update persona set persona.NombreCompleto = nombreCompleto,
                    persona.sobrenombre = sobrenonbre,
                  --  persona.Raiting = raiting,
                    persona.Equipos_idEquipo = idEquipo,
-                   persona.link = link
+                   persona.link = link,
+                   persona.idsofifa = idsofifa
 where persona.idPersona = idJugador;
 
 UPDATE persona_has_temporada

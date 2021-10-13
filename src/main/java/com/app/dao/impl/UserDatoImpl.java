@@ -38,6 +38,7 @@ public class UserDatoImpl implements UserDao{
 					+" persona.userManager,  "
 					+" persona.prestamo, "
 					+" persona.link, "
+					+" persona.idsofifa, "
 					+" (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo "
 					+"                                       ELSE equipos_has_temporada.nombreEquipo  "
 					+"                                 END )as nombreEquipo  "
@@ -56,6 +57,7 @@ public class UserDatoImpl implements UserDao{
 	                        player.setSobrenombre(rs.getString("sobrenombre"));
 	                        player.setRaiting(rs.getInt("rating"));
 	                        player.setLink(rs.getString("link"));
+	                        player.setIdsofifa(rs.getInt("idsofifa"));
 	                        Equipo equipo = new Equipo();
 	                        equipo.setId(rs.getLong("Equipos_idEquipo"));
 	                        equipo.setNombre(rs.getString("nombreEquipo"));
@@ -90,6 +92,7 @@ public class UserDatoImpl implements UserDao{
 				+"      persona.userManager,  "
 				+"      persona.prestamo, "
 				+"      persona.link,  "
+				+"      persona.idsofifa, "
 				+"      (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo "
 				+"                                       ELSE equipos_has_temporada.nombreEquipo  "
 				+"                                 END )as nombreEquipo  "
@@ -113,10 +116,61 @@ public class UserDatoImpl implements UserDao{
                         player.setRaiting(rs.getInt("rating"));
                         player.setPrestamo(rs.getInt("prestamo"));
                         player.setLink(rs.getString("link"));
+                        player.setIdsofifa(rs.getInt("idsofifa"));
                         Equipo equipo = new Equipo();
                         equipo.setId(rs.getLong("equipos_idEquipo"));
                         equipo.setNombre(rs.getString("nombreEquipo"));
                         player.setEquipo(equipo);
+                        return player;
+                    }
+                });
+		 for (Object player : players) {
+//	            System.out.println(((User)player).toString());
+	            playersList.add( (User)player);
+	        }
+	        
+		return playersList;
+	
+}
+	
+	public List<User> findAllBajasByIdEquipo(long idEquipo, int idTemporada) {
+
+		
+		List<User> playersList = new ArrayList<User>();
+		String query = "  select persona.idPersona,  "
+				+"  	   persona.sobrenombre,  "
+				+"         persona.idPersona,  "
+				+"         persona.idsofifa,  "
+				+"         persona.link,  "
+				+"         persona_has_temporada.rating, "
+				+"         persona.nombreCompleto         "
+				+"  	from persona_has_temporada  "
+				+"      join persona on persona.idPersona = persona_has_temporada.persona_idPersona  "
+				+"  	where persona_has_temporada.equipos_idEquipo =  "+idEquipo+"        "
+				+"      and persona_has_temporada.temporada_idTemporada = (  "
+				+"  	select max(idTemporada)  "
+				+"  	from temporada   "
+				+"  	where temporada.idTemporada != "+idTemporada+" )   "
+				+"      and persona_has_temporada.persona_idPersona not in (  "
+				+"  	select persona_idPersona   "
+				+"  		from persona_has_temporada  "
+				+"  		where persona_has_temporada.temporada_idTemporada = "+idTemporada+" "
+				+"  		and persona_has_temporada.equipos_idEquipo =  "+idEquipo+"  )  " ;
+		
+		System.out.println(query);
+		Collection players = jdbcTemplate.query(query, new RowMapper() {
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        User player = new User();
+                        player.setId(rs.getLong("idPersona"));
+                        player.setNombreCompleto(rs.getString("nombreCompleto"));
+                        player.setSobrenombre(rs.getString("sobrenombre"));
+                        player.setRaiting(rs.getInt("rating"));
+                        
+                        player.setLink(rs.getString("link"));
+                        player.setIdsofifa(rs.getInt("idsofifa"));
+                        
+                        
                         return player;
                     }
                 });
@@ -147,6 +201,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 				+"     persona.userManager, "
 				+"     persona.prestamo,"
 				+ "    persona.link, "
+				+"     persona.idsofifa, "
 				+ "    equipos.NombreEquipo as nombreEquipo "
 				+"     from  persona_has_temporada   "
 				+"     join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
@@ -166,6 +221,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
                         player.setRaiting(rs.getInt("rating"));
                         player.setPrestamo(rs.getInt("prestamo"));
                         player.setLink(rs.getString("link"));
+                        player.setIdsofifa(rs.getInt("idsofifa"));
                         player.setEquipos_idEquipo(rs.getInt("equipos_idEquipo"));
                         Equipo equipo = new Equipo();
                         equipo.setId(rs.getLong("Equipos_idEquipo"));
@@ -190,7 +246,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 		//Sobrenombre
 		//Raiting
 		//Equipo
-		String insert = "call  crearJugador(?,?, ?,?,?,?)";
+		String insert = "call  crearJugador(?,?, ?,?,?,?,?)";
 				
 		
 		jdbcTemplate.update(insert,
@@ -199,6 +255,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 			    player.getRaiting(),
 			    player.getEquipo().getId(),
 			    player.getLink(),
+			    player.getIdsofifa(),
 			    idTemporada
 			  );
 		
@@ -213,7 +270,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 		//Sobrenombre
 		//Raiting
 		//Equipo
-		String insert = "call  modificarJugador(?,?, ?,?,?,?,?)";
+		String insert = "call  modificarJugador(?,?, ?,?,?,?,?,?)";
 				
 		
 		jdbcTemplate.update(insert,
@@ -223,6 +280,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 				currentUser.getEquipo().getId(),
 				currentUser.getId(),
 				currentUser.getLink(),
+				currentUser.getIdsofifa(),
 				idTemporada
 			  );
 	}
@@ -243,6 +301,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 				+"     persona.userManager, "
 				+"     persona.prestamo,"
 				+"     persona.link,"
+				+"     persona.idsofifa, "
 				+ "    equipos.NombreEquipo as nombreEquipo "
 				+" FROM  persona "
 				+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
@@ -263,6 +322,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
                         user.setFehaNacimiento(rs.getString("fehaNacimiento"));
                         String raiting = rs.getString("raiting");
                         user.setLink(rs.getString("link"));
+                        user.setIdsofifa(rs.getInt("idsofifa"));
                         user.setRaiting(raiting != null ? Integer.parseInt(raiting): 0);
                         String pot = rs.getString("potencial");
                         user.setPotencial(pot!= null ? Integer.parseInt(pot): 0);

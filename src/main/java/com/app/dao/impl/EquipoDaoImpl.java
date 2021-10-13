@@ -318,6 +318,9 @@ public class EquipoDaoImpl implements EquipoDao{
 	            List<User> listPlayer = userDao.findAllPlayersByIdEquipo(id,idTemporada);
 	            Equipo team = (Equipo)equipo;
 	            team.setJugadores(listPlayer);
+	            List<User> bajas = userDao.findAllBajasByIdEquipo(id, idTemporada);
+				System.out.println("Bajas :"+bajas.size());
+				team.setBajas(bajas);
 	            return team;
 	        }
 	        
@@ -394,6 +397,9 @@ public class EquipoDaoImpl implements EquipoDao{
 			List<User> listPlayer = userDao.findAllPlayersByIdEquipo(id, idTemporada);
 			Equipo team = (Equipo)equipo;
 			team.setJugadores(listPlayer);
+			List<User> bajas = userDao.findAllBajasByIdEquipo(id, idTemporada);
+			System.out.println("Bajas :"+bajas.size());
+			team.setBajas(bajas);
 			return team;
 		}
 		

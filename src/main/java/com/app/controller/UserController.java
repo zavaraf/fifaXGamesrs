@@ -183,6 +183,7 @@ public class UserController {
         currentUser.setRaiting(user.getRaiting());
         currentUser.setEquipo(user.getEquipo());
         currentUser.setLink(user.getLink());
+        currentUser.setIdsofifa(user.getIdsofifa());
         
         ResponseData response = userService.updatePlayer(currentUser,idTemporada);
         
