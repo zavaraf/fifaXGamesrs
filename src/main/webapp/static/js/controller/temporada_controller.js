@@ -9,8 +9,8 @@ angular
 				{
 					'VARTEMPORADA' : '',
 					'PROD' : true,
-					'IP_PROD' : 'http://fifaxgamers.jvmhost.net/fifaApp',
-					'IP_DES' : 'http://localhost:8081/fifaApp',
+					'IP_PROD' : 'https://fifa-xgamers.com/fifaapp',
+					'IP_DES' : 'http://localhost:8081/fifaapp',
 					'JUGADORES' : null,
 					'EQUIPOS' : null,
 					'CAT_EQUIPOS' : null,

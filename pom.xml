@@ -3,10 +3,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fifa</groupId>
-	<artifactId>fifaApp</artifactId>
+	<artifactId>fifaapp</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fifaApp Maven Webapp</name>
+	<name>fifaapp Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 
@@ -32,7 +32,7 @@
 
 	</properties>
 	<build>
-		<finalName>fifaApp</finalName>
+		<finalName>fifaapp</finalName>
 		<plugins>
 
 			<plugin>

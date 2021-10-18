@@ -463,7 +463,7 @@
     </li>
     
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" ng-click="ctrl.showPrestamos(true)" >Prestamos</a>
+      <a class="nav-link" data-toggle="tab" ng-click="ctrl.showPrestamos(true)" >Prestamos/Bajas</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" ng-click="ctrl.showDraftPC(true)" >Draft PC</a>
@@ -488,6 +488,7 @@
 						<span class="lead">Lista de Jugadores</span>
 					</div>
 				</div>
+<!-- 				<div class="table-responsive-sm"> -->
 				<div class="table-responsive-sm">
 					<div class="row">
                           <div class="col align-self-center">
@@ -525,6 +526,7 @@
 						</tbody>
 					</table>
 				</div>
+				
 			</div> 
 			
 		
@@ -606,7 +608,7 @@
 							<td><h6>[align=center][size=150]Indica en "Altas" todos los movimientos referentes a perdidas de dinero y entradas de jugadores.</h6></td>
 						</tr>
 						<tr ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' " ng-if="e.equipo.id == ctrl.equipo.id && e.idEquipoOferta == ctrl.equipo.id"> 
-                              <td>[b]Compra a la CPU -[/b] {{e.equipo.id}} <span ng-bind="e.sobrenombre"></span></td>
+                              <td>[b]Compra a la CPU -[/b]  <span ng-bind="e.sobrenombre"></span></td>
                               <td>- <span>{{e.ofertaFinal | currency}}</span></td>
                         </tr>
 						<tr>
@@ -621,7 +623,9 @@
 						</tr>
 						
 						<tr ng-repeat="p in ctrl.equipo.bajas | orderBy : '-raiting' "">
-                              <td>[b]Bajas -[/b] <span ng-bind="p.sobrenombre"></span></td>
+                              <td>[b]Bajas -[/b] <span ng-bind="p.sobrenombre"> </span></td>
+                              <td>- <span>{{p.rating}}</span></td>
+                              <td>- <span>{{p.equipo.nombre}}</span></td>
                         </tr>
 						
 						<tr ng-repeat="e in ctrl.prestamos | orderBy : 'sobrenombre' | filter : test">
@@ -883,7 +887,34 @@
                       </tbody>
                   </table>
 				</div>
+				<div>
+			<div class="panel-heading">
+						<span class="lead">Bajas</span>
+					</div>
+					<table class="table table-lg table-hover table-center table-dark table-responsive">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Equipo</th>
+								<th>Rating</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="u in ctrl.equipo.bajas | orderBy : '-raiting' | filter : test" ">
+								<td><span ng-bind="u.id"></span></td>
+<!-- 								<td><span ng-bind="u.nombreCompleto"></span></td> -->
+								<td ng-show="u.link!=null"><a href="{{u.link}}" target="_blank" >{{u.sobrenombre}}</td>
+                                <td ng-show="u.link==null">{{u.sobrenombre}}</td>
+<!-- 								<td><span ng-bind="u.sobrenombre"></span></td> -->
+								<td><span ng-bind="u.equipo.nombre"></span></td>
+								<td><span ng-bind="u.raiting"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div> 
+			
    
   </div>
 </div> 

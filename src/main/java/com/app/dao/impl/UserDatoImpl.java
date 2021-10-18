@@ -137,15 +137,23 @@ public class UserDatoImpl implements UserDao{
 
 		
 		List<User> playersList = new ArrayList<User>();
-		String query = "  select persona.idPersona,  "
-				+"  	   persona.sobrenombre,  "
-				+"         persona.idPersona,  "
-				+"         persona.idsofifa,  "
-				+"         persona.link,  "
-				+"         persona_has_temporada.rating, "
-				+"         persona.nombreCompleto         "
-				+"  	from persona_has_temporada  "
-				+"      join persona on persona.idPersona = persona_has_temporada.persona_idPersona  "
+		String query = "  select persona.idPersona, "
+				+"  	   persona.sobrenombre, "
+				+"         persona.idPersona, "
+				+"         persona.idsofifa, "
+				+"         persona.link, "
+				+"         persona.NombreCompleto, "
+				+"  	   persona_has_temporada.rating, "
+				+"         peract.equipos_idEquipo, "
+				+"         peract.temporada_idTemporada, "
+				+"         case when equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo else equipos_has_temporada.nombreEquipo end as nombreEquipo  "
+				+"  	from persona_has_temporada "
+				+"      join persona on persona.idPersona = persona_has_temporada.persona_idPersona "
+				+"      join persona_has_temporada peract on peract.persona_idPersona = persona_has_temporada.persona_idPersona  "
+				+"                         and peract.temporada_idTemporada =  "+idTemporada
+				+"  	join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = peract.equipos_idEquipo  "
+				+"                         and equipos_has_temporada.tempodada_idTemporada =  " + idTemporada
+				+"  	join equipos on equipos.idEquipo = equipos_has_temporada.Equipos_idEquipo "
 				+"  	where persona_has_temporada.equipos_idEquipo =  "+idEquipo+"        "
 				+"      and persona_has_temporada.temporada_idTemporada = (  "
 				+"  	select max(idTemporada)  "
@@ -169,6 +177,11 @@ public class UserDatoImpl implements UserDao{
                         
                         player.setLink(rs.getString("link"));
                         player.setIdsofifa(rs.getInt("idsofifa"));
+                        
+                        Equipo equipo = new Equipo();
+                        equipo.setId(rs.getLong("equipos_idEquipo"));
+                        equipo.setNombre(rs.getString("nombreEquipo"));
+                        player.setEquipo(equipo);
                         
                         
                         return player;

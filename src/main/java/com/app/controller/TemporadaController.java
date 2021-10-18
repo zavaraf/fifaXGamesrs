@@ -29,7 +29,7 @@ import com.app.modelo.Temporada;
 import com.app.modelo.Torneo;
 import com.app.service.TemporadaService;
 
-@CrossOrigin(origins = "*",allowedHeaders = "*", methods= {RequestMethod.GET,RequestMethod.POST})
+@CrossOrigin(origins = "https://fifa-xgamers.com",allowedHeaders = "*")
 @Controller
 @RequestMapping(value="/rest/temporada")
 public class TemporadaController {
