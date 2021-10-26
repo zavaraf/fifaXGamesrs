@@ -5,6 +5,20 @@ angular.module('myApp').factory('EquipoService', ['$http', '$q','CONFIG', functi
 	var IP = CONFIG.PROD == false ? CONFIG.IP_DES : CONFIG.IP_PROD
     var REST_SERVICE_URI = IP+'/rest/equipo/';
     var REST_SERVICE_URI_E = IP+'/rest/temporada/';
+    
+    const headerDict = {
+  		  'Content-Type': 'application/json',
+  		  'Accept': 'application/json',
+  		  'Access-Control-Allow-Origin': '*',
+  	      'Access-Control-Allow-Headers': 'Content-Type',
+  	      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+  	      'Authorization': 'Bearer key',
+  		}
+
+  		const requestOptions = {                                                                                                                                                                                 
+  		  headers: new Headers(headerDict), 
+  		};
+  
  
     var factory = {
     	buscarTodos     : buscarTodos,
@@ -48,8 +62,9 @@ angular.module('myApp').factory('EquipoService', ['$http', '$q','CONFIG', functi
         return deferred.promise;
     }
     function buscarDivisiones() {
+    	
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+'buscarDivisiones')
+        $http.get(REST_SERVICE_URI+'buscarDivisiones',requestOptions)
             .then(
             function (response) {
             	console.log(response.data)

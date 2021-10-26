@@ -1188,12 +1188,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		List<Equipo> equiposList = new ArrayList<Equipo>();		
 		
 		String query =" select idEquipo, "
-					+ " equipos.nombreEquipo, "
-					+ " equipos.descripcionEquipo, "
+					+ " equipos_has_temporada.nombreEquipo, "
+					+ " equipos_has_temporada.nombreEquipo as descripcionEquipo, "
 					+ " equipos_has_imagen.imagen "
 					+ " from equipos "
 					+ " join grupos_torneo on grupos_torneo.equipos_idEquipo = equipos.idEquipo "
 					+ " join equipos_has_imagen on equipos.idEquipo = equipos_has_imagen.equipos_idEquipo  "
+					+ " join equipos_has_temporada on equipos.idEquipo = equipos_has_temporada.Equipos_idEquipo and equipos_has_imagen.idTemporada = equipos_has_temporada.tempodada_idTemporada "
 					+ " where grupos_torneo.nombreGrupo =  "+ idGrupo
 					+ " and grupos_torneo.torneo_idtorneo =  "+ idTorneo
 					+ " and equipos_has_imagen.idTemporada = "+ idTemporada 

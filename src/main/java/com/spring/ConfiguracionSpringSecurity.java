@@ -74,6 +74,7 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 			.antMatchers("/css/*").permitAll()
 			
 			.antMatchers("/test/**").permitAll()
+//			.antMatchers("/rest/**").permitAll()
 			.antMatchers("/usermanager/**").permitAll()
 			.antMatchers("/**").access("hasAnyRole('Admin','Manager','Usuario')")
 			.antMatchers("/index.jsp/**").access("hasAnyRole('Usuario')")

@@ -138,7 +138,7 @@ end if;
 							(null,
 							null,
 							(SELECT JSON_EXTRACT(`jsonJornadas`, CONCAT('$[', `_index_Jornadas`, '].numeroJornada'))),
-							1,
+							0,
 							0,
 							'',
 							idTorneo

@@ -9,7 +9,7 @@ angular
 				{
 					'VARTEMPORADA' : '',
 					'PROD' : true,
-					'IP_PROD' : 'https://fifa-xgamers.com/fifaapp',
+					'IP_PROD' : (window.location+"").includes("www") ?'https://www.fifa-xgamers.com/fifaapp' : 'https://fifa-xgamers.com/fifaapp',
 					'IP_DES' : 'http://localhost:8081/fifaapp',
 					'JUGADORES' : null,
 					'EQUIPOS' : null,
@@ -27,6 +27,8 @@ angular
 						'CONFIG',
 						'TemporadaService',
 						function($scope, $routeParams, CONFIG, TemporadaService) {
+							
+							
 
 							var self = this;
 
@@ -45,6 +47,14 @@ angular
 							}
 
 							function buscarTemporada() {
+								
+								 var URLactual = window.location;
+	    							console.log("La url Actual es : " +URLactual)
+	    							
+	    							
+	    							console.log("Prod : " +CONFIG.IP_PROD)
+	    							
+	    							
 								TemporadaService
 										.buscarTemporada()
 										.then(

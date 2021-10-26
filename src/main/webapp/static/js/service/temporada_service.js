@@ -13,11 +13,16 @@ angular.module('myApp').factory('TemporadaService', ['$http', '$q','CONFIG', fun
  
  
     function buscarTemporada() {
+    	
+    	
         var deferred = $q.defer();
         const headerDict = {
         		  'Content-Type': 'application/json',
         		  'Accept': 'application/json',
-        		  'Access-Control-Allow-Headers': 'Content-Type',
+        		  'Access-Control-Allow-Origin': '*',
+        	      'Access-Control-Allow-Headers': 'Content-Type',
+        	      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        	      'Authorization': 'Bearer key',
         		}
 
         		const requestOptions = {                                                                                                                                                                                 

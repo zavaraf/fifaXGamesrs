@@ -348,7 +348,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		for (int i=0 ; i<numEquipos;i++){
 			
 			List<Equipo> arrayE= new ArrayList<Equipo>();
-			
+//			
 			if(i==0){
 				int endArray = (i+1)*grupos;
 				int startArray = i;
@@ -358,15 +358,26 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 				System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
 
 				
-			}
-			else{
-				int endArray = (grupos*numEquipos) - ((i-1)*grupos);
-				int startArray = (numEquipos*grupos)-(i*grupos);
-//				System.out.println(startArray+" - "+endArray);
+			}else{
+				
+				int endArray = (i+1)*grupos;
+				int startArray = i * grupos;
+		//		System.out.println(startArray+" - "+endArray);
 				arrayE = getEquiposGru(equipos, startArray , endArray , false);
 				mapEquipos.put(i, arrayE);
 				System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
 			}
+//			else{
+////				int endArray = (grupos*numEquipos) - ((i-1)*grupos);
+////				int startArray = (numEquipos*grupos)-(i*grupos);
+//				
+//				int endArray = (grupos*numEquipos) - ((i-1)*grupos);
+//				int startArray = (numEquipos*grupos)-(i*grupos);
+////				System.out.println(startArray+" - "+endArray);
+//				arrayE = getEquiposGru(equipos, startArray , endArray , false);
+//				mapEquipos.put(i, arrayE);
+//				System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
+//			}
 //			System.out.println("grupo:"+i);
 //			
 //			for(int j=0; j<arrayE.size();j++){
@@ -378,7 +389,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		try{
 		for (int i=0 ; i<grupos;i++){
 			for(int j = 0; j< numEquipos;j++){
-				System.out.println(i +" ---- "+j+" Equipo]:");
+//				System.out.println(i +" ---- "+j+" Equipo]:");
 				System.out.println(i +" ---- "+j+" Equipo]:"+mapEquipos.get(j).get(i).getNombre());
 				arrayEquipos.add(mapEquipos.get(j).get(i));
 			}
@@ -397,9 +408,13 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 				arrayEquipos.add(equipos.get(i));
 			}
 		}else{
-			for(int i = endArray; i > startArray; i--){
-				arrayEquipos.add(equipos.get(i-1));
+//			for(int i = endArray; i > startArray; i--){
+//				arrayEquipos.add(equipos.get(i-1));
+//			}
+			for(int i = startArray; i < endArray; i++ ){
+				arrayEquipos.add(equipos.get(i));
 			}
+			
 		}
 		
 		
