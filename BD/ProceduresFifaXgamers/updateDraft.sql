@@ -94,6 +94,12 @@ timestampdiff(MINUTE, DATE_ADD(DATE(now()),INTERVAL horaInicio HOUR), now()) Min
 from draftpc where draftpc.Persona_idPersona =  idJugadorVal and draftpc.tempodada_idTemporada = idTemporada) ta
 ;
 
+select (case when equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo else equipos_has_temporada.nombreEquipo end) nombreEquipo into observaciones
+from equipos_has_temporada
+join equipos on equipos.idEquipo = equipos_has_temporada.Equipos_idEquipo
+where  equipos_has_temporada.Equipos_idEquipo = idEquipoOferta
+and  equipos_has_temporada.tempodada_idTemporada = idTemporada;
+
 select idJugadorVal;
 
 select diasVar ,
