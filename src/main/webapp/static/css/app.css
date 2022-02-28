@@ -231,3 +231,11 @@ body, .form-control{
 .custom-select > .dropdown-menu:before {
 	border: 0;
 }
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+.mx-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}

@@ -85,6 +85,21 @@ where equipos_has_imagen.idTemporada != (select max(idTemporada) from temporada)
 );
 
 
+INSERT INTO `datosfinancieros`
+(idDatosFinancieros,
+`presupuestoInicial`,
+`presupuestoFinal`,
+Equipos_idEquipo,
+tempodada_idTemporada,
+`sponsorOpcional`,
+`presupuestoFinalSponsor`)
+(select 1,presupuestoFinal, presupuestoFinal, equipos_has_temporada.Equipos_idEquipo, idTemporadaVar, 0, presupuestoFinalSponsor
+from equipos_has_temporada
+join datosfinancieros on datosfinancieros.tempodada_idTemporada = equipos_has_temporada.tempodada_idTemporada
+and datosfinancieros.Equipos_idEquipo = equipos_has_temporada.Equipos_idEquipo
+where equipos_has_temporada.tempodada_idTemporada = idTemporadaAnt);
+
+
 
 
 

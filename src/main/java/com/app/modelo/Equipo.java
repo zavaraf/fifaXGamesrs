@@ -15,6 +15,7 @@ public class Equipo {
 	private Division division;
 	private List<User> jugadores;
 	private List<User> bajas;
+	private List<User> altas;
 	private DatosFinancieros datosFinancieros;
 	private Temporada temporada;
 	private List<CatalogoFinanciero> finanzas;
@@ -180,7 +181,13 @@ public class Equipo {
 		this.bajas = bajas;
 	}
 	
-	
+	public List<User> getAltas() {
+		return altas;
+	}
+
+	public void setAltas(List<User> altas) {
+		this.altas = altas;
+	}
 	
 	
 

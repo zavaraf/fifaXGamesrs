@@ -463,7 +463,7 @@
     </li>
     
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" ng-click="ctrl.showPrestamos(true)" >Prestamos/Bajas</a>
+      <a class="nav-link" data-toggle="tab" ng-click="ctrl.showPrestamos(true)" >Movimientos</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" ng-click="ctrl.showDraftPC(true)" >Draft PC</a>
@@ -475,6 +475,25 @@
       <a class="nav-link" data-toggle="tab" ng-click="ctrl.showPantilla()" >Plantilla Sofifa</a>
     </li>
   </ul>
+
+<!-- <!-- Navigation-->
+<!--         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav"> -->
+<!--             <a class="navbar-brand js-scroll-trigger" href="#page-top"> -->
+<!--                 <span class="d-block d-lg-none">BORUSSIA DORTMUND</span> -->
+<!--                 <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="https://i.postimg.cc/g2f8cNrw/BVB22-2x.png" alt="..." /></span> -->
+<!--             </a> -->
+<!--             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> -->
+<!--             <div class="collapse navbar-collapse" id="navbarResponsive"> -->
+<!--                 <ul class="navbar-nav"> -->
+<!--                     <li class="nav-item"><a class="nav-link js-scroll-trigger" ng-click="ctrl.ocultaDatos() href="#about">Jugadores</a></li> -->
+<!--                     <li class="nav-item"><a class="nav-link js-scroll-trigger" ng-click="ctrl.ocultaJuga() href="#experience">Datos Financieros</a></li> -->
+<!--                     <li class="nav-item"><a class="nav-link js-scroll-trigger" ng-click="ctrl.showPrestamos(true)"  href="#education">Movimientos</a></li> -->
+<!--                     <li class="nav-item"><a class="nav-link js-scroll-trigger" ng-click="ctrl.showDraftPC(true)" href="#skills">Draft PC</a></li> -->
+<!--                     <li class="nav-item"><a class="nav-link js-scroll-trigger" ng-click="ctrl.showPublicacion()" href="#interests">Publicacion de Plantilla</a></li> -->
+<!--                     <li class="nav-item"><a class="nav-link js-scroll-trigger" ng-click="ctrl.showPantilla()" href="#awards">Plantilla Sofifa</a></li> -->
+<!--                 </ul> -->
+<!--             </div> -->
+<!--         </nav> -->
 
   <!-- Tab panes -->
   <div class="tab-content">
@@ -611,6 +630,12 @@
                               <td>[b]Compra a la CPU -[/b]  <span ng-bind="e.sobrenombre"></span></td>
                               <td>- <span>{{e.ofertaFinal | currency}}</span></td>
                         </tr>
+                        <tr ng-repeat="p in ctrl.equipo.altas | orderBy : '-raiting' "">
+                              <td>[b]Altas -[/b] <span ng-bind="p.sobrenombre"> </span></td>
+                              <td>- <span>{{p.rating}}</span></td>
+                              <td>- <span>{{p.equipo.nombre}}</span></td>
+                        </tr>
+						
 						<tr>
 							<td><h6>[/size][/align]</h6></td>
 						</tr>
@@ -851,17 +876,46 @@
 			</div> 
 			<div class="formcontainer" ng-show="ctrl.vistaPrestamos" >
 				<div class="panel panel-default">
+				
 					<!-- Default panel contents -->
+					
 					<div class="panel-heading">
 						<span class="lead">Lista de Prestamos</span>
 					</div>
-				</div>
-				<div class="table-responsive-sm">
 					<div class="row">
                           <div class="col align-self-center">
                              <p><input class="form-control"  type="text" ng-model="test" placeholder="Buscar"></p>
 						   </div>                            
               		</div>
+              		
+					<div class="panel-heading">
+						<span class="lead">Altas</span>
+					</div>
+					<table class="table table-lg table-hover table-center table-dark table-responsive">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Equipo</th>
+								<th>Rating</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="u in ctrl.equipo.altas | orderBy : '-raiting' | filter : test" ">
+								<td><span ng-bind="u.id"></span></td>
+<!-- 								<td><span ng-bind="u.nombreCompleto"></span></td> -->
+								<td ng-show="u.link!=null"><a href="{{u.link}}" target="_blank" >{{u.sobrenombre}}</td>
+                                <td ng-show="u.link==null">{{u.sobrenombre}}</td>
+<!-- 								<td><span ng-bind="u.sobrenombre"></span></td> -->
+								<td><span ng-bind="u.equipo.nombre"></span></td>
+								<td><span ng-bind="u.raiting"></span></td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+				<div class="table-responsive-sm">
+					
 					<table class="table table-lg table-hover table-center table-dark table-responsive">
                       <thead>
                           <tr>
@@ -889,8 +943,8 @@
 				</div>
 				<div>
 			<div class="panel-heading">
-						<span class="lead">Bajas</span>
-					</div>
+				<span class="lead">Bajas</span>
+			</div>
 					<table class="table table-lg table-hover table-center table-dark table-responsive">
 						<thead>
 							<tr>

@@ -634,14 +634,17 @@
 			    		<!-- Nav tabs -->
 						  <ul class="nav nav-tabs" role="tablist">
 						    <li class="nav-item">
-						      <a class="nav-link active" data-toggle="tab" ng-click="ctrl.showPen = false; ctrl.showJor = true; ctrl.showLes = false">Jornadas</a>
+						      <a class="nav-link active" data-toggle="tab" ng-click="ctrl.showPen = false; ctrl.showJor = true; ctrl.showLes = false; ctrl.showJug = false">Jornadas</a>
 						      
 						    </li>
 						    <li class="nav-item">
-						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getPendientes(); ctrl.showPen = true; ctrl.showJor = false; ctrl.showLes = false" >Pendientes</a>
+						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getPendientes(); ctrl.showPen = true; ctrl.showJor = false; ctrl.showLes = false; ctrl.showJug = false" >Pendientes</a>
 						    </li>
 						    <li class="nav-item">
-						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getLesiones(); ctrl.showLes = true; ctrl.showPen = false; ctrl.showJor = false" >Lesiones/Tarjetas</a>
+						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getJugados(); ctrl.showJug = true; ctrl.showJor = false; ctrl.showLes = false;ctrl.showPen = false; " >Jugados</a>
+						    </li>
+						    <li class="nav-item">
+						      <a class="nav-link" data-toggle="tab" ng-click="ctrl.getLesiones(); ctrl.showLes = true; ctrl.showPen = false; ctrl.showJor = false; ctrl.showJug = false" >Lesiones/Tarjetas</a>
 						    </li>
 						 
 						  </ul>
@@ -723,6 +726,51 @@
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="jor in ctrl.jorPendientes  | orderBy : 'numeroJornada' | filter : test1 " ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
+								  	ctrl.getJornada(jor.idJornada,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
+								  	data-toggle="modal" data-target="#exampleModalScrollable">
+								  		  <td><span ng-bind="jor.numeroJornada"></span></td>
+			                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
+			                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+			                              <td>{{jor.golesLocal}}</td>
+			                              <td>-</td>
+			                              <td>{{jor.golesVisita}}</td>
+			                              <td ><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+			                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+			                             
+			                          </tr>
+			                      </tbody>
+			    				</table>
+							</div>
+						
+						</div> 
+<!-- 						JUGADOS   ..... -->
+						
+						 <div ng-show="ctrl.showJug" class="row">
+							
+						
+							<div class="col"   >
+								
+							  <div class="form-group col-md-12">
+	                              <div class="col-md-7">
+	                                  <p><input class="form-control input-sm"  type="text" ng-model="test1" placeholder="Filtrar"></p>
+	                              </div>
+	                          </div>
+								<table class="table table-sm table-hover table-dark table-responsive ">
+			                	  <thead class="thead-dark">
+			                          <tr>
+			                          	  <th>#</th>
+			                              <th>Local</th>
+			                              <th></th>	
+			                              <th></th>
+			                              <th></th>
+			                              <th></th>
+			                              <th></th>
+			                              <th>Visita</th>
+			                              	                              
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="jor in ctrl.jorJugados  | orderBy : 'numeroJornada' | filter : test1 " ng-click=" ctrl.findPlayersJornada(jor.idEquipoLocal,jor.idEquipoVisita);
 								  	ctrl.getJornada(jor.idJornada,jor.id,jor.idEquipoLocal,jor.idEquipoVisita);  " 
 								  	data-toggle="modal" data-target="#exampleModalScrollable">
 								  		  <td><span ng-bind="jor.numeroJornada"></span></td>

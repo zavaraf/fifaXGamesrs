@@ -133,6 +133,73 @@ public class UserDatoImpl implements UserDao{
 	
 }
 	
+	public List<User> findAllAltasByIdEquipo(long idEquipo, int idTemporada){
+		
+		List<User> playersList = new ArrayList<User>();
+		String query = "select persona.idPersona,  "
+				+"  	   persona.sobrenombre,  "
+				+"         persona.idPersona,  "
+				+"         persona.idsofifa,  "
+				+"         persona.link,  "
+				+"         persona.NombreCompleto,  "
+				+"  	   persona_has_temporada.rating,  "
+				+"         peract.equipos_idEquipo,  "
+				+"         peract.temporada_idTemporada,  "
+				+"         case when equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo else equipos_has_temporada.nombreEquipo end as nombreEquipo   "
+				+"  	from persona_has_temporada  "
+				+"      join persona on persona.idPersona = persona_has_temporada.persona_idPersona  "
+				+"      join persona_has_temporada peract on peract.persona_idPersona = persona_has_temporada.persona_idPersona   "
+				+"                         and peract.temporada_idTemporada =  (   "
+				+"			select max(idTemporada)   "
+				+"			from temporada    "
+				+"			where temporada.idTemporada !=  "+idTemporada + " ) "
+				+"  	join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = peract.equipos_idEquipo   "
+				+"                         and equipos_has_temporada.tempodada_idTemporada =  (   "
+				+"			select max(idTemporada)   "
+				+"			from temporada    "
+				+"			where temporada.idTemporada !=  "+idTemporada + " ) "
+				+"  	join equipos on equipos.idEquipo = equipos_has_temporada.Equipos_idEquipo  "
+				+"  	where persona_has_temporada.equipos_idEquipo = "+idEquipo+"         "
+				+"      and persona_has_temporada.temporada_idTemporada = "+idTemporada + " "
+				+"      and persona_has_temporada.persona_idPersona not in (   "
+				+"  	select persona_idPersona    "
+				+"  		from persona_has_temporada   "
+				+"  		where persona_has_temporada.temporada_idTemporada = (   "
+				+"			select max(idTemporada)   "
+				+"			from temporada    "
+				+"			where temporada.idTemporada !=  "+idTemporada + " ) "
+				+"  		and persona_has_temporada.equipos_idEquipo =   "+idEquipo+"  )"  ; 
+				
+				System.out.println(query);
+				Collection players = jdbcTemplate.query(query, new RowMapper() {
+		                    public Object mapRow(ResultSet rs, int arg1)
+		                            throws SQLException {
+		                        User player = new User();
+		                        player.setId(rs.getLong("idPersona"));
+		                        player.setNombreCompleto(rs.getString("nombreCompleto"));
+		                        player.setSobrenombre(rs.getString("sobrenombre"));
+		                        player.setRaiting(rs.getInt("rating"));
+		                        
+		                        player.setLink(rs.getString("link"));
+		                        player.setIdsofifa(rs.getInt("idsofifa"));
+		                        
+		                        Equipo equipo = new Equipo();
+		                        equipo.setId(rs.getLong("equipos_idEquipo"));
+		                        equipo.setNombre(rs.getString("nombreEquipo"));
+		                        player.setEquipo(equipo);
+		                        
+		                        
+		                        return player;
+		                    }
+		                });
+				 for (Object player : players) {
+//			            System.out.println(((User)player).toString());
+			            playersList.add( (User)player);
+			        }
+			        
+				return playersList;
+	}
+	
 	public List<User> findAllBajasByIdEquipo(long idEquipo, int idTemporada) {
 
 		

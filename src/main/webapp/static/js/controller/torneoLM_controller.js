@@ -17,9 +17,11 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.divisionSelect;
 	self.jornadaSelect = [];
 	self.jorPendientes = [];
+	self.jorJugados = [];
 	
 	self.showPen = false;
 	self.showJor = true;
+	self.showJug = false;
 	
 	$scope.example9model = [];
 	$scope.example9modelV = [];
@@ -65,6 +67,7 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.guardarJornada = guardarJornada;
 	self.deletedGol   = deletedGol;
 	self.getPendientes = getPendientes;
+	self.getJugados   = getJugados;
 	self.addLesiones = addLesiones;
 	self.addTarjetas = addTarjetas;
 	self.deletedLesiones = deletedLesiones;
@@ -495,6 +498,7 @@ function deletedTarjetas(jugador,idEquipo) {
 			          self.tablaGeneral = d.data
 			          getJornadas();
 			          getPendientes();
+			          getJugados();
 		          }
 		          
 		         // getJornada(jornadaVar.idJornada,jornadaVar.id,jornadaVar.idEquipoLocal,jornadaVar.idEquipoVisita)
@@ -606,7 +610,29 @@ function deletedTarjetas(jugador,idEquipo) {
 		 console.log("Jornadas pendientes:  ", self.jorPendientes);
 	 }
 	 
-	
+	 function getJugados(){
+		 
+			// var jorPendientes = [];
+			 self.jorJugados = null;
+			 self.jorJugados = [];
+			 
+			 if(self.jornadas != null){
+				 for (var i = 0 ; i<self.jornadas.length ; i ++){
+					 var juegos = self.jornadas[i].jornada;
+				
+					 for (var j = 0 ; j<juegos.length ; j ++){ 
+						
+						 if(juegos[j].golesLocal != null){
+							 self.jorJugados.push(juegos[j])
+						 }
+					 }
+				 }
+				 
+			 }
+			 
+			 console.log("Jornadas Jugados:  ", self.jorJugados);
+		 }
+		 
 	
 	
 

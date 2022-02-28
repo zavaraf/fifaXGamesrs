@@ -15,7 +15,7 @@ DECLARE idTorneoVAl INTEGER;
   
   DECLARE done INT DEFAULT FALSE;
 
-DECLARE cursor1 CURSOR FOR (SELECT torneo.idtorneo from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama));
+DECLARE cursor1 CURSOR FOR (SELECT torneo.idtorneo from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama)order by torneo.idtorneo desc);
 -- DECLARE CONTINUE HANDLER FOR NOT FOUND SET var_final = 1;
  
  SELECT count(torneo.idtorneo) into var_final  from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama);
@@ -77,6 +77,7 @@ OPEN cursor1;
 		join torneo on torneo.idtorneo = jornadas.torneo_idtorneo
 		where torneo.idtorneo = var_id  and jornadas.tipoJornada = 1
 		and jornadas.nombreJornada = 'Final'
+        and jornadas_has_equipos.golesLocal is not null
         and torneo.cat_torneo != 2
 
 		UNION 
@@ -93,6 +94,7 @@ OPEN cursor1;
 		join torneo on torneo.idtorneo = jornadas.torneo_idtorneo
 		where torneo.idtorneo = var_id and jornadas.tipoJornada = 1
 		and jornadas.nombreJornada = 'Final Vuelta'
+        and jornadas_has_equipos.golesLocal is not null
         and torneo.cat_torneo != 2
 		) tabla
 		group by tabla.equipos_idEquipoLocal, tabla.equipos_idEquipoVisita
