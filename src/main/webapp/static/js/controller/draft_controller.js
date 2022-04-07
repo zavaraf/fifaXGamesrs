@@ -9,9 +9,11 @@ angular.module('myApp')
     self.jugadoresPres =[]
     self.equipos =[]
     self.players = []
+    self.allDraft = []
     
     $scope.showDraftV
     $scope.selectedEquipoPres
+    $scope.showDraft = true
     
     self.showDraft         = showDraft;
     self.crearPrestamo     = crearPrestamo;
@@ -19,6 +21,7 @@ angular.module('myApp')
     self.buscarEquipos     = buscarEquipos;
     self.findPlayers       = findPlayers;
     self.deletePrestamo    = deletePrestamo;
+    self.getAllDraft       = getAllDraft;
     
     buscarTodos();
     
@@ -70,6 +73,16 @@ angular.module('myApp')
 		});
     }
     
+    
+    function getAllDraft(){
+    	DraftService.getAllDraft().then(function(d) {
+			console.log("allDraft]:",d);
+			self.allDraft = d;
+		}, function(errResponse) {
+			self.players = [];
+			console.error('Error while fetching getAllDraft');
+		});
+    }
 
  
 }]);

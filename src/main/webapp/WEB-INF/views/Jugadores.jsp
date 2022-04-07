@@ -78,13 +78,18 @@
                      <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content bg-dark text-white">
-                           <div class="modal-header">
-                              <h4 class="modal-title">Datos Jugador</h4>
+                           <div class="modal-header">                           
+                              <h4 class="modal-title">Datos Jugador</h4>	                        
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                            </div>
                            <div class="modal-body">
                               <form  name="myForm" >
+                              
                                  <input type="hidden" ng-model="ctrl.player.id" />
+                                  <div class="text-center ">	                                  
+	                                  <img class="rounded float-center"ng-show="ctrl.player.img != null" ng-src="{{ctrl.player.img}}"   alt="...">
+	                              </div>
+	                              
                                   <div class="row">
                                     <div class="col-md">
                                        <label class="col-md control-lable" for="idsofifa">idSofifa</label>
@@ -118,6 +123,24 @@
                                           <input type="text" ng-model="ctrl.player.nombreCompleto"
                                              id="nomcom" class="lastname form-control input-sm"
                                              placeholder="Nombre completo" required ng-minlength="3" />
+                                          <div class="has-error" ng-show="myForm.$dirty">
+                                             <span ng-show="myForm.nomcom.$error.required">Es requerido</span> 
+                                             <span ng-show="myForm.nomcom.$error.minlength">La longitud minima es 3</span> 
+                                             <span ng-show="myForm.nomcom.$invalid">Este campo es Invalido</span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md">
+                                       <label class="col-md control-lable" for="imgcom">Imagen</label>                                   
+				                              
+		                              
+				                        
+                                       <div class="col-md">
+                                          <input type="text" ng-model="ctrl.player.img"
+                                             id="imgcom" class="lastname form-control input-sm"
+                                             placeholder="Imagen" required ng-minlength="3" />
                                           <div class="has-error" ng-show="myForm.$dirty">
                                              <span ng-show="myForm.nomcom.$error.required">Es requerido</span> 
                                              <span ng-show="myForm.nomcom.$error.minlength">La longitud minima es 3</span> 
@@ -175,6 +198,48 @@
                                           </div>
                                           
                                        </div>
+                                       
+                                       
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md">
+                                    <div class="col-md">
+                                    	<button  
+										  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+										    Venta
+										  </button>
+										  <div class="collapse" id="collapseExample">
+										    <div class="modal-dialog">
+												<!-- Modal content-->
+												<div class="modal-content">
+												<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
+								<!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
+												  <strong>¡Error!</strong> {{ctrl.Error}}
+												</div>
+													
+													<div class="modal-body">
+													
+														<div custom-select="t as t.nombre for t in ctrlEquipo.equipos | filter: { nombre: $searchTerm }" ng-model="ctrl.player.equipoPago">
+										                <div class="pull-left" >
+										                    <img ng-src="{{ t.img }}" style="width: 30px" />
+										                    <strong>{{ t.nombre }}</strong>
+										                </div>
+										               
+										                </div>
+													
+													</div>
+													
+													<div class="input-group mb-3 input-group-sm">
+													     
+													    <input type="text" ng-model="ctrl.player.costo" id="montoOfer" class="form-control input-sm" placeholder="Monto" />
+													    <label id="montoSeparado" class="form-control input-sm">{{ctrl.player.costo | currency}}</label>
+													 </div>
+													
+												</div>
+											</div>
+													</div>
+								    </div>
+								    </div>
                                     </div>
                                     <div class="row">
                                        <div class="form-actions floatRight">
@@ -239,7 +304,10 @@
                                        <!--              <tr ng-repeat="u in ctrl.players | orderBy : '-raiting' | filter : test | startFromGrid: currentPage * pageSize | limitTo: pageSize"> -->
                                        <!--              <tr ng-repeat="u in ctrl.players | orderBy : '-raiting' | filter : test "  > -->
                                        <tr ng-pagination="u in ctrl.players | orderBy : '-raiting'" ng-pagination-size="60"  >
-                                          <td>{{u.id}}</td>
+                                          <td ng-show="u.img == null">{{u.id}}</td>
+                                          <td ng-show="u.img != null">                                          	                                  
+			                                  <img height="40" class="rounded float-left" ng-show="u.img != null" ng-src="{{u.img}}"   alt="{{u.id}} ">			                              
+			                              </td>
                                           <td ng-show="u.link!=null"><a href="{{u.link}}" target="_blank" >{{u.sobrenombre}}</td>
                                           <td ng-show="u.link==null">{{u.sobrenombre}}</td>
                                           

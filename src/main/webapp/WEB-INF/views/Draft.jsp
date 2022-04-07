@@ -141,6 +141,17 @@
                   <div class="panel panel-default">
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">Draft Mundial </span></div>
+              <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li class="nav-item">
+			      <a class="nav-link active" data-toggle="tab" ng-click = "ctrl.showPrestamos = true; ctrl.showDraft = false"">Prestamos</a>
+			      
+			    </li>
+			    <li class="nav-item">
+			      <a class="nav-link" data-toggle="tab" ng-click = "ctrl.getAllDraft(); ctrl.showPrestamos = false; ctrl.showDraft = true" >Movimientos</a>
+			    </li>
+			    
+			  </ul>
               <div class="table-responsive-sm">
               		<div class="row">
                           <div class="form-group col-md-12">
@@ -149,10 +160,11 @@
                               </div>
                           </div>
               		</div>
-              
+              <div ng-show="ctrl.showPrestamos">
                   <table class="table table-lg table-hover table-dark table-responsive">
                       <thead>
                           <tr>
+                              <th></th>
                               <th>ID.</th>
                               <th>Nombre</th>
                               <th>Equipo</th>
@@ -161,6 +173,7 @@
                       </thead>
                       <tbody>
                           <tr ng-repeat="e in ctrl.jugadoresPres | orderBy : 'sobrenombre' | filter : test">
+                          <img height="40" class="rounded float-left" ng-show="e.img != null" ng-src="{{e.img}}"   alt="...">
                               <td><span ng-bind="e.id"></span></td>
                               <td><span ng-bind="e.sobrenombre"></span></td>
                               <td><span ng-bind="e.equipo.nombre"></span></td>
@@ -171,6 +184,31 @@
                           </tr>
                       </tbody>
                   </table>
+                </div>
+                <div ng-show="ctrl.showDraft" >
+                	<div class="row bg-dark text-white">
+					  <div class="col-sm-6 bg-dark text-white" ng-repeat="e in ctrl.allDraft | orderBy : 'sobrenombre' | filter : test">
+					    <div class="card bg-dark text-white">
+					      <div class="card-body">
+					      <img class="rounded float-left" ng-show="e.player.img!= null" ng-src="{{e.player.img}}"   alt="...">
+					        <h5 class="card-title ">{{e.player.sobrenombre}}</h5>
+					        <p class="card-text ">
+					        <img height="20" class="rounded float-left"  ng-src="{{e.equipo.img}}"   alt="...">
+					        {{e.equipo.nombre}} ---> {{e.equipoNew.nombre}}
+					        <img height="20" class="rounded float-rigth"  ng-src="{{e.equipoNew.img}}"   alt="...">
+					        </p>
+					        <p class="card-text">Costo de la operación :  
+					        <button type="button" class="btn btn-outline-info btn-sm">{{e.player.costo | currency}}</button>
+<!-- 					        <span class="badge badge-info">{{e.player.costo | currency}} </span> -->
+					        </p>
+					        
+					      </div>
+					    </div>
+					  </div>
+					  
+					</div>
+                	
+                </div>
               </div>
           </div>
   		</div>

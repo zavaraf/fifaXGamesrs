@@ -12,6 +12,9 @@ public class JugadorDraft extends User {
 	private boolean abierto;
 	private boolean contraofertar;
 	
+	private User player;
+	private Equipo equipoNew;
+	
 	
 	public int getMontoOferta() {
 		return montoOferta;
@@ -66,6 +69,19 @@ public class JugadorDraft extends User {
 	}
 	public void setContraofertar(boolean contraofertar) {
 		this.contraofertar = contraofertar;
+	}
+	public User getPlayer() {
+		return player;
+	}
+	public void setPlayer(User player) {
+		this.player = player;
+	}
+	
+	public Equipo getEquipoNew() {
+		return equipoNew;
+	}
+	public void setEquipoNew(Equipo equipoNew) {
+		this.equipoNew = equipoNew;
 	}
 	
 	

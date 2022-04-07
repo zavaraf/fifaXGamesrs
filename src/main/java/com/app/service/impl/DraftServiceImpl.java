@@ -187,5 +187,10 @@ public class DraftServiceImpl implements DraftService {
 
 		return draftDao.getHistoricoDraft(idDraft, idJugador, idTemporada);
 	}
+	
+	public List<JugadorDraft> getAllMov(int idTemporada){
+
+		return draftDao.getAllMov(idTemporada);
+	}
 
 }

@@ -31,5 +31,7 @@ public interface DraftDao {
 	HashMap<String, String> confirmPlayer(long id, int idEquipo, int idTemporada);
 	
 	List<JugadorDraft> getHistoricoDraft(int idDraft,int idJugador, int idTemporada);
+	
+	List<JugadorDraft> getAllMov(int idTemporada);
 
 }

@@ -14,6 +14,7 @@ public class User {
 	private int potencial;
 	private String link;
 	private int idsofifa;
+	private String img;
 	
 
 	private int Equipos_idEquipo;
@@ -22,6 +23,9 @@ public class User {
 	private int prestamo;
 	private Equipo equipo;
 	private Equipo equipoPres;
+	
+	private Equipo equipoPago;
+	private double costo ;
  
 	
     @Override
@@ -182,6 +186,16 @@ public class User {
 	public void setIdsofifa(int idsofifa) {
 		this.idsofifa = idsofifa;
 	}
+	
+	
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 	@Override
     public int hashCode() {
@@ -190,8 +204,26 @@ public class User {
         result = prime * result + (int) (id ^ (id >>> 32));
         return result;
     }
+	
+	
  
-    @Override
+    public Equipo getEquipoPago() {
+		return equipoPago;
+	}
+
+	public void setEquipoPago(Equipo equipoPago) {
+		this.equipoPago = equipoPago;
+	}
+
+	public double getCosto() {
+		return costo;
+	}
+
+	public void setCosto(double costo) {
+		this.costo = costo;
+	}
+
+	@Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;

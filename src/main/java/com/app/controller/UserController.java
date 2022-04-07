@@ -184,6 +184,10 @@ public class UserController {
         currentUser.setEquipo(user.getEquipo());
         currentUser.setLink(user.getLink());
         currentUser.setIdsofifa(user.getIdsofifa());
+        currentUser.setImg(user.getImg());
+        currentUser.setEquipoPago(user.getEquipoPago());
+        currentUser.setCosto(user.getCosto());
+        
         
         ResponseData response = userService.updatePlayer(currentUser,idTemporada);
         

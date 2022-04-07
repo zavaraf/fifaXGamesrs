@@ -11,7 +11,8 @@ angular.module('myApp').factory('DraftService', ['$http', '$q','CONFIG', functio
       buscarTodos     : buscarTodos,
       crearPrestamo   : crearPrestamo,
       findPlayersByIdEquipo: findPlayersByIdEquipo,
-      deletePrestamo  : deletePrestamo
+      deletePrestamo  : deletePrestamo,
+      getAllDraft     : getAllDraft  
     };
  
     return factory;
@@ -78,6 +79,22 @@ angular.module('myApp').factory('DraftService', ['$http', '$q','CONFIG', functio
             },
             function(errResponse){
                 console.error('Error while deletePrestamo ');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+    
+    function getAllDraft(id) {
+        var deferred = $q.defer();
+        
+        $http.get(REST_SERVICE_URI+"pc/getAllMov/"+CONFIG.VARTEMPORADA.id)
+            .then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while getAllDraft ');
                 deferred.reject(errResponse);
             }
         );

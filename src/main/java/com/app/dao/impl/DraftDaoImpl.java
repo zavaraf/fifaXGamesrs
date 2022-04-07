@@ -35,6 +35,7 @@ public class DraftDaoImpl implements DraftDao {
 				+"  persona.idPersona,  "
 				+"  persona.NombreCompleto,  "
 				+"  persona.sobrenombre,  "
+				+"  persona.img,  "
 				+"  persona.raiting,  "
 				+"  persona.prestamo,  "
 				+"  prestamos.Equipos_idEquipo as idEquipo,  "
@@ -67,6 +68,7 @@ public class DraftDaoImpl implements DraftDao {
 				jugador.setSobrenombre(rs.getString("sobrenombre"));
 				jugador.setRaiting(rs.getInt("raiting"));
 				jugador.setPrestamo(rs.getInt("prestamo"));
+				jugador.setImg(rs.getString("img"));
 				Equipo equipo = new Equipo();
 
 				equipo.setId(rs.getLong("idEquipo"));
@@ -117,6 +119,7 @@ public class DraftDaoImpl implements DraftDao {
 		        + " persona.idPersona, " 
 				+ " persona.NombreCompleto, " 
 		        + " persona.sobrenombre, "
+		        +"  persona.img,  "
 				+ " persona.raiting, " 
 		        + " persona.prestamo, " 
 				+ " equipos.idEquipo, " 
@@ -139,6 +142,8 @@ public class DraftDaoImpl implements DraftDao {
 				jugador.setSobrenombre(rs.getString("sobrenombre"));
 				jugador.setRaiting(rs.getInt("raiting"));
 				jugador.setPrestamo(rs.getInt("prestamo"));
+				jugador.setImg(rs.getString("img"));
+				
 				Equipo equipo = new Equipo();
 
 				equipo.setId(rs.getLong("idEquipo"));
@@ -174,6 +179,7 @@ public class DraftDaoImpl implements DraftDao {
 		String query = " select persona.idPersona, " 
 				+ " persona.NombreCompleto, " 
 				+ " persona.sobrenombre, "
+				+ " persona.img, "
 				+ " persona.raiting, "
 				+ " persona.link, "
 				+ " equipos.idEquipo, " 
@@ -186,11 +192,15 @@ public class DraftDaoImpl implements DraftDao {
 				+ " draftpc.abierto, " 
 				+ " draftpc.idEquipo as idEquipoOferta, " 
 				+ " temporada.idTemporada, " 
-				+ " temporada.NombreTemporada " 
+				+ " temporada.NombreTemporada,"
+				+ " equipos_has_imagen.imagen  " 
 				+ " from draftpc "
 				+ " join persona on persona.idPersona = draftpc.Persona_idPersona "
 				+ " join equipos on equipos.idEquipo = persona.Equipos_idEquipo "
 				+ " join temporada on temporada.idTemporada = draftpc.tempodada_idTemporada " 
+				+ " left join equipos_has_imagen on draftpc.idEquipo = equipos_has_imagen.equipos_idEquipo "
+				+ "     and equipos_has_imagen.idTemporada = " + idTemporada
+		        + "     and equipos_has_imagen.tipoImagen_idTipoImagen = 2 "
 				+ " where draftpc.abierto = 1 and temporada.idTemporada = " + idTemporada;
 
 		System.out.println("------->Entrando a hacer consulta DraftPC");
@@ -203,6 +213,7 @@ public class DraftDaoImpl implements DraftDao {
 				jugador.setSobrenombre(rs.getString("sobrenombre"));
 				jugador.setRaiting(rs.getInt("raiting"));
 				jugador.setLink(rs.getString("link"));
+				jugador.setImg(rs.getString("img"));
 
 				jugador.setMontoOferta(rs.getInt("oferta"));
 				jugador.setAbierto(rs.getBoolean("abierto"));
@@ -221,6 +232,7 @@ public class DraftDaoImpl implements DraftDao {
 
 				equipo.setId(rs.getLong("idEquipo"));
 				equipo.setNombre(rs.getNString("nombreEquipo"));
+				equipo.setImg(rs.getString("imagen"));
 				equipo.setTemporada(temporada);
 
 				jugador.setEquipo(equipo);
@@ -452,7 +464,7 @@ public class DraftDaoImpl implements DraftDao {
 		return mapa;
 	}
 	
-	public List<JugadorDraft> getHistoricoDraft(int idDraft,int idJugador, int idTemporada) {
+	public List<JugadorDraft> getHistoricoDraft( int idDraft,int idJugador, int idTemporada) {
 		List<JugadorDraft> listJuadores = new ArrayList<JugadorDraft>();
 		String query = " select persona.NombreCompleto, "
 				+" persona.sobrenombre, "
@@ -503,6 +515,83 @@ public class DraftDaoImpl implements DraftDao {
 //				equipo.setTemporada(temporada);
 
 				jugador.setEquipo(equipo);
+
+				return jugador;
+			}
+		});
+
+		for (Object jugador : jugadores) {
+			listJuadores.add((JugadorDraft) jugador);
+		}
+
+		return listJuadores;
+	}
+	
+	public List<JugadorDraft> getAllMov(int idTemporada) {
+		List<JugadorDraft> listJuadores = new ArrayList<JugadorDraft>();
+		String query = " select persona.idPersona,   "
+				+"        persona.sobrenombre,   "
+				+"          persona.idsofifa,   "
+				+"          persona.img,  "
+				+ "     persona_has_temporada.costo, "
+				+"          persona.link,   "
+				+"          persona.NombreCompleto,   "
+				+"          persona_has_temporada.rating,   "
+				+"          pres.equipos_idEquipo,   "
+				+"          pres.temporada_idTemporada, "
+				+"          case when equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo else equipos_has_temporada.nombreEquipo end as nombreEquipo   , "
+				+"          equipos_has_imagen.imagen, "
+				+"          persona_has_temporada.equipos_idEquipo as equipos_idEquipo2, "
+				+"          case when eqt.nombreEquipo is null then eq.nombreEquipo else eqt.nombreEquipo end as nombreEquipo2   , "
+				+"          eqim.imagen as imagen2, "
+				+"          persona_has_temporada.temporada_idTemporada as temporada_idTemporada2 "
+				+" from persona "
+				+" join persona_has_temporada on persona_has_temporada.persona_idPersona = persona.idPersona "
+				+" join persona_has_temporada pres on pres.persona_idPersona = persona_has_temporada.persona_idPersona  "
+				+"      and pres.temporada_idTemporada = (select max(idTemporada)    "
+				+"                 from temporada     "
+				+"                 where temporada.idTemporada <  "+idTemporada+" ) and pres.equipos_idEquipo > 1 "
+				+" join equipos on equipos.idEquipo = pres.equipos_idEquipo "
+				+" join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = pres.equipos_idEquipo and equipos_has_temporada.tempodada_idTemporada = pres.temporada_idTemporada "
+				+" join equipos_has_imagen on equipos_has_imagen.equipos_idEquipo = pres.equipos_idEquipo  and equipos_has_imagen.idTemporada = pres.temporada_idTemporada  "
+				+"          and equipos_has_imagen.tipoImagen_idTipoImagen = 1 "
+				+" join equipos eq on eq.idEquipo = persona_has_temporada.Equipos_idEquipo  "
+				+" join equipos_has_temporada eqt on eqt.Equipos_idEquipo = eq.idEquipo and eqt.tempodada_idTemporada = persona_has_temporada.temporada_idTemporada "
+				+"  join equipos_has_imagen eqim on eqim.equipos_idEquipo = eq.idEquipo and eqim.idTemporada = persona_has_temporada.temporada_idTemporada "
+				+"      and eqim.tipoImagen_idTipoImagen = 1 "
+				+" where persona_has_temporada.temporada_idTemporada =  " + idTemporada
+				+ "  and persona_has_temporada.equipos_idEquipo> 1 "
+				+" and persona_has_temporada.equipos_idEquipo != pres.equipos_idEquipo ";
+
+		Collection jugadores = jdbcTemplate.query(query, new RowMapper() {
+
+			public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+				JugadorDraft jugador = new JugadorDraft();
+				User player = new User();
+				
+				player.setId(rs.getInt("idPersona"));
+				player.setNombreCompleto(rs.getString("NombreCompleto"));
+				player.setSobrenombre(rs.getString("sobrenombre"));
+				player.setImg(rs.getString("img"));
+				player.setCosto(rs.getDouble("costo"));
+				
+				jugador.setPlayer(player);
+
+				Equipo equipo = new Equipo();
+
+				equipo.setId(rs.getLong("equipos_idEquipo"));
+				equipo.setNombre(rs.getNString("nombreEquipo"));
+				equipo.setImg(rs.getString("imagen"));
+
+				jugador.setEquipo(equipo);
+				
+				Equipo equipoNew = new Equipo();
+
+				equipoNew.setId(rs.getLong("equipos_idEquipo2"));
+				equipoNew.setNombre(rs.getNString("nombreEquipo2"));
+				equipoNew.setImg(rs.getString("imagen2"));
+
+				jugador.setEquipoNew(equipoNew);
 
 				return jugador;
 			}

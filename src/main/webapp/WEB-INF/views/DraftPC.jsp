@@ -19,7 +19,8 @@
     
   </head>
   <body ng-app="myApp" class="ng-cloak">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<!--   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> -->
+  <script data-require="angularjs@1.5.5" data-semver="1.5.5" src="https://code.angularjs.org/1.5.5/angular.js"></script>
   <script src="<c:url value='/static/js/app/app.js' />"></script>
   <script src="<c:url value='/static/js/service/team_service.js' />"></script>
   <script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
@@ -189,6 +190,7 @@
 				   <table class="table table-lg table-hover table-dark table-center ">
                       <thead>
                           <tr>
+                          	  <th></th>
                               <th>ID.</th>
                               <th>Nombre</th>
                               <th>Equipo Oferta</th>
@@ -200,6 +202,9 @@
                       </thead>
                       <tbody>
                           <tr class="{{ctrl.selectColor(e)}}"  ng-repeat="e in ctrl.historicoDraft | orderBy : 'sobrenombre' | filter : test">
+                              <td >                                          	                                  
+                                <img height="40" class="rounded float-left" ng-show="e.img != null" ng-src="{{e.img}}"   alt="{{e.id}} ">			                              
+                              </td>
                               <td><span ng-bind="e.id"></span></td>
                               <td ng-show="e.link!=null"><a href="{{e.link}}" target="_blank" >{{e.sobrenombre}}</td>
                                 <td ng-show="e.link==null">{{e.sobrenombre}}</td>
@@ -265,6 +270,7 @@
               	  <table ng-show = "ctrl.visibleJugadores == true" class="table table-lg table-hover table-dark table-center">
                       <thead>
                           <tr>
+                          	  <th></th>
                               <th>ID.</th>
                               <th>Nombre</th>
                               <th>Equipo</th>
@@ -273,6 +279,9 @@
                       </thead>
                       <tbody>
                           <tr  ng-repeat="e in ctrl.equipo.jugadores | orderBy : 'sobrenombre' | filter : test">
+                              <td >                                          	                                  
+                                <img height="40" class="rounded float-left" ng-show="e.img != null" ng-src="{{e.img}}"   alt="{{e.id}} ">			                              
+                              </td>
                               <td><span ng-bind="e.id"></span></td>
 <!--                               <td><span ng-bind="e.sobrenombre"></span></td> -->
                               <td ng-show="e.link!=null"><a href="{{e.link}}" target="_blank" >{{e.sobrenombre}}</td>
@@ -287,38 +296,138 @@
                       </tbody>
                   </table>
               
-                  <table ng-show = "ctrl.visibleOfertas == true" class="table table-lg table-hover table-dark table-center">
-                      <thead>
-                          <tr>
-                              <th>ID.</th>
-                              <th>Nombre</th>
-                              <th>Equipo Oferta</th>
-                              <th>Manager</th>
-                              <th>Oferta</th>
-                              <th>Oferta Final</th>
-                              <th>Fecha</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr class="{{ctrl.selectColor(e)}}"  ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' | filter : test">
-                              <td><span ng-bind="e.id"></span></td>
-                              <td ng-show="e.link!=null"><a href="{{e.link}}" target="_blank" >{{e.sobrenombre}}</td>
-                                <td ng-show="e.link==null">{{e.sobrenombre}}</td>
-<!--                               <td><span ng-bind="e.sobrenombre"></span></td> -->
-                              <td><a href="#!team/{{e.idEquipoOferta}}"><span ng-bind="e.comentarios"></span></a></td>
-                              <td><span ng-bind="e.manager"></span></td>
-                              <td><span>{{e.montoOferta | currency}}</span></td>
-                              <td><span>{{e.ofertaFinal | currency}}</span></td>
-                              <td><span ng-bind="e.fecha"></span></td>
-                              <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
-                              <td><button type="button"  data-toggle="modal" 
-									data-target="#myModalDraf" ng-click="ctrl.updateDraft(e)" class="btn btn-info btn-sm" ng-show="e.idEquipoOferta != e.equipo.id">Contraofertar</button></td>
-							  <td><button type="button"  data-toggle="modal" 
-									data-target="#ModalHistoricoScrollable" ng-click="ctrl.getHistoricoDraft(1,e.id); ctrl.buscarEquipos();ctrl.updateDraft(e);" class="btn btn-info btn-sm" >Historial</button></td>		
-							  </sec:authorize>
-                          </tr>
-                      </tbody>
-                  </table>
+<!--                   <table ng-show = "ctrl.visibleOfertas == true" class="table table-lg table-hover table-dark table-center"> -->
+<!--                       <thead> -->
+<!--                           <tr> -->
+<!--                               <th></th> -->
+<!--                               <th>ID.</th> -->
+<!--                               <th>Nombre</th> -->
+<!--                               <th>Equipo Oferta</th> -->
+<!--                               <th>Manager</th> -->
+<!--                               <th>Oferta</th> -->
+<!--                               <th>Oferta Final</th> -->
+<!--                               <th>Fecha</th> -->
+<!--                           </tr> -->
+<!--                       </thead> -->
+<!--                       <tbody> -->
+<!--                           <tr class="{{ctrl.selectColor(e)}}"  ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' | filter : test"> -->
+<!--                               <td >                                          	                                   -->
+<!--                                 <img height="40" class="rounded float-left" ng-show="e.img != null" ng-src="{{e.img}}"   alt="{{e.id}} ">			                               -->
+<!--                               </td> -->
+<!--                               <td><span ng-bind="e.id"></span></td> -->
+<!--                               <td ng-show="e.link!=null"><a href="{{e.link}}" target="_blank" >{{e.sobrenombre}}</a></td> -->
+<!--                                 <td ng-show="e.link==null">{{e.sobrenombre}}</td> -->
+<!--                               <td><a href="#!team/{{e.idEquipoOferta}}"><span ng-bind="e.comentarios"></span></a></td> -->
+<!--                               <td><span ng-bind="e.manager"></span></td> -->
+<!--                               <td><span>{{e.montoOferta | currency}}</span></td> -->
+<!--                               <td><span>{{e.ofertaFinal | currency}}</span></td> -->
+<!--                               <td><span ng-bind="e.fecha"></span></td> -->
+<%--                               <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')"> --%>
+<!--                               <td><button type="button"  data-toggle="modal"  -->
+<!-- 									data-target="#myModalDraf" ng-click="ctrl.updateDraft(e)" class="btn btn-info btn-sm" ng-show="e.idEquipoOferta != e.equipo.id">Contraofertar</button></td> -->
+<!-- 							  <td><button type="button"  data-toggle="modal"  -->
+<!-- 									data-target="#ModalHistoricoScrollable" ng-click="ctrl.getHistoricoDraft(1,e.id); ctrl.buscarEquipos();ctrl.updateDraft(e);" class="btn btn-info btn-sm" >Historial</button></td>		 -->
+<%-- 							  </sec:authorize> --%>
+<!--                           </tr> -->
+<!--                       </tbody> -->
+<!--                   </table> -->
+
+                    <div class="row" ng-show = "ctrl.visibleOfertas == true">
+                    <div class="col-sm-3" ng-repeat="e in ctrl.jugadoresDraft | orderBy : '-fecha' | filter : test">
+<!-- 					<div class="card-group "  > -->
+					  <div class="card text-white bg-dark text-center {{ctrl.selectColor(e)}}"  >
+					    <div class="card-body">
+					      <div class="row">
+					      <div class="col-sm-4">
+					        <img height="50" class="rounded float-center" ng-src="{{e.img}}" >
+						  </div>
+					      <div class="col-sm">
+					      	<h5 class="card-title">{{e.sobrenombre}},
+					      	<span ng-show="e.link!=null"><a href="{{e.link}}" target="_blank" >ir</a></span>
+					      	</h5>
+					      </div>
+					      </div>
+ 
+					      <div >
+						      <div class="row">
+						      <div class="col-sm-4">
+						      	<img height="30"  ng-src="{{e.equipo.img}}"   alt="...">
+						      </div>
+						      <div class="col-sm-8 text-center">
+							      <div class="row">
+							      <div class="col-sm">
+							        <a href="#!team/{{e.idEquipoOferta}}">
+							           <span class="text-center"ng-bind="e.comentarios"></span>
+							        </a>
+							        </div>
+							       </div>
+							       <div class="row"> 
+							       <div class="col-sm">
+							        <span class="text-center" ng-bind="e.manager"></span>
+							        </div>
+							        </div>
+						      </div>
+						      
+						      </div>
+						      
+					       </div>
+
+					      <div class="card-text">
+					        <div class="card-text">$ Inicial :  
+					        <button type="button" class="btn btn-outline-info btn-sm">{{e.montoOferta | currency}}</button>
+					        </div>				        
+					        <div class="card-text">$ Final  :  
+					        <button type="button" class="btn btn-outline-info btn-sm">{{e.ofertaFinal | currency}}</button>
+					        </div>
+					      </div>  
+					      
+					      <button type="button"  data-toggle="modal" 
+									data-target="#myModalDraf" ng-click="ctrl.updateDraft(e)" class="btn btn-info btn-sm" ng-show="e.idEquipoOferta != e.equipo.id">Contraofertar</button>
+							 <button type="button"  data-toggle="modal" 
+									data-target="#ModalHistoricoScrollable" ng-click="ctrl.getHistoricoDraft(1,e.id); ctrl.buscarEquipos();ctrl.updateDraft(e);" class="btn btn-info btn-sm" >Historial</button>
+					    
+					    </div>
+					    <div class="card-footer">
+					      <small class="text-muted"><h6><span ng-bind="e.fecha"></span></h6></small>
+					    </div>
+					  </div>
+					</div>
+					</div>
+					
+
+<!-- 				<div ng-show = "ctrl.visibleOfertas == true"  > -->
+<!--                 	<div class="row bg-dark text-white"> -->
+<!-- 					  <div class="col-sm-6 bg-dark text-white" ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' | filter : test"> -->
+<!-- 					    <div class="card bg-dark text-white"> -->
+<!-- 					      <div class="card-body"> -->
+<!-- 					      <img class="rounded float-left" height="50" ng-src="{{e.img}}"   alt="..."> -->
+<!-- 					        <h6 class="card-title ">{{e.sobrenombre}}</h5> -->
+<!-- 					        <p class="card-text "> -->
+<!-- 					        <img height="30" class="rounded float-left"  ng-src="{{e.equipo.img}}"   alt="..."> -->
+<!-- 					        <span ng-bind="e.comentarios"></span> -->
+<!-- 					        <span ng-bind="e.fecha"></span> -->
+<!-- 					        <span ng-bind="e.manager"></span> -->
+<!-- 					        </p> -->
+<!-- 					        <p class="card-text">$ Inicial :   -->
+<!-- 					        <button type="button" class="btn btn-outline-info btn-sm">{{e.montoOferta | currency}}</button>				         -->
+<!-- 					        <span class="card-text">$ Final :   -->
+<!-- 					        <button type="button" class="btn btn-outline-info btn-sm">{{e.ofertaFinal | currency}}</button> -->
+<!-- 					        </span> -->
+<!-- 					        </p> -->
+
+					        
+<!-- 					        <button type="button"  data-toggle="modal"  -->
+<!-- 									data-target="#myModalDraf" ng-click="ctrl.updateDraft(e)" class="btn btn-info btn-sm" ng-show="e.idEquipoOferta != e.equipo.id">Contraofertar</button> -->
+<!-- 							 <button type="button"  data-toggle="modal"  -->
+<!-- 									data-target="#ModalHistoricoScrollable" ng-click="ctrl.getHistoricoDraft(1,e.id); ctrl.buscarEquipos();ctrl.updateDraft(e);" class="btn btn-info btn-sm" >Historial</button> -->
+								
+<!-- 					      </div> -->
+<!-- 					    </div> -->
+<!-- 					  </div> -->
+					  
+<!-- 					</div> -->
+                	
+<!--                 </div> -->
               </div>
           </div>
   		</div>

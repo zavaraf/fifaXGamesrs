@@ -84,12 +84,16 @@
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                            </div>
                            <div class="modal-body">
-                              <form  name="myFormJuga" class="form-horizontal">
+                              <form  name="myFormJuga" >
                                  <input type="hidden" ng-model="ctrlJuga.player.id" />
+                                 
+                                  <div class="text-center ">	                                  
+	                                  <img class="rounded float-center"ng-show="ctrlJuga.player.img != null" ng-src="{{ctrlJuga.player.img}}"   alt="...">
+	                              </div>
                                  <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="idsofifa">ID sofifa</label>
-                                       <div class="col-md-7">
+                                    <div class="form-group col-md">
+                                       <label class="col-md control-lable" for="idsofifa">ID sofifa</label>
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrlJuga.player.idsofifa"
                                              id="idsofifa" class="lastname form-control input-sm"
                                              placeholder="idSofifa" required ng-minlength="3" />
@@ -102,10 +106,10 @@
                                     </div>
                                  </div>
                                  <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="sobreNom">Nombre
+                                    <div class="form-group col-md">
+                                       <label class="col-md control-lable" for="sobreNom">Nombre
                                        Corto</label>
-                                       <div class="col-md-7">
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrlJuga.player.sobrenombre"
                                              id="sobreNom" class="lastname form-control input-sm"
                                              placeholder="Nombre corto" required ng-minlength="3" />
@@ -120,10 +124,10 @@
                                     </div>
                                  </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="nomcom">Nombre
+                                    <div class="form-group col-md">
+                                       <label class="col-md control-lable" for="nomcom">Nombre
                                        Completo</label>
-                                       <div class="col-md-7">
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrlJuga.player.nombreCompleto"
                                              id="nomcom" class="lastname form-control input-sm"
                                              placeholder="Nombre completo" required ng-minlength="3" />
@@ -137,9 +141,24 @@
                                     </div>
                                  </div>
                                  <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="raiti">Rating</label>
-                                       <div class="col-md-7">
+                                    <div class="col-md">
+                                       <label class="col-md control-lable" for="imgcom">Imagen</label>   
+                                       <div class="col-md">
+                                          <input type="text" ng-model="ctrlJuga.player.img"
+                                             id="imgcom" class="lastname form-control input-sm"
+                                             placeholder="Imagen" required ng-minlength="3" />
+                                          <div class="has-error" ng-show="myForm.$dirty">
+                                             <span ng-show="myForm.nomcom.$error.required">Es requerido</span> 
+                                             <span ng-show="myForm.nomcom.$error.minlength">La longitud minima es 3</span> 
+                                             <span ng-show="myForm.nomcom.$invalid">Este campo es Invalido</span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="form-group col-md">
+                                       <label class="col-md control-lable" for="raiti">Rating</label>
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrlJuga.player.raiting" id="raiti"
                                              class="lastname form-control input-sm"
                                              placeholder="Raiting" required ng-minlength="2" />
@@ -151,9 +170,9 @@
                                     </div>
                                  </div>
                                  <div class="row">
-                                    <div class="form-group col-md-12">
-                                       <label class="col-md-2 control-lable" for="raiti">Link Sofifa</label>
-                                       <div class="col-md-7">
+                                    <div class="form-group col-md">
+                                       <label class="col-md control-lable" for="raiti">Link Sofifa</label>
+                                       <div class="col-md">
                                           <input type="text" ng-model="ctrlJuga.player.link" id="link"
                                              class="lastname form-control input-sm"
                                              placeholder="Link Sofifa" required ng-minlength="2" />
@@ -164,9 +183,9 @@
                                  <div ng-controller="EquipoController as ctrlEquipo">
                                     <div class="row">
                                     
-                                       <div class="form-group col-md-12">
-                                          <label class="col-md-2 control-lable" for="address">Equipo</label>
-                                          <div class="col-md-7">
+                                       <div class="form-group col-md">
+                                          <label class="col-md control-lable" for="address">Equipo</label>
+                                          <div class="col-md">
 <!--                                           <div  ng-dropdown-multiselect="" options="ctrlEquipo.buscarTodos();ctrlEquipo.equipos" selected-model="equipoModel" extra-settings="example9settings" translation-texts="example5customTexts"></div> -->
                                           <div custom-select="t as t.nombre for t in ctrlEquipo.equipos | filter: { nombre: $searchTerm }" ng-model="ctrlJuga.player.equipo">
 									                <div class="pull-left" >
@@ -184,6 +203,46 @@
                                           </div>
                                        </div>
                                        
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md">
+                                    <div class="col-md">
+                                    	<button  
+										  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+										    Venta
+										  </button>
+										  <div class="collapse" id="collapseExample">
+										    <div class="modal-dialog">
+												<!-- Modal content-->
+												<div class="modal-content">
+												<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
+								<!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
+												  <strong>¡Error!</strong> {{ctrl.Error}}
+												</div>
+													
+													<div class="modal-body">
+													
+														<div custom-select="t as t.nombre for t in ctrlEquipo.equipos | filter: { nombre: $searchTerm }" ng-model="ctrlJuga.player.equipoPago">
+										                <div class="pull-left" >
+										                    <img ng-src="{{ t.img }}" style="width: 30px" />
+										                    <strong>{{ t.nombre }}</strong>
+										                </div>
+										               
+										                </div>
+													
+													</div>
+													
+													<div class="input-group mb-3 input-group-sm">
+													     
+													    <input type="text" ng-model="ctrlJuga.player.costo" id="montoOfer" class="form-control input-sm" placeholder="Monto" />
+													    <label id="montoSeparado" class="form-control input-sm">{{ctrlJuga.player.costo | currency}}</label>
+													 </div>
+													
+												</div>
+											</div>
+													</div>
+								    </div>
+								    </div>
                                     </div>
                                     <div class="row">
                                        <div class="form-actions floatRight">
@@ -517,9 +576,10 @@
 					<table class="table table-lg table-hover table-center table-dark table-responsive">
 						<thead>
 							<tr>
+								<th></th>
 								<th>ID.</th>
-<!-- 								<th>N. Largo</th> -->
 								<th>N. Corto</th>
+								
 								<th>Equipo</th>
 								<th>Rating</th>
 <!-- 								<th width="20%"></th> -->
@@ -527,6 +587,9 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="u in ctrl.equipo.jugadores | orderBy : '-raiting' | filter : test" ">
+								<td >                                          	                                  
+                                  <img height="40" class="rounded float-left" ng-show="u.img != null" ng-src="{{u.img}}"   alt="{{u.id}} ">			                              
+                                </td>
 								<td><span ng-bind="u.id"></span></td>
 <!-- 								<td><span ng-bind="u.nombreCompleto"></span></td> -->
 								<td ng-show="u.link!=null"><a href="{{u.link}}" target="_blank" >{{u.sobrenombre}}</td>
@@ -634,6 +697,7 @@
                               <td>[b]Altas -[/b] <span ng-bind="p.sobrenombre"> </span></td>
                               <td>- <span>{{p.rating}}</span></td>
                               <td>- <span>{{p.equipo.nombre}}</span></td>
+                               <td>- <span>{{p.costo | currency}}</span></td>
                         </tr>
 						
 						<tr>
@@ -651,6 +715,7 @@
                               <td>[b]Bajas -[/b] <span ng-bind="p.sobrenombre"> </span></td>
                               <td>- <span>{{p.rating}}</span></td>
                               <td>- <span>{{p.equipo.nombre}}</span></td>
+                              <td>- <span>{{p.costo | currency}}</span></td>
                         </tr>
 						
 						<tr ng-repeat="e in ctrl.prestamos | orderBy : 'sobrenombre' | filter : test">
@@ -842,6 +907,7 @@
 					<table class="table table-lg table-hover table-center table-dark table-responsive">
                       <thead>
                           <tr>
+                              <th></th>
                               <th>ID.</th>
                               <th>Nombre</th>
                               <th>Equipo Oferta</th>
@@ -853,6 +919,9 @@
                       </thead>
                       <tbody>
                           <tr ng-repeat="e in ctrl.jugadoresDraft | orderBy : 'sobrenombre' | filter : test">
+	                          <td >                                          	                                  
+                                <img height="40" class="rounded float-left" ng-show="e.img != null" ng-src="{{e.img}}"   alt="{{e.id}} ">			                              
+                              </td>
                               <td><span ng-bind="e.id"></span></td>
                               <td><span ng-bind="e.sobrenombre"></span></td>
                               <td><span ng-bind="e.comentarios"></span></td>
@@ -894,19 +963,25 @@
 					<table class="table table-lg table-hover table-center table-dark table-responsive">
 						<thead>
 							<tr>
+								<th></th>
 								<th>ID</th>
 								<th>Nombre</th>
+								<th>$</th>
 								<th>Equipo</th>
 								<th>Rating</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="u in ctrl.equipo.altas | orderBy : '-raiting' | filter : test" ">
+							   <td >                                          	                                  
+                                <img height="40" class="rounded float-left" ng-show="u.img != null" ng-src="{{u.img}}"   alt="{{u.id}} ">			                              
+                              </td>
 								<td><span ng-bind="u.id"></span></td>
 <!-- 								<td><span ng-bind="u.nombreCompleto"></span></td> -->
 								<td ng-show="u.link!=null"><a href="{{u.link}}" target="_blank" >{{u.sobrenombre}}</td>
                                 <td ng-show="u.link==null">{{u.sobrenombre}}</td>
 <!-- 								<td><span ng-bind="u.sobrenombre"></span></td> -->
+								<td><span ng-bind="u.costo | currency"></span></td>
 								<td><span ng-bind="u.equipo.nombre"></span></td>
 								<td><span ng-bind="u.raiting"></span></td>
 							</tr>
@@ -919,6 +994,7 @@
 					<table class="table table-lg table-hover table-center table-dark table-responsive">
                       <thead>
                           <tr>
+                          	<th></th>
                               <th>ID.</th>
                               <th>Nombre</th>
                               <th>Equipo</th>
@@ -928,6 +1004,9 @@
                       </thead>
                       <tbody>
                           <tr ng-repeat="e in ctrl.prestamos | orderBy : 'sobrenombre' | filter : test">
+                          <td >                                          	                                  
+                                <img height="40" class="rounded float-left" ng-show="e.img != null" ng-src="{{e.img}}"   alt="{{e.id}} ">			                              
+                              </td>
                               <td><span ng-bind="e.id"></span></td>
                               <td><span ng-bind="e.sobrenombre"></span></td>
                               <td><span ng-bind="e.equipo.nombre"></span></td>
@@ -948,19 +1027,25 @@
 					<table class="table table-lg table-hover table-center table-dark table-responsive">
 						<thead>
 							<tr>
+								<th></th>
 								<th>ID</th>
 								<th>Nombre</th>
+								<th>$</th>
 								<th>Equipo</th>
 								<th>Rating</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="u in ctrl.equipo.bajas | orderBy : '-raiting' | filter : test" ">
+							<td >                                          	                                  
+                                <img height="40" class="rounded float-left" ng-show="u.img != null" ng-src="{{u.img}}"   alt="{{u.id}} ">			                              
+                              </td>
 								<td><span ng-bind="u.id"></span></td>
 <!-- 								<td><span ng-bind="u.nombreCompleto"></span></td> -->
 								<td ng-show="u.link!=null"><a href="{{u.link}}" target="_blank" >{{u.sobrenombre}}</td>
                                 <td ng-show="u.link==null">{{u.sobrenombre}}</td>
 <!-- 								<td><span ng-bind="u.sobrenombre"></span></td> -->
+								<td><span ng-bind="u.costo | currency"></span></td>
 								<td><span ng-bind="u.equipo.nombre"></span></td>
 								<td><span ng-bind="u.raiting"></span></td>
 							</tr>

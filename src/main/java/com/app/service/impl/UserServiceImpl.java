@@ -8,16 +8,23 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.dao.EquipoDao;
 import com.app.dao.UserDao;
 import com.app.enums.CodigoResponse;
+import com.app.modelo.Equipo;
 import com.app.modelo.ResponseData;
 import com.app.modelo.User;
+import com.app.service.SponsorService;
 import com.app.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
+	@Autowired
+	EquipoDao equipoDao;
+	@Autowired 
+	SponsorService sponsorService;
 	
 	private static final AtomicLong counter = new AtomicLong();
     
@@ -103,6 +110,27 @@ public class UserServiceImpl implements UserService {
 
 		public ResponseData updatePlayer(User currentUser,int idTemporada) {
 			userDao.updatePlayer(currentUser,idTemporada);
+			
+			
+			if(currentUser.getCosto() > 0 ){
+				Equipo equipoBD = new Equipo();
+				
+				equipoBD = equipoDao.findByIdAll(currentUser.getEquipoPago().getId(),idTemporada);
+				if(equipoBD.getDatosFinancieros() != null){
+					sponsorService.createPresupuesto(equipoBD,equipoBD.getDatosFinancieros().getPresupuestoInicial(), idTemporada);
+				}
+				
+				User userAnt = userDao.findByIdAnterior(currentUser.getId(), idTemporada);
+				
+				Equipo equipoBDAnt = new Equipo();
+				equipoBDAnt = equipoDao.findByIdAll(userAnt.getEquipo().getId(),userAnt.getEquipo().getTemporada().getId());
+				
+				if(equipoBDAnt.getDatosFinancieros() != null){
+					sponsorService.createPresupuesto(equipoBDAnt,equipoBDAnt.getDatosFinancieros().getPresupuestoInicial(), userAnt.getEquipo().getTemporada().getId());
+				}
+				
+				
+			}
 			
 			ResponseData response = new ResponseData();
 			

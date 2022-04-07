@@ -180,7 +180,8 @@ public class GenerarJornadasUtil {
 				Equipo equipoVisita = equipos.get(visita-1);
 				
 //				System.out.println("->Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
-				if(jornada > 0 && grupos.size()== 1){
+//				Ordenar local y visitas
+				if(jornada > 0 && grupos.size()<= 2){
 //					System.out.println("grupos enttro ]:"+grupos.size());
 					Jornada juegoAnterior = getJuegoAnterior(jornadasList, equipoLcoal, equipoLcoal, equipos);
 					Jornada juegoAnteriorVisita = getJuegoAnterior(jornadasList, equipoVisita, equipoVisita, equipos);

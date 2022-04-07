@@ -275,5 +275,22 @@ public class DraftController {
 		 
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
+	 
+	 
+	 @RequestMapping(value="/pc/getAllMov/{idTemporada}",
+			 method = RequestMethod.GET,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<List<JugadorDraft>> getAllMov(
+			 @PathVariable("idTemporada") int idTemporada
+			 ){
+	List<JugadorDraft> listJugadores = draftService.getAllMov(idTemporada);
+			
+			if(listJugadores.isEmpty()){
+				return new ResponseEntity<List<JugadorDraft>>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<JugadorDraft>>(listJugadores, HttpStatus.OK);
+		 
+	 }
 
 }

@@ -1,12 +1,13 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS crearJugador$$
-PROCEDURE `crearJugador`(IN nombreCompleto varchar(200) , 
+CREATE PROCEDURE `crearJugador`(IN nombreCompleto varchar(200) , 
 							   IN sobrenonbre varchar(200),
                                IN raiting INT,
                                IN idEquipo INT,
                                IN link varchar(200),
                                IN idsofifa INT,
-                               IN idTemporada INT
+                               IN idTemporada INT,
+                               IN img varchar(200)
                                )
 BEGIN
 
@@ -22,7 +23,8 @@ INSERT INTO persona
 `Equipos_idEquipo`,
 `activo`,
 `link`,
-`idsofifa`)    
+`idsofifa`,
+`img`)    
 
 VALUES
 (null,
@@ -34,7 +36,8 @@ VALUES
         idEquipo,
         1,
         link,
-        idsofifa
+        idsofifa,
+        img
 	    );
     
         

@@ -184,7 +184,7 @@ angular.module('myApp')
     	if(jug.idEquipoOferta == jug.equipo.id){
     		return ''
     	}else{
-    		return 'table-dark'
+    		return 'border-success'
     	}
     }
 	

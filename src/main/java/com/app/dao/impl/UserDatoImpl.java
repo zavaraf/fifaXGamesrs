@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.app.dao.UserDao;
 import com.app.modelo.Equipo;
+import com.app.modelo.Temporada;
 import com.app.modelo.User;
 
 @Component
@@ -39,6 +40,8 @@ public class UserDatoImpl implements UserDao{
 					+" persona.prestamo, "
 					+" persona.link, "
 					+" persona.idsofifa, "
+					+" persona.img, "
+					+ "     persona_has_temporada.costo, "
 					+" (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo "
 					+"                                       ELSE equipos_has_temporada.nombreEquipo  "
 					+"                                 END )as nombreEquipo  "
@@ -58,6 +61,8 @@ public class UserDatoImpl implements UserDao{
 	                        player.setRaiting(rs.getInt("rating"));
 	                        player.setLink(rs.getString("link"));
 	                        player.setIdsofifa(rs.getInt("idsofifa"));
+	                        player.setImg(rs.getString("img"));
+	                        player.setCosto(rs.getDouble("costo"));
 	                        Equipo equipo = new Equipo();
 	                        equipo.setId(rs.getLong("Equipos_idEquipo"));
 	                        equipo.setNombre(rs.getString("nombreEquipo"));
@@ -93,6 +98,8 @@ public class UserDatoImpl implements UserDao{
 				+"      persona.prestamo, "
 				+"      persona.link,  "
 				+"      persona.idsofifa, "
+				+"      persona.img, "
+				+ "     persona_has_temporada.costo, "
 				+"      (CASE WHEN equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo "
 				+"                                       ELSE equipos_has_temporada.nombreEquipo  "
 				+"                                 END )as nombreEquipo  "
@@ -117,6 +124,8 @@ public class UserDatoImpl implements UserDao{
                         player.setPrestamo(rs.getInt("prestamo"));
                         player.setLink(rs.getString("link"));
                         player.setIdsofifa(rs.getInt("idsofifa"));
+                        player.setImg(rs.getString("img"));
+                        player.setCosto(rs.getDouble("costo"));
                         Equipo equipo = new Equipo();
                         equipo.setId(rs.getLong("equipos_idEquipo"));
                         equipo.setNombre(rs.getString("nombreEquipo"));
@@ -140,6 +149,8 @@ public class UserDatoImpl implements UserDao{
 				+"  	   persona.sobrenombre,  "
 				+"         persona.idPersona,  "
 				+"         persona.idsofifa,  "
+				+"         persona.img, "
+				+ "     persona_has_temporada.costo, "
 				+"         persona.link,  "
 				+"         persona.NombreCompleto,  "
 				+"  	   persona_has_temporada.rating,  "
@@ -152,12 +163,12 @@ public class UserDatoImpl implements UserDao{
 				+"                         and peract.temporada_idTemporada =  (   "
 				+"			select max(idTemporada)   "
 				+"			from temporada    "
-				+"			where temporada.idTemporada !=  "+idTemporada + " ) "
+				+"			where temporada.idTemporada <  "+idTemporada + " ) "
 				+"  	join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = peract.equipos_idEquipo   "
 				+"                         and equipos_has_temporada.tempodada_idTemporada =  (   "
 				+"			select max(idTemporada)   "
 				+"			from temporada    "
-				+"			where temporada.idTemporada !=  "+idTemporada + " ) "
+				+"			where temporada.idTemporada < "+idTemporada + " ) "
 				+"  	join equipos on equipos.idEquipo = equipos_has_temporada.Equipos_idEquipo  "
 				+"  	where persona_has_temporada.equipos_idEquipo = "+idEquipo+"         "
 				+"      and persona_has_temporada.temporada_idTemporada = "+idTemporada + " "
@@ -167,7 +178,7 @@ public class UserDatoImpl implements UserDao{
 				+"  		where persona_has_temporada.temporada_idTemporada = (   "
 				+"			select max(idTemporada)   "
 				+"			from temporada    "
-				+"			where temporada.idTemporada !=  "+idTemporada + " ) "
+				+"			where temporada.idTemporada <  "+idTemporada + " ) "
 				+"  		and persona_has_temporada.equipos_idEquipo =   "+idEquipo+"  )"  ; 
 				
 				System.out.println(query);
@@ -179,9 +190,10 @@ public class UserDatoImpl implements UserDao{
 		                        player.setNombreCompleto(rs.getString("nombreCompleto"));
 		                        player.setSobrenombre(rs.getString("sobrenombre"));
 		                        player.setRaiting(rs.getInt("rating"));
-		                        
 		                        player.setLink(rs.getString("link"));
 		                        player.setIdsofifa(rs.getInt("idsofifa"));
+		                        player.setImg(rs.getString("img"));
+		                        player.setCosto(rs.getDouble("costo"));
 		                        
 		                        Equipo equipo = new Equipo();
 		                        equipo.setId(rs.getLong("equipos_idEquipo"));
@@ -208,6 +220,8 @@ public class UserDatoImpl implements UserDao{
 				+"  	   persona.sobrenombre, "
 				+"         persona.idPersona, "
 				+"         persona.idsofifa, "
+				+"         persona.img, "
+				+"         peract.costo, "
 				+"         persona.link, "
 				+"         persona.NombreCompleto, "
 				+"  	   persona_has_temporada.rating, "
@@ -225,13 +239,13 @@ public class UserDatoImpl implements UserDao{
 				+"      and persona_has_temporada.temporada_idTemporada = (  "
 				+"  	select max(idTemporada)  "
 				+"  	from temporada   "
-				+"  	where temporada.idTemporada != "+idTemporada+" )   "
+				+"  	where temporada.idTemporada < "+idTemporada+" )   "
 				+"      and persona_has_temporada.persona_idPersona not in (  "
 				+"  	select persona_idPersona   "
 				+"  		from persona_has_temporada  "
 				+"  		where persona_has_temporada.temporada_idTemporada = "+idTemporada+" "
 				+"  		and persona_has_temporada.equipos_idEquipo =  "+idEquipo+"  )  " ;
-		
+		System.out.println("----------------------imprimo consulta----------------------------------------------");
 		System.out.println(query);
 		Collection players = jdbcTemplate.query(query, new RowMapper() {
                     public Object mapRow(ResultSet rs, int arg1)
@@ -244,6 +258,8 @@ public class UserDatoImpl implements UserDao{
                         
                         player.setLink(rs.getString("link"));
                         player.setIdsofifa(rs.getInt("idsofifa"));
+                        player.setImg(rs.getString("img"));
+                        player.setCosto(rs.getDouble("costo"));
                         
                         Equipo equipo = new Equipo();
                         equipo.setId(rs.getLong("equipos_idEquipo"));
@@ -282,6 +298,8 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 				+"     persona.prestamo,"
 				+ "    persona.link, "
 				+"     persona.idsofifa, "
+				+"     persona.img, "
+				+ "     persona_has_temporada.costo, "
 				+ "    equipos.NombreEquipo as nombreEquipo "
 				+"     from  persona_has_temporada   "
 				+"     join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
@@ -302,7 +320,9 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
                         player.setPrestamo(rs.getInt("prestamo"));
                         player.setLink(rs.getString("link"));
                         player.setIdsofifa(rs.getInt("idsofifa"));
+                        player.setImg(rs.getString("img"));
                         player.setEquipos_idEquipo(rs.getInt("equipos_idEquipo"));
+                        player.setCosto(rs.getDouble("costo"));
                         Equipo equipo = new Equipo();
                         equipo.setId(rs.getLong("Equipos_idEquipo"));
                         equipo.setNombre(rs.getString("nombreEquipo"));
@@ -326,7 +346,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 		//Sobrenombre
 		//Raiting
 		//Equipo
-		String insert = "call  crearJugador(?,?, ?,?,?,?,?)";
+		String insert = "call  crearJugador(?,?, ?,?,?,?,?,?)";
 				
 		
 		jdbcTemplate.update(insert,
@@ -336,7 +356,8 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 			    player.getEquipo().getId(),
 			    player.getLink(),
 			    player.getIdsofifa(),
-			    idTemporada
+			    idTemporada,
+			    player.getImg()
 			  );
 		
 		
@@ -346,11 +367,16 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 		
 		System.out.println("------->Plyer]:"+currentUser.toString());
 		System.out.println("Equipo]:"+currentUser.toString());
+		if(currentUser.getEquipoPago() == null){
+			currentUser.setEquipoPago(currentUser.getEquipo());
+		}
+		System.out.println("Equipo Pago]:"+currentUser.getEquipoPago().getId());
+		System.out.println("Monto]:"+currentUser.getCosto());
 		//NOmbre
 		//Sobrenombre
 		//Raiting
 		//Equipo
-		String insert = "call  modificarJugador(?,?, ?,?,?,?,?,?)";
+		String insert = "call  modificarJugador(?,?, ?,?,?,?,?,?,?,?,?)";
 				
 		
 		jdbcTemplate.update(insert,
@@ -361,7 +387,10 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 				currentUser.getId(),
 				currentUser.getLink(),
 				currentUser.getIdsofifa(),
-				idTemporada
+				idTemporada,
+				currentUser.getImg(),
+				currentUser.getEquipoPago().getId(),
+				currentUser.getCosto()
 			  );
 	}
 
@@ -382,6 +411,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 				+"     persona.prestamo,"
 				+"     persona.link,"
 				+"     persona.idsofifa, "
+				+"     persona.img, "
 				+ "    equipos.NombreEquipo as nombreEquipo "
 				+" FROM  persona "
 				+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
@@ -403,6 +433,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
                         String raiting = rs.getString("raiting");
                         user.setLink(rs.getString("link"));
                         user.setIdsofifa(rs.getInt("idsofifa"));
+                        user.setImg(rs.getString("img"));
                         user.setRaiting(raiting != null ? Integer.parseInt(raiting): 0);
                         String pot = rs.getString("potencial");
                         user.setPotencial(pot!= null ? Integer.parseInt(pot): 0);
@@ -415,6 +446,86 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
                         equipo.setId(rs.getInt("Equipos_idEquipo"));
                         equipo.setNombre(rs.getString("nombreEquipo"));
                         user.setEquipo(equipo);
+                        return user;
+                    }
+                });
+		 for (Object user : users) {
+	            System.out.println(user.toString());
+	            return (User)user;
+	        }
+	        
+		return null;
+	}
+	
+	public User findByIdAnterior(long id, int idTemporada) {
+		
+		String query = " SELECT persona.idPersona, "
+				+"     persona.nombre, "
+				+"     persona.apellidoPaterno, "
+				+"     persona.apellidoMaterno, "
+				+"     persona.nombreCompleto, "
+				+"     persona.sobrenombre, "
+				+"     persona.fehaNacimiento, "
+				+"     persona.raiting, "
+				+"     persona.potencial, "
+				+"     persona_has_temporada.equipos_idEquipo, "
+				+"     persona.activo, "
+				+"     persona.userManager, "
+				+"     persona.prestamo,"
+				+"     persona.link,"
+				+"     persona.idsofifa, "
+				+"     persona.img, "
+				+ "     persona_has_temporada.costo, "
+				+ "    equipos.NombreEquipo as nombreEquipo,"
+				+ "    persona_has_temporada.temporada_idTemporada  "
+				+" FROM  persona "
+				+" JOIN  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
+				+" join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo"
+				+" join persona_has_temporada on persona_has_temporada.persona_idPersona = persona.idPersona and persona_has_temporada.temporada_idTemporada = equipos_has_temporada.tempodada_idTemporada"
+				+" where equipos_has_temporada.tempodada_idTemporada = (select max(temporada.idTemporada) "
+				+"                 from temporada    "
+				+"                 where temporada.idTemporada < "+idTemporada+")"
+				+" and persona.idPersona =  " + id;
+		
+	
+		Collection users = jdbcTemplate.query(query, new RowMapper() {
+
+                    public Object mapRow(ResultSet rs, int arg1)
+                            throws SQLException {
+                        User user = new User();
+                        user.setId(rs.getLong("idPersona"));
+                        user.setNombre(rs.getString("nombre"));
+                        user.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                        user.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                        user.setNombreCompleto(rs.getString("nombreCompleto"));
+                        user.setSobrenombre(rs.getString("sobrenombre"));
+                        user.setFehaNacimiento(rs.getString("fehaNacimiento"));
+                        String raiting = rs.getString("raiting");
+                        user.setLink(rs.getString("link"));
+                        user.setIdsofifa(rs.getInt("idsofifa"));
+                        user.setImg(rs.getString("img"));
+                        user.setCosto(rs.getDouble("costo"));
+                        user.setRaiting(raiting != null ? Integer.parseInt(raiting): 0);
+                        String pot = rs.getString("potencial");
+                        user.setPotencial(pot!= null ? Integer.parseInt(pot): 0);
+                        user.setEquipos_idEquipo(rs.getInt("equipos_idEquipo"));
+                        user.setActivo(rs.getInt("activo"));
+                        user.setUserManager(rs.getString("userManager"));
+                        String pres = rs.getString("prestamo");
+                        user.setPrestamo(pres != null ? Integer.parseInt(pres): 0);
+                        
+                        Equipo equipo = new Equipo();
+                        equipo.setId(rs.getInt("Equipos_idEquipo"));
+                        equipo.setNombre(rs.getString("nombreEquipo"));
+                        
+                        Temporada temporada = new Temporada();
+                        
+                        temporada.setId(rs.getInt("temporada_idTemporada"));
+                       
+                        equipo.setTemporada(temporada);
+                        
+                        user.setEquipo(equipo);
+                        
                         return user;
                     }
                 });
