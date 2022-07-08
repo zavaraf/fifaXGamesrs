@@ -17,4 +17,6 @@ public interface CatalogoDao {
 	HashMap<String, String> updateCastigos(int id, int idEquipo, int idTemporada, int valor, String observaciones,
 			String tipo, int idTorneo);
 
+	public HashMap<String, String> confirmarJugadores(String json, int idTemporada);
+
 }

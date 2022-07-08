@@ -10,8 +10,10 @@ import com.app.dao.CatalogoDao;
 import com.app.enums.CodigoResponse;
 import com.app.modelo.Castigo;
 import com.app.modelo.CatalogoFinanciero;
+import com.app.modelo.JugadoresCSV;
 import com.app.modelo.ResponseData;
 import com.app.service.CatalogoService;
+import com.google.gson.Gson;
 
 @Service
 public class CatalogoServiceImpl implements CatalogoService{
@@ -59,6 +61,28 @@ public class CatalogoServiceImpl implements CatalogoService{
 				castigo.getObservaciones(), 
 				castigo.getCastigo(),
 				castigo.getIdTorneo());
+		
+		if (map == null || map.isEmpty()) {
+			response.setStatus(CodigoResponse.ERROR.getCodigo());
+			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+		} else {
+			String status = map.get("status");
+			response.setStatus(Integer.parseInt(status));
+			response.setMensaje(map.get("mensaje"));
+		}
+		return response;
+	}
+
+	@Override
+	public ResponseData confirmarJugadores(List<JugadoresCSV> jugadores, int idTemporada) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		ResponseData response = new ResponseData();
+		
+		Gson gson = new Gson();
+
+		String json = gson.toJson(jugadores);
+		
+		map= catalogoDao.confirmarJugadores(json,idTemporada);
 		
 		if (map == null || map.isEmpty()) {
 			response.setStatus(CodigoResponse.ERROR.getCodigo());

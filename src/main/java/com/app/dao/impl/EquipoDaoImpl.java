@@ -92,13 +92,15 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"    join  division on equipos.Division_idDivision = division.idDivision   "
 				+"    join (select count(persona_has_temporada.persona_idPersona) as totalJugadores, sum(persona_has_temporada.rating) totalRaiting, equipos.idEquipo,dat.presupuestoInicial, dat.presupuestoFinal  "
 				+"           from  persona_has_temporada    "
-				+"           join  persona_has_roles pero on pero.Persona_idPersona = persona_has_temporada.persona_idPersona "
-				+"           join  roles on roles.idRoles = pero.Roles_idRoles   "
+//				+"           join  persona_has_roles pero on pero.Persona_idPersona = persona_has_temporada.persona_idPersona "
+//				+"           join  roles on roles.idRoles = pero.Roles_idRoles   "
 				+"           join  equipos on equipos.idEquipo = persona_has_temporada.equipos_idEquipo "
 				+"           join  equipos_has_temporada et on et.Equipos_idEquipo = equipos.idEquipo   "
 				+"           join  temporada on temporada.idTemporada = et.tempodada_idTemporada and persona_has_temporada.temporada_idTemporada = temporada.idTemporada "
 				+"           left join datosfinancieros dat on dat.Equipos_idEquipo = equipos.idEquipo and dat.tempodada_idTemporada = temporada.idTemporada  "
-				+"           where roles.nombreRol = 'Jugador' and temporada.idTemporada =  " + idTemporada
+				+"           where "
+//				+ "         roles.nombreRol = 'Jugador' and "
+				+ "        temporada.idTemporada =  " + idTemporada
 				+"           group by  equipos.idEquipo ,dat.presupuestoInicial ,equipos.idEquipo,dat.presupuestoFinal  ) tot on tot.idEquipo = equipos.idEquipo  "
 				+"   and equipos_has_temporada.tempodada_idTemporada =   " + idTemporada
 				;
@@ -270,11 +272,12 @@ public class EquipoDaoImpl implements EquipoDao{
 				+ " persona_has_temporada.equipos_idEquipo as idEquipo "
 				+"              from  persona_has_temporada   "
 				+"              join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
-				+"              join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
-				+"              join  roles on roles.idRoles = pero.Roles_idRoles  "
+//				+"              join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
+//				+"              join  roles on roles.idRoles = pero.Roles_idRoles  "
 				+"              join  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+"              where roles.nombreRol = 'Jugador'   "
-				+"              and persona_has_temporada.temporada_idTemporada = " + idTemporada
+				+"              where "
+//				+ "             roles.nombreRol = 'Jugador'   "
+				+"              persona_has_temporada.temporada_idTemporada = " + idTemporada
 				+"              group by persona_has_temporada.equipos_idEquipo) tot on tot.idEquipo = equipos_has_temporada.Equipos_idEquipo "
 				
 				+" Where tot.idEquipo = " + id
@@ -354,11 +357,12 @@ public class EquipoDaoImpl implements EquipoDao{
 				+ " persona_has_temporada.equipos_idEquipo as idEquipo "
 				+"              from  persona_has_temporada   "
 				+"              join  persona on persona.idPersona = persona_has_temporada.persona_idPersona   "
-				+"              join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
-				+"              join  roles on roles.idRoles = pero.Roles_idRoles  "
+//				+"              join  persona_has_roles pero on pero.Persona_idPersona = persona.idPersona  "
+//				+"              join  roles on roles.idRoles = pero.Roles_idRoles  "
 				+"              join  equipos on equipos.idEquipo = persona.Equipos_idEquipo  "
-				+"              where roles.nombreRol = 'Jugador'   "
-				+"              and persona_has_temporada.temporada_idTemporada = " + idTemporada
+				+"              where "
+//				+ "   roles.nombreRol = 'Jugador'   "
+				+"               persona_has_temporada.temporada_idTemporada = " + idTemporada
 				+"              group by persona_has_temporada.equipos_idEquipo) tot on tot.idEquipo = equipos_has_temporada.Equipos_idEquipo  "
 				+" Where tot.idEquipo = " + id
 				+" and equipos_has_temporada.tempodada_idTemporada =  "+ idTemporada;

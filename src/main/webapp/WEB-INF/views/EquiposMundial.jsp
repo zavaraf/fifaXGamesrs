@@ -185,15 +185,12 @@
                       <thead>
                           <tr>
                               <th>ID.</th>
-<!--                               <th>Manager</th> -->
                               <th>Nombre</th>
-<!--                               <th>Descripción</th> -->
+                              <th>Manager</th>
                               <th>Jugadores</th>
                               <th>Rating</th>
-                              <th>Salarios</th>
                               <th>P. Inicial</th>
                               <th>P. Final</th>
-                              <th>División</th>
 <!--                               <th width="20%"></th> -->
                           </tr>
                       </thead>
@@ -204,8 +201,8 @@
                           
 <!--                               <td><span ng-bind="e.id"></span></td> -->
                               <td><img ng-src="{{e.img}}" height="25"  class="rounded float-left" alt="..."></td>
-<!--                               <td><span ng-bind="e.manager"></span></td> -->
                               <td><a href="#!team/{{e.id}}">{{e.nombre}}</a></td>
+                              <td><span ng-bind="e.manager"></span></td>
 <!--                               <td><span ng-bind="e.descripcion"></span></td> -->
                               <td><span ng-bind="e.totalJugadores"></span></td>
                               <td><span ng-bind="e.totalRaiting"></span></td>

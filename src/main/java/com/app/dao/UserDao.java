@@ -6,7 +6,7 @@ import com.app.modelo.User;
 
 public interface UserDao {
 	
-	List<User> findAllPlayers(int idTemporadad);
+	List<User> findAllPlayers(int idTemporadad,int option);
 
 	void savePlayer(User player,int idTemporada);
 

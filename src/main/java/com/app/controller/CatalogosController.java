@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.app.enums.CodigoResponse;
 import com.app.modelo.Castigo;
 import com.app.modelo.CatalogoFinanciero;
+import com.app.modelo.JugadoresCSV;
 import com.app.modelo.ResponseData;
 import com.app.service.CatalogoService;
 
@@ -87,6 +88,28 @@ public class CatalogosController {
 		 try{
 			 System.out.println("---->User]:authentication.name");
 			 response = catalogService.updateCastigo(castigo, idTemporada);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/confirmarJugadores/{idTemporada}",method = {RequestMethod.POST},
+			headers="Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<ResponseData> confirmarJugadores(
+			@PathVariable("idTemporada") int idTemporada,
+			@RequestBody List<JugadoresCSV> jugadores){
+		
+		 ResponseData response = new ResponseData();	
+		 try{
+			 System.out.println("---->confirmarJugadores]:authentication.name");
+			 response = catalogService.confirmarJugadores(jugadores, idTemporada);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());

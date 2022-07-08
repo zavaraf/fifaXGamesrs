@@ -34,9 +34,9 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
         return deferred.promise;
     }
  
-    function fetchAllPlayers() {
+    function fetchAllPlayers(option) {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+'findAllPlayers/'+CONFIG.VARTEMPORADA.id)
+        $http.get(REST_SERVICE_URI+'findAllPlayers/'+CONFIG.VARTEMPORADA.id+'/'+option, { timeout: 999999 })
             .then(
             function (response) {
                 deferred.resolve(response.data);

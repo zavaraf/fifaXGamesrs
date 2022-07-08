@@ -42,6 +42,9 @@
       <script src="<c:url value='/static/js/controller/equipo_controller.js' />"></script>
       
       <script src="<c:url value='/static/js/app/customSelect.js' />"></script>
+
+	  <script src="<c:url value='/static/js/app/papaparse.js' />"></script>
+	<script src="<c:url value='/static/js/app/papaparse.min.js' />"></script>   
   
   	
 	<div ng-controller="CastigosController as ctrl">
@@ -201,6 +204,18 @@
 
 </div> 
 
+
+
 </div>
+
+
+ 
+
+
+
+ 
+ 
+
+
 </body>
 </html>

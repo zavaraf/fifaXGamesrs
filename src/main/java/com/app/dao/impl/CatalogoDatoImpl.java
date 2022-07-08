@@ -221,4 +221,39 @@ public class CatalogoDatoImpl implements CatalogoDao{
 		return mapa;
 	}
 
+	@Override
+	public HashMap<String, String> confirmarJugadores(String json, int idTemporada) {
+		System.out.println("----->confirmarJugadores]:");
+		String query = "confirmarJugadores";
+
+		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
+
+		// Sql parameter mapping
+		SqlParameter jsonVar = new SqlParameter("json", Types.VARCHAR);
+		SqlParameter idTemporadaVar = new SqlParameter("idTemporada", Types.INTEGER);
+		
+		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
+		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
+
+		SqlParameter[] paramArray = { jsonVar, idTemporadaVar,
+				isError, message };
+
+		myStoredProcedure.setParameters(paramArray);
+		myStoredProcedure.compile();
+
+		// Call stored procedure  
+		Map storedProcResult = myStoredProcedure.execute(json, idTemporada);
+
+		System.out.println(storedProcResult);
+
+		HashMap<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("status", storedProcResult.get("isError").toString());
+		mapa.put("mensaje", storedProcResult.get("message").toString());
+		
+		System.out.println(mapa);
+
+		return mapa;
+	}
+
 }

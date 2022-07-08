@@ -23,7 +23,7 @@ public interface UserService {
 	     
 	    public boolean isUserExist(User user);
 
-		List<User> findAllPlayers(int idTemporada);
+		List<User> findAllPlayers(int idTemporada,int option);
 
 		ResponseData savePlayer(User user,int idTemporada);
 

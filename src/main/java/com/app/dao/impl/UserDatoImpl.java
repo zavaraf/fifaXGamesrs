@@ -21,7 +21,17 @@ public class UserDatoImpl implements UserDao{
 	@Autowired
     JdbcTemplate jdbcTemplate;
 
-	public List<User> findAllPlayers(int idTemporada) {
+	public List<User> findAllPlayers(int idTemporada,int option) {
+		
+		String queryRati = "  ";
+		
+		if(option == 0){
+			queryRati = "  and persona_has_temporada.rating >= 80 ";
+		}else if(option == 1){
+			queryRati = "  and persona_has_temporada.rating >= 70 and  persona_has_temporada.rating < 80 ";
+		}else if(option == 2){
+			queryRati = "  and persona_has_temporada.rating < 70  ";
+		}
 
 		
 			List<User> playersList = new ArrayList<User>();
@@ -51,6 +61,8 @@ public class UserDatoImpl implements UserDao{
 					+" JOIN equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo   "
 					+"       and persona_has_temporada.temporada_idTemporada = equipos_has_temporada.tempodada_idTemporada  "
 					+" where persona_has_temporada.temporada_idTemporada =  " + idTemporada;
+			
+//			query = query + queryRati;
 			Collection players = jdbcTemplate.query(query, new RowMapper() {
 	                    public Object mapRow(ResultSet rs, int arg1)
 	                            throws SQLException {
@@ -70,12 +82,12 @@ public class UserDatoImpl implements UserDao{
 	                        return player;
 	                    }
 	                });
-			 for (Object player : players) {
-//		            System.out.println(((User)player).toString());
-		            playersList.add( (User)player);
-		        }
+//			 for (Object player : players) {
+////		            System.out.println(((User)player).toString());
+//		            playersList.add( (User)player);
+//		        }
 		        
-			return playersList;
+			return playersList = new ArrayList<User>(players);
 		
 	}
 	
@@ -133,10 +145,12 @@ public class UserDatoImpl implements UserDao{
                         return player;
                     }
                 });
-		 for (Object player : players) {
-//	            System.out.println(((User)player).toString());
-	            playersList.add( (User)player);
-	        }
+//		 for (Object player : players) {
+////	            System.out.println(((User)player).toString());
+//	            playersList.add( (User)player);
+//	        }
+		 
+		 playersList = new ArrayList<User>(players);
 	        
 		return playersList;
 	

@@ -26,6 +26,7 @@
   <script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
   <script src="<c:url value='/static/js/controller/draftPC_controller.js' />"></script>
   <script src="<c:url value='/static/js/service/draftPC_service.js' />"></script>
+   <script src="<c:url value='/static/js/app/customSelect.js' />"></script>
  
 
   <div class="container tab-pane active" ng-controller="DraftPCController as ctrl">
@@ -255,13 +256,15 @@
                 <!-- Default panel contents -->
               <div class="panel-heading"><span class="lead">Draft PC Mundial </span></div>
             
+              <button type="button" class="btn btn-info btn-sm" ng-show = "ctrl.visibleOfertas == true"
+               ng-click="ctrl.buscarJugadoresdraft()">Actualizar</button>
 			
 				
               <div class="table-responsive-sm">
               		<div class="row">
                           <div class="form-group col-md-12">
                               <div class="col-md-7">
-                                  <p><input class="form-control input-sm"  type="text" ng-model="test" placeholder="Filtrar"></p>
+                                  <p><input class="form-control input-sm"  type="text" ng-model="test"  ng-pagination-search="ctrl.equipo.jugadores" placeholder="Filtrar"></p>
                               </div>
                           </div>
               		</div>
@@ -278,7 +281,8 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr  ng-repeat="e in ctrl.equipo.jugadores | orderBy : 'sobrenombre' | filter : test">
+<!--                           <tr  ng-repeat="e in ctrl.equipo.jugadores | orderBy : 'sobrenombre' | filter : test"> -->
+                          <tr ng-pagination="e in ctrl.equipo.jugadores | orderBy : '-raiting' | filter : test" ng-pagination-size="60"  >
                               <td >                                          	                                  
                                 <img height="40" class="rounded float-left" ng-show="e.img != null" ng-src="{{e.img}}"   alt="{{e.id}} ">			                              
                               </td>
@@ -295,6 +299,7 @@
                           </tr>
                       </tbody>
                   </table>
+                  <ng-pagination-control pagination-id="ctrl.equipo.jugadores"></ng-pagination-control>
               
 <!--                   <table ng-show = "ctrl.visibleOfertas == true" class="table table-lg table-hover table-dark table-center"> -->
 <!--                       <thead> -->

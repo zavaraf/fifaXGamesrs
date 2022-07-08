@@ -14,14 +14,17 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','$timeout','U
     self.player={id:null,nombre : '',apellidoPaterno : '',apellidoMaterno : '',nombreCompleto : '',sobrenombre : '',fehaNacimiento : null,raiting : 0 ,potencial : 0 ,activo : 0 ,userManager : '',prestamo : 0};
     self.players=[];
     
+    self.checkBuscar=0
+    
  
-    self.submit = submit;
-    self.submitPlayer = submitPlayer;
-    self.edit = edit;
-    self.remove = remove;
-    self.reset = reset;
-    self.showDraft = showDraft;
-    self.showEditPlayer = showEditPlayer; 
+    self.submit          = submit;
+    self.submitPlayer    = submitPlayer;
+    self.edit            = edit;
+    self.remove          = remove;
+    self.reset           = reset;
+    self.showDraft       = showDraft;
+    self.showEditPlayer  = showEditPlayer;
+    self.fetchAllPlayers = fetchAllPlayers; 
     
     $scope.selectedTeam
     $scope.showDraftV = false
@@ -50,7 +53,7 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','$timeout','U
 	$scope.example5customTexts = {buttonDefaultText: 'Seleccione Equipo'};
  
 //    fetchAllUsers();
-    fetchAllPlayers();
+    fetchAllPlayers(0);
     
     $scope.searchAsync = function (term) {
         // No search term: return initial items
@@ -65,7 +68,7 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','$timeout','U
 	            result.push(term + ' ' + i);
 	        }
 	        deferred.resolve(result);
-	    }, 300);
+	    }, 30000);
 	    return deferred.promise;
 	};
     
@@ -85,9 +88,9 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','$timeout','U
             }
         );
     }
-    function fetchAllPlayers(){
+    function fetchAllPlayers(option){
 //    	if (CONFIG.JUGADORES == null){
-	        UserService.fetchAllPlayers()
+	        UserService.fetchAllPlayers(option)
 	            .then(
 	            function(d) {
 	                self.players = d;
@@ -100,6 +103,7 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','$timeout','U
 	                console.error('[user_controller] Error while fetching fetchAllPlayers');
 	            }
 	        );
+	     
 //    	}else{
 //    		self.players = CONFIG.JUGADORES;
 //    	}

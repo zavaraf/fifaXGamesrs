@@ -45,6 +45,8 @@
 <!-- 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> -->
   
 	<script src="<c:url value='/static/js/app/app.js' />"></script>
+	<script src="<c:url value='/static/js/app/papaparse.js' />"></script>
+	<script src="<c:url value='/static/js/app/papaparse.min.js' />"></script>  
 	
 	
 	<script
@@ -84,6 +86,9 @@
       
       <script src="<c:url value='/static/js/controller/salonFama_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/salonFama_service.js' />"></script>
+      
+      <script src="<c:url value='/static/js/controller/cargaJugadores_controller.js' />"></script>
+  	<script src="<c:url value='/static/js/service/cargarJugador_service.js' />"></script>
 
 	<script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script>
 	<script src="<c:url value='/static/js/app/customSelect.js' />"></script>
@@ -147,6 +152,7 @@
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="#!conceptos">Conceptos Financieros</a>
 				      <a class="dropdown-item" href="#!castigos">Castigos</a>
+				      <a class="dropdown-item" href="#!cargaJugadores">Cargar Jugadores</a>
 				    </div>
 				   
 				  </li>

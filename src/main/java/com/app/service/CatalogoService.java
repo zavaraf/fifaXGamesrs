@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.app.modelo.Castigo;
 import com.app.modelo.CatalogoFinanciero;
+import com.app.modelo.JugadoresCSV;
 import com.app.modelo.ResponseData;
 
 public interface CatalogoService {
@@ -16,5 +17,7 @@ public interface CatalogoService {
 
 
 	public ResponseData updateCastigo(Castigo castigo, int idTemporada);
+	
+	public ResponseData confirmarJugadores(List<JugadoresCSV> judadores, int idTemporada);
 
 }

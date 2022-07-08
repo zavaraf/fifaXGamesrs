@@ -267,19 +267,36 @@
                         <span class="lead">FIFA XGAMERS </span>
                      </div>
                      <!-- Trigger the modal with a button -->
-                     <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
+                     <sec:authorize access="hasAnyRole('ROLE_Admin')">
                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                            data-target="#myModal">Añadir Jugador</button>
                      </sec:authorize>
                      <div class="formcontainer">
                         <div >
-                           <div class="panel panel-default">
-                              <!-- Default panel contents -->
-                              <!-- HTML to write -->	
-                              <div class="panel-heading">
-                                 <span class="lead">Lista de Jugadores</span>                                 
-                              </div>
-                           </div>
+<!--                            <div class="panel panel-default"> -->
+<!--                                  <div class="form-check"> -->
+<!-- 									  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" ng-click="ctrl.checkBuscar=0" checked> -->
+<!-- 									  <label class="form-check-label" for="flexRadioDefault1"> -->
+<!-- 									    Mayor a 80 -->
+<!-- 									  </label> -->
+<!-- 									</div> -->
+<!-- 									<div class="form-check"> -->
+<!-- 									  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" ng-click="ctrl.checkBuscar=1" > -->
+<!-- 									  <label class="form-check-label" for="flexRadioDefault2"> -->
+<!-- 									    Menor 70 y menor que 80 -->
+<!-- 									  </label> -->
+<!-- 									</div> -->
+<!-- 									<div class="form-check"> -->
+<!-- 									  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" ng-click="ctrl.checkBuscar=2" > -->
+<!-- 									  <label class="form-check-label" for="flexRadioDefault2"> -->
+<!-- 									    Menor 70  -->
+<!-- 									  </label> -->
+<!-- 									</div> -->
+                                                                  
+<!--                               <button type="button" class="btn btn-info btn-sm"  ng-click="ctrl.fetchAllPlayers(ctrl.checkBuscar)">Buscar</button> -->
+
+                              
+<!--                            </div> -->
                            <div >
                               <div class="table-responsive-sm">
                                  <div class="row">

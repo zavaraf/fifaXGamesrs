@@ -1,79 +1,39 @@
 'use strict';
  
 angular.module('myApp')
-.controller('CastigosController', ['$scope','$routeParams','CONFIG', 'CastigosService', 'TorneoLMService',
-	function($scope, $routeParams,CONFIG,CastigosService,TorneoLMService) {
+.controller('CargaJugadoresController', ['$scope','$routeParams','CONFIG', 'CargarJugadorService', 
+	function($scope, $routeParams,CONFIG,CargarJugadorService) {
 	var self = this;
-		
-	self.catalogo = [];
-	self.catalogoCastigo = [{ codigo : 'puntos'},{ codigo : 'goles'}];
 	
-	self.data = null;
+	$scope.data = [];
 	
-	self.castigoSubmit;
+	self.result = null;
 	
-	self.torneos = CONFIG.VARTEMPORADA.torneos
+	self.datos = null;
 	
-	self.findAllCastigos         = findAllCastigos;
-	self.updateCastigos         = updateCastigos;
+	
 	self.read                   = read;
+	self.add                   = add;
+	self.confirmar                   = confirmar;
 	
-	findAllCastigos();
-	findTorneos();
-	
-	function findTorneos(){
-		//TorneoLMService
-	}
-	
+
 	function read(datos){
 		console.log(datos)
 	}
 	
-	function findAllCastigos(){
-		CastigosService.findAllCastigos()
+	function confirmar(datos){
+		CargarJugadorService.confirmarJugadores(datos)
             .then(
             function(d) {
-            	console.log("-----[CastigosController]  findAllCastigos]:",d)
-                self.catalogo = d;
+                self.result = d;
+                console.log("[cargarJugadores_controller] confirmar]:",self.result)
             },
             function(errResponse){
-                console.error('----[CastigosController]  Error while fetching findAllCastigos()');
+                console.error('[cargarJugadores_controller] Error while  confirmar');
             }
         );
     }
 	
-	function updateCastigos(castigo) {
-		console.log("------------------->castigo]:",castigo)
-		
-		var castigoMOd = {};
-		
-		castigoMOd.castigo = castigo.tipoconcepto.codigo
-		castigoMOd.numero = castigo.numero
-		castigoMOd.observaciones = castigo.observaciones
-		castigoMOd.idEquipo = castigo.equipo.id
-		castigoMOd.idTorneo = castigo.torneo.id
-		
-		console.log("------------------->castigo]:",castigoMOd)
-		
-		
-		
-		CastigosService
-				.updateCastigos(castigoMOd)
-				.then(
-						function(d) {
-
-							console.log("CastigosController-updateCastigos]:",
-											d)
-
-						   findAllCastigos();
-							return d;
-						},
-						function(errResponse) {
-							console
-									.error('[CastigosController] Error while updateCastigos()');
-						});
-		return null;
-	}
 	
 	 var clearAlerts = function() {
 	      $scope.error = {}, $scope.warning = null
@@ -142,7 +102,7 @@ angular.module('myApp')
 	    }
 	    
 	    //   Convert to JSON function
-	    $scope.add = function(){
+	   function add (){
 	        var Table = document.getElementById('Table');
 	        var file = document.getElementById("bulkDirectFile").files[0];
 	        $('.loading').show();
@@ -155,11 +115,17 @@ angular.module('myApp')
 	            error: function(err, file, inputElem, reason) { },
 	            complete: function(results) {
 	                allResults.push(results.data);
-	                self.data = results.data;
-	                console.log(self.data);
+	                $scope.data = results.data;
+	                
+	                console.log($scope.data);
+	    	        self.datos= $scope.data;
+	                
 	                
 	            }
-	          });   
+	          });  
+	        
+	        console.log("Termina......"+allResults.length);
+	        
 	        }
 	      
 

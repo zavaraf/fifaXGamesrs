@@ -42,12 +42,13 @@ public class UserController {
 		}
 		return new ResponseEntity<List<User>>(listUser, HttpStatus.OK);
 	}
-	@RequestMapping(value="/user/findAllPlayers/{idTemporada}",method = RequestMethod.GET,
+	@RequestMapping(value="/user/findAllPlayers/{idTemporada}/{option}",method = RequestMethod.GET,
 			headers="Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<List<User>> listAllPlayers(@PathVariable("idTemporada") int idTemporada){
+	public ResponseEntity<List<User>> listAllPlayers(@PathVariable("idTemporada") int idTemporada,
+			@PathVariable("option") int option){
 		
-		List<User> listPlayes = userService.findAllPlayers(idTemporada);
+		List<User> listPlayes = userService.findAllPlayers(idTemporada,option);
 		
 		if(listPlayes.isEmpty()){
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);

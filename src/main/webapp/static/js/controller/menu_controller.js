@@ -48,6 +48,9 @@ var app = angular.module("myApp", ["ngRoute","ngPagination",'angularjs-dropdown-
         }).when("/salonFama", {
         	templateUrl : "salonFama"
         	
+        }).when("/cargaJugadores", {
+        	templateUrl : "cargaJugadores"
+        	
         })
          
         ;

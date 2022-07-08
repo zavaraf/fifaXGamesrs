@@ -39,7 +39,7 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
 	function findEquipoAll(teamID, idTemporada) {
 		
 		var deferred = $q.defer();
-		$http.get(REST_SERVICE_URI+"all/"+teamID+"/"+idTemporada)
+		$http.get(REST_SERVICE_URI+"all/"+teamID+"/"+idTemporada, { timeout: 999999 })
 		.then(
 				function (response) {
 					console.log(response.data)

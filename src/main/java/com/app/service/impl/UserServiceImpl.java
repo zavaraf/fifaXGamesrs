@@ -93,8 +93,8 @@ public class UserServiceImpl implements UserService {
 	        return users;
 	    }
 
-		public List<User> findAllPlayers(int idTemporada) {
-			return userDao.findAllPlayers(idTemporada);
+		public List<User> findAllPlayers(int idTemporada,int option) {
+			return userDao.findAllPlayers(idTemporada,option);
 		}
 
 		public ResponseData savePlayer(User user,int idTemporada) {
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 			ResponseData response = new ResponseData();
 			response.setStatus(CodigoResponse.OK.getCodigo());
 			response.setMensaje(CodigoResponse.OK.getMensaje());
-			response.setData(userDao.findAllPlayers(idTemporada));
+			response.setData(userDao.findAllPlayers(idTemporada,0));
 			
 			return response;
 		}
@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
 			
 			response.setStatus(CodigoResponse.OK.getCodigo());
 			response.setMensaje(CodigoResponse.OK.getMensaje());
-			response.setData(userDao.findAllPlayers(idTemporada));
+			response.setData(userDao.findAllPlayers(idTemporada,0));
 			
 			return response;
 					
