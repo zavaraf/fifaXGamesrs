@@ -56,7 +56,7 @@ BEGIN
   declare idPersonaVal int;
   declare idEquipoVal int;
   
- 
+  declare amarillas int;
 
 
   
@@ -324,7 +324,7 @@ set `json_items_tarjetas` = JSON_LENGTH(jsonTarjetas);
 				(SELECT JSON_EXTRACT(`json`, "$.id")),
 				(SELECT JSON_EXTRACT(`json`, "$.idJornada")),
 				1,
-				1);
+				(select JSON_EXTRACT(`jsonTarjetas`, CONCAT('$[', `_index_tarjetas`, '].tipo'))));
         
         end if;
         
@@ -417,6 +417,26 @@ set _index_tarjetas = 0;
             where datosjornadas.persona_idPersona = idPersonaVal
             and datosjornadas.id = idVal;
         
+        end if;
+        
+        if (deletedVal = 3) then
+        
+        select count(datosjornadas.id)  into amarillas
+               from datosjornadas 
+               join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idJornada
+			  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo
+               where datosjornadas.persona_idPersona = idPersonaVal
+               and datosjornadas.tipodatojornada_id = deletedVal
+               and torneo.tempodada_idTemporada = idTemporada;
+        
+			if (amarillas is not null and amarillas = 2   and cuantosVal is not null and cuantosVal >= 2 and deletedVal = 3) then
+			   
+				update datosjornadas
+				set datosjornadas.activa = 0
+				where datosjornadas.persona_idPersona = idPersonaVal
+				and datosjornadas.id = idVal;
+			
+			end if;
         end if;
         
         

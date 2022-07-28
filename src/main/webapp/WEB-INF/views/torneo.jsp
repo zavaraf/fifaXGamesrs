@@ -100,7 +100,9 @@
 					  <img ng-src="{{p.img}}" height="20"  alt="...">
 					  {{p.sobrenombre}} 
 					  <img ng-show= " p.tipo == 2" src="https://img.icons8.com/office/20/000000/bandage.png"/>
-					  <img ng-show= " p.tipo == 1" src="https://img.icons8.com/officexs/16/000000/soccer-yellow-card.png"/>
+					  <img ng-show= " p.tipo == 1" src="https://cdn-icons-png.flaticon.com/16/4768/4768714.png"/>
+					  <img ng-show= " p.tipo == 3" src="https://cdn-icons-png.flaticon.com/16/4768/4768720.png"/>
+					  <img ng-show= " p.tipo == 3" src="https://cdn-icons-png.flaticon.com/16/4768/4768720.png"/>
 					  </p>
 		        <table class="table text-center ">
 				  <tr >
@@ -114,15 +116,24 @@
 			       	<sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-					    <img src="https://img.icons8.com/metro/26/000000/football2.png"/>
+					    <img src="https://img.icons8.com/metro/32/000000/football2.png"/>
 					  </button>
 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseLesiones" aria-expanded="false" aria-controls="collapseLesiones">
-					  <img src="https://img.icons8.com/office/26/000000/bandage.png"/>
+					  <img src="https://img.icons8.com/office/32/000000/bandage.png"/>
 					  </button>
 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					          ng-click = "ctrl.tipoTarjeta = 1; "
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseTarjetas" aria-expanded="false" aria-controls="collapseTarjetas">
-					  <img src="https://img.icons8.com/officexs/26/000000/soccer-yellow-card.png"/>
+<!-- 					  <img src="https://img.icons8.com/officexs/32/000000/soccer-yellow-card.png"/> -->
+					  <img src="https://cdn-icons-png.flaticon.com/32/4768/4768714.png"/>
+					  </button>
+					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"
+					          ng-click = "ctrl.tipoTarjeta = 3; " 
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseTarjetas" aria-expanded="false" aria-controls="collapseTarjetas">
+<!-- 					  <img src="https://img.icons8.com/officexs/32/000000/soccer-yellow-card.png"/> -->
+					  <img src="https://cdn-icons-png.flaticon.com/32/4768/4768720.png"/>
+					  
 					  </button>
 <%-- 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"  --%>
 <!-- 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg" aria-expanded="false" aria-controls="collapseExample"> -->
@@ -253,7 +264,8 @@
 					  </p>
 					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
 					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.tarjetasJornada)">
-					  <img src="https://img.icons8.com/officexs/26/000000/soccer-yellow-card.png"/>{{p.sobrenombre}} 
+					  <img src="{{p.tipo == 1 ? 'https://cdn-icons-png.flaticon.com/32/4768/4768714.png' : 'https://cdn-icons-png.flaticon.com/32/4768/4768720.png'}}
+					  "/>{{p.sobrenombre}} 
 					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  ng-click= "ctrl.deletedTarjetas(p,ctrl.jornadaEdit.idEquipoLocal)">(-)</a>
 					 
@@ -280,17 +292,28 @@
 				      <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
-                      <img src="https://img.icons8.com/metro/26/000000/football2.png"/>
+                      <img src="https://img.icons8.com/metro/32/000000/football2.png"/>
 <!-- 					    +Gol -->
 					  </button>
 					   <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseLesionesV" aria-expanded="false" aria-controls="collapseLesiones">
-					  <img src="https://img.icons8.com/office/26/000000/bandage.png"/>
+					  <img src="https://img.icons8.com/office/32/000000/bandage.png"/>
 					  </button>
-					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					
+        			  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"
+        			          ng-click = "ctrl.tipoTarjeta = 1; " 
 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseTarjetasV" aria-expanded="false" aria-controls="collapseTarjetas">
-					  <img src="https://img.icons8.com/officexs/26/000000/soccer-yellow-card.png"/>
+<!-- 					  <img src="https://img.icons8.com/officexs/32/000000/soccer-yellow-card.png"/> -->
+					  <img src="https://cdn-icons-png.flaticon.com/32/4768/4768714.png"/>
 					  </button>
+					  
+					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
+					          ng-click = "ctrl.tipoTarjeta = 3; "
+					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseTarjetasV" aria-expanded="false" aria-controls="collapseTarjetas">
+<!-- 					  <img src="https://img.icons8.com/officexs/32/000000/soccer-yellow-card.png"/> -->
+					  <img src="https://cdn-icons-png.flaticon.com/32/4768/4768720.png"/>
+					  </button>
+					  
 <%-- 					  <button ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)"  --%>
 <!-- 					  class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseImg1" aria-expanded="false" aria-controls="collapseExample1"> -->
 <!-- 					    +Img -->
@@ -414,7 +437,8 @@
 					  </p>
 					  <p class="mb-0 font-italic {{p.isAutogol == 1 ? 'text-danger' : ''}}" 
 					  ng-repeat="p in ctrl.getPlayers(ctrl.jornadaEdit.idEquipoVisita,ctrl.jornadaEdit.tarjetasJornada)">
-					  <img src="https://img.icons8.com/officexs/26/000000/soccer-yellow-card.png"/>{{p.sobrenombre}} 
+					  <img src="{{p.tipo == 1 ? 'https://cdn-icons-png.flaticon.com/32/4768/4768714.png' : 'https://cdn-icons-png.flaticon.com/32/4768/4768720.png'}}
+					  "/>{{p.sobrenombre}} 
 					  <a href="" class = "text-danger" ng-show= "ctrl.showEditJornada('${user.roles}','${user.idEquipo}',ctrl.jornadaEdit.idEquipoLocal,ctrl.jornadaEdit.idEquipoVisita)" 
 					  ng-click= "ctrl.deletedTarjetas(p,ctrl.jornadaEdit.idEquipoVisita)">(-)</a>
 					 
@@ -849,7 +873,8 @@
 			                          <tr ng-repeat="jor in ctrl.tablaGeneral.eventos  | orderBy : ['-activa','-fecha' ]| filter : test1 ">
 								  		  <td ><img ng-src="{{jor.equipo.img}}" height="25" class="rounded float-left" alt="..."></td>
 								  		  <td ng-show= " jor.tipo == 2" ><img src="https://img.icons8.com/office/20/000000/bandage.png"/></td>
-					 					  <td ng-show= " jor.tipo == 1"><img  src="https://img.icons8.com/officexs/16/000000/soccer-yellow-card.png"/></td>
+					 					  <td ng-show= " jor.tipo == 1"><img  src="https://cdn-icons-png.flaticon.com/16/4768/4768714.png"/></td>
+					 					  <td ng-show= " jor.tipo == 3"><img  src="https://cdn-icons-png.flaticon.com/16/4768/4768720.png"/></td>
 			                              <td><span ng-bind="jor.sobrenombre"></span></td>
 			                              <td><span ng-bind="jor.jornada"></span></td>
 			                              <td><span ng-bind="jor.fecha"></span></td>

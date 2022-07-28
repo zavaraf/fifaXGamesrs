@@ -705,6 +705,12 @@ public class TemporadaDaoImpl implements TemporadaDao {
 			String idEquipoLocal,
 			String idEquipoVisita,
 			int tipoDato) {
+		
+		String datos = " and datosjornadas.tipoDatoJornada_id =  " + tipoDato;
+		
+		if(tipoDato == 1 || tipoDato == 3) {
+			datos = " and datosjornadas.tipoDatoJornada_id in ( 1,3)" ;
+		}
 		List<DatosJornadas> golesList = new ArrayList<DatosJornadas>();
 		String query ="  select equipos.idEquipo,datosjornadas.id, " +
 				"  equipos.nombreEquipo, " +
@@ -719,7 +725,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				"  where datosjornadas.jornadas_has_equipos_jornadas_idJornada =  "+ idJornada +
 				"  and datosjornadas.jornadas_has_equipos_id = "+ id +
 				"  and equipos.idEquipo in ( "+ idEquipoLocal+","+idEquipoVisita+") "
-				+ " and datosjornadas.tipoDatoJornada_id =  " + tipoDato;
+				+ datos;
 		
 		
 		Collection goles = jdbcTemplate.query(
@@ -737,6 +743,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
                     	goles.setNombreEquipo(rs.getString("nombreEquipo"));
                     	goles.setSobrenombre(rs.getString("sobrenombre"));
                     	goles.setActivo(rs.getInt("activa"));
+                    	goles.setTipo(rs.getInt("tipoDatoJornada_id"));
                     	return goles;
                     }
                 });
@@ -754,30 +761,37 @@ public class TemporadaDaoImpl implements TemporadaDao {
 			int idTemporada
 			) {
 		List<DatosJornadas> golesList = new ArrayList<DatosJornadas>();
-		String query ="  select equipos.Equipos_idEquipo,datosjornadas.id, "
-				+"    equipos.nombreEquipo, "
-				+"    persona.idPersona, "
-				+"    persona.sobrenombre, "
-				+"    persona.NombreCompleto, "
-				+"    datosjornadas.activa, "
-				+"    datosjornadas.tipoDatoJornada_id, "
-				+ "   equipos_has_imagen.imagen, "
-				+ "   datosjornadas.tipoDatoJornada_id "
-				+"    from datosjornadas "
-				+"    join persona on persona.idPersona = datosjornadas.persona_idPersona "
-				+"    join equipos_has_temporada equipos on equipos.Equipos_idEquipo = datosjornadas.equipos_idEquipo"
-				+"    join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idJornada"
-				+"    join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
-				+ "   join equipos_has_imagen on equipos_has_imagen.equipos_idEquipo = equipos.Equipos_idEquipo "
-				+"    where "
-				+"     equipos.Equipos_idEquipo in ( "+ idEquipoLocal+","+idEquipoVisita+") "
-				+"    and datosjornadas.activa = 1"
-				+"    and torneo.tempodada_idTemporada = " +idTemporada
-				+"    and equipos.tempodada_idTemporada = " +idTemporada
+		String query ="  select *   "
+				+"  from (  "
+				+"  select count(datosjornadas.persona_idPersona) as cuantos,   "
+				+"  equipos.Equipos_idEquipo,datosjornadas.id,  "
+				+"  equipos.nombreEquipo,  "
+				+"  persona.idPersona,  "
+				+"  persona.sobrenombre,  "
+				+"  persona.NombreCompleto,  "
+				+"  datosjornadas.activa,  "
+				+"  equipos_has_imagen.imagen,  "
+				+"  datosjornadas.tipoDatoJornada_id  "
+				+"  from datosjornadas  "
+				+"  join persona on persona.idPersona = datosjornadas.persona_idPersona  "
+				+"  join equipos_has_temporada equipos on equipos.Equipos_idEquipo = datosjornadas.equipos_idEquipo  "
+				+"  join jornadas on jornadas.idJornada = datosjornadas.jornadas_has_equipos_jornadas_idJornada  "
+				+"  join torneo on torneo.idtorneo = jornadas.torneo_idtorneo  "
+				+"  join equipos_has_imagen on equipos_has_imagen.equipos_idEquipo = equipos.Equipos_idEquipo  "
+				+"  where  "
+				+"  equipos.Equipos_idEquipo in  ( "+ idEquipoLocal+","+idEquipoVisita+")  "
+				+"  and datosjornadas.activa = 1  "
+				+"  and torneo.tempodada_idTemporada = " +idTemporada
+				+"  and equipos.tempodada_idTemporada = " +idTemporada
 				+"  and equipos_has_imagen.idTemporada =  " +idTemporada
-				+"  and equipos_has_imagen.tipoImagen_idTipoImagen = 2 " ;
+				+"  and equipos_has_imagen.tipoImagen_idTipoImagen = 2   "
+				+"  group by datosjornadas.persona_idPersona , datosjornadas.tipoDatoJornada_id  "
+				+"  ) datos  "
+				+"  where   "
+				+"  datos.tipoDatoJornada_id in(1,2) or (datos.tipoDatoJornada_id = 3 and datos.cuantos >1)  " ;
 		
 		
+//		System.out.println(query);
 		Collection goles = jdbcTemplate.query(
                 query
                 , new RowMapper() {
@@ -953,6 +967,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	
 	public HashMap<String, String> addResultJornada(int idTorneo,int idTemporada,String jornada, String username) {
 
+//		Tipo 1 - Roja, 2, lesion, 3 amarilla
 		System.out.println("----->registrarJornada]:" + idTorneo+",idEqupo]:"+idTemporada+",id]:"+idTemporada+",user]:"+ username);
 		String query = "registrarJornada";
 
