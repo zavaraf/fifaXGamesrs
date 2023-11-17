@@ -145,7 +145,7 @@ if idTemporada = idEquipoAct then
 			and persona_has_temporada.persona_idPersona != idJugador;
 			
 			if sumaDraft is null then 
-				set sumaDraft = costo;
+				set sumaDraft = 0;
 			else 
 				set sumaDraft = sumaDraft  + costo ;
 			end if;
@@ -155,7 +155,7 @@ if idTemporada = idEquipoAct then
 			call createOrUpdateDatosFinancieros((select idCatalogoConceptos from catalogoconceptos
 						  where nombre = 'comprasDT' limit 1), 
 												sumaDraft ,
-												idEquipo,
+												idEquipoPago,
 												idTemporada);
 												
 end if;

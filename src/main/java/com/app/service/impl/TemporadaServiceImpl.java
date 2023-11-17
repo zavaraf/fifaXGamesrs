@@ -1,6 +1,10 @@
 package com.app.service.impl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -242,11 +246,21 @@ public class TemporadaServiceImpl implements TemporadaService {
 		ResponseData response = new ResponseData();
 		HashMap<String, String> map = new HashMap<String, String>();
 
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
 		for (Jornadas jornada : jornadas) {
 			for (Jornada juegos : jornada.getJornada()) {
 				if (juegos.getIdEquipoLocal() != -1 && juegos.getIdEquipoVisita() != -1) {
-					map = temporadaDao.addJornada(idTemporada, idDivision, juegos, jornada.getActiva(),
-							jornada.getCerrada());
+					
+					try {
+						Date fechaIni = jornada.getFechaInicioString()!= null ? sdf.parse(jornada.getFechaInicioString()) : null;
+						Date fechaFin = jornada.getFechaFinString()!= null ? sdf.parse(jornada.getFechaFinString()) : null;
+					
+						map = temporadaDao.addJornada(idTemporada, idDivision, juegos, jornada.getActiva(),
+								jornada.getCerrada(),fechaIni,fechaFin);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
 				}
 				if (tipoTorneo == 2) {
 					break;
@@ -364,6 +378,51 @@ public class TemporadaServiceImpl implements TemporadaService {
 
 		response.setData(map);
 
+		return response;
+	}
+
+	@Override
+	public ResponseData delJuegoJornada(int id) {
+		
+		ResponseData response = new ResponseData();
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		map = temporadaDao.delJuegoJornada(id);
+		
+		if (map == null || map.isEmpty()) {
+			response.setStatus(CodigoResponse.ERROR.getCodigo());
+			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+		} else {
+
+			String status = map.get("status");
+
+			response.setStatus(Integer.parseInt(status));
+			response.setMensaje(map.get("mensaje"));
+		
+		}
+		
+		return response;
+	}
+	@Override
+	public ResponseData editJuegoJornada(int id, int idEquipoLocal, int idEquipoVisita) {
+		
+		ResponseData response = new ResponseData();
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map = temporadaDao.editJuegoJornada(id, idEquipoLocal, idEquipoVisita);
+		
+		if (map == null || map.isEmpty()) {
+			response.setStatus(CodigoResponse.ERROR.getCodigo());
+			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+		} else {
+			
+			String status = map.get("status");
+			
+			response.setStatus(Integer.parseInt(status));
+			response.setMensaje(map.get("mensaje"));
+			
+		}
+		
 		return response;
 	}
 

@@ -33,15 +33,17 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		String query = " select usuarios.username,  "
 				+ " usuarios.pass as password,  "
 				+ " usuarios.email,  "
-				+ " equipos.nombreEquipo,  "
-				+ " equipos.idEquipo , "
+				+ " equipos_has_temporada.nombreEquipo,  "
+				+ " equipos_has_temporada.Equipos_idEquipo as idEquipo , "
 				+ " GROUP_CONCAT(DISTINCT roles.descripcionRol "
 				+ "           ORDER BY roles.descripcionRol ASC "
 				+ "           SEPARATOR ' - ') as roles "
 				+ " from usuarios  "
 				+ " join usuarios_has_roles uhr on uhr.Usuarios_userName = usuarios.userName "
 				+ " join roles on uhr.Roles_idRoles = roles.idRoles "
-				+ " left join equipos on usuarios.idequipo = equipos.idEquipo"
+//				+ " left join equipos on usuarios.idequipo = equipos.idEquipo"
+				+ " left join equipos_has_temporada on usuarios.idequipo = equipos_has_temporada.Equipos_idEquipo "
+				+ "              and equipos_has_temporada.tempodada_idTemporada = (select max(idTemporada) from temporada) "
 				+ " group by usuarios.userName,nombreEquipo ";
 		System.out.println("------>user]"+query);
 

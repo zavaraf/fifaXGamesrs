@@ -1,475 +1,572 @@
 'use strict';
 var app = angular.module('myApp');
 
-app
-		.controller(
-				'AdminTorneoLMController',
-				[
-						'$scope',
-						'$routeParams',
-						'CONFIG',
-						'TorneoLMService',
-						'UserService',
-						'EquipoService',
-						'TemporadaService',
-						function($scope, $routeParams, CONFIG, TorneoLMService,
-								UserService, EquipoService, TemporadaService) {
-							var self = this;
+app.controller('AdminTorneoLMController',
+['$scope','$routeParams','CONFIG','TorneoLMService','EquipoService','TemporadaService',
+function($scope, $routeParams, CONFIG, TorneoLMService, EquipoService, TemporadaService) {
+	
+	var self = this;
 
-							self.tablaGeneral;
-							self.jornadas;
-							self.jornadasLiguilla;
-							self.jornadaEdit;
-							self.players;
-							self.golesJornada;
-							self.divisiones;
-							self.divisionSelect;
-							self.isEdit = false;
-							self.isJornadaInsert = false;
-							self.jornadasEdit = [];
-							self.equiposTorneo = [];
-							self.equiposSelect;
-							self.gruposSe = [];
+	self.tablaGeneral;
+	self.jornadas;
+	self.jornadasLiguilla;
+	self.jornadaEdit;
+	self.juegoEdit;
+	self.players;
+	self.golesJornada;
+	self.divisiones;
+	self.divisionSelect;
+	self.isEdit = false;
+	self.isJornadaInsert = false;
+	self.jornadasEdit = [];
+	self.equiposTorneo = [];
+	self.equiposSelect;
+	self.gruposSe = [];
+	
+	self.catTorneo;
+	self.selectedCatTorneo
+	
+	self.gruposTorneo = [];
+	self.confJor = 2;
+	self.confTor = 2;
+	self.confAle = 2;
+	self.confLiguilla = 2;
+	self.CatLiguilla = [{id : 1 , nombre:"Final"},{id : 2 , nombre:"Semifinal"},{id : 3 , nombre:"Cuartos"},{id : 4 , nombre:"Octavos"}];
+	
+	self.getGenerarJornadas = getGenerarJornadas;
+	self.getJornadas = getJornadas;
+	self.addJornadas = addJornadas;
+	
+	self.addJornadasEdit = addJornadasEdit;
+	self.getTorneos = getTorneos;
+	self.buscarTodos = buscarTodos;
+	self.addEquipo = addEquipo;
+	self.getJornadasGrupos = getJornadasGrupos;
+	self.addTorneoGrupo = addTorneoGrupo;
+	self.getGruposTorneo = getGruposTorneo;
+	self.generarPartidosFinales = generarPartidosFinales;
+	self.addJuegosLiguilla = addJuegosLiguilla;
+	self.getCatTorneos = getCatTorneos;
+	self.equiposEdit = equiposEdit;
+	self.cambiarLocalia = cambiarLocalia;
+	self.delJuego = delJuego;
+	self.editJuego = editJuego;
+	
+	
+	//self.getEquiposDes = getEquiposDes;
+	
+	$scope.example9model = [];
+	$scope.equiposLiguilla = [];
+	// $scope.example9data = [ {id: 1, nombre: "David"},
+	// {id: 2, nombre: "Jhon"}, {id: 3, nombre:
+	// "Danny"}];
+	// $scope.example9data = buscarTodos();
+	
+	$scope.example9settings = {
+		enableSearch : true,
+		displayProp : "nombre",
+		checkBoxes : true,
+		scrollable : true,
+		selectedToTop : true
+	};
+	
+	$scope.getFormatDate = function (val) { // assuming val is date like "/Date(946673340000)/"
+	 if (val != undefined) {
+	   let date = new Date(String(val).match(/\d+/)[0] * 1); // creating a date object from val
+	    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 
+	   date.getHours(), date.getMinutes());
+	 }
+	}
+	
+//	$scope.options = {
+//    
+//    minDate: new Date(),
+//    showWeeks: false,
+//    currentText: 'Hoy',    
+//    closeText: 'OK'
+//  };
+//
+//	
+  $scope.minDate = new Date();
+//  
+//  $scope.test = function() {
+//    $scope.minDate = new Date();
+//  }
+//	
+	
+	buscarDivisiones();
+	getCatTorneos();
+	
+	
+	
+	
+	
+//  function getDayClass(data) {
+//    var date = data.date,
+//      mode = data.mode;
+//    if (mode === 'day') {
+//      var dayToCheck = new Date(date).setHours(0,0,0,0);
+//
+//      for (var i = 0; i < $scope.events.length; i++) {
+//        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+//
+//        if (dayToCheck === currentDay) {
+//          return $scope.events[i].status;
+//        }
+//      }
+//    }
+//
+//    return new Date(date);
+//  }
+//	
+//	
+
 							
-							self.catTorneo;
-							self.selectedCatTorneo
-							
-							self.gruposTorneo = [];
-							self.confJor = 2;
-							self.confTor = 2;
-							self.confAle = 2;
-							self.confLiguilla = 2;
-							self.CatLiguilla = [{id : 1 , nombre:"Final"},{id : 2 , nombre:"Semifinal"},{id : 3 , nombre:"Cuartos"},{id : 4 , nombre:"Octavos"}];
+function getCatTorneos(){
+	console.log("------------------->getCatTorneos()")
+	TorneoLMService.getCatTorneos()
+	.then(
+		function(d) {
 
-							self.getGenerarJornadas = getGenerarJornadas;
-							self.getJornadas = getJornadas;
-							self.addJornadas = addJornadas;
+			self.catTorneo = d;
+			
 
-							self.addJornadasEdit = addJornadasEdit;
-							self.getTorneos = getTorneos;
-							self.buscarTodos = buscarTodos;
-							self.addEquipo = addEquipo;
-							self.getJornadasGrupos = getJornadasGrupos;
-							self.addTorneoGrupo = addTorneoGrupo;
-							self.getGruposTorneo = getGruposTorneo;
-							self.generarPartidosFinales = generarPartidosFinales;
-							self.addJuegosLiguilla = addJuegosLiguilla;
-							self.getCatTorneos = getCatTorneos;
-							//self.getEquiposDes = getEquiposDes;
+			console.log("TorneoLMService-ggetCatTorneos]:",self.catTorneo)
+			console.log("TorneoLMService-getCatTorneos]: -----------FIN-----------")
 
-							$scope.example9model = [];
-							$scope.equiposLiguilla = [];
-							// $scope.example9data = [ {id: 1, nombre: "David"},
-							// {id: 2, nombre: "Jhon"}, {id: 3, nombre:
-							// "Danny"}];
-							// $scope.example9data = buscarTodos();
-							$scope.example9settings = {
-								enableSearch : true,
-								displayProp : "nombre",
-								checkBoxes : true,
-								scrollable : true,
-								selectedToTop : true
-							};
+			return d;
+		},
+		function(errResponse) {
+			console
+			.error('[getCatTorneos] Error while fetching TorneoLMService()');
+		});
+	return null;
+	
+}
 
-							buscarDivisiones();
-							getCatTorneos();
-							
-							
-//							function getEquiposDes(equipos, jornada){
-//								
-//								var equiposL = [];
-//								//console.log("Equipo......>",equipos)
-//								//console.log("Jornadas---->",jornada)
-//								
-//								for (var j = 0; j < equipos.length; j++) {
-//									var valor = equipos[j];
-//								   
-//								    var ban = false;
-//								 
-//								    for (var i = 0; i < jornada.length; i++) {
-//								    	if((jornada[i].idEquipoLocal == valor.id || jornada[i].idEquipoVisita == valor.id ) && valor.id !=1){
-//								    		ban = true;
-//								    	
-//								    		
-//								    	}
-//								    	
-//								    }
-//								    
-//								    if(ban == false){
-//								    	equiposL.push(valor);
-//								    	//console.log(eq)
-//								    }
-//								    	
-//								    
-//								};
-//								if(equiposL.length>0)
-//									console.log("Equipos Sin ]:",equiposL)
-//								return equiposL;
-//							}
-							
-							function getCatTorneos(){
-								console.log("------------------->getCatTorneos()")
-								TorneoLMService.getCatTorneos()
-										.then(
-												function(d) {
+function getTorneos(e) {
+	return CONFIG.VARTEMPORADA.torneos;
+}
+function addEquipo(equi) {
+	console.log("EquipoADD]:", equi)
+	self.equiposTorneo.push(equi);
+}
+function buscarTodos() {
+	var idTemporada = CONFIG.VARTEMPORADA.id
+	console.log("[adminTorneo_controller]  entre idTemporada]:",CONFIG.VARTEMPORADA.id);
+	EquipoService
+	.buscarTodos(idTemporada)
+	.then(
+		function(d) {
+			self.equipos = d;
+			$scope.options = self.equipos;
+			$scope.example9data = self.equipos;
+			
+			if(self.juegoEdit != null){
+				equiposEdit();
+			}
 
-													self.catTorneo = d;
-													
+			return $scope.options;
 
-													console.log("TorneoLMService-ggetCatTorneos]:",self.catTorneo)
-													console.log("TorneoLMService-getCatTorneos]: -----------FIN-----------")
+		},
+		function(errResponse) {
+			console.error('[adminTorneo_controller] Error while fetching buscarTodos()');
+		});
+}
+function addJornadasEdit(jor) {
+	var isJornada = false;
+	if (self.isEdit == true) {
+		if (self.jornadasEdit != null
+			&& self.jornadasEdit.length > 0) {
+			for (var i = 0; i < self.jornadasEdit.length; i++) {
+				if (self.jornadasEdit[i].numeroJornada == jor.numeroJornada) {
+					self.jornadasEdit[i] = jor;
+					isJornada = true;
+					console.log("Edit Jornada:",jor);
+					break;
+				}
+			}
+		}
+		if (isJornada == false) {
+			self.jornadasEdit.push(jor);
+			console.log("Add Jornada:", jor);
+		}
+	}
+}
 
-													return d;
-												},
-												function(errResponse) {
-													console
-															.error('[getCatTorneos] Error while fetching TorneoLMService()');
-												});
-								return null;
-								
-							}
+function buscarDivisiones() {
+	EquipoService
+	.buscarDivisiones()
+	.then(
+		function(d) {
+			console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",d)
+			self.divisiones = d;
+			if (self.divisiones != null&& self.divisiones.length > 0) {
+				
+				self.divisionSelect = (CONFIG.VARTEMPORADA.torneos != null && CONFIG.VARTEMPORADA.torneos.length > 0) ? CONFIG.VARTEMPORADA.torneos[0]
+				: self.divisiones[0]
+				console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",self.divisionSelect)
+				getJornadas();
+			}
 
-							function getTorneos(e) {
-								return CONFIG.VARTEMPORADA.torneos;
-							}
-							function addEquipo(equi) {
-								console.log("EquipoADD]:", equi)
-								self.equiposTorneo.push(equi);
-							}
-							function buscarTodos() {
-								var idTemporada = CONFIG.VARTEMPORADA.id
-								console.log("[adminTorneo_controller]  entre idTemporada]:",CONFIG.VARTEMPORADA.id);
-								EquipoService
-										.buscarTodos(idTemporada)
-										.then(
-												function(d) {
-													self.equipos = d;
-													$scope.options = self.equipos;
-													$scope.example9data = self.equipos;
+		},
+		function(errResponse) {
+			console.error('Error while fetching TorneoLMConroller-buscarDivisiones');
+		});
 
-													return $scope.options;
+}
 
-												},
-												function(errResponse) {
-													console.error('[adminTorneo_controller] Error while fetching buscarTodos()');
-												});
-							}
-							function addJornadasEdit(jor) {
-								var isJornada = false;
-								if (self.isEdit == true) {
-									if (self.jornadasEdit != null
-											&& self.jornadasEdit.length > 0) {
-										for (var i = 0; i < self.jornadasEdit.length; i++) {
-											if (self.jornadasEdit[i].numeroJornada == jor.numeroJornada) {
-												self.jornadasEdit[i] = jor;
-												isJornada = true;
-												console.log("Edit Jornada:",jor);
-												break;
-											}
-										}
-									}
-									if (isJornada == false) {
-										self.jornadasEdit.push(jor);
-										console.log("Add Jornada:", jor);
-									}
-								}
-							}
+function getGenerarJornadas() {
+	console.log("------------------->torneo]:"+ self.divisionSelect.id)
+	TorneoLMService.getGenerarJornadas(self.divisionSelect.id, 0)
+	.then(
+		function(d) {
 
-							function buscarDivisiones() {
-								EquipoService
-										.buscarDivisiones()
-										.then(
-												function(d) {
-													console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",d)
-													self.divisiones = d;
-													if (self.divisiones != null&& self.divisiones.length > 0) {
-														
-														self.divisionSelect = (CONFIG.VARTEMPORADA.torneos != null && CONFIG.VARTEMPORADA.torneos.length > 0) ? CONFIG.VARTEMPORADA.torneos[0]
-																: self.divisiones[0]
-														console.log("Entre Buscar TorneoLMConroller-buscarDivisiones-->",self.divisionSelect)
-														getJornadas();
-													}
+			self.jornadas = d;
+			
 
-												},
-												function(errResponse) {
-													console.error('Error while fetching TorneoLMConroller-buscarDivisiones');
-												});
+			console.log("TorneoLMService-getGenerarJornadas]:",self.jornadas)
+			console.log("TorneoLMService-getGenerarJornadas]: -----------FIN-----------")
 
-							}
+			return d;
+		},
+		function(errResponse) {
+			console
+			.error('[TorneoLMService] Error while fetching TorneoLMService()');
+		});
+	return null;
+}
 
-							function getGenerarJornadas() {
-								console.log("------------------->torneo]:"+ self.divisionSelect.id)
-								TorneoLMService.getGenerarJornadas(self.divisionSelect.id, 0)
-										.then(
-												function(d) {
+function getJornadas() {
+	console.log("torneoSeleccionado]:"+ self.divisionSelect.id)
+	TorneoLMService.getJornadas(self.divisionSelect.id, 0).then(
+		function(d) {
+			self.jornadas = d;
+			
 
-													self.jornadas = d;
-													
+			if (self.jornadas != null
+				&& self.jornadas != '') {
+				self.isEdit = true;
+			self.isJornadaInsert = true;
 
-													console.log("TorneoLMService-getGenerarJornadas]:",self.jornadas)
-													console.log("TorneoLMService-getGenerarJornadas]: -----------FIN-----------")
+		} else {
+			self.isEdit = false;
 
-													return d;
-												},
-												function(errResponse) {
-													console
-															.error('[TorneoLMService] Error while fetching TorneoLMService()');
-												});
-								return null;
-							}
-
-							function getJornadas() {
-								console.log("torneoSeleccionado]:"+ self.divisionSelect.id)
-								TorneoLMService.getJornadas(self.divisionSelect.id, 0).then(
-												function(d) {
-													self.jornadas = d;
-													
-
-													if (self.jornadas != null
-															&& self.jornadas != '') {
-														self.isEdit = true;
-														self.isJornadaInsert = true;
-
-													} else {
-														self.isEdit = false;
-
-													}
+		}
 //													console.log("TorneoLMService-getTablaJornadas]:"+ JSON.stringify(self.jornadas))
-													console.log("TorneoLMService-getTablaJornadas]:",self.jornadas)
-													console.log("TorneoLMService-getTablaJornadas]: -----------FIN-----------")
-													self.jornadasEdit = [];
-													return d;
-												},
-												function(errResponse) {
-													console
-															.error('[TorneoLMService] Error while fetching TorneoLMService()');
-												});
-								return null;
-							}
+console.log("TorneoLMService-getTablaJornadas]:",self.jornadas)
+console.log("TorneoLMService-getTablaJornadas]: -----------FIN-----------")
+self.jornadasEdit = [];
+return d;
+},
+function(errResponse) {
+	console
+	.error('[TorneoLMService] Error while fetching TorneoLMService()');
+});
+	return null;
+}
 
-							function addJornadas() {
+function addJornadas() {
 
-								var jor;
-								jor = self.jornadas;
-								if (self.isEdit == true) {
-									jor = self.jornadasEdit;
-								}
-								TorneoLMService
-										.addJornadas(self.divisionSelect,jor)
-										.then(
-												function(d) {
+	var jor;
+	jor = self.jornadas;
+	if (self.isEdit == true) {
+		jor = self.jornadasEdit;
+	}
+	TorneoLMService
+	.addJornadas(self.divisionSelect,jor)
+	.then(
+		function(d) {
 
-													console
-															.log(
-																	"TorneoLMService-addJornadas]:",
-																	d)
+			console
+			.log(
+				"TorneoLMService-addJornadas]:",
+				d)
 
-													self.isEdit = true;
-													self.isJornadaInsert = true;
-													return d;
-												},
-												function(errResponse) {
-													console
-															.error('[TorneoLMService] Error while addJornadas TorneoLMService()');
-												});
-								return null;
-							}
+			self.isEdit = true;
+			self.isJornadaInsert = true;
+			return d;
+		},
+		function(errResponse) {
+			console
+			.error('[TorneoLMService] Error while addJornadas TorneoLMService()');
+		});
+	return null;
+}
 
-							function getJornadasGrupos(equiposSeleccionados,
-									numeroGrupos) {
-								console.log("------------------->Torneo]:",
-										equiposSeleccionados)
-								TorneoLMService
-										.getJornadasGrupos(
-												equiposSeleccionados,
-												self.divisionSelect.id,
-												numeroGrupos, self.confJor,
-												self.confAle)
-										.then(
-												function(d) {
+function getJornadasGrupos(equiposSeleccionados,numeroGrupos) {
+	console.log("------------------->Torneo]:",
+		equiposSeleccionados)
+	TorneoLMService
+	.getJornadasGrupos(
+		equiposSeleccionados,
+		self.divisionSelect.id,
+		numeroGrupos, self.confJor,
+		self.confAle)
+	.then(
+		function(d) {
 
-													self.gruposSe = d;
+			self.gruposSe = d;
 
-													console
-															.log(
-																	"TorneoLMService-getJornadasGrupos]:",
-																	self.gruposSe)
+			console
+			.log(
+				"TorneoLMService-getJornadasGrupos]:",
+				self.gruposSe)
 
-													// console.log("Grupos]:"+
-													// JSON.stringify(self.gruposSe))
+						// console.log("Grupos]:"+
+						// JSON.stringify(self.gruposSe))
 
-													return d;
-												},
-												function(errResponse) {
-													console
-															.error('[getJornadasGrupos] Error while fetching TorneoLMService()');
-												});
-								return null;
-							}
+						return d;
+					},
+					function(errResponse) {
+						console
+						.error('[getJornadasGrupos] Error while fetching TorneoLMService()');
+					});
+	return null;
+}
 
-							function addTorneoGrupo(grupos, nombreTorneo) {
-								console.log("------------------->Torneo]:"
-										+ nombreTorneo)
-								TorneoLMService
-										.addTorneoGrupo(grupos, self.selectedCatTorneo,
-												self.confTor)
-										.then(
-												function(d) {
+function addTorneoGrupo(grupos, nombreTorneo) {
+	console.log("------------------->Torneo]:"
+		+ nombreTorneo)
+	TorneoLMService
+	.addTorneoGrupo(grupos, self.selectedCatTorneo,
+		self.confTor)
+	.then(
+		function(d) {
 
-													console
-															.log(
-																	"TorneoLMService-addTorneoGrupo]:",
-																	d)
+			console
+			.log(
+				"TorneoLMService-addTorneoGrupo]:",
+				d)
 
-													buscarTemporada();
-													return d;
-												},
-												function(errResponse) {
-													console
-															.error('[addTorneoGrupo] Error while fetching TorneoLMService()');
-												});
-								return null;
-							}
+			buscarTemporada();
+			return d;
+		},
+		function(errResponse) {
+			console
+			.error('[addTorneoGrupo] Error while fetching TorneoLMService()');
+		});
+	return null;
+}
 
-							function getGruposTorneo(torneoSelect) {
-								console.log("-----------getGruposTorneo-------->Torneo]:",torneoSelect)
-								if (torneoSelect.tipoTorneo) {
-									TorneoLMService.getGruposTorneo(torneoSelect.id).then(
-													function(d) {
+function getGruposTorneo(torneoSelect) {
+	console.log("-----------getGruposTorneo-------->Torneo]:",torneoSelect)
+	if (torneoSelect.tipoTorneo) {
+		TorneoLMService.getGruposTorneo(torneoSelect.id).then(
+			function(d) {
 
-														self.gruposTorneo = d;
+				self.gruposTorneo = d;
 
-														console.log("TorneoLMService-getGruposTorneo]:",d)
+				console.log("TorneoLMService-getGruposTorneo]:",d)
 
-														return d;
-													},
-													function(errResponse) {
-														console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
-													});
-								} else {
-									self.gruposTorneo = [];
-								}
-								return null;
-							}
+				return d;
+			},
+			function(errResponse) {
+				console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
+			});
+	} else {
+		self.gruposTorneo = [];
+	}
+	return null;
+}
 
-							function buscarTemporada() {
-								TemporadaService
-										.buscarTemporada()
-										.then(
-												function(d) {
-													var temporada = d;
-													console.error(
-															'temporada --- >',
-															d);
-													var selectedTor = temporada.length > 0 ? temporada[temporada.length - 1]
-															: null;
-													// $scope.idTemporada =
-													// ($scope.idTemporada ==
-													// null ||
-													// $scope.idTemporada ===
-													// undefined) ?
-													// self.selectedTor :
-													// $scope.idTemporada;
+function buscarTemporada() {
+	TemporadaService
+	.buscarTemporada()
+	.then(
+		function(d) {
+			var temporada = d;
+			console.error(
+				'temporada --- >',
+				d);
+			var selectedTor = temporada.length > 0 ? temporada[temporada.length - 1]
+			: null;
+						// $scope.idTemporada =
+						// ($scope.idTemporada ==
+						// null ||
+						// $scope.idTemporada ===
+						// undefined) ?
+						// self.selectedTor :
+						// $scope.idTemporada;
 
-													CONFIG.VARTEMPORADA.torneos = selectedTor.torneos
+						CONFIG.VARTEMPORADA.torneos = selectedTor.torneos
 
-													console.log('temporada Seleccionado--- >',CONFIG.VARTEMPORADA);
-													console.log('temporada Seleccionado2--- >',self.selectedTor);
-												},
-												function(errResponse) {
-													console
-															.error('Error while fetching temporada');
-												});
-							}
+						console.log('temporada Seleccionado--- >',CONFIG.VARTEMPORADA);
+						console.log('temporada Seleccionado2--- >',self.selectedTor);
+					},
+					function(errResponse) {
+						console
+						.error('Error while fetching temporada');
+					});
+}
 
-							function generarPartidosFinales(equipos, nombreJor,idFase) {
+function generarPartidosFinales(equipos, nombreJor,idFase) {
 
-								var jornadasL = [];
+	var jornadasL = [];
 
-								var jornada = {};
+	var jornada = {};
 
-								jornada.activa = 1;
-								jornada.cerrada = 0;
-								jornada.idJornda = 0;
-								jornada.nombreJornada = nombreJor;
-								jornada.numeroJornada = 0;
-								jornada.tipoJornada = idFase;
-								var juegos = [];
+	jornada.activa = 1;
+	jornada.cerrada = 0;
+	jornada.idJornda = 0;
+	jornada.nombreJornada = nombreJor;
+	jornada.numeroJornada = 0;
+	jornada.tipoJornada = idFase;
+	var juegos = [];
 
-								for (var i = 0; i < equipos.length; i++) {
+	for (var i = 0; i < equipos.length; i++) {
 
-									var juego = {};
+		var juego = {};
 
-									juego.idEquipoLocal = equipos[i].id;
-									juego.nombreEquipoLocal = equipos[i].nombre;
-									juego.imgLocal = equipos[i].img;
+		juego.idEquipoLocal = equipos[i].id;
+		juego.nombreEquipoLocal = equipos[i].nombre;
+		juego.imgLocal = equipos[i].img;
 
-									juego.idEquipoVisita = equipos[i + 1].id;
-									juego.nombreEquipoVisita = equipos[i + 1].nombre;
-									juego.imgVisita = equipos[i + 1].img;
+		juego.idEquipoVisita = equipos[i + 1].id;
+		juego.nombreEquipoVisita = equipos[i + 1].nombre;
+		juego.imgVisita = equipos[i + 1].img;
 
-									juegos.push(juego);
+		juegos.push(juego);
 
-									i++;
+		i++;
 
-								}
-								jornada.jornada = juegos;
+	}
+	jornada.jornada = juegos;
 
-								jornadasL.push(jornada)
-								
-								if(self.confLiguilla == 2){
-									var jornada = {};
+	jornadasL.push(jornada)
+	
+	if(self.confLiguilla == 2){
+		var jornada = {};
 
-									jornada.activa = 1;
-									jornada.cerrada = 0;
-									jornada.idJornda = 0;
-									jornada.nombreJornada = nombreJor +' Vuelta';
-									jornada.numeroJornada = 0;
-									jornada.tipoJornada = idFase;
-									var juegos = [];
+		jornada.activa = 1;
+		jornada.cerrada = 0;
+		jornada.idJornda = 0;
+		jornada.nombreJornada = nombreJor +' Vuelta';
+		jornada.numeroJornada = 0;
+		jornada.tipoJornada = idFase;
+		var juegos = [];
 
-									for (var i = 0; i < equipos.length; i++) {
+		for (var i = 0; i < equipos.length; i++) {
 
-										var juego = {};
+			var juego = {};
 
-										juego.idEquipoLocal = equipos[i+1].id;
-										juego.nombreEquipoLocal = equipos[i+1].nombre;
-										juego.imgLocal = equipos[i+1].img;
+			juego.idEquipoLocal = equipos[i+1].id;
+			juego.nombreEquipoLocal = equipos[i+1].nombre;
+			juego.imgLocal = equipos[i+1].img;
 
-										juego.idEquipoVisita = equipos[i].id;
-										juego.nombreEquipoVisita = equipos[i].nombre;
-										juego.imgVisita = equipos[i].img;
+			juego.idEquipoVisita = equipos[i].id;
+			juego.nombreEquipoVisita = equipos[i].nombre;
+			juego.imgVisita = equipos[i].img;
 
-										juegos.push(juego);
+			juegos.push(juego);
 
-										i++;
+			i++;
 
-									}
-									jornada.jornada = juegos;
+		}
+		jornada.jornada = juegos;
 
-									jornadasL.push(jornada)
-								}
-								
-								self.jornadasLiguilla = jornadasL;
-								console.log("Jornadas generadas ]:",self.jornadasLiguilla);
-								console.log("Jornadas generadas ]:",JSON.stringify(self.jornadasLiguilla));
-								
+		jornadasL.push(jornada)
+	}
+	
+	self.jornadasLiguilla = jornadasL;
+	console.log("Jornadas generadas ]:",self.jornadasLiguilla);
+	console.log("Jornadas generadas ]:",JSON.stringify(self.jornadasLiguilla));
+	
 
-							}
+}
+
+function addJuegosLiguilla(jornadasLiguillaVar,selectedTorneoModal){
+	TorneoLMService.addJuegosLiguilla(jornadasLiguillaVar,selectedTorneoModal.id).then(
+		function(d) {
+
+			self.jornadas = d.data;
+
+			console.log("TorneoLMService-getGruposTorneo]:",d)
+
+			return d;
+		},
+		function(errResponse) {
+			console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
+		});
+}
+
+function equiposEdit(){
+	
+	console.log(self.juegoEdit)
+	
+	self.juegoEdit.equipoLocal = self.equipos.find( elt => elt.id === self.juegoEdit.idEquipoLocal);
+	self.juegoEdit.equipoVisita = self.equipos.find( elt => elt.id === self.juegoEdit.idEquipoVisita);
+	
+	console.log(self.juegoEdit)
+	
+}
+
+function cambiarLocalia(){
+	
+	if(self.juegoEdit != null){
+		self.juegoEdit.equipoVisita = self.equipos.find( elt => elt.id === self.juegoEdit.idEquipoLocal);
+		self.juegoEdit.equipoLocal  = self.equipos.find( elt => elt.id === self.juegoEdit.idEquipoVisita);
+		
+		self.juegoEdit.idEquipoLocal = self.juegoEdit.equipoLocal.id;
+		self.juegoEdit.nombreEquipoLocal = self.juegoEdit.equipoLocal.nombre;
+		
+		self.juegoEdit.idEquipoVisita = self.juegoEdit.equipoVisita.id;
+		self.juegoEdit.nombreEquipoVisita = self.juegoEdit.equipoVisita.nombre;
+	}
+}
+
+
+function delJuego(){
+	
+	if(self.juegoEdit != null){
+		TorneoLMService.delJuego(self.juegoEdit.id).then(
+		function(d) {
+			
+			const jornadasAux = self.jornadas.filter(elt => elt.idJornda == self.juegoEdit.idJornada);
+	
+			const juegosAux = jornadasAux[0].jornada.filter(elt => elt.id != self.juegoEdit.id);
+			
+			if(jornadasAux.length >0 ){
+		
+				self.jornadas.filter(elt => elt.idJornda == self.juegoEdit.idJornada)[0].jornada = juegosAux;
+			}
+		
+	console.log(self.jornadas);
+			
+			
+			
+			self.juegoEdit = null;
+
+			return d;
+		},
+		function(errResponse) {
+			console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
+		});
+	}
+}
+
+function editJuego(){
+	
+	if(self.juegoEdit != null){
+		TorneoLMService.editJuego(self.juegoEdit).then(
+		function(d) {
+			
+			//buscarTodos();
+			getGruposTorneo(self.divisionSelect);
+			
+			self.juegoEdit = null;
+
+			return d;
+		},
+		function(errResponse) {
+			console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
+		});
+	}
+}
+			
+			
 							
-							function addJuegosLiguilla(jornadasLiguillaVar,selectedTorneoModal){
-								TorneoLMService.addJuegosLiguilla(jornadasLiguillaVar,selectedTorneoModal.id).then(
-										function(d) {
 
-											self.jornadas = d.data;
+}])
 
-											console.log("TorneoLMService-getGruposTorneo]:",d)
-
-											return d;
-										},
-										function(errResponse) {
-											console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
-										});
-							}
-
-						} ]);
+;

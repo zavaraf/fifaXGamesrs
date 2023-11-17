@@ -69,12 +69,29 @@ app.controller('TorneoLMController', ['$scope','$routeParams','CONFIG','TorneoLM
 	self.addTarjetas = addTarjetas;
 	self.deletedLesiones = deletedLesiones;
 	self.deletedTarjetas = deletedTarjetas;
+	self.getTweetOrImage = getTweetOrImage;
 	
 	buscarDivisiones()
 	
 	function getTorneos(){
 		
 		return CONFIG.VARTEMPORADA.torneos;
+	}
+	
+	
+	function getTweetOrImage(img){
+		
+//		if(!img.img.includes('http')){
+//			return "<twitter-widget twitter-widget-id= '"+ img.img +"' >   </twitter-widget> ";
+//		}else{
+//			return '<img ng-src=" '+img.img +'" class="img-fluid" alt="Responsive image">';
+//		}
+
+		if(!img.img.includes('http')){
+			console.log("getTweetOrImage()"+"'"+ img.img +"'");
+			return  "'"+ img.img +"'" ;
+		}
+		
 	}
 	
 	function getJornadaActual (){
@@ -533,8 +550,8 @@ function deletedTarjetas(jugador,idEquipo) {
 	 
 	 function showEditJornada(roles,idEquipo,idEquipoLocal,idEquipoVisita) {
 		 
-			if(self.jornadaEdit!= null && ((roles.includes('Manager') && (idEquipoLocal == idEquipo || idEquipoVisita == idEquipo )) 
-					|| roles.includes('Admin')) && self.jornadaEdit.cerrada == 0){	
+			if(roles.includes('Admin') || (self.jornadaEdit!= null && ((roles.includes('Manager') && (idEquipoLocal == idEquipo || idEquipoVisita == idEquipo )) 
+					) && self.jornadaEdit.cerrada == 0 )){	
 				return true;
 			}						
 			return false;

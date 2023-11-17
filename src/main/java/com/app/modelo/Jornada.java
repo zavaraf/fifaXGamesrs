@@ -1,5 +1,6 @@
 package com.app.modelo;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +28,24 @@ public class Jornada {
 	private List<DatosJornadas> lesionesJornada;
 	private List<DatosJornadas> tarjetasJornada;
 	private List<DatosJornadas> datosActivosJornada;
+	private Date fechaInicio;
+	private Date fechaFin;
+	private String fechaInicioString;
+	private String fechaFinString;
 	
+	
+	public String getFechaInicioString() {
+		return fechaInicioString;
+	}
+	public void setFechaInicioString(String fechaInicioString) {
+		this.fechaInicioString = fechaInicioString;
+	}
+	public String getFechaFinString() {
+		return fechaFinString;
+	}
+	public void setFechaFinString(String fechaFinString) {
+		this.fechaFinString = fechaFinString;
+	}
 	public int getId() {
 		return id;
 	}
@@ -159,6 +177,18 @@ public class Jornada {
 	}
 	public void setDatosActivosJornada(List<DatosJornadas> datosActivosJornada) {
 		this.datosActivosJornada = datosActivosJornada;
+	}
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 	
 	

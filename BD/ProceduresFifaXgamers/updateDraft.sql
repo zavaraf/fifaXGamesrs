@@ -30,6 +30,9 @@ declare minDiaActualVar int;
 declare sumaVar int;
 declare sumaminutosdia_cero_Var int;
 declare minDia_ceroVar int;
+declare ofertasActivas int;
+
+set ofertasActivas = 0;
 
 
 select draftpc.Persona_idPersona,draftpc.ofertaFinal into  idJugadorVal,montoFinalVal
@@ -100,6 +103,15 @@ join equipos on equipos.idEquipo = equipos_has_temporada.Equipos_idEquipo
 where  equipos_has_temporada.Equipos_idEquipo = idEquipoOferta
 and  equipos_has_temporada.tempodada_idTemporada = idTemporada;
 
+select count(*) into ofertasActivas 
+from draftpc
+join persona_has_temporada on persona_has_temporada.Persona_idPersona = draftpc.Persona_idPersona 
+						and persona_has_temporada.temporada_idTemporada = draftpc.tempodada_idTemporada
+where draftpc.usuarioOferta = manager 
+and draftpc.tempodada_idTemporada = idTemporada
+and draftpc.idEquipo != 1
+and persona_has_temporada.equipos_idEquipo = 1;
+
 select idJugadorVal;
 
 select diasVar ,
@@ -109,9 +121,17 @@ minDiaActualVar ,
 sumaVar,
 sumaminutosdia_cero_Var,horaInicio,horaFin ;
 
+
+
 if idJugadorExist is null then 
   set isError = 1 ;
   set message = 'El jugador no Existe';
+  
+  elseif ofertasActivas > 2
+  
+  then 
+  set isError = 1 ;
+  set message = 'Solo puedes tener 2 Ofertas Activas';
 
 elseif ( hour(now()) < horaInicio )
        or ( hour(now()) >= horaFin )

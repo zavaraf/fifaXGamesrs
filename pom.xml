@@ -94,14 +94,16 @@
 			<!-- <scope>provided</scope> -->
 		</dependency>
 
-		<!-- MySql Dependency -->
+		<!-- MySql Dependency--> 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.38</version>
+			<version>5.1.44</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		
+		
 
 
 		<!-- Logging with SLF4J & LogBack -->

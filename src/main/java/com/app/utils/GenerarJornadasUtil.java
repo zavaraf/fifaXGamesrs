@@ -3,16 +3,14 @@ package com.app.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
-import com.app.enums.TipoTorneoEnum;
 import com.app.modelo.Equipo;
 import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
-import com.app.modelo.Torneo;
 
 public class GenerarJornadasUtil {
 	
@@ -181,7 +179,7 @@ public class GenerarJornadasUtil {
 				
 //				System.out.println("->Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
 //				Ordenar local y visitas
-				if(jornada > 0 && grupos.size()<= 2){
+				if(jornada > 0 && grupos.size()<= 2  ){
 //					System.out.println("grupos enttro ]:"+grupos.size());
 					Jornada juegoAnterior = getJuegoAnterior(jornadasList, equipoLcoal, equipoLcoal, equipos);
 					Jornada juegoAnteriorVisita = getJuegoAnterior(jornadasList, equipoVisita, equipoVisita, equipos);
@@ -194,10 +192,12 @@ public class GenerarJornadasUtil {
 						equipoLcoal = equipos.get(visita-1);
 						equipoVisita = equipos.get(local-1);						
 					}
+					
 									
 				}
 				
 				System.out.println("Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
+				
 				
 				Jornada jo = new Jornada();
 				
@@ -224,10 +224,201 @@ public class GenerarJornadasUtil {
 			jornadasList.add(jor);
 			
 		}
+		int mitad = equipos.size() / 2;
 		
+		if(mitad > 5) {
+			balancearJornadas(mitad, equipos, jornadasList);		
+		}
 		
 		return jornadasList;
 		
+	}
+	
+	public void balancearJornadas(int mitad, List<Equipo> equipos, List<Jornadas> jornadasList) {
+		HashMap <String, Integer> map = new HashMap<String, Integer>(); 
+		
+		for(Equipo e: equipos){
+			int cont = 0;
+			for (Jornadas jo : jornadasList) {
+				for (Jornada juego : jo.getJornada()) {
+					if(juego.getIdEquipoLocal() == e.getId()) {
+						cont++;
+					}
+				}
+			}
+			System.out.println(cont  + "\t = "+ e.getNombre());
+			map.put(e.getNombre(), cont);
+		};
+		
+		
+		if((mitad%2) ==0 ){
+			
+			
+			
+			cambiarJuegoLocalVisita(jornadasList, equipos.get(0), equipos.get(1));
+			for(int i = mitad+2 ; i < equipos.size(); i= i+2) {
+				
+				cambiarJuegoLocalVisita(jornadasList, equipos.get(i-1), equipos.get(i));
+				
+			}
+			
+		}else {
+			
+			
+			
+			for(int i = 1 ; i < equipos.size()-1; i=i+2) {
+				int cu = map.get(equipos.get(i).getNombre());
+				
+				int cua = map.get(equipos.get(i+1).getNombre()); 
+				
+				
+				
+				if(cu < cua && cu < mitad) {
+					System.out.println(cu +"-------------"+cua);
+					cambiarJuegoLocalVisita(jornadasList, equipos.get(i), equipos.get(i+1));
+				}
+				if(cu > cua && cu < mitad-1) {
+					System.out.println(cu +"<------------->"+cua);
+					cambiarJuegoLocalVisita(jornadasList, equipos.get(i),equipos.get(i+1));
+				}
+				
+				
+			}
+			
+			HashMap <String, Integer> mapa = obtenerMap(equipos, jornadasList, mitad);
+			
+			
+			Iterator<String> it = mapa.keySet().iterator();
+
+			while(it.hasNext()){
+			    String clave = it.next();
+			    int valor = mapa.get(clave);		    
+			    System.out.println("Clave: " + clave + ", valor: " + valor);
+			    String clave2 = null;
+			    int valor2 = 0;
+			    if(it.hasNext()) {
+			    	clave2 = it.next();
+			    	valor2 = mapa.get(clave2);
+			    	System.out.println("Clave: " + clave2 + ", valor: " + valor2);
+			    }
+			    
+			    
+			    Equipo equipo1 = null;
+			    Equipo equipo2 = null;
+			    for(Equipo eq : equipos) {
+			    	if(equipo1 == null && eq.getNombre().equals(clave)) {
+			    		equipo1 = eq;
+			    	}else if( eq.getNombre().equals(clave2)) {
+			    		equipo2 = eq;
+			    	}
+			    }
+			    if(valor2 > valor)
+			    	cambiarJuegoLocalVisita(jornadasList, equipo1, equipo2);
+			    else
+			    	cambiarJuegoLocalVisita(jornadasList, equipo2, equipo1);
+			}
+			
+			
+			
+		}
+		
+
+		
+		System.out.println("--------------------------------------------------->>>>>");
+		for(Equipo e : equipos) {
+			int cont = 0;
+			for (Jornadas jo : jornadasList) {
+				for (Jornada juego : jo.getJornada()) {
+					if(juego.getIdEquipoLocal() == e.getId()) {
+						cont++;
+					}
+				}
+			}
+			System.out.println(cont  + "\t = "+ e.getNombre());
+			
+		}
+	}
+	
+	public HashMap <String, Integer> obtenerMap(List<Equipo> equipos,List<Jornadas> jornadasList, int mitad) {
+		HashMap <String, Integer> map = new HashMap<String, Integer>(); 
+		
+		for(Equipo e : equipos){
+			int cont = 0;
+			for (Jornadas jo : jornadasList) {
+				for (Jornada juego : jo.getJornada()) {
+					if(juego.getIdEquipoLocal() == e.getId()) {
+						cont++;
+					}
+				}
+			}
+//			System.out.println(cont  + "\t = "+ e.getNombre());
+			if(cont > mitad || cont < mitad-1)
+				map.put(e.getNombre(), cont);
+		}
+		
+		
+		
+		return map;
+	}
+	
+	public void cambiarJuegoLocalVisita(List<Jornadas> jornadasList, Equipo equipo, Equipo equipoCambio) {
+		boolean encontre = false;
+		for (Jornadas jo : jornadasList) {
+			for (Jornada juego : jo.getJornada()) {
+				if(juego.getIdEquipoLocal() == equipoCambio.getId() && juego.getIdEquipoVisita() == equipo.getId()) {
+					
+					juego.setIdEquipoLocal((int) equipo.getId());
+					juego.setNombreEquipoLocal(equipo.getNombre());
+					juego.setIdEquipoVisita((int) equipoCambio.getId());
+					juego.setNombreEquipoVisita(equipoCambio.getNombre());
+					juego.setImgLocal(equipo.getImg());
+					juego.setImgVisita(equipoCambio.getImg());
+//					Jornada jor = new Jornada();
+//					
+//					jor.setIdJornada(juego.getIdJornada());
+//					jor.setNumeroJornada(juego.getNumeroJornada());
+//					jor.setId(juego.getId());
+//					jor.setIdEquipoLocal((int) juego.getIdEquipoVisita());
+//					jor.setNombreEquipoLocal(juego.getNombreEquipoVisita());
+//					jor.setIdEquipoVisita((int) juego.getIdEquipoLocal());
+//					jor.setNombreEquipoVisita(juego.getNombreEquipoLocal());
+//					jor.setImgLocal(juego.getImgVisita());
+//					jor.setImgVisita(juego.getImgLocal());
+//					
+//					juego = jor;
+					
+					
+					
+					encontre = true ;
+					break;
+
+				}
+				
+				if(juego.getIdEquipoLocal() == equipo.getId() && juego.getIdEquipoVisita() == equipoCambio.getId()) {
+					
+					
+					Jornada jor = new Jornada();
+					
+					jor.setIdJornada(juego.getIdJornada());
+					jor.setNumeroJornada(juego.getNumeroJornada());
+					jor.setId(juego.getId());
+					jor.setIdEquipoLocal((int) juego.getIdEquipoVisita());
+					jor.setNombreEquipoLocal(juego.getNombreEquipoVisita());
+					jor.setIdEquipoVisita((int) juego.getIdEquipoLocal());
+					jor.setNombreEquipoVisita(juego.getNombreEquipoLocal());
+					jor.setImgLocal(juego.getImgVisita());
+					jor.setImgVisita(juego.getImgLocal());
+					
+					juego = jor;
+
+					encontre = true ;
+					break;
+				}
+			}
+			
+			if(encontre == true)
+				break;
+		}
 	}
 
 	public List<Jornadas> getJornadas(List<Equipo> equiposL){
@@ -466,81 +657,6 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		
 		return grupos;
 	}
-	
-	public static void main(String[] args) {
-
-	    //obtain the number of teams from user input
-	    Scanner input = new Scanner(System.in);
-	    System.out.print("How many teams should the fixture table have?");
-
-	    int teams;
-	    teams = input.nextInt();
-
-
-	    // Generate the schedule using round robin algorithm.
-	    int totalRounds = (teams - 1)*1;
-	    int matchesPerRound = teams / 2;
-	    String[][] rounds = new String[totalRounds][matchesPerRound];
-
-	    for (int round = 0; round < totalRounds; round++) {
-	        for (int match = 0; match < matchesPerRound; match++) {
-	            int home = (round + match) % (teams - 1);
-	            int away = (teams - 1 - match + round) % (teams - 1);
-
-	            // Last team stays in the same place while the others
-	            // rotate around it.
-	            if (match == 0) {
-	                away = teams - 1;
-	            }
-
-	            // Add one so teams are number 1 to teams not 0 to teams - 1
-	            // upon display.
-	            rounds[round][match] = ("" + (home + 1) + "-" + (away + 1));
-	        }
-	    }
-
-	    // Display the rounds  
-	    for (int i = 0; i < rounds.length; i++) {
-	        System.out.println("Round " + (i + 1));
-	        System.out.println(Arrays.asList(rounds[i]));
-	        System.out.println();
-	    }
-	    
-	   
-	    
-	  System.out.println("Total de Jornadas:"+totalRounds);
-	  System.out.println("Total de Juegos:"+matchesPerRound);
-	  String[][] rounds1 = new String[totalRounds][matchesPerRound];
-
-	    for (int round = totalRounds-1; round >=0 ; round--) {
-	        for (int match = 0; match < matchesPerRound; match++) {
-	            int home = (round + match) % (teams - 1);
-	            int away = (teams - 1 - match + round) % (teams - 1);
-
-	      
-	            // Last team stays in the same place while the others
-	            // rotate around it.
-	            if (match == 0) {
-	                away = teams -1;
-	            }
-	            //System.out.println("home]:"+home+ " away:"+away);
-	            
-
-	            // Add one so teams are number 1 to teams not 0 to teams - 1
-	            // upon display.
-	            rounds1[round][match] = ("" + (away + 1) + "-" + (home + 1));
-	        }
-	    }
-
-	    
-	    for (int i = 0; i < rounds1.length; i++) {
-	        System.out.println("Round Vuelta " + (i + 1));
-	        System.out.println("IDA]:"+Arrays.asList(rounds[i])+" vUELTA"+Arrays.asList(rounds1[i]));
-	        System.out.println();
-	    }
-
-	}
-	
 	
 	
 	

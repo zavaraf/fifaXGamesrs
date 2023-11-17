@@ -22,7 +22,9 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     		getGruposTorneo   : getGruposTorneo,
     		guardarJornada    : guardarJornada,
     		addJuegosLiguilla : addJuegosLiguilla,
-    		getCatTorneos     : getCatTorneos     
+    		getCatTorneos     : getCatTorneos,  
+    		delJuego          : delJuego,
+    		editJuego         : editJuego,   
     };
  
     return factory;
@@ -300,5 +302,56 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         );
         return deferred.promise;
     }
+    
+    function delJuego(id){
+	
+		const urlCompl = '/juego/del/';
+		
+		var deferred = $q.defer();
+        
+        var url = REST_SERVICE_URI_E+urlCompl+id;
+        
+        console.log("------delJuego Service];----",url)
+        
+        $http.post(url)
+            .then(
+            function (response) {
+            	console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while addJuegosLiguilla');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+	
+	
+	}
+    function editJuego(juego){
+	
+		const urlCompl = '/juego/edit';
+		
+		var deferred = $q.defer();
+        
+        var url = REST_SERVICE_URI_E+urlCompl+"/"+juego.id+"/"+juego.idEquipoLocal+"/"+juego.idEquipoVisita;
+        
+        console.log("------edit Service];----",url)
+        
+        $http.post(url)
+            .then(
+            function (response) {
+            	console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while addJuegosLiguilla');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+	
+	
+	}
     
 }]);

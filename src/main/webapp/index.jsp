@@ -41,12 +41,15 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 	<script src="<c:url value='/static/js/libs/angular.js/angular-pagination.js' />"></script>
+<%-- 	<script src="<c:url value='/static/js/app/ui-bootstrap-tpls-0.10.0.js' />"></script> --%>
+	<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
 	
 <!-- 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> -->
   
 	<script src="<c:url value='/static/js/app/app.js' />"></script>
 	<script src="<c:url value='/static/js/app/papaparse.js' />"></script>
-	<script src="<c:url value='/static/js/app/papaparse.min.js' />"></script>  
+	<script src="<c:url value='/static/js/app/papaparse.min.js' />"></script> 
+	<script src="<c:url value='/static/js/LIB/ngtweet.min.js' />"></script>  
 	
 	
 	<script
@@ -184,10 +187,10 @@
 	</nav>
 	</div>
 	<div class="container">
-
+		<div ng-view></div>
 
 </div>
 
-	<div ng-view></div>
+	
 </body>
 </html>

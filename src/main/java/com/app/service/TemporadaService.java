@@ -40,5 +40,9 @@ public interface TemporadaService {
 	
 	ResponseData getCatTorneo();
 	
+	ResponseData delJuegoJornada(int id);
+	
+	ResponseData editJuegoJornada(int id, int idEquipoLocal, int idEquipoVisita);
+	
 	
 }

@@ -26,6 +26,17 @@
          .email.ng-dirty.ng-invalid-email {
          background-color: yellow;
          }
+         
+         .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
       </style>
       <link rel="stylesheet"
          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -46,14 +57,15 @@
       <script
          src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
       <script src="<c:url value='/static/js/libs/angular.js/angular-pagination.js' />"></script>
-      <%--         <script src="<c:url value='/static/js/libs/angular-ui-bootstrap/ui-bootstrap-tpls-2.1.2.min.js' />"></script> --%>
-      <link href="<c:url value='/static/css/app.css' />" rel="stylesheet">
-      </link>
+      
+      
+      <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
        <link data-require="font-awesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
     <link rel="stylesheet" href="https://rawgit.com/rajush/angular-dropdown-multiselect/master/dist/angular-dropdownMultiselect.min.css" />	
       <script src="<c:url value='/static/js/app/app.js' />"></script>
       <script src="<c:url value='/static/js/controller/torneoLM_controller.js' />"></script>
       <script src="<c:url value='/static/js/service/torneoLM_service.js' />"></script>
+      <script src="<c:url value='/static/js/app/ui-bootstrap-tpls-0.10.0.js' />"></script>
       
 
       <%--      <script src="<c:url value='/static/js/service/draft_service.js' />"></script> --%>
@@ -63,6 +75,99 @@
    </head>
    <body class="ng-cloak">
       <div class="container  container-fluid" ng-controller="AdminTorneoLMController as ctrl">
+      
+<!--       MODAL EDIT JORNADA -->
+      <div class="modal fade" id="myModalJuego" role="dialog">
+			<div class="modal-dialog  modal-lg">
+				<!-- Modal content-->
+				<div class="modal-content bg-dark text-white">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Jornada</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<form name="myForm">
+						
+						<div class="row text-center">
+								<div class="col-md-4">
+									<label class="col-md control-lable" for="address">Equipo
+										{{ctrl.juegoEdit.nombreEquipoLocal}}</label>
+									<div class="col-md">
+
+										<div class="col"
+											custom-select="t as t.nombre for t in ctrl.equipos | filter: { nombre: $searchTerm }"
+											ng-model="ctrl.juegoEdit.equipoLocal">
+											<div class="pull-left">
+												<img ng-src="{{ t.img }}" style="width: 30px" /> <strong>{{
+													t.nombre }}</strong>
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+								<div class="col-md-2 text-center ">
+								  <label  >
+								    vs
+								 </label>
+								 
+								 <div class = "row ">
+									 <div class="col-md-2 text-center">
+										 <button type="button" ng-click="ctrl.cambiarLocalia()" class="btn btn-primary" >Cambiar</button>
+									 </div>
+								 </div>
+									
+								</div>
+								<div class="col-md-4">
+									<label class="col-md control-lable" for="address">Equipo
+										{{ctrl.juegoEdit.nombreEquipoVisita}}</label>
+									<div class="col-md">
+
+										<div class="col"
+											custom-select="t as t.nombre for t in ctrl.equipos  | filter: { nombre: $searchTerm }"
+											ng-model="ctrl.juegoEdit.equipoVisita">
+											<div class="pull-left">
+												<img ng-src="{{ t.img }}" style="width: 30px" /> <strong>{{
+													t.nombre }}</strong>
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+
+							</div>
+							
+						
+						</form>
+					</div>
+					
+					<div class="row modal-footer">
+					
+					
+					<div class="col">
+					    <button type="button" ng-click="ctrl.delJuego()" class="btn btn-danger " data-dismiss="modal">eliminar</button>
+					</div>
+					<div class="col ">
+					
+					
+					    
+					    <button type="button" class="btn btn-primary float-right" data-dismiss="modal" 
+					    
+					    ng-click="ctrl.editJuego()">Guardar</button>
+					    
+						<button type="button" class="btn btn-dark float-right" data-dismiss="modal">Close</button>
+					
+					    
+						
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
       
       
       <!--       Modal Liguilla -->
@@ -353,6 +458,8 @@
 			    <li class="nav-item" ng-repeat="tor in ctrl.getTorneos()">
 			      <a class="nav-link"  ng-click= "ctrl.divisionSelect=tor ;ctrl.isJornadaInsert = false; ctrl.getJornadas();ctrl.getGruposTorneo(tor)" data-toggle="tab" >{{tor.nombre}}</a>
 			    </li>
+			    
+			    
 			    <li class="nav-item dropdown">
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">Agregar torneo</a>
 				    <div class="dropdown-menu">
@@ -361,8 +468,13 @@
 				    </div>
 				    
 				    
-				  </li>   
+				  </li> 
+				 
+				  
+		
 			 </ul>
+			 
+			 
 	        <div class="formcontainer"	>
 	        
             	<div class="panel panel-default">
@@ -407,6 +519,7 @@
 		    		<div class="col" >
 					
 		    			<div class="row"   >
+		    				
 		    			
 							<div class="col-lg-6" ng-repeat="e in ctrl.jornadas | orderBy : 'numeroJornada' ">
 							<div class="row"   >
@@ -432,7 +545,26 @@
 							      </div>
 							    
 								</div>
+								
 							</div>
+							
+							<div class="p-3 mb-2 bg-dark text-white">
+							<div class="col" >
+									Fecha Inicio {{e.fechaInicioString}}
+    								<input type="datetime-local" name="input" ng-init='e.fechaInicioSt = getFormatDate(e.fechaInicio)' 
+    								ng-model="e.fechaInicioSt" ng-change="ctrl.addJornadasEdit(e);e.fechaInicioString = (e.fechaInicioSt | date:'yyyy-MM-dd HH:mm:ss')"
+      								placeholder="yyyy-MM-ddTHH:mm:ss" min="minDate" max="minDate" required />
+      						</div>
+      						<div class="col" >		
+    								Fecha Fin {{e.fechaFinString}}
+    								<input type="datetime-local" name="input" ng-init='e.fechaFinSt = getFormatDate(e.fechaFin)' 
+    								ng-model="e.fechaFinSt" ng-change="ctrl.addJornadasEdit(e); e.fechaFinString = (e.fechaFinSt | date:'yyyy-MM-dd HH:mm:ss')"
+      								placeholder="yyyy-MM-ddTHH:mm:ss" min="minDate" max="minDate" required />
+    						</div>		
+    								
+
+						    </div>
+						    
 							
 							<table class="table table-sm table-hover table-dark">
 		                	
@@ -448,6 +580,15 @@
 		                              <td>{{jor.golesVisita}}</td>
 		                              <td><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
 		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+		                              <td>
+			                              <button   
+		                                  type="button" data-toggle="modal" data-target="#myModalJuego"  
+		                                  ng-click="ctrl.juegoEdit = jor;
+		                                   ctrl.equipos == null ? ctrl.buscarTodos() : ctrl.equipos = ctrl.equipos;
+		                                   "
+		                                  
+		                                  class="btn btn-success btn-sm">Edit</button>
+		                              </td>
 		                             
 		                          </tr>
 		                      </tbody>

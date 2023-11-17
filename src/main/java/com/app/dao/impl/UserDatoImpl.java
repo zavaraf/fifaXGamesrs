@@ -95,6 +95,9 @@ public class UserDatoImpl implements UserDao{
 
 		
 		List<User> playersList = new ArrayList<User>();
+		
+		
+		
 		String query = " SELECT persona.idPersona,  "
 				+"      persona.nombre,  "
 				+"      persona.apellidoPaterno,  "
@@ -122,6 +125,7 @@ public class UserDatoImpl implements UserDao{
 				+"       and persona_has_temporada.temporada_idTemporada = equipos_has_temporada.tempodada_idTemporada  "
 				+"  WHERE   equipos.idEquipo =  " + idEquipo
 				+"  and persona_has_temporada.temporada_idTemporada = " + idTemporada 
+//				+" limit 1000"
 				;
 		
 		System.out.println(query);

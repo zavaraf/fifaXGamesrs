@@ -503,7 +503,30 @@
 				</div>
 <!-- 		        <img src="https://i.imgur.com/qHTsbGs.png" class="img-fluid" alt="Responsive image"> -->
 <!-- 		        <img src="https://i.imgur.com/Pwac2HN.png" class="img-fluid" alt="Responsive image"> -->
-		        <img  ng-repeat="img in ctrl.jornadaEdit.imagenes"   ng-src="{{img.img}}" class="img-fluid" alt="Responsive image">
+				<div ng-repeat="img in ctrl.jornadaEdit.imagenes">
+				<div ng-if="img.img.includes('http') && ( !img.img.includes('twitter') &&  !img.img.includes('x.com'))">
+				   <img ng-src="{{img.img}}" class="img-fluid" alt="Responsive image">
+<!-- 					{{ctrl.getTweetOrImage(img)}} -->
+				</div>
+				<div ng-if="( img.img.includes('twitter') ||  img.img.includes('x.com'))" >
+				<twitter-widget twitter-widget-id= 'img.img' > hoals twit  </twitter-widget> 	    
+
+				</div>
+
+				
+				<div ng-if="img.img.includes('twitter') || img.img.includes('x.com')">
+				<a href="{{img.img}}" target="_blank" >{{img.img}}</a>
+				 <br /> 
+					<twitter-widget>
+					    <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="{{img.img}}"></a></p></blockquote>
+					</twitter-widget>
+				</div>
+				</div>
+		        
+		    
+		        
+		        
+				
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

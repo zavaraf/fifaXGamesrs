@@ -112,25 +112,25 @@ public class UserServiceImpl implements UserService {
 			userDao.updatePlayer(currentUser,idTemporada);
 			
 			
-			if(currentUser.getCosto() > 0 ){
+		
 				Equipo equipoBD = new Equipo();
 				
 				equipoBD = equipoDao.findByIdAll(currentUser.getEquipoPago().getId(),idTemporada);
-				if(equipoBD.getDatosFinancieros() != null){
+				if(equipoBD.getDatosFinancieros() != null && equipoBD.getId() != 1){
 					sponsorService.createPresupuesto(equipoBD,equipoBD.getDatosFinancieros().getPresupuestoInicial(), idTemporada);
 				}
 				
 				User userAnt = userDao.findByIdAnterior(currentUser.getId(), idTemporada);
 				
 				Equipo equipoBDAnt = new Equipo();
-				equipoBDAnt = equipoDao.findByIdAll(userAnt.getEquipo().getId(),userAnt.getEquipo().getTemporada().getId());
+				equipoBDAnt = equipoDao.findByIdAll(userAnt.getEquipo().getId(),idTemporada);
 				
-				if(equipoBDAnt.getDatosFinancieros() != null){
-					sponsorService.createPresupuesto(equipoBDAnt,equipoBDAnt.getDatosFinancieros().getPresupuestoInicial(), userAnt.getEquipo().getTemporada().getId());
+				if(equipoBDAnt.getDatosFinancieros() != null && equipoBDAnt.getId() != 1){
+					sponsorService.createPresupuesto(equipoBDAnt,equipoBDAnt.getDatosFinancieros().getPresupuestoInicial(), idTemporada);
 				}
 				
 				
-			}
+			
 			
 			ResponseData response = new ResponseData();
 			

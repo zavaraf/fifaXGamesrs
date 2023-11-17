@@ -72,7 +72,9 @@ angular.module('myApp')
     function findTeam(){
 		var team = 1;
 		console.log('Equipo a Buscar]:'+team);
-		TeamService.findEquipoAll(team, CONFIG.VARTEMPORADA.id)
+		console.log('Equipo a Buscar Equipo]:',self.equipo);
+		if(self.equipo.jugadores == null ){
+			TeamService.findEquipoAll(team, CONFIG.VARTEMPORADA.id)
             .then(
             function(d) {
                 self.equipo = d;
@@ -82,6 +84,9 @@ angular.module('myApp')
                 console.error('Error while fetching Users');
             }
         );
+			
+		}
+		
     }
     function selectJugador(jugadorSel){
     	self.isError = false;
@@ -175,7 +180,7 @@ angular.module('myApp')
 	}
     
     function actualizar(){
-    	findTeam();
+//    	findTeam();
         buscarJugadoresdraft();
     }
     

@@ -1,12 +1,12 @@
 body, #mainWrapper {
 	height: 90%;
 	background-color:rgb(010,010,010);
-	color: #FFFFFF;
+	color: #408080;
 /*	background-color:rgb(245, 245, 245); */
 }
 .dark1{
 	height: 90%;
-	color:rgb(010,010,030);
+	color:#408080;
 	
 }
 

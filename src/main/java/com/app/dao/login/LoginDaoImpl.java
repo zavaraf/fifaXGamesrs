@@ -24,13 +24,21 @@ public class LoginDaoImpl implements LoginDao {
 	public UserInfo findUserInfo(String username) {
 		// String query = "select username, pass as password from usuarios where
 		// username = '"+username+"'";
-		String query = " select usuarios.username,  " + " usuarios.pass as password,  " + " usuarios.email,  "
-				+ " equipos.nombreEquipo,  " + " equipos.idEquipo , " + " GROUP_CONCAT(DISTINCT roles.descripcionRol "
-				+ "           ORDER BY roles.descripcionRol ASC " + "           SEPARATOR ' - ') as roles "
-				+ " from usuarios  " + " join usuarios_has_roles uhr on uhr.Usuarios_userName = usuarios.userName "
+		String query = " select usuarios.username,  " 
+				+ " usuarios.pass as password,  " 
+				+ " usuarios.email,  "
+				+ " equipos_has_temporada.nombreEquipo,  " 
+				+ " equipos_has_temporada.Equipos_idEquipo as idEquipo , " 
+				+ " GROUP_CONCAT(DISTINCT roles.descripcionRol "
+				+ "           ORDER BY roles.descripcionRol ASC " 
+				+ "           SEPARATOR ' - ') as roles "
+				+ " from usuarios  " 
+				+ " join usuarios_has_roles uhr on uhr.Usuarios_userName = usuarios.userName "
 				+ " join roles on uhr.Roles_idRoles = roles.idRoles "
-				+ " left join equipos on usuarios.idequipo = equipos.idEquipo" + " where usuarios.userName = '"
-				+ username + "'" + " group by equipos.nombreEquipo ";
+				+ " left join equipos_has_temporada on usuarios.idequipo = equipos_has_temporada.Equipos_idEquipo "
+				+ "              and equipos_has_temporada.tempodada_idTemporada = (select max(idTemporada) from temporada) "
+				+ " where usuarios.userName = '"
+				+ username + "'" + " group by equipos_has_temporada.nombreEquipo ";
 		System.out.println("------>user]" + query);
 
 		Collection users = jdbcTemplate.query(query, new RowMapper() {

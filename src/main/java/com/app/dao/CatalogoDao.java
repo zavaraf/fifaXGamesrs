@@ -18,5 +18,7 @@ public interface CatalogoDao {
 			String tipo, int idTorneo);
 
 	public HashMap<String, String> confirmarJugadores(String json, int idTemporada);
+	
+	public HashMap<String, String> confirmarJugadores(StringBuilder json, int idTemporada);
 
 }

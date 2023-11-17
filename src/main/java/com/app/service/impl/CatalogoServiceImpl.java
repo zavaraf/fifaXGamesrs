@@ -95,6 +95,48 @@ public class CatalogoServiceImpl implements CatalogoService{
 		return response;
 	}
 	
+	@Override
+	public ResponseData confirmarJugadoresString(List<JugadoresCSV> jugadores, int idTemporada) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		ResponseData response = new ResponseData();
+		
+		Gson gson = new Gson();
+
+//		String json = gson.toJson(jugadores);
+		
+		StringBuilder sql = new StringBuilder();
+		
+		
+		
+		for(JugadoresCSV obj : jugadores) {
+			String update = ""
+					+ " UPDATE persona_has_temporada "
+					+ " SET rating = " + obj.Overall
+					+ " where persona_idPersona = "
+					+ "    (select persona.idPersona from persona  where persona.idsofifa = " + obj.ID
+					+ "    limit 1 )"
+					+ " AND temporada_idTemporada = " +idTemporada
+					+ ";";
+			
+			sql.append(update);
+		}
+		
+		
+//		map= catalogoDao.confirmarJugadores(sql,idTemporada);
+		
+//		if (map == null || map.isEmpty()) {
+//			response.setStatus(CodigoResponse.ERROR.getCodigo());
+//			response.setMensaje(CodigoResponse.ERROR.getMensaje());
+//		} else {
+//			String status = map.get("status");
+//			response.setStatus(Integer.parseInt(status));
+//			response.setMensaje(map.get("mensaje"));
+//		}
+		response.setStatus(CodigoResponse.OK.getCodigo());
+		response.setMensaje(sql.toString());
+		return response;
+	}
+	
 	
 
 }

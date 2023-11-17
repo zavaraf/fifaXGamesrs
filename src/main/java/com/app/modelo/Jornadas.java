@@ -1,5 +1,6 @@
 package com.app.modelo;
 
+import java.util.Date;
 import java.util.List;
 
 public class Jornadas {
@@ -10,7 +11,44 @@ public class Jornadas {
 	private int numeroJornada;
 	private int tipoJornada;
 	private String nombreJornada;
+	private Date fechaInicio;
+	private Date fechaFin;
+	private String fechaInicioString;
+	private String fechaFinString;
 	
+	
+	public String getFechaInicioString() {
+		return fechaInicioString;
+	}
+
+	public void setFechaInicioString(String fechaInicioString) {
+		this.fechaInicioString = fechaInicioString;
+	}
+
+	public String getFechaFinString() {
+		return fechaFinString;
+	}
+
+	public void setFechaFinString(String fechaFinString) {
+		this.fechaFinString = fechaFinString;
+	}
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
 	private List<Jornada> jornada;
 
 	public int getIdJornda() {
@@ -68,6 +106,8 @@ public class Jornadas {
 	public void setNombreJornada(String nombreJornada) {
 		this.nombreJornada = nombreJornada;
 	}
+
+	
 	
 	
 	

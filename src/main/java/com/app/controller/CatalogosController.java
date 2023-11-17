@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.enums.CodigoResponse;
@@ -108,8 +109,29 @@ public class CatalogosController {
 		
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println("---->confirmarJugadores]:authentication.name");
-			 response = catalogService.confirmarJugadores(jugadores, idTemporada);
+//			 System.out.println("---->confirmarJugadores]:authentication.name");
+			 response = catalogService.confirmarJugadoresString(jugadores, idTemporada);
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/confirmarJugadoresTemp",method = {RequestMethod.POST},
+			headers="Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<ResponseData> confirmarJugadoresTemp(
+			@RequestParam("idTemporada") int idTemporada,
+			@RequestBody List<JugadoresCSV> jugadores){
+		
+		 ResponseData response = new ResponseData();	
+		 try{
+//			 System.out.println("---->confirmarJugadores]:authentication.name");
+			 response = catalogService.confirmarJugadoresString(jugadores, idTemporada);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());

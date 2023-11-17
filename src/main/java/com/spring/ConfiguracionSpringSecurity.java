@@ -74,6 +74,8 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 			.antMatchers("/css/*").permitAll()
 			
 			.antMatchers("/test/**").permitAll()
+			.antMatchers("/rest/catalogs/confirmarJugadores**").permitAll()
+			
 //			.antMatchers("/rest/**").permitAll()
 			.antMatchers("/usermanager/**").permitAll()
 			.antMatchers("/**").access("hasAnyRole('Admin','Manager','Usuario')")
@@ -112,7 +114,7 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 		http
 		.sessionManagement()
 		.invalidSessionUrl("/paginas/sesion-expirada.jsp")
-		.maximumSessions(1)
+		.maximumSessions(4)
 		.maxSessionsPreventsLogin(false);
 		
 		http.sessionManagement()

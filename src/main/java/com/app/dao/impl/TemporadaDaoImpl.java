@@ -3,8 +3,12 @@ package com.app.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,7 @@ import com.app.modelo.GolesJornadas;
 import com.app.modelo.Grupos;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
+import com.app.modelo.ResponseData;
 import com.app.modelo.SalonFama;
 import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
@@ -94,6 +99,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	
 	public Torneo getTorneoGeneral(int idTemporada, int idTorneo, int idEquipo) {
 		
+		actualizaJornadas();
 		Torneo torneo = new Torneo();
 		
 		torneo.setTablaGeneral(getTablaGeneral(idTemporada, idTorneo));
@@ -512,7 +518,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		if (activa == 1){
 			queryAddActiva = "  and jornadas.activa = 1 ";
 		}
-		String query = "  select tabla.idJornada, tabla.id, tabla.numeroJornada, "
+		String query =" select tabla.idJornada, tabla.id, tabla.numeroJornada, "
 					+" tabla.equipos_idEquipoLocal, "
 					+" tabla.activa, "
 					+" tabla.cerrada, "
@@ -529,7 +535,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
 					+ " ) imgLocal, "
 					+" tabla.golesLocal, "
 					+" tabla.golesVisita, "
-					+" "
+					+" tabla.fechaInicio,"
+					+" tabla.fechaFin,"
 					+" (select case when equipos_has_temporada.nombreEquipo is null then equipos.nombreEquipo else equipos_has_temporada.nombreEquipo end "
 					+"  from equipos  "
 					+"  join equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo "
@@ -549,7 +556,9 @@ public class TemporadaDaoImpl implements TemporadaDao {
 					+" je.equipos_idEquipoLocal, "
 					+" je.golesLocal, "
 					+" je.golesVisita, "
-					+" je.equipos_idEquipoVisita "
+					+" je.equipos_idEquipoVisita,"
+					+" jornadas.fechaInicio,"
+					+" jornadas.fechaFin"
 					+" from jornadas "
 					+" join jornadas_has_equipos je on je.jornadas_idJornada = jornadas.idJornada "
 					+" join torneo on torneo.idtorneo = jornadas.torneo_idtorneo "
@@ -587,6 +596,8 @@ public class TemporadaDaoImpl implements TemporadaDao {
                     	}catch(Exception e){
                     		                    		
                     	}
+                    	jornada.setFechaInicio(rs.getTimestamp("fechaInicio"));
+                    	jornada.setFechaFin(rs.getTimestamp("fechaFin"));
                     	
                     	return jornada;
                     }
@@ -601,9 +612,9 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		
 		for (Map.Entry<Integer, Integer> entry : mapJornadas.entrySet()) {
 			Jornadas jorn = new Jornadas();
-		    System.out.println("idJornada=" + entry.getKey() + ", NumeroJornada=" + entry.getValue());
 		    List<Jornada> juegos = getJuegos(ListJornada, entry.getKey());
-		    
+		    System.out.println("idJornada=" + entry.getKey() + ", NumeroJornada=" + entry.getValue() + " Fechas: "+juegos.get(0).getFechaInicio()+ " - "+juegos.get(0).getFechaFin());
+		    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		    if(juegos.size()>0){
 		    	
 		    	jorn.setActiva(juegos.get(0).getActiva());
@@ -612,6 +623,15 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		    	jorn.setNumeroJornada(juegos.get(0).getNumeroJornada());
 		    	jorn.setTipoJornada(juegos.get(0).getTipoJornada());
 		    	jorn.setNombreJornada(juegos.get(0).getNombreJornada());
+		    	try {
+					jorn.setFechaInicio(juegos.get(0).getFechaInicio() != null ? juegos.get(0).getFechaInicio() : null);
+					jorn.setFechaFin(juegos.get(0).getFechaFin()!= null ? juegos.get(0).getFechaFin(): null);
+					jorn.setFechaInicioString(juegos.get(0).getFechaInicio() != null ? sdf.format(juegos.get(0).getFechaInicio()) : null);
+					jorn.setFechaFinString(juegos.get(0).getFechaFin()!= null ? sdf.format(juegos.get(0).getFechaFin()): null);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		    	jorn.setJornada(juegos);
 		    	
 		    	
@@ -826,14 +846,14 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	Jornada jornada = new Jornada();
 	String query ="  select tabla.idJornada, tabla.id, tabla.numeroJornada, tabla.cerrada,"
 				+"  tabla.equipos_idEquipoLocal, "
-				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, "
+				+"  (select equipos_has_temporada.nombreEquipo from equipos_has_temporada where equipos_has_temporada.Equipos_idEquipo = tabla.equipos_idEquipoLocal and  tempodada_idTemporada = "+ idTemporada +" ) equipoLocal, "
 				+"  tabla.golesLocal, "
 				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoLocal) equipoLocal, " 
 				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoLocal and equipos_has_imagen.idTemporada = "+ idTemporada +" ) imgLocal, "
 				+"  tabla.golesLocal, "
 				+"  tabla.golesVisita, "
 				+"   "
-				+"  (select equipos.nombreEquipo from equipos where equipos.idEquipo = tabla.equipos_idEquipoVisita) equipoVisita, "
+				+"  (select equipos_has_temporada.nombreEquipo from equipos_has_temporada where equipos_has_temporada.Equipos_idEquipo = tabla.equipos_idEquipoVisita and  tempodada_idTemporada = "+ idTemporada +" ) equipoVisita, "
 				+"  (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=1 and equipos_has_imagen.equipos_idEquipo = tabla.equipos_idEquipoVisita and equipos_has_imagen.idTemporada = "+ idTemporada +" ) imgVisita, "
 				+"  tabla.equipos_idEquipoVisita, "
 				+"  tabla.username, "
@@ -1039,12 +1059,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	}
 
 	@Override
-	public HashMap<String, String> addJornada(int idTemporada, int idDivision, Jornada juego,int activa,int cerrada) {
+	public HashMap<String, String> addJornada(int idTemporada, int idDivision, Jornada juego,int activa,int cerrada,Date fechaIni,Date fechaFin) {
 		System.out.println("----->equipoLocal]:" + juego.getIdEquipoLocal()+","
 				+ "equipoVisita]:"+juego.getIdEquipoVisita()+
 				",numJornada]:"+juego.getId()+",temporada]:"+idDivision+",division]:"+idDivision+
-				",liga]:1"+",activa]:"+juego.getActiva()+",id]:"+juego.getId());
+				",liga]:1"+",activa]:"+juego.getActiva()+",id]:"+juego.getId()+",fechaIFin]:"+fechaFin);
 		String query = "crearJornada";
+		
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
 
@@ -1058,19 +1079,21 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		SqlParameter activaV          = new SqlParameter("activa", Types.INTEGER);
 		SqlParameter cerradaV          = new SqlParameter("cerrada", Types.INTEGER);
 		SqlParameter id          = new SqlParameter("id", Types.INTEGER);
+		SqlParameter fechaIniV          = new SqlParameter("fechaIni", Types.TIMESTAMP);
+		SqlParameter fechaFinV          = new SqlParameter("fechaFin", Types.TIMESTAMP);
 		
 		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
 		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
 
 		SqlParameter[] paramArray = { equipoLocal,equipoVisita,numJornada,
-				torneo,division,liga,activaV,cerradaV,id,isError ,message};
+				torneo,division,liga,activaV,cerradaV,id,fechaIniV,fechaFinV,isError ,message};
 
 		myStoredProcedure.setParameters(paramArray);
 		myStoredProcedure.compile();
 
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(juego.getIdEquipoLocal(),juego.getIdEquipoVisita(),
-				juego.getNumeroJornada(),idDivision,idDivision,1,activa,cerrada,juego.getId());
+				juego.getNumeroJornada(),idDivision,idDivision,1,activa,cerrada,juego.getId(),fechaIni,fechaFin);
 
 		System.out.println(storedProcResult);
 
@@ -1340,7 +1363,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
                     	salon.setIdEquipo(rs.getInt("idEquipo"));
                     	salon.setIdTipoTorneo(rs.getInt("idcat_torneo"));
                     	salon.setNombreTorneo(rs.getString("nombretorneo"));
-                    	salon.setNombreTemporada(rs.getString("nombretemporada"));
+                    	salon.setNombreTemporada(rs.getInt("nombretemporada"));
                     	salon.setImgTorneo(rs.getString("img_torneo"));
                     	salon.setTotalxTemporada(rs.getInt("totalxTorneo"));
                     	salon.setTotal(rs.getInt("total"));
@@ -1392,6 +1415,110 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	        }
 	        
 		return eventosList;
+	}
+	
+	public void actualizaJornadas() {
+
+		System.out.println("----->activarJornadas]:" );
+		String query = "activarJornadas";
+
+		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
+
+		// Sql parameter mapping
+		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
+		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
+
+		SqlParameter[] paramArray = { 
+				isError, message };
+
+		myStoredProcedure.setParameters(paramArray);
+		myStoredProcedure.compile();
+
+		// Call stored procedure  
+		Map storedProcResult = myStoredProcedure.execute();
+
+		System.out.println(storedProcResult);
+
+		HashMap<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("status", storedProcResult.get("isError").toString());
+		mapa.put("mensaje", storedProcResult.get("message").toString());
+		System.out.println(mapa);
+
+		
+	}
+
+	@Override
+	public HashMap<String, String> delJuegoJornada(int id) {
+		
+		System.out.println("----->delJuegoJornada]:"+id );
+		String query = "delJuegoJornada";
+
+		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
+
+		// Sql parameter mapping
+		
+		SqlParameter idJuegoVar = new SqlParameter("idJuego", Types.INTEGER);
+		
+		
+		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
+		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
+
+		SqlParameter[] paramArray = { idJuegoVar,
+				isError, message };
+
+		myStoredProcedure.setParameters(paramArray);
+		myStoredProcedure.compile();
+
+		// Call stored procedure
+		Map storedProcResult = myStoredProcedure.execute(id);
+
+		System.out.println(storedProcResult);
+
+		HashMap<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("status", storedProcResult.get("isError").toString());
+		mapa.put("mensaje", storedProcResult.get("message").toString());
+		System.out.println(mapa);
+
+		return mapa;
+	}
+	@Override
+	public HashMap<String, String> editJuegoJornada(int id, int idEquipoLocal, int idEquipoVisita) {
+		
+		System.out.println("----->modJuegoJornada]:"+id + "  "+ idEquipoLocal+ " "+ idEquipoVisita );
+		String query = "modJuegoJornada";
+		
+		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
+		
+		// Sql parameter mapping
+		
+		SqlParameter idJuegoVar        = new SqlParameter("idJuego", Types.INTEGER);
+		SqlParameter idEquipoLocalVar  = new SqlParameter("idEquipoLocal", Types.INTEGER);
+		SqlParameter idEquipoVisitaVar = new SqlParameter("idEquipoVisita", Types.INTEGER);
+		
+		
+		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
+		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
+		
+		SqlParameter[] paramArray = { idJuegoVar,idEquipoLocalVar,idEquipoVisitaVar,
+				isError, message };
+		
+		myStoredProcedure.setParameters(paramArray);
+		myStoredProcedure.compile();
+		
+		// Call stored procedure
+		Map storedProcResult = myStoredProcedure.execute(id,idEquipoLocal, idEquipoVisita);
+		
+		System.out.println(storedProcResult);
+		
+		HashMap<String, String> mapa = new HashMap<String, String>();
+		
+		mapa.put("status", storedProcResult.get("isError").toString());
+		mapa.put("mensaje", storedProcResult.get("message").toString());
+		System.out.println(mapa);
+		
+		return mapa;
 	}
 
 

@@ -20,4 +20,6 @@ public interface CatalogoService {
 	
 	public ResponseData confirmarJugadores(List<JugadoresCSV> judadores, int idTemporada);
 
+	public ResponseData confirmarJugadoresString(List<JugadoresCSV> jugadores, int idTemporada);
+
 }

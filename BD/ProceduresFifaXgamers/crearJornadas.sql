@@ -9,6 +9,8 @@ CREATE PROCEDURE crearJornada (IN equipoLocal int ,
                                IN activa int,
                                IN cerrada int,
                                IN id int,
+                               IN fechaInicio timestamp,
+                               IN fechaFin timestamp,
                                out isError int, 
                                out message varchar(200))
 BEGIN
@@ -46,17 +48,19 @@ from jornadas
 where jornadas.numeroJornada = numJornada
 and jornadas.torneo_idtorneo = torneo;
 
-UPDATE `fifaxgamersbd`.`jornadas`
+UPDATE `jornadas`
 SET
 `activa` = activa,
-`cerrada` = cerrada
+`cerrada` = cerrada,
+`fechaInicio` = fechaInicio,
+`fechaFin` = fechaFin
 
 WHERE `idJornada` = idjornadaVal AND `torneo_idtorneo` = torneo;
 
 
 else if idjornadaVal is null then
 
-INSERT INTO `fifaxgamersbd`.`jornadas`
+INSERT INTO `jornadas`
 (`idJornada`,
 `division_idDivision`,
 `numeroJornada`,
@@ -78,7 +82,7 @@ torneo
 
 else if idjornadaVal is not null then
 
-UPDATE `fifaxgamersbd`.`jornadas`
+UPDATE `jornadas`
 SET
 `activa` = activa,
 `cerrada` = cerrada
@@ -105,7 +109,7 @@ and hje.jornadas_idJornada = idjornadaVal;
 
 if idJ is null then 
 
-INSERT INTO `fifaxgamersbd`.`jornadas_has_equipos`
+INSERT INTO `jornadas_has_equipos`
 (`id`,
 `jornadas_idJornada`,
 `equipos_idEquipoLocal`,

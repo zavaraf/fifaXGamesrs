@@ -1,7 +1,8 @@
 'use strict';
  
-angular.module('myApp').controller('TeamController', ['$scope','$routeParams','CONFIG','$sce','TeamService','EquipoService','DraftPCService','UserService',
-    function($scope,$routeParams, CONFIG,$sce,TeamService,EquipoService,DraftPCService,UserService) {
+angular.module('myApp')
+   .controller('TeamController', ['$scope','$routeParams','CONFIG','$sce','TeamService','EquipoService','DraftPCService','UserService',
+                         function($scope,$routeParams, CONFIG,$sce,TeamService,EquipoService,DraftPCService,UserService) {
     var self = this;
     
 
@@ -79,6 +80,7 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
     self.submitDraftPCConfirm     = submitDraftPCConfirm;
     self.submitPlayer      = submitPlayer;
     self.modificarEquipo   = modificarEquipo;
+    self.actualizarSuma    = actualizarSuma;
     
     self.deletePrestamo         = deletePrestamo;
     
@@ -107,26 +109,26 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
         }
     }, false);
     
-    separadorPI.addEventListener('keyup', (e) => {
-        var entrada = e.target.value.split(',').join('');
-        entrada = entrada.split('').reverse();
-        
-        var salida = [];
-        var aux = '';
-        
-        var paginador = Math.ceil(entrada.length / 3);
-        
-        for(let i = 0; i < paginador; i++) {
-            for(let j = 0; j < 3; j++) {
-                if(entrada[j + (i*3)] != undefined) {
-                    aux += entrada[j + (i*3)];
-                }
-            }
-            salida.push(aux);
-            aux = '';
-            document.querySelector('#montoSeparadoPI').innerText = salida.join(',').split("").reverse().join('');
-        }
-    }, false);
+//    separadorPI.addEventListener('keyup', (e) => {
+//        var entrada = e.target.value.split(',').join('');
+//        entrada = entrada.split('').reverse();
+//        
+//        var salida = [];
+//        var aux = '';
+//        
+//        var paginador = Math.ceil(entrada.length / 3);
+//        
+//        for(let i = 0; i < paginador; i++) {
+//            for(let j = 0; j < 3; j++) {
+//                if(entrada[j + (i*3)] != undefined) {
+//                    aux += entrada[j + (i*3)];
+//                }
+//            }
+//            salida.push(aux);
+//            aux = '';
+//            document.querySelector('#montoSeparadoPI').innerText = salida.join(',').split("").reverse().join('');
+//        }
+//    }, false);
     
     function showEditPlayer(equipo,userEquipoId,roles){
         var ban = false;
@@ -367,6 +369,25 @@ angular.module('myApp').controller('TeamController', ['$scope','$routeParams','C
         }
         );
     }
+    
+    function actualizarSuma(){
+	
+	    
+       
+        console.log(" [team_controller]-------->Inicial]:",self.equipo)
+        
+        TeamService.submitDatos(self.equipo.datosFinancieros.presupuestoInicial,self.equipo,CONFIG.VARTEMPORADA.id)
+        .then(findTeam,
+                function(d) {           
+            console.log(' [team_controller]submitDatos--------->',d)
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        }
+        );
+    }
+    
+    
     function guardarObj(objetivos){
         console.log(" [team_controller]guardarObj]:"," Objetivos]:",objetivos)    
         

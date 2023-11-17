@@ -44,6 +44,7 @@
       <script src="<c:url value='/static/js/service/user_service.js' />"></script>
       <script src="<c:url value='/static/js/service/equipo_service.js' />"></script>
       <script src="<c:url value='/static/js/controller/equipo_controller.js' />"></script>
+      <script src="<c:url value='/static/js/LIB/ngtweet.min.js' />"></script>  
 <%--       <script src="<c:url value='/static/dotansimha-angularjs-dropdown-multiselect-e73fca5/dist/angularjs-dropdown-multiselect.min.js' />"></script> --%>
 <div ng-controller="TeamController as ctrl">
 <div ng-controller="UserController as ctrlJuga">
@@ -67,9 +68,9 @@
 <!-- 	    <div class="col-sm-3"> -->
 <!-- 	      <h4><span class="badge badge-success">Salarios : {{ctrl.equipo.salarios | currency}}</span></h4> -->
 <!-- 	    </div> -->
-		  <div class=" badge badge-success"><h5><span>Total Rating: {{ctrl.equipo.totalRaiting}}</span></h5></div>
+<!-- 		  <div class=" badge badge-success"><h5><span>Total Rating: {{ctrl.equipo.totalRaiting}}</span></h5></div> -->
           <div class=" badge  badge-primary"><h5><span>Total Jugadores: {{ctrl.equipo.totalJugadores}}</span></h5></div>
-          <div class="badge badge-success"><h5><span>Salarios : {{ctrl.equipo.salarios | currency}}</span></h5></div>
+          <div class="badge badge-success"><h5><span>Presupuesto : {{ctrl.equipo.datosFinancieros.presupuestoFinal | currency}}</span></h5></div>
 	  </div>
   </div>
 <!-- </div> -->
@@ -217,7 +218,7 @@
 												<div class="modal-content">
 												<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
 								<!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
-												  <strong>¡Error!</strong> {{ctrl.Error}}
+												  <strong>Â¡Error!</strong> {{ctrl.Error}}
 												</div>
 													
 													<div class="modal-body">
@@ -430,7 +431,7 @@
 				<div class="modal-content bg-dark text-white">
 				<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
 <!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
-				  <strong>�Error!</strong> {{ctrl.Error}}
+				  <strong>¡Error!</strong> {{ctrl.Error}}
 				</div>
 					<div class="modal-header">
 						<h4 class="modal-title">{{ctrl.jugador.sobrenombre + ' - Raiting: ' + ctrl.jugador.raiting}}</h4>
@@ -485,7 +486,7 @@
 				<div class="modal-content bg-dark text-white">
 				<div class="alert alert-danger alert-dismissable" ng-show="ctrl.isError">
 <!-- 				<button type="button" class="close" data-dismiss="alert">&times;</button> -->
-				  <strong>�Error!</strong> {{ctrl.Error}}
+				  <strong>¡Error!</strong> {{ctrl.Error}}
 				</div>
 					<div class="modal-header">
 					    <h4 class="modal-title">Confirmar</h4>
@@ -639,7 +640,12 @@
 	  <div class="embed-responsive embed-responsive-16by9" ng-if="ctrl.vistaPantilla && urlSofifa!=null" >
 	  	
 		  <iframe class="embed-responsive-item" ng-src="{{urlSofifa}}" allowfullscreen></iframe>
+
+	
+
+
 		</div>
+		
 		
     </div>
     </div>
@@ -797,20 +803,33 @@
 			     </sec:authorize>
 				<button type="submit" ng-click="ctrl.showGuarDat()" class="btn btn-info btn-sm" 
 				 ng-show="ctrl.showInicial">Guardar</button>
+			
+			<button type="button" ng-click="ctrl.actualizarSuma()" class="btn btn-info btn-sm" 
+			    ng-disabled="ctrl.showEdit( '${user.authorities}',ctrl.equipo.id,'${user.idEquipo}') == false"
+			  >ActualizarSuma</button>
 				   
 				      <div class="input-group mb-3 input-group-sm">
-					     <div class="input-group-prepend">
-					       <span class="input-group-text">Presupuesto Inicial</span>					       
+					     <div class="col-sm">
+					       <div class="badge badge-dark"><h5><span>Presupuesto Inicial : {{ctrl.equipo.datosFinancieros.presupuestoInicial | currency}}</span></h5></div>					       
 					    </div>
-					    <input type="text" class="form-control" ng-show="!ctrl.showInicial" readonly value="{{ctrl.equipo.datosFinancieros.presupuestoInicial | currency}}">
-					    <input type="text" ng-model="ctrl.preInicial" ng-show="ctrl.showInicial" id="montoInicial" class="form-control input-sm" placeholder="Presupuesto Inicial" required ng-minlength="3"/>
-					    <label id="montoSeparadoPI" class="form-control input-sm" ng-show="ctrl.showInicial">0</label>
+<!-- 					    <input type="text" class="form-control" ng-show="!ctrl.showInicial" readonly value="{{ctrl.equipo.datosFinancieros.presupuestoInicial | currency}}"> -->
+<!-- 					    <input type="text" ng-model="ctrl.preInicial" ng-show="ctrl.showInicial" id="montoInicial" class="form-control input-sm" placeholder="Presupuesto Inicial" required ng-minlength="3"/> -->
+<!-- 					    <label id="montoSeparadoPI" class="form-control input-sm" ng-show="ctrl.showInicial">0</label> -->
+					  </div>
+					  <div class="form-row" ng-show="ctrl.showInicial" >
+					    <div class="form-group col-md-6">
+					      <label for="inputEmail4">Presupuesto Inicial {{ctrl.preInicial | currency}}</label>
+					      <input type="text" ng-model="ctrl.preInicial" 
+					       class="form-control" id="inputEmail4" placeholder="Presupuesto">
+					    </div>
+					   
 					  </div>
 				      <div class="col-sm">
 <!-- 					     <div class="input-group-prepend"> -->
-						   <span class="input-group-text">Salarios: {{ctrl.equipo.salarios | currency}}</span>	
-					       <span class="input-group-text">Presupuesto Final: {{ctrl.equipo.datosFinancieros.presupuestoFinal | currency}}</span>					       
-					       <span class="input-group-text">Presupuesto Final Sponsor: {{ctrl.equipo.datosFinancieros.presupuestoFinalSponsor | currency}}</span>					       
+<!-- 						   <span class="input-group-text">Salarios: {{ctrl.equipo.salarios | currency}}</span>	 -->
+<!-- 					       <span class="input-group-text">Presupuesto Final: {{ctrl.equipo.datosFinancieros.presupuestoFinal | currency}}</span>					        -->
+<!-- 					       <span class="input-group-text">Presupuesto Final Sponsor: {{ctrl.equipo.datosFinancieros.presupuestoFinalSponsor | currency}}</span> -->
+					       <div class="badge badge-dark"><h5><span>Presupuesto Final: {{ctrl.equipo.datosFinancieros.presupuestoFinal | currency}}</span></h5></div>					       
 <!-- 					    </div> -->
 					    
 					  </div>

@@ -239,7 +239,7 @@
   			  <!-- Nav tabs -->
 			  <ul class="nav nav-tabs" role="tablist">
 			    <li class="nav-item">
-			      <a class="nav-link active" data-toggle="tab" ng-click = "ctrl.visibleJugadores = true; ctrl.visibleOfertas = false"">Jugadores</a>
+			      <a class="nav-link active" data-toggle="tab" ng-click = " ctrl.visibleJugadores = true; ctrl.visibleOfertas = false">Jugadores</a>
 			      
 			    </li>
 			    <li class="nav-item">
@@ -258,6 +258,9 @@
             
               <button type="button" class="btn btn-info btn-sm" ng-show = "ctrl.visibleOfertas == true"
                ng-click="ctrl.buscarJugadoresdraft()">Actualizar</button>
+               
+               <button type="button" class="btn btn-info btn-sm" ng-show = "ctrl.visibleJugadores == true"
+               ng-click="ctrl.findTeam()">Actualizar Jugadores</button>
 			
 				
               <div class="table-responsive-sm">

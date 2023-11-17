@@ -20,6 +20,7 @@ import com.app.dao.CatalogoDao;
 import com.app.dao.EquipoDao;
 import com.app.modelo.Castigo;
 import com.app.modelo.CatalogoFinanciero;
+import com.app.modelo.JugadoresCSV;
 import com.app.modelo.TipoConcepto;
 import com.app.modelo.Torneo;
 import com.app.utils.MyStoredProcedure;
@@ -254,6 +255,20 @@ public class CatalogoDatoImpl implements CatalogoDao{
 		System.out.println(mapa);
 
 		return mapa;
+	}
+	
+	public HashMap<String, String> confirmarJugadores(StringBuilder sql, int idTemporada) {
+		System.out.println("----->confirmarJugadores]:");
+		
+		
+		System.out.println(sql.toString());
+
+		
+		jdbcTemplate.update(sql.toString()
+			  );
+		
+
+		return null;
 	}
 
 }

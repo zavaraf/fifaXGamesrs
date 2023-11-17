@@ -28,6 +28,7 @@ import com.app.modelo.TablaGeneral;
 import com.app.modelo.Temporada;
 import com.app.modelo.Torneo;
 import com.app.service.TemporadaService;
+import com.google.gson.Gson;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 @Controller
@@ -288,6 +289,7 @@ public class TemporadaController {
 		 ResponseData response = new ResponseData();	
 		 try{
 			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idDivision+" TipoTorneo:"+tipoTorneo);
+			 System.out.println( new Gson().toJson(jornadas));
 			 response = temporadaService.addJornadas(idTemporada,idDivision,jornadas,tipoTorneo);
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
@@ -395,6 +397,8 @@ public class TemporadaController {
 		 
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
+	
+	 
 	 @RequestMapping(value="/lm/getCatTorneo",
 			 method = RequestMethod.GET,
 			 headers="Accept=application/json")
@@ -406,6 +410,50 @@ public class TemporadaController {
 		 try{
 //			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
 			 response = temporadaService.getCatTorneo();
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
+	 
+	 
+	 @RequestMapping(value="/lm/juego/del/{id}",
+			 method = RequestMethod.POST,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<ResponseData> delJuegoJornada(@PathVariable int id){
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+
+			 response = temporadaService.delJuegoJornada(id);
+			 
+		 }catch(Exception e){
+			 System.out.println(e.getMessage());
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
+			 
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
+	 @RequestMapping(value="/lm/juego/edit/{id}/{idEquipoLocal}/{idEquipoVisitia}",
+			 method = RequestMethod.POST,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<ResponseData> editJuegoJornada(@PathVariable int id,
+			 @PathVariable int idEquipoLocal,
+			 @PathVariable int idEquipoVisitia){
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+			 
+			 response = temporadaService.editJuegoJornada(id,idEquipoLocal, idEquipoVisitia);
+			 
 		 }catch(Exception e){
 			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());

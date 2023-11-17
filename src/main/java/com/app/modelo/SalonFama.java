@@ -13,7 +13,7 @@ public class SalonFama {
 	int idTipoTorneo;	
 	String imgTorneo;
 	int idTemporada;
-	String nombreTemporada;
+	int nombreTemporada;
 	
 	int totalxTemporada;
 	int total;
@@ -67,10 +67,10 @@ public class SalonFama {
 	public void setIdTemporada(int idTemporada) {
 		this.idTemporada = idTemporada;
 	}
-	public String getNombreTemporada() {
+	public int getNombreTemporada() {
 		return nombreTemporada;
 	}
-	public void setNombreTemporada(String nombreTemporada) {
+	public void setNombreTemporada(int nombreTemporada) {
 		this.nombreTemporada = nombreTemporada;
 	}
 	public int getTotalxTemporada() {

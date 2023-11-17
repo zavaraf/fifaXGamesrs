@@ -188,7 +188,7 @@
                               <th>Nombre</th>
                               <th>Manager</th>
                               <th>Jugadores</th>
-                              <th>Rating</th>
+<!--                               <th>Rating</th> -->
                               <th>P. Inicial</th>
                               <th>P. Final</th>
 <!--                               <th width="20%"></th> -->
@@ -205,11 +205,11 @@
                               <td><span ng-bind="e.manager"></span></td>
 <!--                               <td><span ng-bind="e.descripcion"></span></td> -->
                               <td><span ng-bind="e.totalJugadores"></span></td>
-                              <td><span ng-bind="e.totalRaiting"></span></td>
-                              <td><span ng-bind="e.salarios | currency"></span></td>
+<!--                               <td><span ng-bind="e.totalRaiting"></span></td> -->
+<!--                               <td><span ng-bind="e.salarios | currency"></span></td> -->
                               <td><span ng-bind="e.presupuestoInicial | currency"></span></td>
                               <td><span ng-bind="e.presupuestoFinal | currency"></span></td>
-                              <td><span ng-bind="e.division.nombre"></span></td>
+<!--                               <td><span ng-bind="e.division.nombre"></span></td> -->
                               <td>
                               <sec:authorize access="hasAnyRole('ROLE_Admin','ROLE_Manager')">
                               <sec:authentication var="user" property="principal" />
