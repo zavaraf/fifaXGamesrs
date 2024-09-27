@@ -40,7 +40,7 @@ package com.app.dao.impl;
 //
 //	        // Escribimos en pantalla los datos leidos
 //	        for (Object persona : personas) {
-//	            System.out.println(persona.toString());
+//	            //System.out.println(persona.toString());
 //	            products.add((Product)persona);
 //	        }
 //	        return products;
@@ -48,7 +48,7 @@ package com.app.dao.impl;
 //
 //	    
 //	    public void saveProduct(Product prod) {
-//	        System.out.println("Guardado");
+//	        //System.out.println("Guardado");
 //	    }
 //
 //}

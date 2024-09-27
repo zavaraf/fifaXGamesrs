@@ -51,6 +51,10 @@ function($scope, $routeParams, CONFIG, TorneoLMService, EquipoService, Temporada
 	self.cambiarLocalia = cambiarLocalia;
 	self.delJuego = delJuego;
 	self.editJuego = editJuego;
+	self.buscarTemporadasEspejo = buscarTemporadasEspejo;
+	self.getJornadasEspejo = getJornadasEspejo;
+	self.cambiarLocalias = cambiarLocalias;
+	self.cambiarEquipoJornadas = cambiarEquipoJornadas;
 	
 	
 	//self.getEquiposDes = getEquiposDes;
@@ -217,7 +221,7 @@ function buscarDivisiones() {
 }
 
 function getGenerarJornadas() {
-	console.log("------------------->torneo]:"+ self.divisionSelect.id)
+	console.log("------------------->torneo]:"+ self.divisionSelect)
 	TorneoLMService.getGenerarJornadas(self.divisionSelect.id, 0)
 	.then(
 		function(d) {
@@ -326,11 +330,9 @@ function getJornadasGrupos(equiposSeleccionados,numeroGrupos) {
 }
 
 function addTorneoGrupo(grupos, nombreTorneo) {
-	console.log("------------------->Torneo]:"
-		+ nombreTorneo)
+	console.log("-----------addTorneoGrupo-------->Torneo]:",grupos, self.selectedCatTorneo,self.confTor)
 	TorneoLMService
-	.addTorneoGrupo(grupos, self.selectedCatTorneo,
-		self.confTor)
+	.addTorneoGrupo(grupos, self.selectedCatTorneo,self.confTor)
 	.then(
 		function(d) {
 
@@ -399,6 +401,23 @@ function buscarTemporada() {
 						.error('Error while fetching temporada');
 					});
 }
+
+function buscarTemporadasEspejo() {
+	TemporadaService
+	.buscarTemporada()
+	.then(
+		function(d) {
+			var temporada = d;
+			console.error('temporada --- >',d);
+			
+			self.temporadasEspejo = d;
+		},
+		function(errResponse) {
+			console.error('Error while fetching temporada');
+		});
+}
+
+
 
 function generarPartidosFinales(equipos, nombreJor,idFase) {
 
@@ -512,6 +531,9 @@ function cambiarLocalia(){
 		
 		self.juegoEdit.idEquipoVisita = self.juegoEdit.equipoVisita.id;
 		self.juegoEdit.nombreEquipoVisita = self.juegoEdit.equipoVisita.nombre;
+		
+		self.juegoEdit.imgLocal             = self.juegoEdit.equipoLocal.img
+		self.juegoEdit.imgVisita            = self.juegoEdit.equipoVisita.img			
 	}
 }
 
@@ -548,6 +570,27 @@ function delJuego(){
 function editJuego(){
 	
 	if(self.juegoEdit != null){
+		
+		if (self.juegoEdit.equipoLocal != null ){
+			
+			self.juegoEdit.idEquipoLocal = self.juegoEdit.equipoLocal.id;
+			self.juegoEdit.nombreEquipoLocal = self.juegoEdit.equipoLocal.nombre;
+			self.juegoEdit.imgLocal             = self.juegoEdit.equipoLocal.img
+						
+		}
+		if (self.juegoEdit.equipoVisita != null ){
+			
+			self.juegoEdit.idEquipoVisita = self.juegoEdit.equipoVisita.id;
+			self.juegoEdit.nombreEquipoVisita = self.juegoEdit.equipoVisita.nombre;
+		    self.juegoEdit.imgVisita            = self.juegoEdit.equipoVisita.img
+			
+		}
+			
+			
+		
+		
+	
+	
 		TorneoLMService.editJuego(self.juegoEdit).then(
 		function(d) {
 			
@@ -563,8 +606,146 @@ function editJuego(){
 		});
 	}
 }
+
+function getJornadasEspejo(temporada, torneo) {
+	console.log("getJornadasEspejo() torneoSeleccionado]:",temporada,torneo)
+		
+	
+	TorneoLMService.getJornadasEspejo(temporada.id,torneo.id, 0).then(
+		function(d) {
+			self.jornadasEspejo = d.filter( elt => !isNaN(elt.nombreJornada));
 			
 			
+
+			if (self.jornadasEspejo != null
+				&& self.jornadasEspejo != '') {
+				self.isEditEspejo = true;
+			self.isJornadaInsertEspejo = true;
+
+		} else {
+			self.isEditEspejo = false;
+
+		}
+//													console.log("TorneoLMService-getTablaJornadas]:"+ JSON.stringify(self.jornadas))
+	console.log("TorneoLMService-getTablaJornadas]:",self.jornadasEspejo)
+	
+	
+	console.log("TorneoLMService-getTablaJornadas]: -----------FIN-----------",self.selectedCatTorneo,self.catTorneo)
+	
+	self.selectedCatTorneo = self.catTorneo.data.catTorneo.find(elt => elt.nombre == torneo.nombre);
+	
+	if (torneo.tipoTorneo) {
+		TorneoLMService.getGruposTorneoTemp(torneo.id,temporada.id).then(
+			function(res) {
+
+				self.gruposTorneo = res;
+
+				console.log("TorneoLMService-getGruposTorneo]:",res)
+
+	
+				return res;
+			},
+			function(errResponse) {
+				console.error('[getGruposTorneo] Error while fetching TorneoLMService()');
+			});
+	} else {
+		self.gruposTorneo = [];
+	}
+	
+	return d;
+	},
+	function(errResponse) {
+		console
+		.error('[TorneoLMService] Error while fetching TorneoLMService()');
+	});
+		return null;
+}
+
+function cambiarLocalias(){
+	
+	let jornadasCambio = self.jornadasEspejo;
+	
+	self.jornadasEspejo.reverse();
+	
+	jornadasCambio.forEach( (jornada,index) => {
+    	
+    	jornada.numeroJornada = index +1;
+    	
+    	jornada.jornada.forEach(juego => {  
+			
+			let idEquipoLocalTemp= juego.idEquipoLocal
+			let idEquipoVisitaTemp= juego.idEquipoVisita
+			let imgLocalTemp= juego.imgLocal
+			let imgVisitaTemp= juego.imgVisita
+			let nombreEquipoLocalTemp= juego.nombreEquipoLocal
+			let nombreEquipoVisitaTemp  = juego.nombreEquipoVisita	
+			
+			juego.idEquipoLocal        = idEquipoVisitaTemp
+			juego.idEquipoVisita       = idEquipoLocalTemp
+			juego.imgLocal             = imgVisitaTemp
+			juego.imgVisita            = imgLocalTemp
+			juego.nombreEquipoLocal    = nombreEquipoVisitaTemp
+			juego.nombreEquipoVisita   = nombreEquipoLocalTemp
+			juego.numeroJornada        = index +1;
+    	
+	    	
+		});
+	});
+	
+	
+	
+	
+	if(self.gruposTorneo.length > 0 )
+		self.gruposTorneo[0].jornadas = self.jornadasEspejo 
+	
+	self.gruposSe = self.gruposTorneo;
+	
+	console.log(self.gruposTorneo)
+	
+	 
+	
+}
+
+function cambiarEquipoJornadas(equipo, equipoCambio){
+	
+	let jornadasCambio = self.jornadasEspejo;
+	
+	console.log("entro cambiarequipo jornadas",equipo,equipoCambio)
+	
+	if(self.gruposTorneo.length > 0 ){
+		self.gruposTorneo[0].equipos.forEach( (equi, index )=> {
+			if(equi.id == equipoCambio.id){
+				self.gruposTorneo[0].equipos[index] = equipoCambio
+			}
+		})	
+	}
+		 
+		 console.log(self.gruposTorneo)
+	
+	jornadasCambio.forEach(jornada => {
+    	
+    	
+    	jornada.jornada.forEach(juego => {  
+			
+			
+			if(juego.idEquipoLocal == equipo.id){
+				juego.idEquipoLocal        = equipoCambio.id
+				juego.imgLocal             = equipoCambio.img
+				juego.nombreEquipoLocal    = equipoCambio.nombre				
+				
+			}
+			if(juego.idEquipoVisita == equipo.id){
+				juego.idEquipoVisita        = equipoCambio.id
+				juego.imgVisita             = equipoCambio.img
+				juego.nombreEquipoVisita    = equipoCambio.nombre				
+				
+			}
+    	
+	    	
+		});
+	});
+	
+}			
 							
 
 }])

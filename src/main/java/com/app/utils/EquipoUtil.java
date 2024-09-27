@@ -11,6 +11,8 @@ import com.app.modelo.Equipo;
 import com.app.modelo.Jornada;
 import com.app.modelo.Jornadas;
 import com.app.modelo.ObjetivosSponsor;
+
+
 @Component
 public class EquipoUtil {
 	public int getPresupuestoFinal(Equipo equipo, int montoInicial){
@@ -18,10 +20,10 @@ public class EquipoUtil {
 		
 		int ingresos = getIngresos(equipo);
 		int egresos  = getEgresos(equipo);
-		System.out.println("----------->INICIAL]:"+montoInicial);
-		System.out.println("----------->INGRESOS]+:"+ingresos);
-		System.out.println("----------->EGRESOS]-:"+egresos);
-		System.out.println("----------->Salarios]-:"+equipo.getSalarios());
+		//System.out.println("----------->INICIAL]:"+montoInicial);
+		//System.out.println("----------->INGRESOS]+:"+ingresos);
+		//System.out.println("----------->EGRESOS]-:"+egresos);
+		//System.out.println("----------->Salarios]-:"+equipo.getSalarios());
 		
 //		totalFinal = (montoInicial + ingresos) - (egresos + equipo.getSalarios());
 		totalFinal = (montoInicial + ingresos) - (egresos );
@@ -34,19 +36,19 @@ public class EquipoUtil {
 		
 		int ingresos = getIngresos(equipo);
 		int egresos  = getEgresos(equipo);
-		System.out.println("----------->INICIAL]:"+montoInicial);
-		System.out.println("----------->INGRESOS]+:"+ingresos);
-		System.out.println("----------->EGRESOS]-:"+egresos);
-		System.out.println("----------->Salarios]-:"+equipo.getSalarios());
+		//System.out.println("----------->INICIAL]:"+montoInicial);
+		//System.out.println("----------->INGRESOS]+:"+ingresos);
+		//System.out.println("----------->EGRESOS]-:"+egresos);
+		//System.out.println("----------->Salarios]-:"+equipo.getSalarios());
 		
 //		totalFinal = (montoInicial + ingresos) - (egresos + equipo.getSalarios());
 		totalFinal = (montoInicial + ingresos) - (egresos );
 		
-		System.out.println("----------->TOTAL SIN SPONSOR]:"+totalFinal);
-		System.out.println("----------->Sponsor]:"+getTotalSponsor(equipo));
+		//System.out.println("----------->TOTAL SIN SPONSOR]:"+totalFinal);
+		//System.out.println("----------->Sponsor]:"+getTotalSponsor(equipo));
 		
 		totalFinal = totalFinal + getTotalSponsor(equipo);
-		System.out.println("----------->TOTAL CON SPONSOR]:"+totalFinal);
+		//System.out.println("----------->TOTAL CON SPONSOR]:"+totalFinal);
 		
 		return totalFinal;
 	}
@@ -79,7 +81,7 @@ public class EquipoUtil {
 		if(equipo.getDatosFinancieros()!= null){
 			if(equipo.getDatosFinancieros().getSponsor()!= null){
 				total = total + equipo.getDatosFinancieros().getSponsor().getContratoFijo();
-				System.out.println("----------->TOTAL Contrato SPONSOR]:"+total);
+				//System.out.println("----------->TOTAL Contrato SPONSOR]:"+total);
 			}
 			if (equipo.getDatosFinancieros()!= null && equipo.getDatosFinancieros().getSponsor()!= null){
 				boolean opcionales = equipo.getDatosFinancieros().isOpcional();
@@ -115,10 +117,10 @@ public class EquipoUtil {
 				
 				if(equipoLocal == equipoVisita){
 					equipoVisita = (int) Math.floor(Math.random()*(0-equipos.size()+1)+equipos.size());
-					System.out.println("Numeros Iguales: "+nextNum);
+					//System.out.println("Numeros Iguales: "+nextNum);
 					if(equipoLocal != equipoVisita){
 						nextNum = false;
-						System.out.println("Ya soy diferente : "+nextNum);
+						//System.out.println("Ya soy diferente : "+nextNum);
 						
 					}
 				}
@@ -134,8 +136,8 @@ public class EquipoUtil {
 						
 			}
 			
-			System.out.println(idJornada+"--->"+ equipos.get(equipoLocal).getId()+" ->"+ equipos.get(equipoVisita).getId()
-					+ "  isEquipoRepetido]:"+ isEquipoInJornad+ " isJornadaRepe]:"+isJornadaRe + " next]:"+next);
+			//System.out.println(idJornada+"--->"+ equipos.get(equipoLocal).getId()+" ->"+ equipos.get(equipoVisita).getId()
+//					+ "  isEquipoRepetido]:"+ isEquipoInJornad+ " isJornadaRepe]:"+isJornadaRe + " next]:"+next);
 			
 			Jornada jor = new Jornada();
 			

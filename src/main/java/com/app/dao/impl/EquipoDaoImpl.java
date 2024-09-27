@@ -41,7 +41,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	SponsorDao sponsorDao;
 	
 	public Equipo findById(long id) {
-		System.out.println("findById");
+		//System.out.println("findById");
 		Collection equipos = jdbcTemplate.query(
                 "SELECT equipos.idEquipo, "
                 + "equipos.nombreEquipo, "
@@ -63,14 +63,14 @@ public class EquipoDaoImpl implements EquipoDao{
                     }
                 });
 		 for (Object equipo : equipos) {
-	            System.out.println(equipo.toString());
+	            //System.out.println(equipo.toString());
 	            return (Equipo)equipo;
 	        }
 	        
 		return null;
 	}
 	public List<Equipo> buscarTodos(long idTemporada) {
-		System.out.println("buscarTodos");
+		//System.out.println("buscarTodos");
 		List<Equipo> equiposList = new ArrayList<Equipo>();
 		String query = "   SELECT  equipos.idEquipo, equipos_has_temporada.linksofifa,  "
 				+"   (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img, "
@@ -136,7 +136,7 @@ public class EquipoDaoImpl implements EquipoDao{
                     }
                 });
 		 for (Object equipo : equipos) {
-	            System.out.println(equipo.toString());
+	            //System.out.println(equipo.toString());
 	            equiposList.add( (Equipo)equipo);
 	        }
 	        
@@ -144,7 +144,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	}
 	
 	public void createEquipo(Equipo equipo){
-		System.out.println("Division]:"+equipo.getDivision().getId());
+		//System.out.println("Division]:"+equipo.getDivision().getId());
 		jdbcTemplate.update(
 			    "INSERT INTO  equipos (idEquipo,NombreEquipo,DescripcionEquipo,activo,Division_idDivision)"
 				+"VALUES(?,?,?,?,?)",
@@ -152,8 +152,8 @@ public class EquipoDaoImpl implements EquipoDao{
 			  );
 	}
 	public void updateEquipo(Equipo currentEquipo,int idTemporada) {
-		System.out.println("-->Equipo Modificar]:"+currentEquipo.toString());
-		System.out.println("-->Division Modificar]:"+currentEquipo.getDivision().toString());
+		//System.out.println("-->Equipo Modificar]:"+currentEquipo.toString());
+		//System.out.println("-->Division Modificar]:"+currentEquipo.getDivision().toString());
 //		String updateQuery = "update  equipos "
 //				+ "set NombreEquipo = ?, "
 //				+ "DescripcionEquipo = ?, "
@@ -213,13 +213,13 @@ public class EquipoDaoImpl implements EquipoDao{
 				currentEquipo.getImg(),
 				currentEquipo.getImg2());
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 	}
 	public List<Division> buscarDivision() {
 		List<Division> divisionesList = new ArrayList<Division>();
@@ -238,14 +238,14 @@ public class EquipoDaoImpl implements EquipoDao{
                     }
                 });
 		 for (Object division : divisiones) {
-	            System.out.println(division.toString());
+	            //System.out.println(division.toString());
 	            divisionesList.add( (Division)division);
 	        }
 	        
 		return divisionesList;
 	}
 	public Equipo findByIdAll(long id, int idTemporada) {
-		System.out.println("findByIdAll");
+		//System.out.println("findByIdAll");
 		String query = " SELECT  "
 				+" equipos.idEquipo, equipos_has_temporada.linksofifa, "
 				+" (select imagen from equipos_has_imagen where tipoImagen_idTipoImagen=2 and equipos_has_imagen.equipos_idEquipo = equipos.idEquipo and equipos_has_imagen.idTemporada = "+ idTemporada +" ) img,"
@@ -317,15 +317,15 @@ public class EquipoDaoImpl implements EquipoDao{
                     }
                 });
 		 for (Object equipo : equipos) {
-	            System.out.println(equipo.toString());
+	            //System.out.println(equipo.toString());
 	            List<User> listPlayer = userDao.findAllPlayersByIdEquipo(id,idTemporada);
 	            Equipo team = (Equipo)equipo;
 	            team.setJugadores(listPlayer);
 	            List<User> bajas = userDao.findAllBajasByIdEquipo(id, idTemporada);
-				System.out.println("Bajas :"+bajas.size());
+				//System.out.println("Bajas :"+bajas.size());
 				team.setBajas(bajas);
 				List<User> altas = userDao.findAllAltasByIdEquipo(id, idTemporada);
-				System.out.println("Altas :"+altas.size());
+				//System.out.println("Altas :"+altas.size());
 				team.setAltas(altas);
 	            return team;
 	        }
@@ -333,7 +333,7 @@ public class EquipoDaoImpl implements EquipoDao{
 		return null;
 	}
 	public Equipo findEquipoByIdAll(long id, int idTemporada) {
-		System.out.println("findEquipoByIdAll Buscar todos");
+		//System.out.println("findEquipoByIdAll Buscar todos");
 		
 		String query = " SELECT  "
 				+" equipos.idEquipo,  "
@@ -400,15 +400,15 @@ public class EquipoDaoImpl implements EquipoDao{
 			}
 		});
 		for (Object equipo : equipos) {
-			System.out.println("->"+equipo.toString());
+			//System.out.println("->"+equipo.toString());
 			List<User> listPlayer = userDao.findAllPlayersByIdEquipo(id, idTemporada);
 			Equipo team = (Equipo)equipo;
 			team.setJugadores(listPlayer);
 			List<User> bajas = userDao.findAllBajasByIdEquipo(id, idTemporada);
-			System.out.println("Bajas :"+bajas.size());
+			//System.out.println("Bajas :"+bajas.size());
 			team.setBajas(bajas);
 			List<User> altas = userDao.findAllAltasByIdEquipo(id, idTemporada);
-			System.out.println("Altas :"+altas.size());
+			//System.out.println("Altas :"+altas.size());
 			team.setAltas(altas);
 			return team;
 		}
@@ -435,7 +435,7 @@ public class EquipoDaoImpl implements EquipoDao{
 	}
 	
 	public List<Equipo> findEquiposByDivision(int idTemporada,int idDivision) {
-		System.out.println("findEquiposByDivision");
+		//System.out.println("findEquiposByDivision");
 		List<Equipo> equiposList = new ArrayList<Equipo>();
 		String query = "  SELECT  "
 				+"   equipos.idEquipo,  "
@@ -478,14 +478,14 @@ public class EquipoDaoImpl implements EquipoDao{
                     }
                 });
 		 for (Object equipo : equipos) {
-	            System.out.println(equipo.toString());
+	            //System.out.println(equipo.toString());
 	            equiposList.add( (Equipo)equipo);
 	        }
 	        
 		return equiposList;
 	}
 	public List<Equipo> findEquiposByTorneo(int idTemporada,int idTorneo) {
-		System.out.println("findEquiposByDivision");
+		//System.out.println("findEquiposByDivision");
 		List<Equipo> equiposList = new ArrayList<Equipo>();
 		String query = "  SELECT  "
 				+"   equipos.idEquipo,  "
@@ -527,7 +527,7 @@ public class EquipoDaoImpl implements EquipoDao{
                     }
                 });
 		 for (Object equipo : equipos) {
-	            System.out.println(equipo.toString());
+	            //System.out.println(equipo.toString());
 	            equiposList.add( (Equipo)equipo);
 	        }
 	        

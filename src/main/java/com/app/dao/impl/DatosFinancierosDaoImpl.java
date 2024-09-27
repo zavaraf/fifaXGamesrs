@@ -91,14 +91,14 @@ public class DatosFinancierosDaoImpl implements DatosFinancierosDao {
 //		Map<String, Object> pa = new HashMap<String,Object>();
 //		pa.put("id", false);
 //		pa.put("Nam", "hola");
-//		System.out.println("----------->"+pa);
+//		//System.out.println("----------->"+pa);
 //		for (Map row : rows) {
-//			System.out.println(row);
-//			System.out.println("Opcional]:"+Boolean.parseBoolean(row.get("sponsorOpcional").toString()));
-//			System.out.println("Opcional]:"+row.get("sponsorOpcional").getClass().getName());
+//			//System.out.println(row);
+//			//System.out.println("Opcional]:"+Boolean.parseBoolean(row.get("sponsorOpcional").toString()));
+//			//System.out.println("Opcional]:"+row.get("sponsorOpcional").getClass().getName());
 //			boolean b = Boolean.valueOf(row.get("sponsorOpcional").toString());
-//			System.out.println("B-->:"+b);
-//			System.out.println("Opcional]:"+Integer.parseInt(row.get("sponsorOpcional").toString()));
+//			//System.out.println("B-->:"+b);
+//			//System.out.println("Opcional]:"+Integer.parseInt(row.get("sponsorOpcional").toString()));
 //			datos = new DatosFinancieros();
 //            datos.setId(Integer.parseInt(row.get("idDatosFinancieros").toString()));
 //            datos.setIdEquipo(Integer.parseInt( row.get("Equipos_idEquipo").toString()));
@@ -113,7 +113,7 @@ public class DatosFinancierosDaoImpl implements DatosFinancierosDao {
 //            sponsor.setObjetivos(objetivosSelected);
 //            datos.setSponsor(sponsor);
 //		}
-		System.out.println("hola sali");
+		//System.out.println("hola sali");
 		
 
 		return null;
@@ -176,7 +176,7 @@ public void test() {
 		  public Object mapRow(ResultSet rs, int arg1)
                   throws SQLException {
 			  
-			  System.out.println(rs);
+			  //System.out.println(rs);
 			  
 			  return null;
 		  }
@@ -188,9 +188,9 @@ public void test() {
 	
 	
 	for (Map row : rows) {
-		System.out.println(row);
+		//System.out.println(row);
 	}
-	System.out.println("hola sali");
+	//System.out.println("hola sali");
 	
 	Equipo equipo = new Equipo();
 	equipo.setId(2);

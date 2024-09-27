@@ -64,9 +64,6 @@ public class DraftController {
 	    										@PathVariable("idTemporada") int idTemporada,
 	    										@RequestBody User jugador,    
 	    										UriComponentsBuilder ucBuilder) {
-	        System.out.println("Creating Prestamo " +jugador.toString());
-	        System.out.println("Creating Prestamo Equpo]: " +id);
-	        System.out.println("Creating Prestamo idTemporada]: " +idTemporada);
 	  
 	        draftService.crearPrestamo(jugador,id,idTemporada);
 	  
@@ -78,11 +75,11 @@ public class DraftController {
 	 @RequestMapping(value = "/player/{id}/{idTemporada}", method = RequestMethod.DELETE)
 	    public ResponseEntity<User> deleteUser(@PathVariable("id") long id,
 	    						@PathVariable("idTemporada") int idTemporada) {
-	        System.out.println("Fetching & Deleting User with id " + id);
+//	        //System.out.println("Fetching & Deleting User with id " + id);
 	  
 	        User user = userService.findById(id);
 	        if (user == null) {
-	            System.out.println("Unable to delete. User with id " + id + " not found");
+//	            //System.out.println("Unable to delete. User with id " + id + " not found");
 	            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	        }
 	  
@@ -142,11 +139,9 @@ public class DraftController {
 		 ResponseData response = new ResponseData();	
 		 try{
 			 
-//			 System.out.println(request.getUserPrincipal().getName());
 		 
 			response = draftService.initialDraft(id,monto,manager,observaciones,idEquipo, idTemporada);
 		 }catch(Exception e){
-			 System.out.println("Error]:"+e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -173,7 +168,6 @@ public class DraftController {
 			 
 			 response = draftService.updateDraft(id,monto,manager,observaciones,montoInicial,idEquipo,  idTemporada);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -194,10 +188,8 @@ public class DraftController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "jugador:"+id+" Equipo]:"+idEquipo);
 			 response = draftService.confirmPlayer(id,idEquipo,idTemporada);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -267,7 +259,6 @@ public class DraftController {
 			 
 			 response = draftService.updateDraftAdmin(id,monto,manager,observaciones,montoInicial,idEquipo,  idTemporada);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 

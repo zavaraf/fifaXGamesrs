@@ -24,7 +24,9 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
     		addJuegosLiguilla : addJuegosLiguilla,
     		getCatTorneos     : getCatTorneos,  
     		delJuego          : delJuego,
-    		editJuego         : editJuego,   
+    		editJuego         : editJuego,  
+    		getJornadasEspejo : getJornadasEspejo ,
+    		getGruposTorneoTemp : getGruposTorneoTemp
     };
  
     return factory;
@@ -37,7 +39,7 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
          var idEquipo = CONFIG.ID_EQUIPO == null ? 0 : CONFIG.ID_EQUIPO;
          
          var url = REST_SERVICE_URI_E+'getCatTorneo'
-         console.log(url,CONFIG)
+         console.log("torneoLM_service"+url,CONFIG)
          		
          $http.get(url)
              .then(
@@ -229,7 +231,7 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         var deferred = $q.defer();
         
         
-        console.log("catTorneo]:",nombre);
+        console.log("catTorneo]:",nombre,confTor);
         var url = REST_SERVICE_URI_E+'addJornadasGrupos'+"/"+CONFIG.VARTEMPORADA.id+'/'+nombre.nombre+'/'+confTor+'/'+nombre.id
         console.log(url,grupos);
         $http.post(url,grupos)
@@ -249,6 +251,24 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
         var deferred = $q.defer();
       
         var url = REST_SERVICE_URI_E+'getGruposTorneo'+"/"+CONFIG.VARTEMPORADA.id+'/'+idGrupo
+        console.log(url);
+        $http.get(url)
+            .then(
+            function (response) {
+            	console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while getJornadas');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+    function getGruposTorneoTemp(idGrupo,idTemp) {
+        var deferred = $q.defer();
+      
+        var url = REST_SERVICE_URI_E+'getGruposTorneo'+"/"+idTemp+'/'+idGrupo
         console.log(url);
         $http.get(url)
             .then(
@@ -353,5 +373,24 @@ angular.module('myApp').factory('TorneoLMService', ['$http', '$q','CONFIG',funct
 	
 	
 	}
+	
+	function getJornadasEspejo(idTemporada,idTorneo,activa) {
+        var deferred = $q.defer();
+        
+        var url = REST_SERVICE_URI_E+'getJornadas'+"/"+idTemporada+'/'+idTorneo+"/"+activa
+        console.log("utl]:"+ url)
+        $http.get(url)
+            .then(
+            function (response) {
+            	console.log(response.data)
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while getJornadas');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
     
 }]);

@@ -42,7 +42,6 @@ public class TemporadaController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> createEquipo(@RequestBody Equipo equipo,    UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating temporada " +equipo.toString());
 
   
 //        equipoService.crearTemporada(equipo);
@@ -85,7 +84,7 @@ public class TemporadaController {
 			@PathVariable("idDivision") int idDivision,
 			@PathVariable("idEquipo") int idEquipo){
 		
-		System.out.println("/lm/getTorneoGeneral/{idTemporada}"+idTemporada+"/{idDivision}"+idDivision+"/{idEquipo"+idEquipo);
+//		//System.out.println("/lm/getTorneoGeneral/{idTemporada}"+idTemporada+"/{idDivision}"+idDivision+"/{idEquipo"+idEquipo);
 		Torneo listTorneo = temporadaService.getTorneoGeneral(idTemporada,idDivision, idEquipo);
 		
 		if(listTorneo == null){
@@ -154,10 +153,9 @@ public class TemporadaController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "jugador:"+id+" Equipo]:"+idEquipo);
+//			 //System.out.println( "jugador:"+id+" Equipo]:"+idEquipo);
 			 response = temporadaService.addGol(idJugador,idEquipo,id,idJornada);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -180,10 +178,8 @@ public class TemporadaController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "jugador:"+idTorneo+" Equipo]:"+idEquipo +" User]:" +username );
 			 response = temporadaService.addResultJornada(idTorneo,idTempodrada,jornadaEdit,idEquipo,username);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -205,10 +201,8 @@ public class TemporadaController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "jugador:"+id+" Equipo]:"+idEquipo);
 			 response = temporadaService.addImagen(idEquipo,id,idJornada,img);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -262,10 +256,10 @@ public class TemporadaController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "idTemporada:"+idTemporada+" idTorneo]:"+idTorneo);
+//			 //System.out.println( "idTemporada:"+idTemporada+" idTorneo]:"+idTorneo);
 			 response = temporadaService.addJuegosLiguilla(idTemporada,idTorneo,jornadas);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -288,11 +282,11 @@ public class TemporadaController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idDivision+" TipoTorneo:"+tipoTorneo);
-			 System.out.println( new Gson().toJson(jornadas));
+//			 //System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idDivision+" TipoTorneo:"+tipoTorneo);
+//			 //System.out.println( new Gson().toJson(jornadas));
 			 response = temporadaService.addJornadas(idTemporada,idDivision,jornadas,tipoTorneo);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -315,10 +309,10 @@ public class TemporadaController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+//			 //System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
 			 response = temporadaService.addJornadasGrupos(idTemporada,nombreTorneo,grupos,confTor,idCat);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -338,10 +332,10 @@ public class TemporadaController {
 		 
 		 List<Grupos> response = new ArrayList<Grupos>();	
 		 try{
-			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+//			 //System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
 			 response = temporadaService.getGruposTorneo(idTemporada, idTorneo);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 
 		 }
 		 if(response.isEmpty()){
@@ -364,10 +358,10 @@ public class TemporadaController {
 		 
 		 List<Grupos> response = new ArrayList<Grupos>();	
 		 try{
-			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+//			 //System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
 			 response = temporadaService.generarJornadasGruposTorneos(idTemporada, idTorneo,vuelta,nombre);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 
 		 }
 		 if(response.isEmpty()){
@@ -386,10 +380,10 @@ public class TemporadaController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-//			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+//			 //System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
 			 response = temporadaService.getSalonFama();
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -408,10 +402,10 @@ public class TemporadaController {
 		 
 		 ResponseData response = new ResponseData();	
 		 try{
-//			 System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
+//			 //System.out.println( "idTemporada:"+idTemporada+" idDivision]:"+idTemporada);
 			 response = temporadaService.getCatTorneo();
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -433,7 +427,7 @@ public class TemporadaController {
 			 response = temporadaService.delJuegoJornada(id);
 			 
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -455,7 +449,7 @@ public class TemporadaController {
 			 response = temporadaService.editJuegoJornada(id,idEquipoLocal, idEquipoVisitia);
 			 
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+//			 //System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 

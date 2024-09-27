@@ -8,7 +8,7 @@ angular
 				'CONFIG',
 				{
 					'VARTEMPORADA' : '',
-					'PROD' : true ,
+					'PROD' : false ,
 					'IP_PROD' : (window.location+"").includes("www") ?'https://www.fifa-xgamers.com/fifaapp' : 'https://fifa-xgamers.com/fifaapp',
 					'IP_DES' : 'http://localhost:8081/fifaapp',
 					'JUGADORES' : null,

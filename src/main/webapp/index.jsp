@@ -167,7 +167,7 @@
 			</ul>
 			<!-- LOGOUT -->
 			<p>
-				Bienvenido
+				Bienvenido 1.0
 				<%=request.getUserPrincipal().getName()%>
 			
 				

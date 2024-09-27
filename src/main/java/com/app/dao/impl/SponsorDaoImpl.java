@@ -55,7 +55,7 @@ public class SponsorDaoImpl implements SponsorDao{
                     }
                 });
 		 for (Object sponsor : sponsors) {
-//	            System.out.println(equipo.toString());
+//	            //System.out.println(equipo.toString());
 	            sponsorList.add( (Sponsor)sponsor);
 	        }
 	        
@@ -289,7 +289,7 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 		
 				String query = "call  createOrUpdateDatosFinancieros(?,?,?,?)";
 						
-				System.out.println(query+"-"+idCatalogo+"-"+monto+"-"+equipo.getId());
+				//System.out.println(query+"-"+idCatalogo+"-"+monto+"-"+equipo.getId());
 				jdbcTemplate.update(query,
 					    idCatalogo,
 					    monto,
@@ -304,8 +304,8 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 		// idEquipo,idSponsor,montoInicial,montoFinal,
 		String query = "call  createOrUpdatePresupuesto(?,?,?,?,?)";
 		
-		System.out.println("createOrUpdatePresupuesto("+equipo.getId()+",0"
-				+","+monto +","+montoFinal+ ")");
+		//System.out.println("createOrUpdatePresupuesto("+equipo.getId()+",0"
+//				+","+monto +","+montoFinal+ ")");
 		
 		jdbcTemplate.update(query,
 			    equipo.getId(),
@@ -321,8 +321,8 @@ List<Sponsor> sponsorList = new ArrayList<Sponsor>();
 		// createOrUpdateObjetivos(IN `json` JSON,IN idEquipo INT, IN idSponsor INT,IN idTemporada INT)
 				String query = "call  createOrUpdateObjetivos(?,?,?,?)";
 				
-				System.out.println("createOrUpdatePresupuesto("+objetivos+","+equipo.getId()+""
-						+","+equipo.getDatosFinancieros().getSponsor().getId() +","+equipo.getTemporada().getId()+ ")");
+				//System.out.println("createOrUpdatePresupuesto("+objetivos+","+equipo.getId()+""
+//						+","+equipo.getDatosFinancieros().getSponsor().getId() +","+equipo.getTemporada().getId()+ ")");
 				
 				jdbcTemplate.update(query,
 					    objetivos,

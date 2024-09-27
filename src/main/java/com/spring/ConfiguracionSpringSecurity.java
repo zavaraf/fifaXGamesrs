@@ -103,7 +103,7 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 		http.rememberMe() 
 		.rememberMeParameter("remember-me-param")
 		.rememberMeCookieName("my-remember-me")
-		.tokenValiditySeconds(864000);
+		.tokenValiditySeconds(86400);
 //		
 		http
 		.logout()
@@ -114,7 +114,7 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 		http
 		.sessionManagement()
 		.invalidSessionUrl("/paginas/sesion-expirada.jsp")
-		.maximumSessions(4)
+		.maximumSessions(1)
 		.maxSessionsPreventsLogin(false);
 		
 		http.sessionManagement()

@@ -15,7 +15,7 @@ DECLARE idTorneoVAl INTEGER;
   
   DECLARE done INT DEFAULT FALSE;
 
-DECLARE cursor1 CURSOR FOR (SELECT torneo.idtorneo from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama)order by torneo.idtorneo desc);
+DECLARE cursor1 CURSOR FOR (SELECT torneo.idtorneo from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama));
 -- DECLARE CONTINUE HANDLER FOR NOT FOUND SET var_final = 1;
  
  SELECT count(torneo.idtorneo) into var_final  from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama);

@@ -45,7 +45,7 @@ public class TestController {
 		
 		map.put("1", "OK");
 		
-		System.out.println(map);
+//		//System.out.println(map);
 		
 		return map;
 	}
@@ -58,13 +58,13 @@ public class TestController {
 		
 		map.put("1", "OK");
 		
-		System.out.println(map);
+//		//System.out.println(map);
 		
 		ApplicationConfig ap = new ApplicationConfig();
 //		
 		Connection con = ap.getRemoteConnection();
 		
-		System.out.println("HOla");
+//		//System.out.println("HOla");
 		
 		DataSource data = ap.dataSource1();
 		
@@ -72,7 +72,7 @@ public class TestController {
 		
 		String user  = ap.findUserInfo("zavaraf", jdbcTemplate);
 		
-		System.out.println("user");
+//		//System.out.println("user");
 		
 		map.put("2", user);
 		return map;
@@ -87,13 +87,13 @@ public class TestController {
 		
 		map.put("1", "OK");
 		
-		System.out.println(map);
+//		//System.out.println(map);
 		
 		ApplicationConfig ap = new ApplicationConfig();
 //		
 		Connection conn = null;
 		
-		System.out.println("HOla");
+//		//System.out.println("HOla");
 		String  results = "";
 		
 		  try {
@@ -118,9 +118,9 @@ public class TestController {
 
 			  } catch (SQLException ex) {
 			    // Handle any errors
-			    System.out.println("SQLException: " + ex.getMessage());
-			    System.out.println("SQLState: " + ex.getSQLState());
-			    System.out.println("VendorError: " + ex.getErrorCode());
+//			    //System.out.println("SQLException: " + ex.getMessage());
+//			    //System.out.println("SQLState: " + ex.getSQLState());
+//			    //System.out.println("VendorError: " + ex.getErrorCode());
 			  }
 		
 		if(conn != null )

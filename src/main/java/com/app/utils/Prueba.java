@@ -1,54 +1,49 @@
-package com.app.utils;
 
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
-/**
- * Ejemplo de descarga de un fichero de imagen desde la web.
- * 
- * @author chuidiang
- * 
- */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+ 
 public class Prueba {
-
-	/**
-	 * Descarga un fichero jpeg y lo guarda en e:/foto.jpg
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			// Url con la foto
-			URL url = new URL(
-					"https://cdn.sofifa.com/teams/10/dark/243@2x.png");
-
-			// establecemos conexion
-			URLConnection urlCon = url.openConnection();
-
-			// Sacamos por pantalla el tipo de fichero
-			System.out.println(urlCon.getContentType());
-
-			// Se obtiene el inputStream de la foto web y se abre el fichero
-			// local.
-			InputStream is = urlCon.getInputStream();
-			FileOutputStream fos = new FileOutputStream("e:/foto.jpg");
-
-			// Lectura de la foto de la web y escritura en fichero local
-			byte[] array = new byte[1000]; // buffer temporal de lectura.
-			int leido = is.read(array);
-			while (leido > 0) {
-				fos.write(array, 0, leido);
-				leido = is.read(array);
-			}
-
-			// cierre de conexion y fichero.
-			is.close();
-			fos.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+ 
+    public static void main( String []arg ){
+        try
+        {
+            //Se carga el driver JDBC
+            DriverManager.registerDriver( new oracle.jdbc.driver.OracleDriver() );
+             
+            //nombre del servidor
+            String nombre_servidor = "127.0.0.1";
+            //numero del puerto
+            String numero_puerto = "1521";
+            //SID
+            String sid = "xe";
+            //URL "jdbc:oracle:thin:@nombreServidor:numeroPuerto:SID"
+            String url = "jdbc:oracle:thin:@" + nombre_servidor + ":" + numero_puerto + ":" + sid;
+ 
+            //Nombre usuario y password
+            String usuario = "DBAP1";
+            String password = "proyecto1";
+ 
+            //Obtiene la conexion
+            Connection conexion = DriverManager.getConnection( url, usuario, password );
+             
+            //Para realiza una consulta
+            Statement sentencia = conexion.createStatement();
+            ResultSet resultado = sentencia.executeQuery( "SELECT * FROM TIPO_OPERACION" );
+             
+            //Se recorre el resultado obtenido
+            while ( resultado.next() )
+            {
+                //Se imprime el resultado colocando
+                //Para obtener la primer columna se coloca el numero 1 y para la segunda columna 2 el numero 2
+                //System.out.println ( resultado.getInt( 1 ) + "\t" + resultado.getString( 2 ) );
+            }
+             
+            //Cerramos la sentencia
+            sentencia.close();
+        }catch( Exception e ){
+            e.printStackTrace();
+        }
+    }
 }

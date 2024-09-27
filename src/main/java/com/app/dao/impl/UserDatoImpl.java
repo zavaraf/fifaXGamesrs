@@ -83,7 +83,7 @@ public class UserDatoImpl implements UserDao{
 	                    }
 	                });
 //			 for (Object player : players) {
-////		            System.out.println(((User)player).toString());
+////		            //System.out.println(((User)player).toString());
 //		            playersList.add( (User)player);
 //		        }
 		        
@@ -128,7 +128,7 @@ public class UserDatoImpl implements UserDao{
 //				+" limit 1000"
 				;
 		
-		System.out.println(query);
+		//System.out.println(query);
 		Collection players = jdbcTemplate.query(query, new RowMapper() {
                     public Object mapRow(ResultSet rs, int arg1)
                             throws SQLException {
@@ -150,7 +150,7 @@ public class UserDatoImpl implements UserDao{
                     }
                 });
 //		 for (Object player : players) {
-////	            System.out.println(((User)player).toString());
+////	            //System.out.println(((User)player).toString());
 //	            playersList.add( (User)player);
 //	        }
 		 
@@ -199,7 +199,7 @@ public class UserDatoImpl implements UserDao{
 				+"			where temporada.idTemporada <  "+idTemporada + " ) "
 				+"  		and persona_has_temporada.equipos_idEquipo =   "+idEquipo+"  )"  ; 
 				
-				System.out.println(query);
+				//System.out.println(query);
 				Collection players = jdbcTemplate.query(query, new RowMapper() {
 		                    public Object mapRow(ResultSet rs, int arg1)
 		                            throws SQLException {
@@ -223,7 +223,7 @@ public class UserDatoImpl implements UserDao{
 		                    }
 		                });
 				 for (Object player : players) {
-//			            System.out.println(((User)player).toString());
+//			            //System.out.println(((User)player).toString());
 			            playersList.add( (User)player);
 			        }
 			        
@@ -263,8 +263,8 @@ public class UserDatoImpl implements UserDao{
 				+"  		from persona_has_temporada  "
 				+"  		where persona_has_temporada.temporada_idTemporada = "+idTemporada+" "
 				+"  		and persona_has_temporada.equipos_idEquipo =  "+idEquipo+"  )  " ;
-		System.out.println("----------------------imprimo consulta----------------------------------------------");
-		System.out.println(query);
+		//System.out.println("----------------------imprimo consulta----------------------------------------------");
+		//System.out.println(query);
 		Collection players = jdbcTemplate.query(query, new RowMapper() {
                     public Object mapRow(ResultSet rs, int arg1)
                             throws SQLException {
@@ -289,7 +289,7 @@ public class UserDatoImpl implements UserDao{
                     }
                 });
 		 for (Object player : players) {
-//	            System.out.println(((User)player).toString());
+//	            //System.out.println(((User)player).toString());
 	            playersList.add( (User)player);
 	        }
 	        
@@ -326,7 +326,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 				+" and persona_has_temporada.temporada_idTemporada = " + idTemporada
 				;
 		
-		System.out.println(query);
+		//System.out.println(query);
 		Collection players = jdbcTemplate.query(query, new RowMapper() {
                     public Object mapRow(ResultSet rs, int arg1)
                             throws SQLException {
@@ -349,7 +349,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
                     }
                 });
 		 for (Object player : players) {
-//	            System.out.println(((User)player).toString());
+//	            //System.out.println(((User)player).toString());
 	            playersList.add( (User)player);
 	        }
 	        
@@ -358,8 +358,8 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 }
 
 	public void savePlayer(User player,int idTemporada) {
-		System.out.println("Plyer]:"+player.toString());
-		System.out.println("Equipo]:"+player.toString());
+		//System.out.println("Plyer]:"+player.toString());
+		//System.out.println("Equipo]:"+player.toString());
 		//NOmbre
 		//Sobrenombre
 		//Raiting
@@ -383,13 +383,13 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
 
 	public void updatePlayer(User currentUser, int idTemporada) {
 		
-		System.out.println("------->Plyer]:"+currentUser.toString());
-		System.out.println("Equipo]:"+currentUser.toString());
+		//System.out.println("------->Plyer]:"+currentUser.toString());
+		//System.out.println("Equipo]:"+currentUser.toString());
 		if(currentUser.getEquipoPago() == null){
 			currentUser.setEquipoPago(currentUser.getEquipo());
 		}
-		System.out.println("Equipo Pago]:"+currentUser.getEquipoPago().getId());
-		System.out.println("Monto]:"+currentUser.getCosto());
+		//System.out.println("Equipo Pago]:"+currentUser.getEquipoPago().getId());
+		//System.out.println("Monto]:"+currentUser.getCosto());
 		//NOmbre
 		//Sobrenombre
 		//Raiting
@@ -468,7 +468,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
                     }
                 });
 		 for (Object user : users) {
-	            System.out.println(user.toString());
+	            //System.out.println(user.toString());
 	            return (User)user;
 	        }
 	        
@@ -548,7 +548,7 @@ public List<User> findAllPlayersByIdEquipo(long idEquipo,long idEquipoVisita, in
                     }
                 });
 		 for (Object user : users) {
-	            System.out.println(user.toString());
+	            //System.out.println(user.toString());
 	            return (User)user;
 	        }
 	        

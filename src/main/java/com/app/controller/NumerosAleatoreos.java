@@ -23,7 +23,7 @@ public class NumerosAleatoreos {
 		        k--;           
 		}
 		for(int i = 0; i<n; i++){
-		       System.out.println(resultado[i]);
+//		       //System.out.println(resultado[i]);
 		}
 	}
 

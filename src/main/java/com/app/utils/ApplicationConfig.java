@@ -17,7 +17,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import com.app.modelo.login.UserInfo;
 import com.mysql.jdbc.Connection;
 
 @Configuration
@@ -30,14 +29,14 @@ public class ApplicationConfig {
 	
 	@Bean
 	public DataSource dataSource(){
-		System.out.println(env.getRequiredProperty("jdbc.url"));
+		//System.out.println(env.getRequiredProperty("jdbc.url"));
 		
 		String url = env.getRequiredProperty("jdbc.url");
 		String userName = env.getRequiredProperty("jdbc.userName");
 		String pass = env.getRequiredProperty("jdbc.pass");
 		
 		if(!env.getRequiredProperty("isProd").equals("false")){
-			System.out.println("isProduccioon------------>]:"+env.getRequiredProperty("prod.jdbc.url"));
+			//System.out.println("isProduccioon------------>]:"+env.getRequiredProperty("prod.jdbc.url"));
 			 url = env.getRequiredProperty("prod.jdbc.url");
 			 userName = env.getRequiredProperty("prod.jdbc.userName");
 			 pass = env.getRequiredProperty("prod.jdbc.pass");
@@ -61,7 +60,7 @@ public class ApplicationConfig {
 	}
 	
 	public DataSource dataSource1(){
-		System.out.println(System.getProperty("jdbc.url"));
+		//System.out.println(System.getProperty("jdbc.url"));
 		
 		String url = "jdbc:mysql://database-1.c5pfdjducnqe.us-east-2.rds.amazonaws.com/fifaxgamersbd";
 		String userName ="admin";
@@ -88,7 +87,7 @@ public class ApplicationConfig {
 				+ " join roles on uhr.Roles_idRoles = roles.idRoles "
 				+ " left join equipos on usuarios.idequipo = equipos.idEquipo" + " where usuarios.userName = '"
 				+ username + "'" + " group by equipos.nombreEquipo ";
-		System.out.println("------>user]" + query);
+		//System.out.println("------>user]" + query);
 
 		Collection users = jdbcTemplate.query(query, new RowMapper() {
 
@@ -100,11 +99,11 @@ public class ApplicationConfig {
 				user += " [password]:"+rs.getString("password");
 				
 
-				System.out.println(rs.getString("username"));
-				System.out.println(rs.getString("password"));
-				System.out.println(rs.getString("idEquipo"));
-				System.out.println(rs.getString("nombreEquipo"));
-				System.out.println(rs.getString("roles"));
+				//System.out.println(rs.getString("username"));
+				//System.out.println(rs.getString("password"));
+				//System.out.println(rs.getString("idEquipo"));
+				//System.out.println(rs.getString("nombreEquipo"));
+				//System.out.println(rs.getString("roles"));
 
 				return user;
 			}
@@ -114,7 +113,7 @@ public class ApplicationConfig {
 			return  (String) user;
 		}
 		
-		System.out.println("Fin Cosulta");
+//		System.out.println("Fin Cosulta");
 		return "null";
 	}
 	
@@ -133,28 +132,16 @@ public class ApplicationConfig {
 	      System.out.println("Remote connection successful.");
 	      return con;
 	    }
-	    catch (ClassNotFoundException e) { System.out.println(e.toString());}
-	    catch (SQLException e) { System.out.println(e.toString());}
+	    catch (ClassNotFoundException e) { 
+	    	System.out.println(e.toString());
+	    	
+	    }
+	    catch (SQLException e) { 
+	    	System.out.println(e.toString());
+	    }
 	    
 	    return null;
 	  }
 	
-//	public static void main(String args[]){
-//		
-//		ApplicationConfig ap = new ApplicationConfig();
-//		
-//		Connection con = ap.getRemoteConnection();
-//		
-//		System.out.println("HOla");
-//		
-//		DataSource data = ap.dataSource1();
-//		
-//		JdbcTemplate jdbcTemplate  = ap.jdbcTemplate(data);
-//		
-//		ap.findUserInfo("zavaraf", jdbcTemplate);
-//		
-//		System.out.println("Fin");
-//		
-//	}
 
 }

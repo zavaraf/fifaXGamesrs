@@ -39,7 +39,7 @@ public class LoginDaoImpl implements LoginDao {
 				+ "              and equipos_has_temporada.tempodada_idTemporada = (select max(idTemporada) from temporada) "
 				+ " where usuarios.userName = '"
 				+ username + "'" + " group by equipos_has_temporada.nombreEquipo ";
-		System.out.println("------>user]" + query);
+		//System.out.println("------>user]" + query);
 
 		Collection users = jdbcTemplate.query(query, new RowMapper() {
 
@@ -75,17 +75,17 @@ public class LoginDaoImpl implements LoginDao {
 
 			public Object mapRow(ResultSet rs, int arg1) throws SQLException {
 
-				System.out.println(rs.getString("role"));
+				//System.out.println(rs.getString("role"));
 				return rs.getString("role");
 
 			}
 		});
-		System.out.println("Entro roles");
+		//System.out.println("Entro roles");
 		for (Object rol : roles) {
-			System.out.println("------>" + rol.toString());
+			//System.out.println("------>" + rol.toString());
 			listaRoles.add(rol.toString());
 		}
-		System.out.println("Sali roles");
+		//System.out.println("Sali roles");
 		return listaRoles;
 	}
 

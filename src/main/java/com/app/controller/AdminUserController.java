@@ -66,10 +66,10 @@ public class AdminUserController {
 		
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println("---->User]:authentication.name");
+
 			 response = userService.updateUserAdmin(usuario,idEquipo,roles);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+			 
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 

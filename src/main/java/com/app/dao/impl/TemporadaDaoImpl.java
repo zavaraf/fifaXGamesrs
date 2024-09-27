@@ -62,7 +62,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
                     }
                 });
 		 for (Object tempo : temporada) {
-	            System.out.println(tempo.toString());
+	            //System.out.println(tempo.toString());
 	            Temporada tem = (Temporada)tempo;
 	            tem.setTorneos(buscarTodosTorneos(tem.getId()));
 	            temporadaList.add( tem);
@@ -613,7 +613,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		for (Map.Entry<Integer, Integer> entry : mapJornadas.entrySet()) {
 			Jornadas jorn = new Jornadas();
 		    List<Jornada> juegos = getJuegos(ListJornada, entry.getKey());
-		    System.out.println("idJornada=" + entry.getKey() + ", NumeroJornada=" + entry.getValue() + " Fechas: "+juegos.get(0).getFechaInicio()+ " - "+juegos.get(0).getFechaFin());
+		    //System.out.println("idJornada=" + entry.getKey() + ", NumeroJornada=" + entry.getValue() + " Fechas: "+juegos.get(0).getFechaInicio()+ " - "+juegos.get(0).getFechaFin());
 		    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		    if(juegos.size()>0){
 		    	
@@ -811,7 +811,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 				+"  datos.tipoDatoJornada_id in(1,2) or (datos.tipoDatoJornada_id = 3 and datos.cuantos >1)  " ;
 		
 		
-//		System.out.println(query);
+//		//System.out.println(query);
 		Collection goles = jdbcTemplate.query(
                 query
                 , new RowMapper() {
@@ -842,7 +842,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	
 	public Jornada getJornada(String idJornada,String id,	String idEquipoLocal,	String idEquipoVisita, int idTemporada){
 		
-		System.out.println("idTemporada]:"+idTemporada);
+		//System.out.println("idTemporada]:"+idTemporada);
 	Jornada jornada = new Jornada();
 	String query ="  select tabla.idJornada, tabla.id, tabla.numeroJornada, tabla.cerrada,"
 				+"  tabla.equipos_idEquipoLocal, "
@@ -876,7 +876,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 
 ;
 	
-	System.out.println(query);
+	//System.out.println(query);
 	Collection jornadas = jdbcTemplate.query(
             query
             , new RowMapper() {
@@ -897,7 +897,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
                 	jornada.setImgVisita(rs.getString("imgVisita"));
                 	jornada.setUsername(rs.getString("username"));
                 	jornada.setDate(rs.getString("updateDate"));
-                	System.out.println(rs.getString("updateDate"));
+                	//System.out.println(rs.getString("updateDate"));
                 	
                 	try{
                 	jornada.setGolesLocal(Integer.parseInt(rs.getString("golesLocal")));
@@ -952,7 +952,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	@Override
 	public HashMap<String, String> addGol(int idJugador,int idEquipo,int id,int idJornada) {
 
-		System.out.println("----->addGoles]:" + idJugador+",idEqupo]:"+idEquipo+",id]:"+id+",idJonada]:"+idJornada);
+		//System.out.println("----->addGoles]:" + idJugador+",idEqupo]:"+idEquipo+",id]:"+id+",idJonada]:"+idJornada);
 		String query = "addGoles";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -974,13 +974,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(idJornada, id, idJugador, idEquipo);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
@@ -988,7 +988,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	public HashMap<String, String> addResultJornada(int idTorneo,int idTemporada,String jornada, String username) {
 
 //		Tipo 1 - Roja, 2, lesion, 3 amarilla
-		System.out.println("----->registrarJornada]:" + idTorneo+",idEqupo]:"+idTemporada+",id]:"+idTemporada+",user]:"+ username);
+		//System.out.println("----->registrarJornada]:" + idTorneo+",idEqupo]:"+idTemporada+",id]:"+idTemporada+",user]:"+ username);
 		String query = "registrarJornada";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1011,13 +1011,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure  
 		Map storedProcResult = myStoredProcedure.execute(jornada, "nombre", idTemporada,username);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
@@ -1025,7 +1025,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	@Override
 	public HashMap<String, String> addImagen(int idEquipo,int id,int idJornada,String img) {
 
-		System.out.println("----->addImagen]:" + img+",idEqupo]:"+idEquipo+",id]:"+id+",idJonada]:"+idJornada);
+		//System.out.println("----->addImagen]:" + img+",idEqupo]:"+idEquipo+",id]:"+id+",idJonada]:"+idJornada);
 		String query = "addImagen";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1047,23 +1047,23 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(idJornada, id,  idEquipo,img);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
 
 	@Override
 	public HashMap<String, String> addJornada(int idTemporada, int idDivision, Jornada juego,int activa,int cerrada,Date fechaIni,Date fechaFin) {
-		System.out.println("----->equipoLocal]:" + juego.getIdEquipoLocal()+","
-				+ "equipoVisita]:"+juego.getIdEquipoVisita()+
-				",numJornada]:"+juego.getId()+",temporada]:"+idDivision+",division]:"+idDivision+
-				",liga]:1"+",activa]:"+juego.getActiva()+",id]:"+juego.getId()+",fechaIFin]:"+fechaFin);
+		//System.out.println("----->equipoLocal]:" + juego.getIdEquipoLocal()+","
+//				+ "equipoVisita]:"+juego.getIdEquipoVisita()+
+//				",numJornada]:"+juego.getId()+",temporada]:"+idDivision+",division]:"+idDivision+
+//				",liga]:1"+",activa]:"+juego.getActiva()+",id]:"+juego.getId()+",fechaIFin]:"+fechaFin);
 		String query = "crearJornada";
 		
 
@@ -1095,13 +1095,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		Map storedProcResult = myStoredProcedure.execute(juego.getIdEquipoLocal(),juego.getIdEquipoVisita(),
 				juego.getNumeroJornada(),idDivision,idDivision,1,activa,cerrada,juego.getId(),fechaIni,fechaFin);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
@@ -1109,7 +1109,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	
 	@Override
 	public HashMap<String, String> addJornadasGrupos(int idTemporada, String nombre , String grupos, int idCat) {
-		System.out.println("----->createOrTorneoGrupos]:" + idTemporada+ " nombre]:"+ nombre +" grupos]:"+grupos+" idCat]:"+ idCat);
+		//System.out.println("----->createOrTorneoGrupos]:" + idTemporada+ " nombre]:"+ nombre +" grupos]:"+grupos+" idCat]:"+ idCat);
 		String query = "createOrTorneoGrupos";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1131,19 +1131,19 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(grupos,nombre,idTemporada,idCat);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
 	@Override
 	public HashMap<String, String> crearTorneo(int idTemporada, String nombre ) {
-		System.out.println("----->crearTorneo]:" + idTemporada+ " nombre]:"+ nombre );
+		//System.out.println("----->crearTorneo]:" + idTemporada+ " nombre]:"+ nombre );
 		String query = "crearTorneo";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1165,20 +1165,20 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(nombre,idTemporada,1);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
 	
 	public List<Grupos> getGruposTorneo(int idTemporada, int idTorneo){
 		
-		System.out.println("Consultando Grupos Torneo]"+idTemporada+" idTorneo]:"+idTorneo);
+		//System.out.println("Consultando Grupos Torneo]"+idTemporada+" idTorneo]:"+idTorneo);
 		
 		List<Grupos> gruposList = new ArrayList<Grupos>();		
 		
@@ -1269,7 +1269,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	
 	public HashMap<String, String> addJuegosLiguilla(int idTemporada,int idTorneo,String json) {
 
-		System.out.println("----->crearJornadasFinales]:" + idTorneo+",idTemporada]:"+idTemporada+",jornadas]:"+json);
+		//System.out.println("----->crearJornadasFinales]:" + idTorneo+",idTemporada]:"+idTemporada+",jornadas]:"+json);
 		String query = "crearJornadasFinales";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1291,13 +1291,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(json, idTorneo, idTemporada);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
@@ -1419,7 +1419,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	
 	public void actualizaJornadas() {
 
-		System.out.println("----->activarJornadas]:" );
+		//System.out.println("----->activarJornadas]:" );
 		String query = "activarJornadas";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1437,13 +1437,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure  
 		Map storedProcResult = myStoredProcedure.execute();
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		
 	}
@@ -1451,7 +1451,7 @@ public class TemporadaDaoImpl implements TemporadaDao {
 	@Override
 	public HashMap<String, String> delJuegoJornada(int id) {
 		
-		System.out.println("----->delJuegoJornada]:"+id );
+		//System.out.println("----->delJuegoJornada]:"+id );
 		String query = "delJuegoJornada";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1473,20 +1473,20 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(id);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
 	@Override
 	public HashMap<String, String> editJuegoJornada(int id, int idEquipoLocal, int idEquipoVisita) {
 		
-		System.out.println("----->modJuegoJornada]:"+id + "  "+ idEquipoLocal+ " "+ idEquipoVisita );
+		//System.out.println("----->modJuegoJornada]:"+id + "  "+ idEquipoLocal+ " "+ idEquipoVisita );
 		String query = "modJuegoJornada";
 		
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -1510,13 +1510,13 @@ public class TemporadaDaoImpl implements TemporadaDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(id,idEquipoLocal, idEquipoVisita);
 		
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 		
 		HashMap<String, String> mapa = new HashMap<String, String>();
 		
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 		
 		return mapa;
 	}

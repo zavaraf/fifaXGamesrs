@@ -46,9 +46,9 @@ public class GenerarJornadasUtil {
 
 	    // Display the rounds    
 	    for (int i = 0; i < rounds.length; i++) {
-	        System.out.println("Round " + (i + 1));
-	        System.out.println(Arrays.asList(rounds[i]));
-	        System.out.println();
+	        //System.out.println("Round " + (i + 1));
+	        //System.out.println(Arrays.asList(rounds[i]));
+	        //System.out.println();
 	    }
 		
 		
@@ -102,7 +102,7 @@ public class GenerarJornadasUtil {
 		            if (match == 0) {
 		                away = teams -1;
 		            }
-		            //System.out.println("home]:"+home+ " away:"+away);
+		            ////System.out.println("home]:"+home+ " away:"+away);
 		            
 	
 		            // Add one so teams are number 1 to teams not 0 to teams - 1
@@ -117,9 +117,9 @@ public class GenerarJornadasUtil {
 	    
 	    // Display the rounds    
 	    for (int i = 0; i < rounds.length; i++) {
-	        System.out.println("Round " + (i + 1));
-	        System.out.println(Arrays.asList(rounds[i]));
-	        System.out.println();
+	        //System.out.println("Round " + (i + 1));
+	        //System.out.println(Arrays.asList(rounds[i]));
+	        //System.out.println();
 	    }
 		
 		
@@ -177,10 +177,10 @@ public class GenerarJornadasUtil {
 				Equipo equipoLcoal = equipos.get(local-1);
 				Equipo equipoVisita = equipos.get(visita-1);
 				
-//				System.out.println("->Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
+//				//System.out.println("->Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
 //				Ordenar local y visitas
 				if(jornada > 0 && grupos.size()<= 2  ){
-//					System.out.println("grupos enttro ]:"+grupos.size());
+//					//System.out.println("grupos enttro ]:"+grupos.size());
 					Jornada juegoAnterior = getJuegoAnterior(jornadasList, equipoLcoal, equipoLcoal, equipos);
 					Jornada juegoAnteriorVisita = getJuegoAnterior(jornadasList, equipoVisita, equipoVisita, equipos);
 					
@@ -196,7 +196,7 @@ public class GenerarJornadasUtil {
 									
 				}
 				
-				System.out.println("Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
+				//System.out.println("Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
 				
 				
 				Jornada jo = new Jornada();
@@ -226,7 +226,7 @@ public class GenerarJornadasUtil {
 		}
 		int mitad = equipos.size() / 2;
 		
-		if(mitad > 5) {
+		if(mitad > 5 && vuelta != 2) {
 			balancearJornadas(mitad, equipos, jornadasList);		
 		}
 		
@@ -246,7 +246,7 @@ public class GenerarJornadasUtil {
 					}
 				}
 			}
-			System.out.println(cont  + "\t = "+ e.getNombre());
+			//System.out.println(cont  + "\t = "+ e.getNombre());
 			map.put(e.getNombre(), cont);
 		};
 		
@@ -274,11 +274,11 @@ public class GenerarJornadasUtil {
 				
 				
 				if(cu < cua && cu < mitad) {
-					System.out.println(cu +"-------------"+cua);
+					//System.out.println(cu +"-------------"+cua);
 					cambiarJuegoLocalVisita(jornadasList, equipos.get(i), equipos.get(i+1));
 				}
 				if(cu > cua && cu < mitad-1) {
-					System.out.println(cu +"<------------->"+cua);
+					//System.out.println(cu +"<------------->"+cua);
 					cambiarJuegoLocalVisita(jornadasList, equipos.get(i),equipos.get(i+1));
 				}
 				
@@ -293,13 +293,13 @@ public class GenerarJornadasUtil {
 			while(it.hasNext()){
 			    String clave = it.next();
 			    int valor = mapa.get(clave);		    
-			    System.out.println("Clave: " + clave + ", valor: " + valor);
+			    //System.out.println("Clave: " + clave + ", valor: " + valor);
 			    String clave2 = null;
 			    int valor2 = 0;
 			    if(it.hasNext()) {
 			    	clave2 = it.next();
 			    	valor2 = mapa.get(clave2);
-			    	System.out.println("Clave: " + clave2 + ", valor: " + valor2);
+			    	//System.out.println("Clave: " + clave2 + ", valor: " + valor2);
 			    }
 			    
 			    
@@ -324,7 +324,7 @@ public class GenerarJornadasUtil {
 		
 
 		
-		System.out.println("--------------------------------------------------->>>>>");
+		//System.out.println("--------------------------------------------------->>>>>");
 		for(Equipo e : equipos) {
 			int cont = 0;
 			for (Jornadas jo : jornadasList) {
@@ -334,7 +334,7 @@ public class GenerarJornadasUtil {
 					}
 				}
 			}
-			System.out.println(cont  + "\t = "+ e.getNombre());
+			//System.out.println(cont  + "\t = "+ e.getNombre());
 			
 		}
 	}
@@ -351,7 +351,7 @@ public class GenerarJornadasUtil {
 					}
 				}
 			}
-//			System.out.println(cont  + "\t = "+ e.getNombre());
+//			//System.out.println(cont  + "\t = "+ e.getNombre());
 			if(cont > mitad || cont < mitad-1)
 				map.put(e.getNombre(), cont);
 		}
@@ -521,7 +521,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		        k--;           
 		}
 		for(int i = 0; i<n; i++){
-		       System.out.println(resultado[i]);
+		       //System.out.println(resultado[i]);
 		       arrayEquipos.add(equipos.get(resultado[i]-1));
 		}
 		return arrayEquipos;
@@ -547,17 +547,17 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 				arrayE = getEquiposGru(equipos, i, (i+1)*grupos, true);
 				
 				mapEquipos.put(i, arrayE);
-				System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
+				//System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
 
 				
 			}else{
 				
 				int endArray = (i+1)*grupos;
 				int startArray = i * grupos;
-		//		System.out.println(startArray+" - "+endArray);
+		//		//System.out.println(startArray+" - "+endArray);
 				arrayE = getEquiposGru(equipos, startArray , endArray , false);
 				mapEquipos.put(i, arrayE);
-				System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
+				//System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
 			}
 //			else{
 ////				int endArray = (grupos*numEquipos) - ((i-1)*grupos);
@@ -565,15 +565,15 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 //				
 //				int endArray = (grupos*numEquipos) - ((i-1)*grupos);
 //				int startArray = (numEquipos*grupos)-(i*grupos);
-////				System.out.println(startArray+" - "+endArray);
+////				//System.out.println(startArray+" - "+endArray);
 //				arrayE = getEquiposGru(equipos, startArray , endArray , false);
 //				mapEquipos.put(i, arrayE);
-//				System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
+//				//System.out.println(startArray+" - "+endArray + " Grupo]:"+i+" Equipos"+ arrayE);
 //			}
-//			System.out.println("grupo:"+i);
+//			//System.out.println("grupo:"+i);
 //			
 //			for(int j=0; j<arrayE.size();j++){
-//				System.out.println("grupo:"+i + " equpos:"+arrayE.get(j));
+//				//System.out.println("grupo:"+i + " equpos:"+arrayE.get(j));
 //				arrayEquipos.add(arrayE.get(j));
 //			}
 			
@@ -581,14 +581,14 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		try{
 		for (int i=0 ; i<grupos;i++){
 			for(int j = 0; j< numEquipos;j++){
-//				System.out.println(i +" ---- "+j+" Equipo]:");
-				System.out.println(i +" ---- "+j+" Equipo]:"+mapEquipos.get(j).get(i).getNombre());
+//				//System.out.println(i +" ---- "+j+" Equipo]:");
+				//System.out.println(i +" ---- "+j+" Equipo]:"+mapEquipos.get(j).get(i).getNombre());
 				arrayEquipos.add(mapEquipos.get(j).get(i));
 			}
 		}
 		}catch(Exception e){}
 		
-		System.out.println("Ordenado---->"+arrayEquipos);
+		//System.out.println("Ordenado---->"+arrayEquipos);
 		return arrayEquipos;
 	}
 	public List<Equipo> getEquiposGru(List<Equipo> equipos,int startArray, int endArray, boolean isOrder){
@@ -624,7 +624,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		
 		
 		
-		System.out.println("Grupos]:"+numeroGrupo+" Equipos]:"+equipos.size()+" NumeroGrupos]:"+numero);
+		//System.out.println("Grupos]:"+numeroGrupo+" Equipos]:"+equipos.size()+" NumeroGrupos]:"+numero);
 		
 		for (int i=0; i< numeroGrupo; i++) {
 			int startArray =0;
@@ -634,7 +634,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 			
 			Grupos grupo = new Grupos();
 			List<Equipo> equiposGrupo = new ArrayList<Equipo>();
-			System.out.println("Grupo]:"+i+ " StayArry]:"+startArray+ " End]:"+(i+1)*numero);
+			//System.out.println("Grupo]:"+i+ " StayArry]:"+startArray+ " End]:"+(i+1)*numero);
 			for(int j=startArray; j < (i+1)*numero ; j++) {
 					
 					grupo.setNumero(i+1);
@@ -652,7 +652,7 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 			
 		
 		
-		System.out.println("Grupos Generados]:"+grupos.size());
+		//System.out.println("Grupos Generados]:"+grupos.size());
 		
 		
 		return grupos;

@@ -20,7 +20,6 @@ import com.app.dao.CatalogoDao;
 import com.app.dao.EquipoDao;
 import com.app.modelo.Castigo;
 import com.app.modelo.CatalogoFinanciero;
-import com.app.modelo.JugadoresCSV;
 import com.app.modelo.TipoConcepto;
 import com.app.modelo.Torneo;
 import com.app.utils.MyStoredProcedure;
@@ -80,7 +79,7 @@ public class CatalogoDatoImpl implements CatalogoDao{
 	@Override
 	public HashMap<String, String> updateCatalogos(String nombre, String desctipcion, int tipo) {
 		
-		System.out.println("----->createOrUpdateConceptos]:" + nombre);
+		//System.out.println("----->createOrUpdateConceptos]:" + nombre);
 		String query = "createOrUpdateConceptos";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -102,13 +101,13 @@ public class CatalogoDatoImpl implements CatalogoDao{
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(nombre, desctipcion,tipo);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
@@ -178,14 +177,7 @@ public class CatalogoDatoImpl implements CatalogoDao{
 			                        String tipo,
 			                        int idTorneo) {
 		
-		System.out.println("----->call createOrUpdateCastigo("+id+","
-				
-				+idEquipo+","
-				+idTemporada+","
-				+valor+",'"
-				+observaciones+"', '"
-				+tipo+"',"
-				+idTorneo+" )");
+		
 		String query = "createOrUpdateCastigo" ;
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -211,20 +203,20 @@ public class CatalogoDatoImpl implements CatalogoDao{
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(id, idEquipo,idTemporada,valor,observaciones,tipo,idTorneo);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
 
 	@Override
 	public HashMap<String, String> confirmarJugadores(String json, int idTemporada) {
-		System.out.println("----->confirmarJugadores]:");
+		//System.out.println("----->confirmarJugadores]:");
 		String query = "confirmarJugadores";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -245,23 +237,23 @@ public class CatalogoDatoImpl implements CatalogoDao{
 		// Call stored procedure  
 		Map storedProcResult = myStoredProcedure.execute(json, idTemporada);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
 		
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}
 	
 	public HashMap<String, String> confirmarJugadores(StringBuilder sql, int idTemporada) {
-		System.out.println("----->confirmarJugadores]:");
+		//System.out.println("----->confirmarJugadores]:");
 		
 		
-		System.out.println(sql.toString());
+		//System.out.println(sql.toString());
 
 		
 		jdbcTemplate.update(sql.toString()

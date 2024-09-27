@@ -59,10 +59,8 @@ public class EquiposController {
     		@PathVariable("id") long id,
     		@PathVariable("idTemporada") int idTemporada
     		) {
-        System.out.println("Fetching User with id " + id);
         Equipo equipo = equipoService.findByIdAll(id, idTemporada);
         if (equipo == null) {
-            System.out.println("Equipo with id " + id + " not found");
             return new ResponseEntity<Equipo>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Equipo>(equipo, HttpStatus.OK);
@@ -70,10 +68,8 @@ public class EquiposController {
 	@RequestMapping(value = "/team/all/{id}/{idTemporada}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Equipo> getTeamAll(@PathVariable("id") long id,
     		@PathVariable("idTemporada") int idTemporada) {
-		System.out.println("Fetching User with id " + id);
 		Equipo equipo = equipoService.findEquipoByIdAll(id, idTemporada);
 		if (equipo == null) {
-			System.out.println("Equipo with id " + id + " not found");
 			return new ResponseEntity<Equipo>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Equipo>(equipo, HttpStatus.OK);
@@ -83,10 +79,8 @@ public class EquiposController {
 	
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Equipo> getEquipo(@PathVariable("id") long id) {
-        System.out.println("Fetching User with id " + id);
         Equipo equipo = equipoService.findById(id);
         if (equipo == null) {
-            System.out.println("User with id " + id + " not found");
             return new ResponseEntity<Equipo>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Equipo>(equipo, HttpStatus.OK);
@@ -98,10 +92,8 @@ public class EquiposController {
       
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> createEquipo(@RequestBody Equipo equipo,    UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating User " +equipo.toString());
   
 //        if (equipoService.isUserExist(user)) {
-//            System.out.println("A User with name " + user.getUsername() + " already exist");
 //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 //        }
   
@@ -117,12 +109,10 @@ public class EquiposController {
     		@PathVariable("id") long id,
     		@PathVariable("idTemporada") int idTemporada,
     		@RequestBody Equipo equipo) {
-        System.out.println("Updating User " + id);
           
         Equipo currentEquipo = equipoService.findById(id);
           
         if (currentEquipo==null) {
-            System.out.println("User with id " + id + " not found");
             return new ResponseEntity<Equipo>(HttpStatus.NOT_FOUND);
         }
   

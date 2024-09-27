@@ -96,7 +96,7 @@
 
 										<div class="col"
 											custom-select="t as t.nombre for t in ctrl.equipos | filter: { nombre: $searchTerm }"
-											ng-model="ctrl.juegoEdit.equipoLocal">
+											ng-model="ctrl.juegoEdit.equipoLocal" ng-click="ctrl.juegoEdit.equipoLocal">
 											<div class="pull-left">
 												<img ng-src="{{ t.img }}" style="width: 30px" /> <strong>{{
 													t.nombre }}</strong>
@@ -296,8 +296,117 @@
 				  <input class="form-check-input" type="radio" ng-model="ctrl.confTor" name="inlineRadioOptions" id="inlineRadio2" ng-value=2>
 				  <label class="form-check-label" for="inlineRadio2">Por Grupos</label>
 				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" type="radio" ng-click="ctrl.buscarTemporadasEspejo()" ng-model="ctrl.confTor" name="inlineRadioOptions" id="inlineRadio3" ng-value=3>
+				  <label class="form-check-label" for="inlineRadio3">Jornadas Espejo</label>
+				</div>
 				<div ng-show="ctrl.confTor == 1">
 					<h5 class="modal-title" id="exampleModalLongTitle">Preciona Guardar para generar los torneos por división</h5>
+				</div>
+				<div ng-show="ctrl.confTor == 3">
+				
+					<div>
+						<select  ng-model="ctrl.selectedCatTemp" 
+						    ng-options="temporada as temporada.nombre for temporada in ctrl.temporadasEspejo track by temporada.id"  		
+							 class="custom-select input-sm">
+							 <option value="">--Temporada--</option>
+							</select>
+						<select ng-model="ctrl.selectedCatTorneoTemp" 
+		                    ng-options="pla as pla.nombre for pla in ctrl.selectedCatTemp.torneos  track by pla.id"
+		                    class="custom-select input-sm">
+		                    <option value="">--Torneo--</option>
+		                 </select>
+					
+					</div>
+					<div>
+						<button type="button" ng-click="ctrl.getJornadasEspejo(ctrl.selectedCatTemp,ctrl.selectedCatTorneoTemp)" class="btn btn-primary">Consultar</button>
+						<button type="button" ng-click="ctrl.cambiarLocalias()" class="btn btn-primary">Cambiar</button>
+					
+					</div>
+					<div>
+						<div class="modal-body">
+						<form name="myForm">
+						
+						<div class="row text-center">
+								<div class="col-md-4">
+									<label class="col-md control-lable" for="address">Equipo
+										{{ctrl.juegoEdit.nombreEquipoLocal}}</label>
+									<div class="col-md">
+
+										<div class="col"
+											custom-select="t as t.nombre for t in ctrl.equipos | filter: { nombre: $searchTerm }"
+											ng-model="ctrl.juegoEdit.equipoLocal">
+											<div class="pull-left">
+												<img ng-src="{{ t.img }}" style="width: 30px" /> <strong>{{
+													t.nombre }}</strong>
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+								<div class="col-md-2 text-center ">
+								  <label  >
+								    vs
+								 </label>
+								 
+								 <div class = "row ">
+									 <div class="col-md-2 text-center">
+										 <button type="button" ng-click="ctrl.cambiarEquipoJornadas(ctrl.juegoEdit.equipoLocal,ctrl.juegoEdit.equipoVisita)" class="btn btn-primary" >Cambiar</button>
+									 </div>
+								 </div>
+									
+								</div>
+								<div class="col-md-4">
+									<label class="col-md control-lable" for="address">Equipo
+										{{ctrl.juegoEdit.nombreEquipoVisita}}</label>
+									<div class="col-md">
+
+										<div class="col"
+											custom-select="t as t.nombre for t in ctrl.equipos  | filter: { nombre: $searchTerm }"
+											ng-model="ctrl.juegoEdit.equipoVisita">
+											<div class="pull-left">
+												<img ng-src="{{ t.img }}" style="width: 30px" /> <strong>{{
+													t.nombre }}</strong>
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+
+							</div>
+							
+						
+						</form>
+					</div>
+					</div>
+					
+					<div ng-repeat="jor in ctrl.jornadasEspejo">
+						jornada : {{jor.numeroJornada}}
+
+						<table class="table table-sm table-hover table-dark">
+		                	
+		                      <tbody>
+		                          <tr  ng-repeat="jor in jor.jornada | filter : test " 
+							  	data-toggle="modal" data-target="#exampleModalScrollable">
+		                              <td><span class="text-right">{{e.nombreEquipo}}</span></td>
+		                              <td><span ng-bind="jor.nombreEquipoLocal"></span></td>
+		                              <td><img ng-src="{{jor.imgLocal}}" height="25"  class="rounded float-left" alt="..."></td>
+		                              <td>{{jor.golesLocal}}</td>
+		                              <td>-</td>
+		                              <td>{{jor.golesVisita}}</td>
+		                              <td><img ng-src="{{jor.imgVisita}}" height="25" class="rounded float-left" alt="..."></td>
+		                              <td><span ng-bind="jor.nombreEquipoVisita"></span></td>
+		                             
+		                          </tr>
+		                      </tbody>
+		    			</table>
+						
+						</div>	
 				</div>
 				<div ng-show="ctrl.confTor == 2">
 					<div class="row">
@@ -339,6 +448,7 @@
 						  <label class="form-check-label" for="inlineRadioA2">Posición</label>
 						</div>
 						
+						
 					  </div>
 					</div>
 					<div class="form-row align-items-center">
@@ -356,10 +466,9 @@
 						  
 					    </div>
 					    
-	<!-- 				    <div class="col-auto my-1"> -->
-	<!-- 				      <button type="submit" ng-click="ctrl.addEquipo(equiposSelect)" class="btn btn-primary">Agregar</button> -->
-	<!-- 				    </div> -->
+					    
 					  </div>
+					  
 					  
 					  <div  class="list-group" >
 					  <span   class="list-group-item list-group-item-action">

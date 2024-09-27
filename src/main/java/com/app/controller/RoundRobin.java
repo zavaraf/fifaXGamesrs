@@ -9,7 +9,7 @@ public static void main(String[] args) {
 
     //obtain the number of teams from user input
     Scanner input = new Scanner(System.in);
-    System.out.print("How many teams should the fixture table have?");
+//    //System.out.print("How many teams should the fixture table have?");
 
     int teams;
     teams = input.nextInt();
@@ -39,9 +39,9 @@ public static void main(String[] args) {
 
     // Display the rounds    
     for (int i = 0; i < rounds.length; i++) {
-        System.out.println("Round " + (i + 1));
-        System.out.println(Arrays.asList(rounds[i]));
-        System.out.println();
+        //System.out.println("Round " + (i + 1));
+        //System.out.println(Arrays.asList(rounds[i]));
+        //System.out.println();
     }
 
 }

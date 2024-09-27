@@ -195,7 +195,7 @@ public class TemporadaServiceImpl implements TemporadaService {
 
 		String json = gson.toJson(jornada);
 
-		System.out.println(json);
+		//System.out.println(json);
 
 		map = temporadaDao.addResultJornada(idTorneo, idTemporada, json, username);
 
@@ -290,9 +290,9 @@ public class TemporadaServiceImpl implements TemporadaService {
 		ResponseData response = new ResponseData();
 		HashMap<String, String> map = new HashMap<String, String>();
 		
-		if(confTor == 2){
+		if(confTor == 2 || confTor ==3){
 			map = temporadaDao.addJornadasGrupos(idTemporada, nombre, grupos, idCat);
-			System.out.println(grupos);//TODO DESCOMENTAR 
+			//System.out.println(grupos);//TODO DESCOMENTAR 
 		}else {
 			map = temporadaDao.crearTorneo(idTemporada, nombre);
 		}

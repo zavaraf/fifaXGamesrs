@@ -52,10 +52,10 @@ public class CatalogosController {
 		
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println("---->User]:authentication.name");
+			
 			 response = catalogService.updateCatalogos(nombre, description, tipo);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+			
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -87,10 +87,10 @@ public class CatalogosController {
 		
 		 ResponseData response = new ResponseData();	
 		 try{
-			 System.out.println("---->User]:authentication.name");
+			 
 			 response = catalogService.updateCastigo(castigo, idTemporada);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
+			 
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -109,10 +109,8 @@ public class CatalogosController {
 		
 		 ResponseData response = new ResponseData();	
 		 try{
-//			 System.out.println("---->confirmarJugadores]:authentication.name");
 			 response = catalogService.confirmarJugadoresString(jugadores, idTemporada);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 
@@ -130,10 +128,8 @@ public class CatalogosController {
 		
 		 ResponseData response = new ResponseData();	
 		 try{
-//			 System.out.println("---->confirmarJugadores]:authentication.name");
 			 response = catalogService.confirmarJugadoresString(jugadores, idTemporada);
 		 }catch(Exception e){
-			 System.out.println(e.getMessage());
 			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
 			 response.setMensaje(CodigoResponse.ERROR_INESPERADO.getMensaje());
 			 

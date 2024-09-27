@@ -91,7 +91,6 @@ public class SponsorController {
 													@PathVariable("opcional") boolean opcional,
 													@PathVariable("idSponsor") long idSponsor,
 													UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating Sponsor " +id + " spongor:"+idSponsor+ " opcional:"+opcional);
 		
         sponsorService.crearDatosFinancieros(id,idSponsor,opcional);
         
@@ -121,7 +120,6 @@ public class SponsorController {
 													@PathVariable("monto") long monto,
 													@PathVariable("idTemporada") int idTemporada,
 													UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating CAtalogoFinanzas " +id );
 		
         sponsorService.crearfinanzas(equipo,id,monto,idTemporada);
         
@@ -136,7 +134,6 @@ public class SponsorController {
 													@PathVariable("monto") long monto,
 													@PathVariable("idTemporada") int idTemporada,
 													UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating createPresupuesto " +monto );
 		
         sponsorService.createPresupuesto(equipo,monto,idTemporada);
         
@@ -151,10 +148,6 @@ public class SponsorController {
 			@PathVariable("id") long id,
 			@PathVariable("idTemporada") int idTemporada,
 			UriComponentsBuilder ucBuilder) {
-		System.out.println("Creating updateObjetivosByIdEquipo " +id );
-		System.out.println("Creating updateObjetivosByIdEquipo  objetivos]: " +objetivos );
-		
-		sponsorService.updateObjetivosByIdEquipo(id,objetivos,idTemporada);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/{monto}").buildAndExpand(id).toUri());

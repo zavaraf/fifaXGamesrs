@@ -67,7 +67,7 @@ angular.module('myApp').factory('EquipoService', ['$http', '$q','CONFIG', functi
         $http.get(REST_SERVICE_URI+'buscarDivisiones',requestOptions)
             .then(
             function (response) {
-            	console.log(response.data)
+            	console.log("buscarDivisiones()",response.data)
                 deferred.resolve(response.data);
             },
             function(errResponse){

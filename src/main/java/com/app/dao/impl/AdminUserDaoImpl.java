@@ -45,7 +45,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 				+ " left join equipos_has_temporada on usuarios.idequipo = equipos_has_temporada.Equipos_idEquipo "
 				+ "              and equipos_has_temporada.tempodada_idTemporada = (select max(idTemporada) from temporada) "
 				+ " group by usuarios.userName,nombreEquipo ";
-		System.out.println("------>user]"+query);
+		//System.out.println("------>user]"+query);
 
 		Collection users = jdbcTemplate.query(
                 query
@@ -87,7 +87,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 	public List<RoleUser> findAllRoles() {
 		List<RoleUser> listRoles = new ArrayList<RoleUser>();
 		String query = " select idRoles, nombreRol, descripcionRol from roles";
-		System.out.println("------>user]"+query);
+		//System.out.println("------>user]"+query);
 
 		Collection users = jdbcTemplate.query(
                 query
@@ -125,7 +125,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 				+" from roles"
 				+" join usuarios_has_roles uhr on uhr.Roles_idRoles = roles.idRoles"
 				+" where uhr.Usuarios_userName = '"+ username+"'";
-		System.out.println("------>user]"+query);
+		//System.out.println("------>user]"+query);
 
 		Collection users = jdbcTemplate.query(
                 query
@@ -158,7 +158,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 	@Override
 	public HashMap<String, String> pdateUserAdmin(String usuario, String idEquipo, String roles) {
 		
-		System.out.println("----->confirmPlayer]:" + idEquipo);
+		//System.out.println("----->confirmPlayer]:" + idEquipo);
 		String query = "updateUserManager";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -180,13 +180,13 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(usuario, idEquipo,roles);
 
-		System.out.println(storedProcResult);
+		//System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		System.out.println(mapa);
+		//System.out.println(mapa);
 
 		return mapa;
 	}

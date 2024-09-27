@@ -38,16 +38,16 @@ public class LoginServiceImpl implements UserDetailsService {
 
 		if (roles != null) {
 			for (int i=0;i< roles.size(); i++) {
-				System.out.println("Antas--->");
+				//System.out.println("Antas--->");
 				String role = "ROLE_"+roles.get(i);
-				System.out.println("------->Role]:"+role);
+				//System.out.println("------->Role]:"+role);
 				 
 //				GrantedAuthority authority = new SimpleGrantedAuthority(role);
 				grantList.add(new SimpleGrantedAuthority(role));
 			}
 		}
 		userInfo.setRols(roles);
-		System.out.println("user]:"+userInfo.getUsername()+" Pass]:"+userInfo.getPassword()+" Equipo:"+userInfo.getNombreEquipo());
+		//System.out.println("user]:"+userInfo.getUsername()+" Pass]:"+userInfo.getPassword()+" Equipo:"+userInfo.getNombreEquipo());
 		User usuario = new User(userInfo.getUsername(), userInfo.getPassword(), grantList,
 				userInfo.getIdEquipo(),userInfo.getNombreEquipo(),userInfo.getRols());
 		
