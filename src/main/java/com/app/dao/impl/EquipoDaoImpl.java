@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.stereotype.Component;
 
 import com.app.dao.DatosFinancierosDao;
+import com.app.dao.DraftDao;
 import com.app.dao.EquipoDao;
 import com.app.dao.SponsorDao;
 import com.app.dao.UserDao;
@@ -24,6 +25,7 @@ import com.app.enums.Salarios;
 import com.app.modelo.CatalogoFinanciero;
 import com.app.modelo.Division;
 import com.app.modelo.Equipo;
+import com.app.modelo.JugadorDraft;
 import com.app.modelo.Temporada;
 import com.app.modelo.User;
 import com.app.utils.MyStoredProcedure;
@@ -39,6 +41,8 @@ public class EquipoDaoImpl implements EquipoDao{
 	DatosFinancierosDao datosFinancierosDao;
 	@Autowired
 	SponsorDao sponsorDao;
+	@Autowired
+	DraftDao draftDao;
 	
 	public Equipo findById(long id) {
 		//System.out.println("findById");
@@ -86,10 +90,17 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"    tot.totalJugadores,  "
 				+"    tot.totalRaiting,   "
 				+"    tot.presupuestoInicial,   "
-				+"    tot.presupuestoFinal   "
+				+"    tot.presupuestoFinal ,"
+				+"   GROUP_CONCAT(DISTINCT usuarios.userName "
+				+"               ORDER BY usuarios.userName ASC  "
+				+" 			           SEPARATOR ' - ') as usuarios, "
+				+"     GROUP_CONCAT(DISTINCT usuarios.whatsapp "
+				+"               ORDER BY usuarios.whatsapp ASC  "
+				+" 			           SEPARATOR ' - ') as whatsapp "
 				+"    FROM  equipos   "
 				+"    join  equipos_has_temporada on equipos_has_temporada.Equipos_idEquipo = equipos.idEquipo   "
 				+"    join  division on equipos.Division_idDivision = division.idDivision   "
+				+ "   left join usuarios on usuarios.idequipo = equipos.idEquipo "				
 				+"    join (select count(persona_has_temporada.persona_idPersona) as totalJugadores, sum(persona_has_temporada.rating) totalRaiting, equipos.idEquipo,dat.presupuestoInicial, dat.presupuestoFinal  "
 				+"           from  persona_has_temporada    "
 //				+"           join  persona_has_roles pero on pero.Persona_idPersona = persona_has_temporada.persona_idPersona "
@@ -103,6 +114,7 @@ public class EquipoDaoImpl implements EquipoDao{
 				+ "        temporada.idTemporada =  " + idTemporada
 				+"           group by  equipos.idEquipo ,dat.presupuestoInicial ,equipos.idEquipo,dat.presupuestoFinal  ) tot on tot.idEquipo = equipos.idEquipo  "
 				+"   and equipos_has_temporada.tempodada_idTemporada =   " + idTemporada
+				+"   group by idEquipo"
 				;
 		Collection equipos = jdbcTemplate.query(
                 query
@@ -121,6 +133,8 @@ public class EquipoDaoImpl implements EquipoDao{
                         equipo.setImg(rs.getString("img"));
                         equipo.setImg2(rs.getString("img2"));
                         equipo.setLinksofifa(rs.getString("linksofifa"));
+                        equipo.setManager(rs.getString("usuarios"));
+                        equipo.setWhatsapp(rs.getString("whatsapp"));
                         
                         Division division= new Division();
                         division.setId(rs.getString("Division_idDivision"));
@@ -324,9 +338,11 @@ public class EquipoDaoImpl implements EquipoDao{
 	            List<User> bajas = userDao.findAllBajasByIdEquipo(id, idTemporada);
 				//System.out.println("Bajas :"+bajas.size());
 				team.setBajas(bajas);
-				List<User> altas = userDao.findAllAltasByIdEquipo(id, idTemporada);
+				List<User> altas = userDao.findAllAltasByIdEquipo(id, idTemporada);				
 				//System.out.println("Altas :"+altas.size());
 				team.setAltas(altas);
+				List<JugadorDraft> draftpc  = draftDao.findJugadoresDraftByIdEquipo((int)id, idTemporada);
+				team.setDraftpc(draftpc);
 	            return team;
 	        }
 	        

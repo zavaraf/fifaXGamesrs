@@ -40,5 +40,12 @@ public class UserServiceLoginImpl implements UserService {
 	public boolean userExists(String username) {
 		return userDao.userExists(username);
 	}
+	public UserInfo authenticate(String username,String password) {
+		UserInfo user = userDao.login(username,password);
+    if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+        return user;
+    }
+    return null;
+	}
 
 }

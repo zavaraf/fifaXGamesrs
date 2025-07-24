@@ -36,7 +36,9 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
  
     function fetchAllPlayers(option) {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+'findAllPlayers/'+CONFIG.VARTEMPORADA.id+'/'+option, { timeout: 999999 })
+        var url = REST_SERVICE_URI+'findAllPlayers/'+CONFIG.VARTEMPORADA.id+'/'+option;
+        console.log(url)
+        $http.get(url, { timeout: 999999 })
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -66,6 +68,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
  
     function createPlayer(player) {
     	var deferred = $q.defer();
+    	console.log(JSON.stringify(player))
     	$http.post(REST_SERVICE_URI+"player"+"/"+CONFIG.VARTEMPORADA.id, player)
     	.then(
     			function (response) {
@@ -97,8 +100,9 @@ angular.module('myApp').factory('UserService', ['$http', '$q','CONFIG',function(
     }
     function updatePlayer(player, id) {
         var deferred = $q.defer();
-        console.log("------> Player Update]",player)
-        $http.post(REST_SERVICE_URI+"playerUpdate/"+id+"/"+CONFIG.VARTEMPORADA.id, player)
+        var url = REST_SERVICE_URI+"playerUpdate/"+id+"/"+CONFIG.VARTEMPORADA.id
+        console.log(url,player)
+        $http.post(url, player)
             .then(
             function (response) {
                 deferred.resolve(response.data);

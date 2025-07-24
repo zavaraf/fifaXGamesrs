@@ -16,6 +16,7 @@ public class Equipo {
 	private List<User> jugadores;
 	private List<User> bajas;
 	private List<User> altas;
+	private List<JugadorDraft> draftpc;
 	private DatosFinancieros datosFinancieros;
 	private Temporada temporada;
 	private List<CatalogoFinanciero> finanzas;
@@ -24,6 +25,7 @@ public class Equipo {
 	private String img;
 	private String img2;
 	private String linksofifa;
+	private String whatsapp;
 	
 	@Override
 	public String toString() {
@@ -187,6 +189,22 @@ public class Equipo {
 
 	public void setAltas(List<User> altas) {
 		this.altas = altas;
+	}
+
+	public List<JugadorDraft> getDraftpc() {
+		return draftpc;
+	}
+
+	public void setDraftpc(List<JugadorDraft> draftpc) {
+		this.draftpc = draftpc;
+	}
+
+	public String getWhatsapp() {
+		return whatsapp;
+	}
+
+	public void setWhatsapp(String whatsapp) {
+		this.whatsapp = whatsapp;
 	}
 	
 	

@@ -511,6 +511,7 @@ function deletedTarjetas(jugador,idEquipo) {
 		         
 		          
 		          console.log("TorneoLMService-guardarJornada]:",d)
+		          
 		          if(d.status == 0){
 			          self.tablaGeneral = d.data
 			          getJornadas();

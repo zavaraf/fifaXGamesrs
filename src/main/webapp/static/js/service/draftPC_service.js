@@ -21,10 +21,12 @@ angular.module('myApp').factory('DraftPCService', ['$http', '$q','CONFIG', funct
     function getHistoricoDraft(idDraft,idJugador) {
     	console.log("SErvice getHIstorico:"+idDraft+" - idJugador:"+idJugador)
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+'getHistorico/'+idDraft+'/'+idJugador+'/'+CONFIG.VARTEMPORADA.id)
+        var url = REST_SERVICE_URI+'getHistorico/'+idDraft+'/'+idJugador+'/'+CONFIG.VARTEMPORADA.id
+        console.log(url)
+        $http.get(url)
             .then(
             function (response) {
-            	console.log(response.data)
+            	console.log(JSON.stringify(response.data))
                 deferred.resolve(response.data);
             },
             function(errResponse){

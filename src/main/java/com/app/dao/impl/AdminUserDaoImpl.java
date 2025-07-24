@@ -45,7 +45,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 				+ " left join equipos_has_temporada on usuarios.idequipo = equipos_has_temporada.Equipos_idEquipo "
 				+ "              and equipos_has_temporada.tempodada_idTemporada = (select max(idTemporada) from temporada) "
 				+ " group by usuarios.userName,nombreEquipo ";
-		//System.out.println("------>user]"+query);
+		System.out.println("------>user]"+query);
 
 		Collection users = jdbcTemplate.query(
                 query
@@ -71,8 +71,8 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		
 		for (Object user : users) {
 			UserInfo userA = (UserInfo) user;
-			List<RoleUser> roles = findAllRolesByID(userA.getUsername());
-			userA.setRoles(roles);
+//			List<RoleUser> roles = findAllRolesByID(userA.getUsername());
+//			userA.setRoles(roles);
             listUsuarios.add(userA);
             
             

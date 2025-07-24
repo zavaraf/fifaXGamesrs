@@ -69,6 +69,20 @@ public class SponsorServiceImpl implements SponsorService {
 		sponsorDao.createPresupuesto(equipoBD,monto,montoFinal,montoFinalSponsor,idTemporada);
 		
 	}
+	
+	public void createPresupuestoId(int idEquipo, long monto, int idTemporada) {
+
+		
+		Equipo equipoBD = new Equipo();
+		
+		equipoBD = equipoDao.findByIdAll(idEquipo,idTemporada);
+		
+		int montoFinal = equipoUtil.getPresupuestoFinal(equipoBD, (int) monto);
+		int montoFinalSponsor = equipoUtil.getPresupuestoFinalSponsor(equipoBD, (int) monto);
+		
+		sponsorDao.createPresupuesto(equipoBD,monto,montoFinal,montoFinalSponsor,idTemporada);
+		
+	}
 
 	public void updateObjetivosByIdEquipo(long id, String objetivos,int idTemporada) {
 		Equipo equipoBD = new Equipo();
@@ -83,4 +97,5 @@ public class SponsorServiceImpl implements SponsorService {
 		
 	}
 
+	
 }

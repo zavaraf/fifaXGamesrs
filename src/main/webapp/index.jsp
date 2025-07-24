@@ -167,8 +167,12 @@
 			</ul>
 			<!-- LOGOUT -->
 			<p>
-				Bienvenido 1.0
-				<%=request.getUserPrincipal().getName()%>
+				Bienvenido 1.1
+				<% if (request.getUserPrincipal() != null) { %>
+					Bienvenido, <%= request.getUserPrincipal().getName() %>
+				<% } else { %>
+					Usuario no autenticado.
+				<% } %>
 			
 				
 				<a href="<c:url value='/logout'/>">desconectar</a>

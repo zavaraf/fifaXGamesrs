@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.app.dao.DatosFinancierosDao;
@@ -21,8 +21,9 @@ import com.app.modelo.Equipo;
 import com.app.modelo.Sponsor;
 import com.app.service.SponsorService;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-@Controller
+//@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping(value="/rest/sponsor")
 public class SponsorController {
 
@@ -141,6 +142,23 @@ public class SponsorController {
         headers.setLocation(ucBuilder.path("/{monto}").buildAndExpand(monto).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
+	
+	
+	@RequestMapping(value="finanzas/presupuestoId/{monto}/{idEquipo}/{idTemporada}",method = RequestMethod.PUT,
+			headers="Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<Void> createPresupuestoId(@PathVariable("monto") long monto,
+													@PathVariable("idEquipo") int idEquipo,
+													@PathVariable("idTemporada") int idTemporada,
+													UriComponentsBuilder ucBuilder) {
+		
+        sponsorService.createPresupuestoId(idEquipo,monto,idTemporada);
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/{monto}").buildAndExpand(monto).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+	
 	@RequestMapping(value="finanzas/presupuesto/objetivos/{id}/{idTemporada}",method = RequestMethod.POST,
 			headers="Accept=application/json")
 	@ResponseBody

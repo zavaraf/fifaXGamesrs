@@ -538,7 +538,12 @@
 		  </div>
 		</div>
 			
-		<div id="jugadores">
+		<div id="jugadores"  
+		ng-style="{'background-image': 'url(' + '<c:url value="/imagenes/campo.jpg"/>' + ')', 
+                'background-size': 'cover', 
+                'background-repeat': 'no-repeat', 
+                'background-position': 'center', 
+                'padding': '20px'}">
 			<!--  Div verde <div class="formcontainer"> -->
 		
 			<ul class="nav nav-tabs" role="tablist">
@@ -546,20 +551,18 @@
 			      <a class="nav-link" ng-click= "ctrl.jornadaSelect = [];ctrl.getInitTorneo(div);ctrl.getGruposTorneo(div);" data-toggle="tab" >{{div.nombre}}</a>
 			    </li>   
 			 </ul>
-	        <div class="formcontainer"	>
+	        <div 	>
 	        
             	<div class="panel panel-default">
                     <div class="panel-heading">
                         <img ng-src="<c:url value='/imagenes/LigaMundialXGamers.png'/>" class="rounded mx-auto d-block" style="width: 200px; height: 200px;" alt="Cinque Terre">
-                        
-<!--                         https://i.imgur.com/iOfwGBr.png -->
-<!--                        <span class="lead">Tabla General</span> -->
+
                     </div>
                 </div>
                 <div  class="row">
                 	<div class="col-xs-12 col-md-7">
 		                <table  ng-show = "ctrl.divisionSelect.tipoTorneo ==1" class="table table-lg table-hover table-center table-dark ">
-<%-- 		               style="background: url(<c:url value='/imagenes/LigaMundialXGamers.png'/>) " > --%>
+
 		                	<thead class="thead-dark">
 		                          <tr>
 		                          	  <th>*</th>
@@ -594,7 +597,7 @@
 		                      </tbody>
 		    			</table>
 		    			
-		    			<table ng-show = "ctrl.divisionSelect.tipoTorneo ==2" ng-repeat="grupo in ctrl.gruposTorneo" class="table table-sm table-hover table-center table-dark ">
+		    			<table ng-show = "ctrl.divisionSelect.tipoTorneo ==2" ng-repeat="grupo in ctrl.gruposTorneo" class="table table-sm table-hover table-center  table-responsive-sm text-white ">
 		                	<thead class="thead-dark">
 		                          <tr>
 		                              <th>*</th>
@@ -605,7 +608,7 @@
 		                              <th>PE</th>
 		                              <th>PP</th>
 		                              <th>GF</th>
-		                              <th>GE</th>
+		                              <th>GC</th>
 		                              <th>DIF</th>
 		                              <th>PTS</th>
 		                              

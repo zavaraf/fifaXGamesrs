@@ -226,7 +226,7 @@ angular.module('myApp')
             function(d) {
                 self.equipo = d;
                 $scope.urlSofifa = $sce.trustAsResourceUrl(self.equipo.linksofifa);
-                console.log(' [team_controller]--------->',d)
+                console.log('findTeam [team_controller]--------->',d)
             },
             function(errResponse){
                 console.error('Error while fetching Users');
@@ -343,7 +343,7 @@ angular.module('myApp')
     }
     
     function submitFinanzas(catalogo,monto){
-        console.log(" [team_controller]Crear Finanzas]:",catalogo," Monto]:",monto,CONFIG.VARTEMPORADA.id)    
+        console.log(" [team_controller]Crear submitFinanzas]:",catalogo," Monto]:",monto,CONFIG.VARTEMPORADA.id)    
             
         TeamService.submitFinanzas(catalogo,monto,self.equipo,CONFIG.VARTEMPORADA.id)
         .then(findTeam,

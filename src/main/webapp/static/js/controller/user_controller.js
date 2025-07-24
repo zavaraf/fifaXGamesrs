@@ -219,7 +219,7 @@ app.controller('UserController', ['$scope','$routeParams','CONFIG','$timeout','U
 //                self.player.equipo = $scope.selectedTeam
 //                self.player.equipo = ($scope.equipoModel != null && $scope.equipoModel.length>0) ? $scope.equipoModel[0] : null;
                 
-                console.log('[user_controller] jugador',self.player)
+                console.log('[user_controller] jugador',JSON.stringify(self.player));
 //                console.log('[user_controller] user',user)
 //                break;
 //            }

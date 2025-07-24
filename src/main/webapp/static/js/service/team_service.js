@@ -26,7 +26,7 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
         $http.get(REST_SERVICE_URI+teamID+"/"+idTemporada)
             .then(
             function (response) {
-            	console.log(response.data)
+            	console.log(JSON.stringify(response.data),response.data)
                 deferred.resolve(response.data);
             },
             function(errResponse){
@@ -105,7 +105,9 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
 	function submitFinanzas(catFinanzas,monto,equipo,idTemporada) {
 		
 		var deferred = $q.defer();
-		$http.post(REST_SERVICE_URIS+"finanzas/"+catFinanzas.id+"/"+monto+"/"+idTemporada,equipo)
+		var url = REST_SERVICE_URIS+"finanzas/"+catFinanzas.id+"/"+monto+"/"+idTemporada;
+		console.log(url)
+		$http.post(url,equipo)
 		.then(
 				function (response) {
 					console.log(response.data)
@@ -121,7 +123,9 @@ angular.module('myApp').factory('TeamService', ['$http', '$q','CONFIG', function
 	function submitDatos(monto,equipo,idTemporada) {
 		
 		var deferred = $q.defer();
-		$http.post(REST_SERVICE_URIS+"finanzas/presupuesto/"+monto+"/"+idTemporada,equipo)
+		var url = REST_SERVICE_URIS+"finanzas/presupuesto/"+monto+"/"+idTemporada;
+		console.log(url,equipo)
+		$http.post(url,equipo)
 		.then(
 				function (response) {
 					console.log(response.data)

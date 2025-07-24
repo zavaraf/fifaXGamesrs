@@ -26,4 +26,6 @@ public interface SponsorService {
 
 	void updateObjetivosByIdEquipo(long id, String objetivos,int idTemporada);
 
+	void createPresupuestoId(int idEquipo, long monto, int idTemporada);
+
 }

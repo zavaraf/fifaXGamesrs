@@ -95,6 +95,9 @@ public class UserDaoImpl implements UserDao {
 				password,
 				username);
 	}
+	
+	
+	
 
 	public void add(String username, String password) {
 		String sql = "insert into usuarios(username, pass) values(?, ?)";
@@ -136,6 +139,37 @@ public class UserDaoImpl implements UserDao {
 		
 
 		return false;
+	}
+	
+	public UserInfo login(String username, String password) {
+		String query = " select usuarios.username,  " 
+				+ " usuarios.pass as password,  " 
+				+ " usuarios.email,  "
+				+ " equipos_has_temporada.nombreEquipo,  " 
+				+ " equipos_has_temporada.Equipos_idEquipo as idEquipo , " 
+				+ " GROUP_CONCAT(DISTINCT roles.descripcionRol "
+				+ "           ORDER BY roles.descripcionRol ASC " 
+				+ "           SEPARATOR ' - ') as roles "
+				+ " from usuarios  " 
+				+ " join usuarios_has_roles uhr on uhr.Usuarios_userName = usuarios.userName "
+				+ " join roles on uhr.Roles_idRoles = roles.idRoles "
+				+ " left join equipos_has_temporada on usuarios.idequipo = equipos_has_temporada.Equipos_idEquipo "
+				+ "              and equipos_has_temporada.tempodada_idTemporada = (select max(idTemporada) from temporada) "
+				+ " where usuarios.userName = ?"
+				+ " group by equipos_has_temporada.nombreEquipo ";
+	
+		return jdbcTemplate.queryForObject(query, new Object[]{username}, new RowMapper<UserInfo>() {
+			@Override
+			public UserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				UserInfo user = new UserInfo();
+				user.setUsername(rs.getString("username"));
+				user.setPassword(rs.getString("password"));
+				user.setIdEquipo(rs.getString("idEquipo"));
+				user.setNombreEquipo(rs.getString("nombreEquipo"));
+				user.setRolesDes(rs.getString("roles"));
+				return user;
+			}
+		});
 	}
 
 }

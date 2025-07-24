@@ -63,6 +63,10 @@ public class GenerarJornadasUtil {
 	    int matchesPerRound = teams / 2;
 	    String[][] rounds = new String[totalRounds][matchesPerRound];
 	    
+	    // Arrays para contar cuántas veces cada equipo juega como local y visitante
+	    int[] contadorLocal = new int[teams];
+	    int[] contadorVisitante = new int[teams];
+	    
 	    for (int round = 0; round < totalRounds; round++) {
 	    	List<String> juegos = new ArrayList<String>();
 	        for (int match = 0; match < matchesPerRound; match++) {
@@ -74,6 +78,28 @@ public class GenerarJornadasUtil {
 	            if (match == 0) {
 	                away = teams - 1;
 	            }
+	            
+	            // Estrategia de balanceo mejorada para distribuir mejor local/visitante
+	            // Verificar cuántas veces cada equipo ha jugado como local
+	            if (round > 0) {
+	                // Si home ha jugado más veces como local que away, intercambiar
+	                if (contadorLocal[home] > contadorLocal[away] + 1) {
+	                    int temp = home;
+	                    home = away;
+	                    away = temp;
+	                }
+	                // También considerar el balance total (local - visitante)
+	                else if ((contadorLocal[home] - contadorVisitante[home]) > 
+	                        (contadorLocal[away] - contadorVisitante[away]) + 1) {
+	                    int temp = home;
+	                    home = away;
+	                    away = temp;
+	                }
+	            }
+	            
+	            // Incrementar contadores
+	            contadorLocal[home]++;
+	            contadorVisitante[away]++;
 
 	            // Add one so teams are number 1 to teams not 0 to teams - 1
 	            // upon display.
@@ -159,7 +185,10 @@ public class GenerarJornadasUtil {
 		}
 	
 		
-		HashMap<Integer,List<String>> jornadas = generarJornadasIdaYVuelta(numero,vuelta);
+		// Usar el nuevo método balanceado en lugar del original
+		//HashMap<Integer,List<String>> jornadas = generarJornadasBalanceadas(numero,vuelta);
+		// Alternativa: usar el método circular
+		 HashMap<Integer,List<String>> jornadas = generarJornadasCirculares(numero,vuelta);
 		List<Jornadas> jornadasList = new ArrayList<Jornadas>();
 		
 		for(int jornada = 0; jornada<jornadas.size(); jornada++){
@@ -226,9 +255,9 @@ public class GenerarJornadasUtil {
 		}
 		int mitad = equipos.size() / 2;
 		
-		if(mitad > 5 && vuelta != 2) {
-			balancearJornadas(mitad, equipos, jornadasList);		
-		}
+//		if(mitad > 5 && vuelta != 2) {
+//			balancearJornadas(mitad, equipos, jornadasList);		
+//		}
 		
 		return jornadasList;
 		
@@ -660,6 +689,173 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 	
 	
 	
+	/**
+	 * Método alternativo para generar jornadas con mejor balance usando Round Robin optimizado
+	 * Este método garantiza una distribución más equitativa de partidos como local y visitante
+	 */
+	public HashMap<Integer,List<String>> generarJornadasBalanceadas(int teams, int vuelta) {
+		HashMap<Integer,List<String>> jornadas = new HashMap<Integer,List<String>>();
+		
+		if (teams % 2 != 0) {
+			teams++; // Agregar equipo "fantasma" si es impar
+		}
+		
+		int totalRounds = teams - 1;
+		int matchesPerRound = teams / 2;
+		
+		// Lista de equipos (0 a teams-1)
+		List<Integer> equipos = new ArrayList<Integer>();
+		for (int i = 0; i < teams; i++) {
+			equipos.add(i);
+		}
+		
+		// Primera vuelta
+		for (int round = 0; round < totalRounds; round++) {
+			List<String> juegos = new ArrayList<String>();
+			
+			for (int match = 0; match < matchesPerRound; match++) {
+				int home, away;
+				
+				if (match == 0) {
+					// El primer equipo (0) siempre está fijo
+					home = 0;
+					away = equipos.get(teams - 1 - round);
+				} else {
+					// Los demás equipos rotan
+					int homeIndex = (round + match - 1) % (teams - 1) + 1;
+					int awayIndex = (round - match + teams - 1) % (teams - 1) + 1;
+					
+					home = equipos.get(homeIndex);
+					away = equipos.get(awayIndex);
+				}
+				
+				// Alternar local/visitante cada cierta cantidad de rondas para balancear
+				if ((round + match) % 2 == 1) {
+					int temp = home;
+					home = away;
+					away = temp;
+				}
+				
+				// Solo agregar si no es contra el equipo "fantasma" (teams-1 si era impar)
+				if (home < teams - 1 && away < teams - 1) {
+					String juego = (home + 1) + "-" + (away + 1);
+					juegos.add(juego);
+				}
+			}
+			
+			if (!juegos.isEmpty()) {
+				jornadas.put(round, juegos);
+			}
+		}
+		
+		// Segunda vuelta si se requiere
+		if (vuelta == 2) {
+			int baseRounds = jornadas.size();
+			
+			for (int round = 0; round < totalRounds; round++) {
+				if (jornadas.containsKey(round)) {
+					List<String> juegosPrimeraVuelta = jornadas.get(round);
+					List<String> juegosSegundaVuelta = new ArrayList<String>();
+					
+					// Invertir local y visitante para la segunda vuelta
+					for (String juego : juegosPrimeraVuelta) {
+						String[] equiposJuego = juego.split("-");
+						String juegoInvertido = equiposJuego[1] + "-" + equiposJuego[0];
+						juegosSegundaVuelta.add(juegoInvertido);
+					}
+					
+					jornadas.put(baseRounds + round, juegosSegundaVuelta);
+				}
+			}
+		}
+		
+		return jornadas;
+	}
 	
-
+	/**
+	 * Método alternativo con algoritmo "Circle Method" para máximo balance
+	 */
+	public HashMap<Integer,List<String>> generarJornadasCirculares(int teams, int vuelta) {
+		HashMap<Integer,List<String>> jornadas = new HashMap<Integer,List<String>>();
+		
+		boolean equipoImpar = false;
+		if (teams % 2 != 0) {
+			teams++;
+			equipoImpar = true;
+		}
+		
+		int totalRounds = teams - 1;
+		
+		// Crear matriz circular
+		int[][] schedule = new int[totalRounds][teams/2 * 2];
+		
+		// Llenar la matriz usando el método circular
+		for (int round = 0; round < totalRounds; round++) {
+			int col = 0;
+			
+			for (int i = 0; i < teams/2; i++) {
+				int home = (round + i) % (teams - 1);
+				int away = (teams - 1 - i + round) % (teams - 1);
+				
+				// El último equipo se mantiene fijo en la primera posición cada ronda
+				if (i == 0) {
+					away = teams - 1;
+				}
+				
+				// Estrategia de balance: alternar cada 2 rondas
+				if ((round / 2) % 2 == 1) {
+					int temp = home;
+					home = away;
+					away = temp;
+				}
+				
+				schedule[round][col++] = home;
+				schedule[round][col++] = away;
+			}
+		}
+		
+		// Convertir matriz a HashMap
+		for (int round = 0; round < totalRounds; round++) {
+			List<String> juegos = new ArrayList<String>();
+			
+			for (int match = 0; match < teams/2; match++) {
+				int home = schedule[round][match * 2];
+				int away = schedule[round][match * 2 + 1];
+				
+				// Filtrar el equipo "fantasma" si había número impar
+				if (equipoImpar && (home == teams - 1 || away == teams - 1)) {
+					continue;
+				}
+				
+				String juego = (home + 1) + "-" + (away + 1);
+				juegos.add(juego);
+			}
+			
+			if (!juegos.isEmpty()) {
+				jornadas.put(round, juegos);
+			}
+		}
+		
+		// Segunda vuelta
+		if (vuelta == 2) {
+			int baseRounds = jornadas.size();
+			
+			for (int round = 0; round < baseRounds; round++) {
+				if (jornadas.containsKey(round)) {
+					List<String> juegosPrimeraVuelta = jornadas.get(round);
+					List<String> juegosSegundaVuelta = new ArrayList<String>();
+					
+					for (String juego : juegosPrimeraVuelta) {
+						String[] equiposJuego = juego.split("-");
+						String juegoInvertido = equiposJuego[1] + "-" + equiposJuego[0];
+						juegosSegundaVuelta.add(juegoInvertido);
+					}
+					
+					jornadas.put(baseRounds + round, juegosSegundaVuelta);
+				}
+			}
+		}
+		
+		return jornadas;
+	}
 }

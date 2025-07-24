@@ -34,7 +34,7 @@ public class LoginDaoImpl implements LoginDao {
 				+ "           SEPARATOR ' - ') as roles "
 				+ " from usuarios  " 
 				+ " join usuarios_has_roles uhr on uhr.Usuarios_userName = usuarios.userName "
-				+ " join roles on uhr.Roles_idRoles = roles.idRoles "
+				+ " join roles on uhr.Roles_idRoles = roles.idRoles and roles.nombreRol = 'Admin'"
 				+ " left join equipos_has_temporada on usuarios.idequipo = equipos_has_temporada.Equipos_idEquipo "
 				+ "              and equipos_has_temporada.tempodada_idTemporada = (select max(idTemporada) from temporada) "
 				+ " where usuarios.userName = '"

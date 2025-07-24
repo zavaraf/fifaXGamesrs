@@ -304,7 +304,7 @@ public class DraftDaoImpl implements DraftDao {
 		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
 		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
 
-		//System.out.println("------->[updateDraft]\t id:" +id +"\t montoInicial:" +montoInicial +"\t monto:" +monto +"\t manager:" +manager +"\t observaciones:" +observaciones +"\t idEquipo:" +idEquipo +"\t idTemporada:" +idTemporada);
+		System.out.println("------->[updateDraft]\t id:" +id +"\t montoInicial:" +montoInicial +"\t monto:" +monto +"\t manager:" +manager +"\t observaciones:" +observaciones +"\t idEquipo:" +idEquipo +"\t idTemporada:" +idTemporada);
 		SqlParameter[] paramArray = { idJugador, montoInicial1, montoOferta, manager1, observaciones1, idEquipoOferta,idTemporadaOferta,
 				isError, message };
 
@@ -313,13 +313,13 @@ public class DraftDaoImpl implements DraftDao {
 
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(id, montoInicial, monto, manager, observaciones, idEquipo,idTemporada);
-		//System.out.println(storedProcResult);
+		System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		//System.out.println(mapa);
+		System.out.println(mapa);
 
 		return mapa;
 	}
@@ -342,7 +342,7 @@ public class DraftDaoImpl implements DraftDao {
 		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
 		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
 
-		//System.out.println("------->[updateDraft]\t id:" +id +"\t montoInicial:" +montoInicial +"\t monto:" +monto +"\t manager:" +manager +"\t observaciones:" +observaciones +"\t idEquipo:" +idEquipo +"\t idTemporada:" +idTemporada);
+		System.out.println("------->[updateDraftCorreccion]\t id:" +id +"\t montoInicial:" +montoInicial +"\t monto:" +monto +"\t manager:" +manager +"\t observaciones:" +observaciones +"\t idEquipo:" +idEquipo +"\t idTemporada:" +idTemporada);
 		SqlParameter[] paramArray = { idJugador, montoInicial1, montoOferta, manager1, observaciones1, idEquipoOferta,idTemporadaOferta,
 				isError, message };
 
@@ -351,13 +351,13 @@ public class DraftDaoImpl implements DraftDao {
 
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(id, montoInicial, monto, manager, observaciones, idEquipo,idTemporada);
-		//System.out.println(storedProcResult);
+		System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		//System.out.println(mapa);
+		System.out.println(mapa);
 
 		return mapa;
 	}
@@ -432,7 +432,7 @@ public class DraftDaoImpl implements DraftDao {
 	@Override
 	public HashMap<String, String> confirmPlayer(long id, int idEquipo, int idTemporada) {
 
-		//System.out.println("----->confirmPlayer]:" + idEquipo);
+		System.out.println("----->confirmPlayer]:" +id+ "  -  "+ idEquipo+ "  -  "+idTemporada);
 		String query = "confirmPlayer";
 
 		MyStoredProcedure myStoredProcedure = new MyStoredProcedure(jdbcTemplate, query);
@@ -453,13 +453,13 @@ public class DraftDaoImpl implements DraftDao {
 		// Call stored procedure
 		Map storedProcResult = myStoredProcedure.execute(id, idEquipo,idTemporada);
 
-		//System.out.println(storedProcResult);
+		System.out.println(storedProcResult);
 
 		HashMap<String, String> mapa = new HashMap<String, String>();
 
 		mapa.put("status", storedProcResult.get("isError").toString());
 		mapa.put("mensaje", storedProcResult.get("message").toString());
-		//System.out.println(mapa);
+		System.out.println(mapa);
 
 		return mapa;
 	}

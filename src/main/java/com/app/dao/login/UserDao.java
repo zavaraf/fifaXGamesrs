@@ -15,5 +15,7 @@ public interface UserDao {
 	 public void add(String username, String password);
 	 
 	 public boolean userExists(String username);
+	 
+	 public UserInfo login(String username, String password);
 
 }

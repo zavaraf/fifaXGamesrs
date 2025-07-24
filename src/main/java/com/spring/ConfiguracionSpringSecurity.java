@@ -76,7 +76,7 @@ public class ConfiguracionSpringSecurity extends WebSecurityConfigurerAdapter {
 			.antMatchers("/test/**").permitAll()
 			.antMatchers("/rest/catalogs/confirmarJugadores**").permitAll()
 			
-//			.antMatchers("/rest/**").permitAll()
+			.antMatchers("/rest/**").permitAll()
 			.antMatchers("/usermanager/**").permitAll()
 			.antMatchers("/**").access("hasAnyRole('Admin','Manager','Usuario')")
 			.antMatchers("/index.jsp/**").access("hasAnyRole('Usuario')")
