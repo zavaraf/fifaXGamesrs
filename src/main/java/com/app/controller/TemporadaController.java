@@ -457,6 +457,28 @@ public class TemporadaController {
 		 
 		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	 }
+	 
+	 @RequestMapping(value="/lm/agregarEquiposCalendario/{idTemporada}/{idTorneo}/{jornadaActual}/{vuelta}",
+			 method = RequestMethod.POST,
+			 headers="Accept=application/json")
+	 @ResponseBody
+	 public ResponseEntity<ResponseData> agregarEquiposACalendario(
+			 @PathVariable("idTemporada") int idTemporada,
+			 @PathVariable("idTorneo") int idTorneo,
+			 @PathVariable("jornadaActual") int jornadaActual,
+			 @PathVariable("vuelta") int vuelta,
+			 @RequestBody List<Equipo> nuevosEquipos){
+		 
+		 ResponseData response = new ResponseData();	
+		 try{
+			 response = temporadaService.agregarEquiposACalendario(idTemporada, idTorneo, nuevosEquipos, jornadaActual, vuelta);
+		 }catch(Exception e){
+			 response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			 response.setMensaje("Error al agregar equipos al calendario: " + e.getMessage());
+		 }
+		 
+		 return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	 }
 	
 	 
 	 

@@ -26,6 +26,7 @@ public class Equipo {
 	private String img2;
 	private String linksofifa;
 	private String whatsapp;
+	private String postfifa;
 	
 	@Override
 	public String toString() {
@@ -205,6 +206,14 @@ public class Equipo {
 
 	public void setWhatsapp(String whatsapp) {
 		this.whatsapp = whatsapp;
+	}
+
+	public String getPostfifa() {
+		return postfifa;
+	}
+
+	public void setPostfifa(String postfifa) {
+		this.postfifa = postfifa;
 	}
 	
 	

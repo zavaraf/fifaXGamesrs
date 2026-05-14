@@ -1,16 +1,18 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS createOrUpdateEquipo$$
-CREATE PROCEDURE createOrUpdateEquipo (IN nombreEquipo varchar(200) , 
-								   IN descripcion varchar(200),
-                                   IN idDivision INT,
-                                   IN linksofifa varchar(200), 
-                                   IN idEquipo INT,
-                                   IN idTemporada INT,
-                                   IN img varchar(200), 
-                                   IN img2 varchar(200),
-                               out isError int, 
-                               out message varchar(200)
-                                   )
+CREATE PROCEDURE createOrUpdateEquipo (
+	IN nombreEquipo varchar(200), 
+	IN descripcion varchar(200),
+	IN idDivision INT,
+	IN linksofifa varchar(200), 
+	IN idEquipo INT,
+	IN idTemporada INT,
+	IN img varchar(200), 
+	IN img2 varchar(200),
+	IN postfifa varchar(200),
+	out isError int, 
+	out message varchar(200)
+)
 BEGIN
 
 declare  idEquipoVar int;
@@ -27,7 +29,7 @@ where equipos.idEquipo = idEquipo;
 
 if idEquipoIni is null and idEquipo != 1 then
 
-	INSERT INTO `fifaxgamersbd`.`equipos`
+	INSERT INTO equipos
 	(`idEquipo`,
 	`nombreEquipo`,
 	`descripcionEquipo`,
@@ -37,20 +39,19 @@ if idEquipoIni is null and idEquipo != 1 then
 	VALUES
 	(null,
 	nombreEquipo,
-	descripcion,
+	nombreEquipo,
 	1,
 	idDivision,
 	linksofifa);
-    
-    ELSE if idEquipoIni is not null then 
-    
-		UPDATE `fifaxgamersbd`.`equipos`
+	
+	ELSE if idEquipoIni is not null then 
+	
+		UPDATE equipos
 		SET
 		`Division_idDivision` = idDivision
-		
 		WHERE equipos.idEquipo = idEquipoIni ;
-    end if;
-    
+	end if;
+	
 end if;
 
 
@@ -63,35 +64,37 @@ and equipos_has_temporada.tempodada_idTemporada = idTemporada;
  select idEquipoVar;
  if idEquipoVar is null and idEquipo != 1 then
  
-	INSERT INTO `fifaxgamersbd`.`equipos_has_temporada`
+	INSERT INTO equipos_has_temporada
 	(`Equipos_idEquipo`,
 	`tempodada_idTemporada`,
 	`nombreEquipo`,
 	`idDivision`,
-	`linksofifa`)
+	`linksofifa`,
+	`postfifa`)
 	VALUES
 	(idEquipo,
 	idTemporada,
 	nombreEquipo,
 	idDivision,
-	linksofifa);
+	linksofifa,
+	postfifa);
 
 	else if idEquipoVar  is not null then
-    UPDATE `fifaxgamersbd`.`equipos_has_temporada`
+	UPDATE equipos_has_temporada
 	SET
-	
 	`nombreEquipo` = nombreEquipo,
 	`idDivision` = idDivision,
-	`linksofifa` = linksofifa
+	`linksofifa` = linksofifa,
+	`postfifa` = postfifa
 	WHERE `Equipos_idEquipo` = idEquipo AND `tempodada_idTemporada` = idTemporada;
 
-    
+	
 
 	end  if;
  
  end if  ;
-       
-       
+	   
+	   
 select equipos_has_imagen.equipos_idEquipo into isImg
 from equipos_has_imagen
 where equipos_has_imagen.equipos_idEquipo = idEquipo
@@ -102,7 +105,7 @@ select isImg;
 
 if isImg is null then
 
-INSERT INTO `fifaxgamersbd`.`equipos_has_imagen`
+INSERT INTO equipos_has_imagen
 (`equipos_idEquipo`,
 `tipoImagen_idTipoImagen`,
 `imagen`,
@@ -115,7 +118,7 @@ idTemporada);
 
 else if isImg is not null then
 
-UPDATE `fifaxgamersbd`.`equipos_has_imagen`
+UPDATE equipos_has_imagen
 SET
 
 `imagen` = img
@@ -139,7 +142,7 @@ select isImg2;
 
 if isImg2 is null then
 
-INSERT INTO `fifaxgamersbd`.`equipos_has_imagen`
+INSERT INTO equipos_has_imagen
 (`equipos_idEquipo`,
 `tipoImagen_idTipoImagen`,
 `imagen`,
@@ -152,7 +155,7 @@ idTemporada);
 
 else if isImg2 is not null then
 
-UPDATE `fifaxgamersbd`.`equipos_has_imagen`
+UPDATE equipos_has_imagen
 SET
 
 `imagen` = img2

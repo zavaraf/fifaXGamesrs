@@ -15,7 +15,7 @@ DECLARE idTorneoVAl INTEGER;
   
   DECLARE done INT DEFAULT FALSE;
 
-DECLARE cursor1 CURSOR FOR (SELECT torneo.idtorneo from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama));
+DECLARE cursor1 CURSOR FOR (SELECT torneo.idtorneo from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama) order by torneo.idtorneo desc);
 -- DECLARE CONTINUE HANDLER FOR NOT FOUND SET var_final = 1;
  
  SELECT count(torneo.idtorneo) into var_final  from torneo where torneo.idtorneo not in (select cat_salon_fama.idtorneo from cat_salon_fama);
@@ -52,8 +52,11 @@ OPEN cursor1;
     set idEquipoVal = null;
     set idTorneoVal = null;
     select 
-		(case when tabla1.golesLocal > golesVisita then tabla1.equipos_idEquipoLocal else tabla1.equipos_idEquipoVisita end) 
-        as idEquipo  ,
+		(case 
+            when tabla1.golesLocal > tabla1.golesVisita then tabla1.equipos_idEquipoLocal 
+            when tabla1.golesLocal < tabla1.golesVisita then tabla1.equipos_idEquipoVisita
+            else tabla1.equipos_idEquipoLocal  -- En empate, gana el local
+        end) as idEquipo,
 		tabla1.idtorneo
         
         into idEquipoVal, idTorneoVal
@@ -99,7 +102,8 @@ OPEN cursor1;
 		) tabla
 		group by tabla.equipos_idEquipoLocal, tabla.equipos_idEquipoVisita
 		) tabla1
-		;
+		ORDER BY (tabla1.golesLocal + tabla1.golesVisita) DESC
+        LIMIT 1;
         
         if idEquipoVal is not null then 
     

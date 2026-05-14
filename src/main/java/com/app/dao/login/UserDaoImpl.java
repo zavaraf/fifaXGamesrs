@@ -145,6 +145,7 @@ public class UserDaoImpl implements UserDao {
 		String query = " select usuarios.username,  " 
 				+ " usuarios.pass as password,  " 
 				+ " usuarios.email,  "
+				+ " usuarios.whatsapp as telefono,  "
 				+ " equipos_has_temporada.nombreEquipo,  " 
 				+ " equipos_has_temporada.Equipos_idEquipo as idEquipo , " 
 				+ " GROUP_CONCAT(DISTINCT roles.descripcionRol "
@@ -164,12 +165,22 @@ public class UserDaoImpl implements UserDao {
 				UserInfo user = new UserInfo();
 				user.setUsername(rs.getString("username"));
 				user.setPassword(rs.getString("password"));
+				user.setEmail(getStringIfPresent(rs, "email"));
+				user.setTelefono(getStringIfPresent(rs, "telefono"));
 				user.setIdEquipo(rs.getString("idEquipo"));
 				user.setNombreEquipo(rs.getString("nombreEquipo"));
 				user.setRolesDes(rs.getString("roles"));
 				return user;
 			}
 		});
+	}
+
+	private String getStringIfPresent(ResultSet rs, String columnName) {
+		try {
+			return rs.getString(columnName);
+		} catch (SQLException ex) {
+			return null;
+		}
 	}
 
 }

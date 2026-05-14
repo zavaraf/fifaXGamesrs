@@ -426,4 +426,36 @@ public class TemporadaServiceImpl implements TemporadaService {
 		return response;
 	}
 
+	@Override
+	public ResponseData agregarEquiposACalendario(int idTemporada, int idTorneo, List<Equipo> nuevosEquipos, 
+												  int jornadaActual, int vuelta) {
+		
+		ResponseData response = new ResponseData();
+		
+		try {
+			// Obtener equipos existentes del torneo
+			List<Equipo> equiposOriginales = equipoDao.findEquiposByTorneo(idTemporada, idTorneo);
+			
+			// Obtener jornadas existentes
+			List<Jornadas> jornadasExistentes = temporadaDao.getJornadas(idTemporada, idTorneo, 0);
+			
+			// Crear instancia del util para generar jornadas
+			GenerarJornadasUtil generarJornadas = new GenerarJornadasUtil();
+			
+			// Generar el nuevo calendario con los equipos agregados
+			List<Jornadas> nuevasJornadas = generarJornadas.agregarEquiposACalendarioEnProgreso(
+				jornadasExistentes, equiposOriginales, nuevosEquipos, jornadaActual, vuelta);
+			
+			response.setStatus(CodigoResponse.OK.getCodigo());
+			response.setMensaje("Equipos agregados exitosamente al calendario");
+			response.setData(nuevasJornadas);
+			
+		} catch (Exception e) {
+			response.setStatus(CodigoResponse.ERROR_INESPERADO.getCodigo());
+			response.setMensaje("Error al agregar equipos al calendario: " + e.getMessage());
+		}
+		
+		return response;
+	}
+
 }

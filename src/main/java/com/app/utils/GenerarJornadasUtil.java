@@ -166,9 +166,75 @@ public class GenerarJornadasUtil {
 		return null;
 		
 	}
+	
+	public HashMap<Integer, List<String>> generarRoundRobinIdaYVuelta(int teams, int vuelta) {
+	    HashMap<Integer, List<String>> jornadas = new HashMap<Integer, List<String>>();
+
+	    int totalRounds = teams - 1;
+	    int matchesPerRound = teams / 2;
+
+	    List<Integer> rotacion = new ArrayList<Integer>();
+	    for (int i = 0; i < teams; i++) {
+	        rotacion.add(i);
+	    }
+
+	    for (int round = 0; round < totalRounds; round++) {
+	        List<String> juegos = new ArrayList<String>();
+
+	        for (int match = 0; match < matchesPerRound; match++) {
+	            int a = rotacion.get(match);
+	            int b = rotacion.get(teams - 1 - match);
+
+	            int local;
+	            int visita;
+
+	            if (match == 0) {
+	                if (round % 2 == 0) {
+	                    local = a;
+	                    visita = b;
+	                } else {
+	                    local = b;
+	                    visita = a;
+	                }
+	            } else {
+	                if (match % 2 == 0) {
+	                    local = a;
+	                    visita = b;
+	                } else {
+	                    local = b;
+	                    visita = a;
+	                }
+	            }
+
+	            juegos.add((local + 1) + "-" + (visita + 1));
+	        }
+
+	        jornadas.put(round, juegos);
+
+	        int ultimo = rotacion.remove(rotacion.size() - 1);
+	        rotacion.add(1, ultimo);
+	    }
+
+	    if (vuelta == 2) {
+	        for (int round = 0; round < totalRounds; round++) {
+	            List<String> ida = jornadas.get(round);
+	            List<String> vueltaJuegos = new ArrayList<String>();
+
+	            for (String juego : ida) {
+	                String[] partes = juego.split("-");
+	                vueltaJuegos.add(partes[1] + "-" + partes[0]);
+	            }
+
+	            jornadas.put(round + totalRounds, vueltaJuegos);
+	        }
+	    }
+
+	    return jornadas;
+	}
+	
 	public List<Jornadas> getJornadasIdaYVuelta(List<Equipo> equiposL, int vuelta, List<Grupos> grupos){
 		
-		List<Equipo> equipos = equiposL;
+		List<Equipo> equipos = new ArrayList<Equipo>(equiposL);
 		
 		
 		
@@ -188,7 +254,8 @@ public class GenerarJornadasUtil {
 		// Usar el nuevo método balanceado en lugar del original
 		//HashMap<Integer,List<String>> jornadas = generarJornadasBalanceadas(numero,vuelta);
 		// Alternativa: usar el método circular
-		 HashMap<Integer,List<String>> jornadas = generarJornadasCirculares(numero,vuelta);
+		// HashMap<Integer,List<String>> jornadas = generarJornadasCirculares(numero,vuelta);
+		HashMap<Integer,List<String>> jornadas = generarRoundRobinIdaYVuelta(numero, vuelta);
 		List<Jornadas> jornadasList = new ArrayList<Jornadas>();
 		
 		for(int jornada = 0; jornada<jornadas.size(); jornada++){
@@ -206,24 +273,7 @@ public class GenerarJornadasUtil {
 				Equipo equipoLcoal = equipos.get(local-1);
 				Equipo equipoVisita = equipos.get(visita-1);
 				
-//				//System.out.println("->Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
-//				Ordenar local y visitas
-				if(jornada > 0 && grupos.size()<= 2  ){
-//					//System.out.println("grupos enttro ]:"+grupos.size());
-					Jornada juegoAnterior = getJuegoAnterior(jornadasList, equipoLcoal, equipoLcoal, equipos);
-					Jornada juegoAnteriorVisita = getJuegoAnterior(jornadasList, equipoVisita, equipoVisita, equipos);
-					
-					if(juegoAnterior!= null && juegoAnterior.getIdEquipoLocal() == equipoLcoal.getId()){
-						equipoLcoal = equipos.get(visita-1);
-						equipoVisita = equipos.get(local-1);						
-					}else
-					if(juegoAnteriorVisita != null && juegoAnteriorVisita.getIdEquipoVisita() == equipoVisita.getId()){
-						equipoLcoal = equipos.get(visita-1);
-						equipoVisita = equipos.get(local-1);						
-					}
-					
-									
-				}
+
 				
 				//System.out.println("Jornada]:"+jornada+" Juego]:"+j+ " :::::  "+equipoLcoal.getNombre()+" - "+equipoVisita.getNombre());
 				
@@ -770,6 +820,242 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		}
 		
 		return jornadas;
+	}
+	
+	/**
+	 * Método para agregar nuevos equipos a un calendario en progreso
+	 * Preserva jornadas ya jugadas y distribuye los nuevos partidos respetando balance
+	 */
+	public List<Jornadas> agregarEquiposACalendarioEnProgreso(
+			List<Jornadas> jornadasExistentes, 
+			List<Equipo> equiposOriginales,
+			List<Equipo> nuevosEquipos, 
+			int jornadaActual,
+			int vuelta) {
+		
+		// Crear lista completa de equipos
+		List<Equipo> todosLosEquipos = new ArrayList<Equipo>(equiposOriginales);
+		todosLosEquipos.addAll(nuevosEquipos);
+		
+		// Manejar número impar de equipos
+		boolean equipoFantasmaAgregado = false;
+		if (todosLosEquipos.size() % 2 != 0) {
+			Equipo equipoFantasma = new Equipo();
+			equipoFantasma.setId(-1);
+			equipoFantasma.setNombre("Descanso");
+			todosLosEquipos.add(equipoFantasma);
+			equipoFantasmaAgregado = true;
+		}
+		
+		// Copiar jornadas ya jugadas (preservar intactas)
+		List<Jornadas> nuevasJornadas = new ArrayList<Jornadas>();
+		for (int i = 0; i < jornadaActual - 1 && i < jornadasExistentes.size(); i++) {
+			nuevasJornadas.add(jornadasExistentes.get(i));
+		}
+		
+		// Generar partidos faltantes para nuevos equipos
+		List<String> partidosFaltantes = generarPartidosFaltantes(equiposOriginales, nuevosEquipos, jornadasExistentes, jornadaActual - 1);
+		
+		// Calcular balance actual de equipos existentes
+		HashMap<Long, Integer> balanceLocal = calcularBalanceLocal(jornadasExistentes, jornadaActual - 1);
+		HashMap<Long, Integer> balanceVisitante = calcularBalanceVisitante(jornadasExistentes, jornadaActual - 1);
+		
+		// Distribuir partidos faltantes en jornadas futuras
+		distribuirPartidosEnJornadas(nuevasJornadas, partidosFaltantes, todosLosEquipos, 
+									jornadaActual, balanceLocal, balanceVisitante, equipoFantasmaAgregado);
+		
+		return nuevasJornadas;
+	}
+	
+	/**
+	 * Genera la lista de partidos que faltan por jugar entre equipos nuevos y existentes
+	 */
+	private List<String> generarPartidosFaltantes(List<Equipo> equiposOriginales, 
+												  List<Equipo> nuevosEquipos, 
+												  List<Jornadas> jornadasExistentes,
+												  int jornadasJugadas) {
+		List<String> partidosFaltantes = new ArrayList<String>();
+		
+		// Crear mapa de partidos ya jugados
+		HashMap<String, Boolean> partidosJugados = new HashMap<String, Boolean>();
+		for (int i = 0; i < jornadasJugadas && i < jornadasExistentes.size(); i++) {
+			for (Jornada juego : jornadasExistentes.get(i).getJornada()) {
+				String partido1 = juego.getIdEquipoLocal() + "-" + juego.getIdEquipoVisita();
+				String partido2 = juego.getIdEquipoVisita() + "-" + juego.getIdEquipoLocal();
+				partidosJugados.put(partido1, true);
+				partidosJugados.put(partido2, true);
+			}
+		}
+		
+		// Agregar partidos entre nuevos equipos y equipos existentes
+		for (Equipo nuevoEquipo : nuevosEquipos) {
+			for (Equipo equipoExistente : equiposOriginales) {
+				String partido1 = nuevoEquipo.getId() + "-" + equipoExistente.getId();
+				String partido2 = equipoExistente.getId() + "-" + nuevoEquipo.getId();
+				
+				if (!partidosJugados.containsKey(partido1)) {
+					partidosFaltantes.add(partido1);
+				}
+			}
+		}
+		
+		// Agregar partidos entre nuevos equipos
+		for (int i = 0; i < nuevosEquipos.size(); i++) {
+			for (int j = i + 1; j < nuevosEquipos.size(); j++) {
+				String partido = nuevosEquipos.get(i).getId() + "-" + nuevosEquipos.get(j).getId();
+				partidosFaltantes.add(partido);
+			}
+		}
+		
+		return partidosFaltantes;
+	}
+	
+	/**
+	 * Calcula cuántas veces cada equipo ha jugado como local
+	 */
+	private HashMap<Long, Integer> calcularBalanceLocal(List<Jornadas> jornadas, int jornadasJugadas) {
+		HashMap<Long, Integer> balance = new HashMap<Long, Integer>();
+		
+		for (int i = 0; i < jornadasJugadas && i < jornadas.size(); i++) {
+			for (Jornada juego : jornadas.get(i).getJornada()) {
+				long equipoLocal = juego.getIdEquipoLocal();
+				balance.put(equipoLocal, balance.getOrDefault(equipoLocal, 0) + 1);
+			}
+		}
+		
+		return balance;
+	}
+	
+	/**
+	 * Calcula cuántas veces cada equipo ha jugado como visitante
+	 */
+	private HashMap<Long, Integer> calcularBalanceVisitante(List<Jornadas> jornadas, int jornadasJugadas) {
+		HashMap<Long, Integer> balance = new HashMap<Long, Integer>();
+		
+		for (int i = 0; i < jornadasJugadas && i < jornadas.size(); i++) {
+			for (Jornada juego : jornadas.get(i).getJornada()) {
+				long equipoVisitante = juego.getIdEquipoVisita();
+				balance.put(equipoVisitante, balance.getOrDefault(equipoVisitante, 0) + 1);
+			}
+		}
+		
+		return balance;
+	}
+	
+	/**
+	 * Distribuye los partidos faltantes en las jornadas futuras respetando restricciones
+	 */
+	private void distribuirPartidosEnJornadas(List<Jornadas> jornadas, 
+											  List<String> partidosFaltantes,
+											  List<Equipo> todosLosEquipos,
+											  int jornadaInicial,
+											  HashMap<Long, Integer> balanceLocal,
+											  HashMap<Long, Integer> balanceVisitante,
+											  boolean equipoFantasmaAgregado) {
+		
+		int jornadaActual = jornadaInicial;
+		List<String> partidosRestantes = new ArrayList<String>(partidosFaltantes);
+		
+		while (!partidosRestantes.isEmpty()) {
+			List<Jornada> juegosJornada = new ArrayList<Jornada>();
+			List<Long> equiposOcupados = new ArrayList<Long>();
+			List<String> partidosAsignados = new ArrayList<String>();
+			
+			// Asignar partidos para esta jornada
+			for (String partido : partidosRestantes) {
+				String[] equipos = partido.split("-");
+				long equipoLocal = Long.parseLong(equipos[0]);
+				long equipoVisitante = Long.parseLong(equipos[1]);
+				
+				// Verificar que ningún equipo esté ocupado en esta jornada
+				if (!equiposOcupados.contains(equipoLocal) && !equiposOcupados.contains(equipoVisitante)) {
+					
+					// Decidir local/visitante basado en balance
+					boolean intercambiar = debeIntercambiarLocalVisitante(equipoLocal, equipoVisitante, balanceLocal, balanceVisitante);
+					if (intercambiar) {
+						long temp = equipoLocal;
+						equipoLocal = equipoVisitante;
+						equipoVisitante = temp;
+					}
+					
+					// Filtrar equipo fantasma
+					if (equipoFantasmaAgregado && (equipoLocal == -1 || equipoVisitante == -1)) {
+						partidosAsignados.add(partido);
+						continue;
+					}
+					
+					// Crear el juego
+					Equipo eLocal = buscarEquipoPorId(todosLosEquipos, equipoLocal);
+					Equipo eVisitante = buscarEquipoPorId(todosLosEquipos, equipoVisitante);
+					
+					if (eLocal != null && eVisitante != null) {
+						Jornada juego = new Jornada();
+						juego.setIdJornada(jornadaActual);
+						juego.setNumeroJornada(jornadaActual);
+						juego.setId(juegosJornada.size() + 1);
+						juego.setIdEquipoLocal((int) equipoLocal);
+						juego.setNombreEquipoLocal(eLocal.getNombre());
+						juego.setIdEquipoVisita((int) equipoVisitante);
+						juego.setNombreEquipoVisita(eVisitante.getNombre());
+						juego.setImgLocal(eLocal.getImg());
+						juego.setImgVisita(eVisitante.getImg());
+						
+						juegosJornada.add(juego);
+						equiposOcupados.add(equipoLocal);
+						equiposOcupados.add(equipoVisitante);
+						partidosAsignados.add(partido);
+						
+						// Actualizar balances
+						balanceLocal.put(equipoLocal, balanceLocal.getOrDefault(equipoLocal, 0) + 1);
+						balanceVisitante.put(equipoVisitante, balanceVisitante.getOrDefault(equipoVisitante, 0) + 1);
+					}
+				}
+			}
+			
+			// Remover partidos asignados
+			partidosRestantes.removeAll(partidosAsignados);
+			
+			// Crear jornada si tiene juegos
+			if (!juegosJornada.isEmpty()) {
+				Jornadas nuevaJornada = new Jornadas();
+				nuevaJornada.setIdJornda(jornadaActual);
+				nuevaJornada.setNumeroJornada(jornadaActual);
+				nuevaJornada.setJornada(juegosJornada);
+				jornadas.add(nuevaJornada);
+			}
+			
+			jornadaActual++;
+		}
+	}
+	
+	/**
+	 * Decide si se debe intercambiar local y visitante para balancear
+	 */
+	private boolean debeIntercambiarLocalVisitante(long equipo1, long equipo2, 
+												   HashMap<Long, Integer> balanceLocal,
+												   HashMap<Long, Integer> balanceVisitante) {
+		int local1 = balanceLocal.getOrDefault(equipo1, 0);
+		int visitante1 = balanceVisitante.getOrDefault(equipo1, 0);
+		int local2 = balanceLocal.getOrDefault(equipo2, 0);
+		int visitante2 = balanceVisitante.getOrDefault(equipo2, 0);
+		
+		int balance1 = local1 - visitante1;
+		int balance2 = local2 - visitante2;
+		
+		// Si equipo2 tiene mayor desbalance hacia visitante, hacer que sea local
+		return balance2 < balance1;
+	}
+	
+	/**
+	 * Busca un equipo por ID en la lista
+	 */
+	private Equipo buscarEquipoPorId(List<Equipo> equipos, long id) {
+		for (Equipo equipo : equipos) {
+			if (equipo.getId() == id) {
+				return equipo;
+			}
+		}
+		return null;
 	}
 	
 	/**

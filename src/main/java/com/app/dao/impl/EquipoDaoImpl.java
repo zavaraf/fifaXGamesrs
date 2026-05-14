@@ -91,6 +91,7 @@ public class EquipoDaoImpl implements EquipoDao{
 				+"    tot.totalRaiting,   "
 				+"    tot.presupuestoInicial,   "
 				+"    tot.presupuestoFinal ,"
+				+"    equipos_has_temporada.postfifa, "
 				+"   GROUP_CONCAT(DISTINCT usuarios.userName "
 				+"               ORDER BY usuarios.userName ASC  "
 				+" 			           SEPARATOR ' - ') as usuarios, "
@@ -135,7 +136,7 @@ public class EquipoDaoImpl implements EquipoDao{
                         equipo.setLinksofifa(rs.getString("linksofifa"));
                         equipo.setManager(rs.getString("usuarios"));
                         equipo.setWhatsapp(rs.getString("whatsapp"));
-                        
+                        equipo.setPostfifa(rs.getString("postfifa"));
                         Division division= new Division();
                         division.setId(rs.getString("Division_idDivision"));
                         division.setNombre(rs.getString("nombreDivision"));
@@ -206,12 +207,13 @@ public class EquipoDaoImpl implements EquipoDao{
 		SqlParameter idTemporadaVar     = new SqlParameter("idTemporada", Types.INTEGER);
 		SqlParameter imgVar          = new SqlParameter("img", Types.VARCHAR);
 		SqlParameter img2Var         = new SqlParameter("img2", Types.VARCHAR);
+		SqlParameter postfifaVar     = new SqlParameter("postfifa", Types.VARCHAR);
 		
 		SqlOutParameter isError = new SqlOutParameter("isError", Types.INTEGER);
 		SqlOutParameter message = new SqlOutParameter("message", Types.VARCHAR);
 
 		SqlParameter[] paramArray = { nombreEquipoVar, descripcionVar,idDivisionVar
-				,linksofifaVar,idEquipoVar,idTemporadaVar,imgVar,img2Var,
+				,linksofifaVar,idEquipoVar,idTemporadaVar,imgVar,img2Var,postfifaVar,
 				isError, message };
 
 		myStoredProcedure.setParameters(paramArray);
@@ -225,7 +227,8 @@ public class EquipoDaoImpl implements EquipoDao{
 				currentEquipo.getId(),
 				idTemporada,
 				currentEquipo.getImg(),
-				currentEquipo.getImg2());
+				currentEquipo.getImg2(),
+				currentEquipo.getPostfifa());
 
 		//System.out.println(storedProcResult);
 
@@ -395,6 +398,7 @@ public class EquipoDaoImpl implements EquipoDao{
 				equipo.setTotalRaiting(rs.getInt("totalRaiting"));
 				equipo.setImg(rs.getString("img"));
 				equipo.setImg2(rs.getString("img2"));
+				//equipo.setLinksofifa(rs.getString("linksofifa"));
 				
 				Division division= new Division();
 				division.setId(rs.getString("Division_idDivision"));
@@ -407,7 +411,7 @@ public class EquipoDaoImpl implements EquipoDao{
 //				temporada.setNombre(rs.getString("NombreTemporada"));
 //				equipo.setTemporada(temporada);
 //				equipo.setDatosFinancieros(datosFinancierosDao.getDatosFinancieros(equipo));
-//				if(equipo.getDatosFinancieros()!=null && equipo.getDatosFinancieros().getSponsor()!=null){
+//				if(equipo.getDatosFinancieros()!=null ){
 //					List<CatalogoFinanciero> catalogoFinanzas = new ArrayList<CatalogoFinanciero>();
 //					catalogoFinanzas = sponsorDao.getCatalogoFinanzasByID(equipo);
 //					equipo.setFinanzas(catalogoFinanzas);
@@ -426,6 +430,8 @@ public class EquipoDaoImpl implements EquipoDao{
 			List<User> altas = userDao.findAllAltasByIdEquipo(id, idTemporada);
 			//System.out.println("Altas :"+altas.size());
 			team.setAltas(altas);
+			List<JugadorDraft> draftpc  = draftDao.findJugadoresDraftByIdEquipo((int)id, idTemporada);
+			team.setDraftpc(draftpc);
 			return team;
 		}
 		

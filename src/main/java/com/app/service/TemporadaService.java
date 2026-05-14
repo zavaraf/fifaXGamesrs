@@ -44,5 +44,8 @@ public interface TemporadaService {
 	
 	ResponseData editJuegoJornada(int id, int idEquipoLocal, int idEquipoVisita);
 	
+	// Método para agregar equipos a calendario en progreso
+	ResponseData agregarEquiposACalendario(int idTemporada, int idTorneo, List<Equipo> nuevosEquipos, int jornadaActual, int vuelta);
+	
 	
 }

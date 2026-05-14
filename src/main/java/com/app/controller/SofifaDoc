@@ -1,0 +1,961 @@
+Leagues
+Get all leagues appears in FIFA/FC history (including clubs from rest of world)
+
+GET https://api.sofifa.net/leagues
+
+Example response
+
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Superliga",
+      "gender": "male",
+      "country": "Denmark",
+      "type": "domestic",
+      "roster": "220001",
+      "version": "22",
+      "export": "160283",
+      "latestRoster": "250016"
+    },
+    ...
+  ]
+}
+Get all leagues for specific roster
+
+GET https://api.sofifa.net/leagues/{roster}
+
+Parameter	Type	Required	Description
+roster	string	YES	The roster ID, which SoFIFA defines, can be found on the version select dropdown
+Example response
+
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Superliga",
+      "gender": "male",
+      "country": "Denmark",
+      "type": "domestic",
+      "roster": "220001",
+      "version": "22",
+      "export": "160283",
+      "latestRoster": "250016"
+    },
+    ...
+  ]
+}
+Get all teams for specific league and roster
+
+GET https://api.sofifa.net/league/{id}/{roster}
+
+Parameter	Type	Required	Description
+id	int	YES	The league ID from the official game release
+roster	string	YES	The roster ID, which SoFIFA defines, can be found on the version select dropdown
+Example response
+
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Arsenal",
+      "gender": "male",
+      "country": "England",
+      "type": "domestic",
+      "roster": "250002",
+      "version": "25",
+      "export": "161411",
+      "latestRoster": "250003",
+      "league": {
+        "id": 13,
+        "name": "Premier League",
+        "gender": "male",
+        "country": "England",
+        "type": "domestic"
+      }
+    },
+    ...
+  ]
+}
+Teams
+Get all teams for specific roster
+
+GET https://api.sofifa.net/teams/{roster}
+
+Parameter	Type	Required	Description
+roster	string	YES	The roster ID, which SoFIFA defines, can be found on the version select dropdown
+Example response
+
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Arsenal",
+      "gender": "male",
+      "country": "England",
+      "type": "domestic",
+      "roster": "250002",
+      "version": "25",
+      "export": "161411",
+      "latestRoster": "250003",
+      "league": {
+        "id": 13,
+        "name": "Premier League",
+        "gender": "male",
+        "country": "England",
+        "type": "domestic"
+      }
+    },
+    ...
+  ]
+}
+Get latest details and the squads of a team
+
+GET https://api.sofifa.net/team/{id}
+
+Parameter	Type	Required	Description
+id	int	YES	The team ID from the official game release
+Example response
+
+{
+  "data": {
+    "id": 1,
+    "name": "Arsenal",
+    "gender": "male",
+    "country": "England",
+    "type": "domestic",
+    "leagueId": 13,
+    "countryId": 14,
+    "playerCount": 24,
+    "transferBudget": null,
+    "intPrestige": 9,
+    "domPrestige": 9,
+    "popularity": 9,
+    "youthDevelopment": 6,
+    "clubWorth": 1871280,
+    "opponentWeakThreshold": 3,
+    "opponentStrongThreshold": 3,
+    "stadiumId": 156,
+    "rivalTeamId": 18,
+    "xiAverageAge": 25.18,
+    "totalAverageAge": 25.63,
+    "overallRating": 83,
+    "attackRating": 83,
+    "midfieldRating": 85,
+    "defenseRating": 84,
+    "trait1": 180738,
+    "profitability": 2,
+    "busBuildUpSpeed": null,
+    "busPassing": null,
+    "busDribbling": null,
+    "busPositioning": null,
+    "ccCrossing": null,
+    "ccPassing": null,
+    "ccPositioning": null,
+    "ccShooting": null,
+    "defAggression": null,
+    "defDefenderLine": null,
+    "defTeamWidth": null,
+    "defMentality": null,
+    "defensiveStyle": null,
+    "defensiveWidth": null,
+    "defensiveDepth": 65,
+    "offensiveStyle": null,
+    "offensiveWidth": null,
+    "playersInBoxCross": null,
+    "playersInBoxCorner": null,
+    "playersInBoxFreeKick": null,
+    "buildUpPlay": 1,
+    "chanceCreation": null,
+    "roster": "250003",
+    "version": "25",
+    "export": "161412",
+    "latestRoster": "250003",
+    "players": [
+      {
+        "id": 194404,
+        "position": 28,
+        "jerseyNumber": 32,
+        "joinTeamDate": 160639,
+        "joinedYear": 2022,
+        "joinedMonth": 8,
+        "joinedDay": 7,
+        "contractValidUntil": 2026,
+        "teamIdLoanedFrom": 1943,
+        "loanDateEnd": 161697,
+        "firstName": "Norberto",
+        "lastName": "Murara Neto",
+        "commonName": "Neto",
+        "country": "Brazil",
+        "countryId": 54,
+        "gender": "male",
+        "birthDate": 148567,
+        "birthYear": 1989,
+        "birthMonth": 7,
+        "birthDay": 19,
+        "age": 34,
+        "height": 190,
+        "weight": 83,
+        "position1": 0,
+        "position2": -1,
+        "position3": -1,
+        "position4": -1,
+        "foot": 1,
+        "weakFoot": 2,
+        "crossing": 11,
+        "finishing": 15,
+        "heading": 14,
+        "shortPassing": 37,
+        "volleys": 12,
+        "dribbling": 18,
+        "curve": 12,
+        "freeKick": 13,
+        "longPassing": 42,
+        "ballControl": 23,
+        "acceleration": 55,
+        "sprintSpeed": 50,
+        "agility": 58,
+        "reactions": 78,
+        "balance": 48,
+        "shotPower": 55,
+        "jumping": 68,
+        "stamina": 40,
+        "strength": 62,
+        "longShots": 20,
+        "aggression": 40,
+        "interceptions": 15,
+        "positioning": 11,
+        "vision": 43,
+        "penalties": 22,
+        "marking": 17,
+        "standingTackle": 14,
+        "slidingTackle": 15,
+        "gkDiving": 80,
+        "gkHandling": 72,
+        "gkKicking": 73,
+        "gkPositioning": 76,
+        "gkReflexes": 82,
+        "composure": 60,
+        "headClassCode": 0,
+        "bodyTypeCode": 4,
+        "overallRating": 78,
+        "potential": 78,
+        "growth": 0,
+        "internationalRep": 2,
+        "skillMoves": 0,
+        "atkWorkRate": null,
+        "defWorkRate": null,
+        "trait1": 1073741824,
+        "trait2": 1,
+        "specialities": [],
+        "price": 2400000,
+        "wage": 41000,
+        "buyout": 0,
+        "iconTrait1": 0,
+        "iconTrait2": 0,
+        "accelerationType": "PLAYER_ACCELERATE_CONTROLLED",
+        "pac": 80,
+        "sho": 72,
+        "pas": 73,
+        "dri": 82,
+        "def": 53,
+        "phy": 76,
+        "roster": "250003",
+        "version": "25",
+        "export": "161412",
+        "latestRoster": "250003",
+        "role": [
+          {
+            "name": "ROLE_GOALKEEPER+",
+            "position": 0,
+            "focuses": [
+              "ROLE_DEFEND",
+              "ROLE_BALANCED"
+            ]
+          }
+        ],
+        "trait": [],
+        "playStyle": [
+          "PLAYSTYLE_GOAL_KEEPER_CROSS_CLAIMER"
+        ],
+        "playStylePlus": []
+      },
+      ...
+    ]
+  }
+}
+Get details and the squads of a team for a specific roster
+
+GET https://api.sofifa.net/team/{id}/{roster}
+
+Parameter	Type	Required	Description
+id	int	YES	The team ID from the official game release
+roster	string	YES	The roster ID, which SoFIFA defines, can be found on the version select dropdown
+Players
+Get latest details of a player
+
+GET https://api.sofifa.net/player/{id}
+
+Parameter	Type	Required	Description
+id	int	YES	The player ID from the official game release
+Example response
+
+{
+  "data": {
+    "id": 277643,
+    "firstName": "Lamine",
+    "lastName": "Yamal",
+    "commonName": "Lamine Yamal",
+    "country": "Spain",
+    "countryId": 45,
+    "gender": "male",
+    "birthDate": 155135,
+    "birthYear": 2007,
+    "birthMonth": 7,
+    "birthDay": 13,
+    "age": 16,
+    "height": 180,
+    "weight": 65,
+    "position1": 23,
+    "position2": 27,
+    "position3": -1,
+    "position4": -1,
+    "foot": 2,
+    "weakFoot": 3,
+    "crossing": 81,
+    "finishing": 76,
+    "heading": 33,
+    "shortPassing": 79,
+    "volleys": 49,
+    "dribbling": 84,
+    "curve": 79,
+    "freeKick": 65,
+    "longPassing": 64,
+    "ballControl": 82,
+    "acceleration": 84,
+    "sprintSpeed": 81,
+    "agility": 87,
+    "reactions": 79,
+    "balance": 74,
+    "shotPower": 77,
+    "jumping": 55,
+    "stamina": 57,
+    "strength": 45,
+    "longShots": 79,
+    "aggression": 42,
+    "interceptions": 18,
+    "positioning": 77,
+    "vision": 77,
+    "penalties": 69,
+    "marking": 23,
+    "standingTackle": 20,
+    "slidingTackle": 28,
+    "gkDiving": 9,
+    "gkHandling": 13,
+    "gkKicking": 7,
+    "gkPositioning": 10,
+    "gkReflexes": 7,
+    "composure": 65,
+    "headClassCode": 0,
+    "bodyTypeCode": 1,
+    "overallRating": 81,
+    "potential": 94,
+    "growth": 13,
+    "internationalRep": 1,
+    "skillMoves": 3,
+    "atkWorkRate": null,
+    "defWorkRate": null,
+    "trait1": 4521985,
+    "trait2": 0,
+    "specialities": [],
+    "price": 58500000,
+    "wage": 72000,
+    "buyout": 156487500,
+    "iconTrait1": 0,
+    "iconTrait2": 0,
+    "accelerationType": "PLAYER_ACCELERATE_MOSTLY_EXPLOSIVE",
+    "pac": 82,
+    "sho": 75,
+    "pas": 76,
+    "dri": 82,
+    "def": 23,
+    "phy": 48,
+    "roster": "250003",
+    "version": "25",
+    "export": "161412",
+    "latestRoster": "250003",
+    "teams": [
+      {
+        "id": 241,
+        "name": "FC Barcelona",
+        "gender": "male",
+        "country": "Spain",
+        "type": "domestic",
+        "league": {
+          "id": 53,
+          "name": "La Liga",
+          "gender": "male",
+          "country": "Spain",
+          "type": "domestic"
+        },
+        "position": 12,
+        "jerseyNumber": 19,
+        "joinTeamDate": 160602,
+        "joinedYear": 2022,
+        "joinedMonth": 7,
+        "joinedDay": 1,
+        "contractValidUntil": 2026,
+        "teamIdLoanedFrom": 0,
+        "loanDateEnd": 0
+      },
+      {
+        "id": 1362,
+        "name": "Spain",
+        "gender": "male",
+        "country": "Spain",
+        "type": "national",
+        "league": {
+          "id": 78,
+          "name": "Friendly International",
+          "gender": "male",
+          "country": "World",
+          "type": "friendly"
+        },
+        "position": 23,
+        "jerseyNumber": 19
+      }
+    ],
+    "role": [
+      {
+        "name": "ROLE_WINGER+",
+        "position": 23,
+        "focuses": [
+          "ROLE_BALANCED",
+          "ROLE_ATTACK"
+        ]
+      },
+      {
+        "name": "ROLE_INSIDE_FORWARD+",
+        "position": 23,
+        "focuses": [
+          "ROLE_ATTACK",
+          "ROLE_BALANCED",
+          "ROLE_ROAMING"
+        ]
+      },
+      {
+        "name": "ROLE_WINGER+",
+        "position": 27,
+        "focuses": [
+          "ROLE_BALANCED",
+          "ROLE_ATTACK"
+        ]
+      }
+    ],
+    "trait": [],
+    "playStyle": [
+      "PLAYSTYLE_SCORING_FINESSE_SHOT",
+      "PLAYSTYLE_BALL_CONTROL_TECHNICAL",
+      "PLAYSTYLE_BALL_CONTROL_FLAIR",
+      "PLAYSTYLE_PHYSICAL_QUICK_STEP"
+    ],
+    "playStylePlus": []
+  }
+}
+Get details of a player for specific roster
+
+GET https://api.sofifa.net/player/{id}/{roster}
+
+Parameter	Type	Required	Description
+id	int	YES	The player ID from the official game release
+roster	string	YES	The roster ID, which SoFIFA defines, can be found on the version select dropdown.
+Get prime of a player
+
+GET https://api.sofifa.net/player/{id}/prime
+
+Parameter	Type	Required	Description
+id	int	YES	The player ID from the official game release
+Example response
+
+{
+  "data": {
+    "playerId": 278349,
+    "weakFoot": 3,
+    "weakFootRoster": "240010",
+    "crossing": 48,
+    "crossingRoster": "240030",
+    "finishing": 36,
+    "finishingRoster": "240010",
+    "heading": 75,
+    "headingRoster": "250016",
+    "shortPassing": 69,
+    "shortPassingRoster": "250016",
+    "volleys": 50,
+    "volleysRoster": "240030",
+    "dribbling": 64,
+    "dribblingRoster": "240030",
+    "curve": 56,
+    "curveRoster": "240030",
+    "freeKick": 46,
+    "freeKickRoster": "240030",
+    "longPassing": 66,
+    "longPassingRoster": "250001",
+    "ballControl": 68,
+    "ballControlRoster": "250001",
+    "acceleration": 60,
+    "accelerationRoster": "240030",
+    "sprintSpeed": 68,
+    "sprintSpeedRoster": "240030",
+    "agility": 54,
+    "agilityRoster": "240030",
+    "reactions": 69,
+    "reactionsRoster": "250016",
+    "balance": 34,
+    "balanceRoster": "240010",
+    "shotPower": 56,
+    "shotPowerRoster": "240030",
+    "jumping": 78,
+    "jumpingRoster": "250016",
+    "stamina": 64,
+    "staminaRoster": "240030",
+    "strength": 74,
+    "strengthRoster": "250016",
+    "longShots": 58,
+    "longShotsRoster": "240030",
+    "aggression": 65,
+    "aggressionRoster": "250016",
+    "interceptions": 69,
+    "interceptionsRoster": "250016",
+    "positioning": 32,
+    "positioningRoster": "240010",
+    "vision": 60,
+    "visionRoster": "240030",
+    "penalties": 49,
+    "penaltiesRoster": "240018",
+    "marking": 71,
+    "markingRoster": "250016",
+    "standingTackle": 76,
+    "standingTackleRoster": "240030",
+    "slidingTackle": 73,
+    "slidingTackleRoster": "250016",
+    "gkDiving": 12,
+    "gkDivingRoster": "240010",
+    "gkHandling": 7,
+    "gkHandlingRoster": "240010",
+    "gkKicking": 14,
+    "gkKickingRoster": "240010",
+    "gkPositioning": 14,
+    "gkPositioningRoster": "240010",
+    "gkReflexes": 8,
+    "gkReflexesRoster": "240010",
+    "composure": 68,
+    "composureRoster": "240025",
+    "overallRating": 72,
+    "overallRatingRoster": "250016",
+    "potential": 86,
+    "potentialRoster": "240030",
+    "growth": 20,
+    "growthRoster": "240010",
+    "internationalRep": 1,
+    "internationalRepRoster": "240010",
+    "skillMoves": 1,
+    "skillMovesRoster": "240010",
+    "totalAttacking": 278,
+    "totalAttackingRoster": "250016",
+    "totalPower": 329,
+    "totalPowerRoster": "250016",
+    "totalMentality": 275,
+    "totalMentalityRoster": "250016",
+    "totalDefending": 220,
+    "totalDefendingRoster": "250016",
+    "totalSkill": 300,
+    "totalSkillRoster": "250001",
+    "totalMovement": 283,
+    "totalMovementRoster": "250016",
+    "totalGoalkeeping": 55,
+    "totalGoalkeepingRoster": "240010",
+    "totalOverall": 1740,
+    "totalOverallRoster": "250016",
+    "pac": 64,
+    "pacRoster": "240030",
+    "sho": 46,
+    "shoRoster": "240030",
+    "pas": 61,
+    "pasRoster": "250016",
+    "dri": 63,
+    "driRoster": "250001",
+    "def": 73,
+    "defRoster": "250016",
+    "phy": 70,
+    "phyRoster": "250016"
+  }
+}
+Get list of customized players for specific user
+
+GET https://api.sofifa.net/customizedPlayers/{apiToken}
+
+Parameter	Type	Required	Description
+apiToken	string	YES	The API token that the user applied for from SoFIFA
+Notice:
+
+Users can get the API Token from the settings page (only on PC).
+Only the customized players set as public appear on the list.
+The team ID of customized players is not compatible with the official FIFA/FC game release.
+Example response
+
+{
+  "data": [
+    {
+      "id": 13568284,
+      "firstName": "Loïs",
+      "lastName": "Openda",
+      "commonName": "",
+      "country": "Belgium",
+      "countryId": 7,
+      "gender": "male",
+      "birthDate": 152431,
+      "birthYear": 2000,
+      "birthMonth": 2,
+      "birthDay": 16,
+      "age": 23,
+      "height": 177,
+      "weight": 75,
+      "position1": 25,
+      "position2": -1,
+      "position3": -1,
+      "position4": -1,
+      "foot": 1,
+      "weakFoot": 4,
+      "crossing": 69,
+      "finishing": 83,
+      "heading": 79,
+      "shortPassing": 75,
+      "volleys": 69,
+      "dribbling": 80,
+      "curve": 59,
+      "freeKick": 48,
+      "longPassing": 59,
+      "ballControl": 80,
+      "acceleration": 94,
+      "sprintSpeed": 93,
+      "agility": 82,
+      "reactions": 83,
+      "balance": 84,
+      "shotPower": 79,
+      "jumping": 93,
+      "stamina": 79,
+      "strength": 78,
+      "longShots": 72,
+      "aggression": 74,
+      "interceptions": 26,
+      "positioning": 84,
+      "vision": 69,
+      "penalties": 75,
+      "marking": 29,
+      "standingTackle": 23,
+      "slidingTackle": 19,
+      "gkDiving": 9,
+      "gkHandling": 8,
+      "gkKicking": 10,
+      "gkPositioning": 8,
+      "gkReflexes": 13,
+      "composure": 78,
+      "headClassCode": 0,
+      "bodyTypeCode": 2,
+      "overallRating": 84,
+      "potential": 86,
+      "growth": 2,
+      "internationalRep": 2,
+      "skillMoves": 2,
+      "atkWorkRate": 2,
+      "defWorkRate": 0,
+      "trait1": 21102593,
+      "trait2": 0,
+      "specialities": [
+        "SPECIALITY_SPEEDSTER"
+      ],
+      "price": 55500000,
+      "wage": 77000,
+      "buyout": 0,
+      "iconTrait1": 0,
+      "iconTrait2": 0,
+      "accelerationType": "PLAYER_ACCELERATE_CONTROLLED",
+      "pac": 93,
+      "sho": 79,
+      "pas": 68,
+      "dri": 81,
+      "def": 31,
+      "phy": 78,
+      "roster": "240016",
+      "version": "24",
+      "export": 161112,
+      "latestRoster": "240016",
+      "teams": [
+        {
+          "position": 24,
+          "jerseyNumber": 17,
+          "joinTeamDate": 160980,
+          "joinedYear": 2023,
+          "joinedMonth": 7,
+          "joinedDay": 14,
+          "contractValidUntil": 2028,
+          "teamIdLoanedFrom": 0,
+          "loanDateEnd": 0,
+          "id": 277,
+          "name": "RB Leipzig",
+          "gender": "male",
+          "country": "Germany",
+          "type": "domestic"
+        },
+        {
+          "position": 28,
+          "jerseyNumber": 17,
+          "id": 18743,
+          "name": "Belgium",
+          "gender": "male",
+          "country": "Belgium",
+          "type": "national"
+        }
+      ],
+      "role": [],
+      "trait": [],
+      "playStyle": [
+        "PLAYSTYLE_SCORING_FINESSE_SHOT",
+        "PLAYSTYLE_BALL_CONTROL_RAPID",
+        "PLAYSTYLE_PHYSICAL_QUICK_STEP",
+        "PLAYSTYLE_PHYSICAL_TRIVELA"
+      ],
+      "playStylePlus": []
+    },
+    ...
+  ]
+}
+Get details of customized player
+
+GET https://api.sofifa.net/customizedPlayer/{id}/{apiToken}
+
+Parameter	Type	Required	Description
+id	int	YES	The customized player ID from SoFIFA
+apiToken	string	YES	The API token that the user applied for from SoFIFA
+Example response
+
+{
+  "data": {
+    "id": 13568284,
+    "firstName": "Loïs",
+    "lastName": "Openda",
+    "commonName": "",
+    "country": "Belgium",
+    "countryId": 7,
+    "gender": "male",
+    "birthDate": 152431,
+    "birthYear": 2000,
+    "birthMonth": 2,
+    "birthDay": 16,
+    "age": 23,
+    "height": 177,
+    "weight": 75,
+    "position1": 25,
+    "position2": -1,
+    "position3": -1,
+    "position4": -1,
+    "foot": 1,
+    "weakFoot": 4,
+    "crossing": 69,
+    "finishing": 83,
+    "heading": 79,
+    "shortPassing": 75,
+    "volleys": 69,
+    "dribbling": 80,
+    "curve": 59,
+    "freeKick": 48,
+    "longPassing": 59,
+    "ballControl": 80,
+    "acceleration": 94,
+    "sprintSpeed": 93,
+    "agility": 82,
+    "reactions": 83,
+    "balance": 84,
+    "shotPower": 79,
+    "jumping": 93,
+    "stamina": 79,
+    "strength": 78,
+    "longShots": 72,
+    "aggression": 74,
+    "interceptions": 26,
+    "positioning": 84,
+    "vision": 69,
+    "penalties": 75,
+    "marking": 29,
+    "standingTackle": 23,
+    "slidingTackle": 19,
+    "gkDiving": 9,
+    "gkHandling": 8,
+    "gkKicking": 10,
+    "gkPositioning": 8,
+    "gkReflexes": 13,
+    "composure": 78,
+    "headClassCode": 0,
+    "bodyTypeCode": 2,
+    "overallRating": 84,
+    "potential": 86,
+    "growth": 2,
+    "internationalRep": 2,
+    "skillMoves": 2,
+    "atkWorkRate": 2,
+    "defWorkRate": 0,
+    "trait1": 21102593,
+    "trait2": 0,
+    "specialities": [
+      "SPECIALITY_SPEEDSTER"
+    ],
+    "price": 55500000,
+    "wage": 77000,
+    "buyout": 0,
+    "iconTrait1": 0,
+    "iconTrait2": 0,
+    "accelerationType": "PLAYER_ACCELERATE_CONTROLLED",
+    "pac": 93,
+    "sho": 79,
+    "pas": 68,
+    "dri": 81,
+    "def": 31,
+    "phy": 78,
+    "roster": "240016",
+    "version": "24",
+    "export": 161112,
+    "latestRoster": "240016",
+    "teams": [
+      {
+        "id": 277,
+        "name": "RB Leipzig",
+        "gender": "male",
+        "country": "Germany",
+        "type": "domestic",
+        "position": 24,
+        "jerseyNumber": 17,
+        "joinTeamDate": 160980,
+        "joinedYear": 2023,
+        "joinedMonth": 7,
+        "joinedDay": 14,
+        "contractValidUntil": 2028,
+        "teamIdLoanedFrom": 0,
+        "loanDateEnd": 0
+      },
+      {
+        "id": 18743,
+        "name": "Belgium",
+        "gender": "male",
+        "country": "Belgium",
+        "type": "national",
+        "position": 28,
+        "jerseyNumber": 17
+      }
+    ],
+    "role": [],
+    "trait": [],
+    "playStyle": [
+      "PLAYSTYLE_SCORING_FINESSE_SHOT",
+      "PLAYSTYLE_BALL_CONTROL_RAPID",
+      "PLAYSTYLE_PHYSICAL_QUICK_STEP",
+      "PLAYSTYLE_PHYSICAL_TRIVELA"
+    ],
+    "playStylePlus": []
+  }
+}
+Traits
+Get list of traits
+
+GET https://api.sofifa.net/traits/{version}
+
+Parameter	Type	Required	Description
+version	string	YES	Available values from 07 to 23
+Example response
+
+{
+  "data": [
+    "TRAIT_LONG_THROW_IN",
+    ...
+  ]
+}
+PlayStyles
+Get list of PlayStyles
+
+GET https://api.sofifa.net/playStyles/{version}
+
+Parameter	Type	Required	Description
+version	string	YES	Available values from 24 to 25
+Example response
+
+{
+  "data": [
+    "PLAYSTYLE_SCORING_FINESSE_SHOT",
+    ...
+  ]
+}
+Get list of PlayStyles+
+
+GET https://api.sofifa.net/playStylesPlus/{version}
+
+Parameter	Type	Required	Description
+version	string	YES	Available values from 24 to 25
+Example response
+
+{
+  "data": [
+    "PLAYSTYLE_PLUS_SCORING_FINESSE_SHOT",
+    ...
+  ]
+}
+Specialities
+Get list of specialities
+
+GET https://api.sofifa.net/specialities/{version}
+
+Parameter	Type	Required	Description
+version	string	YES	Available values from 07 to 25
+Example response
+
+{
+  "data": [
+    "SPECIALITY_POACHER",
+    ...
+  ]
+}
+Player Role
+Get list of player roles
+
+GET https://api.sofifa.net/playerRole/{version}
+
+Parameter	Type	Required	Description
+version	string	YES	Available value: 25
+Example response
+
+{
+  "data": [
+    {
+      "name": "ROLE_GOALKEEPER+",
+      "position": 0,
+      "focuses": [
+        "ROLE_DEFEND",
+        "ROLE_BALANCED"
+      ]
+    },
+    ...
+  ]
+}
+Acceleration Type
+Get list of acceleration types
+
+GET https://api.sofifa.net/accelerationType/{version}
+
+Parameter	Type	Required	Description
+version	string	YES	Available values from 24 to 25
+Example response
+
+{
+  "data": [
+    "PLAYER_ACCELERATE_EXPLOSIVE",
+    ...
+  ]
+}

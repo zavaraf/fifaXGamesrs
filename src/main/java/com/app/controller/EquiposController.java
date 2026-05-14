@@ -122,6 +122,7 @@ public class EquiposController {
         currentEquipo.setLinksofifa(equipo.getLinksofifa());
         currentEquipo.setImg(equipo.getImg());
         currentEquipo.setImg2(equipo.getImg2());
+        currentEquipo.setPostfifa(equipo.getPostfifa());
         
         
           

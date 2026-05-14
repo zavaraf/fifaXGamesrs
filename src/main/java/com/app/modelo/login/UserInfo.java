@@ -8,6 +8,7 @@ public class UserInfo {
 	 private String username;
 	 private String password;
 	 private String email;
+	 private String telefono;
 	 private String idEquipo;
 	 private String nombreEquipo;
 	 private String rolesDes;
@@ -35,6 +36,12 @@ public class UserInfo {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 	public String getIdEquipo() {
 		return idEquipo;
