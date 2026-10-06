@@ -21,7 +21,6 @@ import com.app.modelo.ResponseData;
 import com.app.modelo.User;
 import com.app.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @Controller
 @RequestMapping(value="/rest")
 public class UserController {

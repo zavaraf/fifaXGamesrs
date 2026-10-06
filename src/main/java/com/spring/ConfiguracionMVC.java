@@ -32,8 +32,8 @@ public class ConfiguracionMVC extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-        	    .allowedOrigins("https://fifa-xgamers.com")
-                .allowedMethods("*")
+        	    .allowedOrigins("https://fifa-xgamers.com", "http://localhost:3000", "http://localhost:8081")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .maxAge(3600L)
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization")

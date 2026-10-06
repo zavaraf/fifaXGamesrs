@@ -23,7 +23,6 @@ import com.app.service.SponsorService;
 
 //@Controller
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping(value="/rest/sponsor")
 public class SponsorController {
 

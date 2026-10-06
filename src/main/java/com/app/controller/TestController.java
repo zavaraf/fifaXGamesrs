@@ -26,7 +26,6 @@ import com.mysql.jdbc.Connection;
 
 
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class TestController {
 	

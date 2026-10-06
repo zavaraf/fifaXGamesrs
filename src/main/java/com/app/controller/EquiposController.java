@@ -20,7 +20,6 @@ import com.app.modelo.Division;
 import com.app.modelo.Equipo;
 import com.app.service.EquipoService;
 
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @Controller
 @RequestMapping(value="/rest/equipo")
 public class EquiposController {

@@ -22,7 +22,6 @@ import com.app.modelo.User;
 import com.app.service.DraftService;
 import com.app.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @Controller
 @RequestMapping(value="/rest/draft")
 public class DraftController {

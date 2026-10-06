@@ -30,7 +30,6 @@ import com.app.modelo.Torneo;
 import com.app.service.TemporadaService;
 import com.google.gson.Gson;
 
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @Controller
 @RequestMapping(value="/rest/temporada")
 public class TemporadaController {

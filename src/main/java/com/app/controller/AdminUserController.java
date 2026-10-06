@@ -20,7 +20,6 @@ import com.app.modelo.RoleUser;
 import com.app.modelo.login.UserInfo;
 import com.app.service.AdminUserService;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @RequestMapping(value="/rest/adminUser")
 public class AdminUserController {

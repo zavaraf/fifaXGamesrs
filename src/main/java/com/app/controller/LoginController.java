@@ -1,6 +1,5 @@
 package com.app.controller;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +24,7 @@ import com.app.validator.SignupValidator;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @Controller
 @RequestMapping("/rest")
 public class LoginController {
@@ -39,7 +36,8 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 	
-	private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+	// Clave secreta para JWT (en producción usar variable de entorno)
+	private static final String SECRET_KEY = "fifaxgamers_secret_key_2024_very_long_string_for_security";
 
 	@RequestMapping(value = "/api/login/validate", method = RequestMethod.POST)
 	@ResponseBody
@@ -177,7 +175,7 @@ public class LoginController {
 	            .setSubject(username) // Establece el usuario como sujeto del token
 	            .setIssuedAt(new Date()) // Fecha de emisión
 	            .setExpiration(new Date(System.currentTimeMillis() + expirationTime)) // Fecha de expiración
-	            .signWith(SECRET_KEY, SignatureAlgorithm.HS256) // Firma con la clave secreta
+	            .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // Firma con la clave secreta
 	            .compact();
 	}
 

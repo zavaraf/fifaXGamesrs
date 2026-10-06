@@ -21,7 +21,6 @@ import com.app.modelo.JugadoresCSV;
 import com.app.modelo.ResponseData;
 import com.app.service.CatalogoService;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @RequestMapping(value="/rest/catalogs")
 public class CatalogosController {

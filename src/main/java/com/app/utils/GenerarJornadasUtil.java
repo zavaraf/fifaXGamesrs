@@ -919,7 +919,8 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		for (int i = 0; i < jornadasJugadas && i < jornadas.size(); i++) {
 			for (Jornada juego : jornadas.get(i).getJornada()) {
 				long equipoLocal = juego.getIdEquipoLocal();
-				balance.put(equipoLocal, balance.getOrDefault(equipoLocal, 0) + 1);
+				Integer current = balance.get(equipoLocal);
+				balance.put(equipoLocal, (current != null ? current : 0) + 1);
 			}
 		}
 		
@@ -935,7 +936,8 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 		for (int i = 0; i < jornadasJugadas && i < jornadas.size(); i++) {
 			for (Jornada juego : jornadas.get(i).getJornada()) {
 				long equipoVisitante = juego.getIdEquipoVisita();
-				balance.put(equipoVisitante, balance.getOrDefault(equipoVisitante, 0) + 1);
+				Integer current = balance.get(equipoVisitante);
+				balance.put(equipoVisitante, (current != null ? current : 0) + 1);
 			}
 		}
 		
@@ -1006,8 +1008,10 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 						partidosAsignados.add(partido);
 						
 						// Actualizar balances
-						balanceLocal.put(equipoLocal, balanceLocal.getOrDefault(equipoLocal, 0) + 1);
-						balanceVisitante.put(equipoVisitante, balanceVisitante.getOrDefault(equipoVisitante, 0) + 1);
+						Integer currLocal = balanceLocal.get(equipoLocal);
+						balanceLocal.put(equipoLocal, (currLocal != null ? currLocal : 0) + 1);
+						Integer currVisit = balanceVisitante.get(equipoVisitante);
+						balanceVisitante.put(equipoVisitante, (currVisit != null ? currVisit : 0) + 1);
 					}
 				}
 			}
@@ -1034,10 +1038,14 @@ public List<Equipo> agruparArreglo(List<Equipo> equipos){
 	private boolean debeIntercambiarLocalVisitante(long equipo1, long equipo2, 
 												   HashMap<Long, Integer> balanceLocal,
 												   HashMap<Long, Integer> balanceVisitante) {
-		int local1 = balanceLocal.getOrDefault(equipo1, 0);
-		int visitante1 = balanceVisitante.getOrDefault(equipo1, 0);
-		int local2 = balanceLocal.getOrDefault(equipo2, 0);
-		int visitante2 = balanceVisitante.getOrDefault(equipo2, 0);
+		Integer l1 = balanceLocal.get(equipo1);
+		int local1 = l1 != null ? l1 : 0;
+		Integer v1 = balanceVisitante.get(equipo1);
+		int visitante1 = v1 != null ? v1 : 0;
+		Integer l2 = balanceLocal.get(equipo2);
+		int local2 = l2 != null ? l2 : 0;
+		Integer v2 = balanceVisitante.get(equipo2);
+		int visitante2 = v2 != null ? v2 : 0;
 		
 		int balance1 = local1 - visitante1;
 		int balance2 = local2 - visitante2;
